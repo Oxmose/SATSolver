@@ -1,0 +1,254 @@
+Grammaire
+
+    0 $accept: input $end
+
+    1 input: expression
+
+    2 expression: TK_INT
+    3           | TK_LPAREN expression TK_RPAREN
+    4           | expression TK_PLUS expression
+    5           | expression TK_MULT expression
+    6           | TK_MINUS expression
+    7           | expression TK_MINUS expression
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+$end (0) 0
+error (256)
+TK_MIN_UN (258)
+TK_PLUS (259) 4
+TK_MULT (260) 5
+TK_MINUS (261) 6 7
+TK_LPAREN (262) 3
+TK_RPAREN (263) 3
+TK_INT (264) 2
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (10)
+    à gauche: 0
+input (11)
+    à gauche: 1, à droite: 0
+expression (12)
+    à gauche: 2 3 4 5 6 7, à droite: 1 3 4 5 6 7
+
+
+État 0
+
+    0 $accept: . input $end
+    1 input: . expression
+    2 expression: . TK_INT
+    3           | . TK_LPAREN expression TK_RPAREN
+    4           | . expression TK_PLUS expression
+    5           | . expression TK_MULT expression
+    6           | . TK_MINUS expression
+    7           | . expression TK_MINUS expression
+
+    TK_MINUS   décalage et aller à l'état 1
+    TK_LPAREN  décalage et aller à l'état 2
+    TK_INT     décalage et aller à l'état 3
+
+    input       aller à l'état 4
+    expression  aller à l'état 5
+
+
+État 1
+
+    2 expression: . TK_INT
+    3           | . TK_LPAREN expression TK_RPAREN
+    4           | . expression TK_PLUS expression
+    5           | . expression TK_MULT expression
+    6           | . TK_MINUS expression
+    6           | TK_MINUS . expression
+    7           | . expression TK_MINUS expression
+
+    TK_MINUS   décalage et aller à l'état 1
+    TK_LPAREN  décalage et aller à l'état 2
+    TK_INT     décalage et aller à l'état 3
+
+    expression  aller à l'état 6
+
+
+État 2
+
+    2 expression: . TK_INT
+    3           | . TK_LPAREN expression TK_RPAREN
+    3           | TK_LPAREN . expression TK_RPAREN
+    4           | . expression TK_PLUS expression
+    5           | . expression TK_MULT expression
+    6           | . TK_MINUS expression
+    7           | . expression TK_MINUS expression
+
+    TK_MINUS   décalage et aller à l'état 1
+    TK_LPAREN  décalage et aller à l'état 2
+    TK_INT     décalage et aller à l'état 3
+
+    expression  aller à l'état 7
+
+
+État 3
+
+    2 expression: TK_INT .
+
+    $défaut  réduction par utilisation de la règle 2 (expression)
+
+
+État 4
+
+    0 $accept: input . $end
+
+    $end  décalage et aller à l'état 8
+
+
+État 5
+
+    1 input: expression .  [$end]
+    4 expression: expression . TK_PLUS expression
+    5           | expression . TK_MULT expression
+    7           | expression . TK_MINUS expression
+
+    TK_PLUS   décalage et aller à l'état 9
+    TK_MULT   décalage et aller à l'état 10
+    TK_MINUS  décalage et aller à l'état 11
+
+    $défaut  réduction par utilisation de la règle 1 (input)
+
+
+État 6
+
+    4 expression: expression . TK_PLUS expression
+    5           | expression . TK_MULT expression
+    6           | TK_MINUS expression .  [$end, TK_PLUS, TK_MULT, TK_MINUS, TK_RPAREN]
+    7           | expression . TK_MINUS expression
+
+    $défaut  réduction par utilisation de la règle 6 (expression)
+
+    Conflit entre la règle 6 et le jeton TK_PLUS résolu par réduction (TK_PLUS < TK_MIN_UN).
+    Conflit entre la règle 6 et le jeton TK_MULT résolu par réduction (TK_MULT < TK_MIN_UN).
+    Conflit entre la règle 6 et le jeton TK_MINUS résolu par réduction (TK_MINUS < TK_MIN_UN).
+
+
+État 7
+
+    3 expression: TK_LPAREN expression . TK_RPAREN
+    4           | expression . TK_PLUS expression
+    5           | expression . TK_MULT expression
+    7           | expression . TK_MINUS expression
+
+    TK_PLUS    décalage et aller à l'état 9
+    TK_MULT    décalage et aller à l'état 10
+    TK_MINUS   décalage et aller à l'état 11
+    TK_RPAREN  décalage et aller à l'état 12
+
+
+État 8
+
+    0 $accept: input $end .
+
+    $défaut  accepter
+
+
+État 9
+
+    2 expression: . TK_INT
+    3           | . TK_LPAREN expression TK_RPAREN
+    4           | . expression TK_PLUS expression
+    4           | expression TK_PLUS . expression
+    5           | . expression TK_MULT expression
+    6           | . TK_MINUS expression
+    7           | . expression TK_MINUS expression
+
+    TK_MINUS   décalage et aller à l'état 1
+    TK_LPAREN  décalage et aller à l'état 2
+    TK_INT     décalage et aller à l'état 3
+
+    expression  aller à l'état 13
+
+
+État 10
+
+    2 expression: . TK_INT
+    3           | . TK_LPAREN expression TK_RPAREN
+    4           | . expression TK_PLUS expression
+    5           | . expression TK_MULT expression
+    5           | expression TK_MULT . expression
+    6           | . TK_MINUS expression
+    7           | . expression TK_MINUS expression
+
+    TK_MINUS   décalage et aller à l'état 1
+    TK_LPAREN  décalage et aller à l'état 2
+    TK_INT     décalage et aller à l'état 3
+
+    expression  aller à l'état 14
+
+
+État 11
+
+    2 expression: . TK_INT
+    3           | . TK_LPAREN expression TK_RPAREN
+    4           | . expression TK_PLUS expression
+    5           | . expression TK_MULT expression
+    6           | . TK_MINUS expression
+    7           | . expression TK_MINUS expression
+    7           | expression TK_MINUS . expression
+
+    TK_MINUS   décalage et aller à l'état 1
+    TK_LPAREN  décalage et aller à l'état 2
+    TK_INT     décalage et aller à l'état 3
+
+    expression  aller à l'état 15
+
+
+État 12
+
+    3 expression: TK_LPAREN expression TK_RPAREN .
+
+    $défaut  réduction par utilisation de la règle 3 (expression)
+
+
+État 13
+
+    4 expression: expression . TK_PLUS expression
+    4           | expression TK_PLUS expression .  [$end, TK_PLUS, TK_MINUS, TK_RPAREN]
+    5           | expression . TK_MULT expression
+    7           | expression . TK_MINUS expression
+
+    TK_MULT  décalage et aller à l'état 10
+
+    $défaut  réduction par utilisation de la règle 4 (expression)
+
+    Conflit entre la règle 4 et le jeton TK_PLUS résolu par réduction (%left TK_PLUS).
+    Conflit entre la règle 4 et le jeton TK_MULT résolu par décalage (TK_PLUS < TK_MULT).
+    Conflit entre la règle 4 et le jeton TK_MINUS résolu par réduction (%left TK_MINUS).
+
+
+État 14
+
+    4 expression: expression . TK_PLUS expression
+    5           | expression . TK_MULT expression
+    5           | expression TK_MULT expression .  [$end, TK_PLUS, TK_MULT, TK_MINUS, TK_RPAREN]
+    7           | expression . TK_MINUS expression
+
+    $défaut  réduction par utilisation de la règle 5 (expression)
+
+    Conflit entre la règle 5 et le jeton TK_PLUS résolu par réduction (TK_PLUS < TK_MULT).
+    Conflit entre la règle 5 et le jeton TK_MULT résolu par réduction (%left TK_MULT).
+    Conflit entre la règle 5 et le jeton TK_MINUS résolu par réduction (TK_MINUS < TK_MULT).
+
+
+État 15
+
+    4 expression: expression . TK_PLUS expression
+    5           | expression . TK_MULT expression
+    7           | expression . TK_MINUS expression
+    7           | expression TK_MINUS expression .  [$end, TK_PLUS, TK_MINUS, TK_RPAREN]
+
+    TK_MULT  décalage et aller à l'état 10
+
+    $défaut  réduction par utilisation de la règle 7 (expression)
+
+    Conflit entre la règle 7 et le jeton TK_PLUS résolu par réduction (%left TK_PLUS).
+    Conflit entre la règle 7 et le jeton TK_MULT résolu par décalage (TK_MINUS < TK_MULT).
+    Conflit entre la règle 7 et le jeton TK_MINUS résolu par réduction (%left TK_MINUS).
