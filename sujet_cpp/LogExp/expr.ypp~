@@ -29,7 +29,7 @@ Expr *res = NULL;
 // by convention), and associate each with a field of the union:
 %token TK_DIS TK_CON TK_XOR TK_IMP TK_EQU TK_ANT TK_NEG
 %token TK_LPAREN TK_RPAREN
-%token TK_ZERO
+%token TK_EOF
 %token <ival> TK_VAR
 %type <exp> expression
 
