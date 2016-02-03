@@ -14,7 +14,7 @@ int main(int, char**) {
     // parse through the input until there is no more:
     do {
         yyparse();
-        cout << res->to_string() << endl;
+        cout << res->to_string() << endl << res->eval() << endl;
     } while (!feof(yyin));
     return 0;
 }

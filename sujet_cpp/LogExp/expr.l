@@ -17,7 +17,7 @@ using namespace std;
 "=>"            { return TK_IMP; }
 "<=>"           { return TK_EQU; }
 "~"             { return TK_ANT; } //Antithese
-"-"             { return TK_NEG; }
-"0"             { return TK_ZERO; } //End Of Formule
+"-" {return TK_NEG;}
+"0" {return TK_ZERO;}//End Of Formule
 .               ;
 %%

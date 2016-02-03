@@ -77,6 +77,7 @@ class EDis : public Expr
 public:
     EDis(Expr * e1, Expr * e2);
     virtual std::string to_string();
+    virtual int eval();
 private:
     Expr * op1, * op2;
 };

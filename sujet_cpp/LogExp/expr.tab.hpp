@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -45,19 +45,23 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TK_MIN_UN = 258,
-    TK_PLUS = 259,
-    TK_MULT = 260,
-    TK_MINUS = 261,
-    TK_LPAREN = 262,
-    TK_RPAREN = 263,
-    TK_INT = 264
+    TK_DIS = 258,
+    TK_CON = 259,
+    TK_XOR = 260,
+    TK_IMP = 261,
+    TK_EQU = 262,
+    TK_ANT = 263,
+    TK_NEG = 264,
+    TK_LPAREN = 265,
+    TK_RPAREN = 266,
+    TK_ZERO = 267,
+    TK_VAR = 268
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
+typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
 #line 21 "expr.ypp" /* yacc.c:1909  */
@@ -65,10 +69,8 @@ union YYSTYPE
     int ival;
     class Expr *exp;
 
-#line 69 "expr.tab.hpp" /* yacc.c:1909  */
+#line 73 "expr.tab.hpp" /* yacc.c:1909  */
 };
-
-typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
