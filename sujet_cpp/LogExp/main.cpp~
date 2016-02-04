@@ -12,10 +12,10 @@ extern Expr *res;
 
 int main(int, char**) {
     // parse through the input until there is no more:
-    do {
+
         yyparse();
-        cout << res->to_string() << endl << res->eval() << endl;
-    } while (!feof(yyin));
+        cout << res->to_string() << endl;
+
     return 0;
 }
 

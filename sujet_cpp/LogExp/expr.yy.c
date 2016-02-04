@@ -380,8 +380,8 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[23] =
     {   0,
-        0,    0,   15,   13,    1,    6,    6,    3,    4,   11,
-        5,   12,    2,   13,   13,    7,   10,    2,    0,    8,
+        0,    0,   15,   13,    1,    1,    3,    4,   11,    5,
+       12,    2,   13,   13,    7,   10,    6,    2,    0,    8,
         9,    0
     } ;
 
@@ -390,13 +390,13 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    4,    1,    1,    1,    1,    1,    5,
-        6,    1,    1,    1,    7,    1,    8,    9,   10,   10,
-       10,   10,   10,   10,   10,   10,   10,    1,    1,   11,
-       12,   13,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
+        5,    1,    1,    1,    6,    1,    7,    8,    9,    9,
+        9,    9,    9,    9,    9,    9,    9,    1,    1,   10,
+       11,   12,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,   14,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,   13,    1,    1,
+        1,   14,    1,    1,    1,    1,    1,    1,    1,    1,
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -425,9 +425,9 @@ static yyconst flex_int32_t yy_meta[16] =
 
 static yyconst flex_int16_t yy_base[23] =
     {   0,
-        0,    0,   23,   24,   24,   24,   24,   24,   24,   24,
-       24,   24,    7,   10,    8,   24,   24,    9,    7,   24,
-       24,   24
+        0,    0,   24,   25,   25,   25,   25,   25,   25,    9,
+       25,    8,   11,    9,   25,   25,   25,   10,    8,   25,
+       25,   25
     } ;
 
 static yyconst flex_int16_t yy_def[23] =
@@ -437,20 +437,20 @@ static yyconst flex_int16_t yy_def[23] =
        22,    0
     } ;
 
-static yyconst flex_int16_t yy_nxt[40] =
+static yyconst flex_int16_t yy_nxt[41] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
-       14,   15,    4,   16,   17,   18,   18,   18,   18,   21,
-       20,   19,   22,    3,   22,   22,   22,   22,   22,   22,
-       22,   22,   22,   22,   22,   22,   22,   22,   22
+       14,    4,   15,    4,   16,   18,   18,   18,   18,   21,
+       20,   19,   17,   22,    3,   22,   22,   22,   22,   22,
+       22,   22,   22,   22,   22,   22,   22,   22,   22,   22
     } ;
 
-static yyconst flex_int16_t yy_chk[40] =
+static yyconst flex_int16_t yy_chk[41] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,   13,   13,   18,   18,   19,
-       15,   14,    3,   22,   22,   22,   22,   22,   22,   22,
-       22,   22,   22,   22,   22,   22,   22,   22,   22
+        1,    1,    1,    1,    1,   12,   12,   18,   18,   19,
+       14,   13,   10,    3,   22,   22,   22,   22,   22,   22,
+       22,   22,   22,   22,   22,   22,   22,   22,   22,   22
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -723,7 +723,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 24 );
+		while ( yy_base[yy_current_state] != 25 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -748,6 +748,7 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
+/* rule 1 can match eol */
 YY_RULE_SETUP
 #line 10 "expr.l"
 ;
@@ -773,7 +774,6 @@ YY_RULE_SETUP
 { return TK_DIS; }
 	YY_BREAK
 case 6:
-/* rule 6 can match eol */
 YY_RULE_SETUP
 #line 15 "expr.l"
 { return TK_CON; }
@@ -801,12 +801,12 @@ YY_RULE_SETUP
 case 11:
 YY_RULE_SETUP
 #line 20 "expr.l"
-{return TK_NEG;}
+{ return TK_NEG;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 21 "expr.l"
-{return TK_ZERO;}//End Of Formule
+{ return TK_ZERO;}//End Of Formule
 	YY_BREAK
 case 13:
 YY_RULE_SETUP

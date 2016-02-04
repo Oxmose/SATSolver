@@ -7,17 +7,17 @@ using namespace std;
 #include "expr.tab.hpp"
 %}
 %%
-[ \t]         ;
-[1-9][0-9]*     { yylval.ival = atoi(yytext); return TK_VAR; } //don't want 0
+[ \n\t]         ;
+[1-9][0-9]*     { printf("oo"); yylval.ival = atoi(yytext); return TK_VAR; } //don't want 0
 "("             { return TK_LPAREN; }
 ")"             { return TK_RPAREN; }
 "\/"            { return TK_DIS; }
-["/\"\n]        { return TK_CON; }
+"/\\"           { return TK_CON; }
 "X"		{ return TK_XOR; }
 "=>"            { return TK_IMP; }
 "<=>"           { return TK_EQU; }
 "~"             { return TK_ANT; } //Antithese
-"-"{return TK_NEG;}
-"0" {return TK_ZERO;}//End Of Formule
+"-"             { return TK_NEG;}
+"0"             { printf("caca"); return TK_ZERO;}//End Of Formule
 .               ;
 %%
