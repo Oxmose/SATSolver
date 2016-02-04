@@ -45,14 +45,14 @@ EDis::EDis(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
 string EDis::to_string()
 {
-    return "(" + op1->to_string() + " \\\/ " +  op2->to_string() + ")";
+    return "(" + op1->to_string() + " \\/ " +  op2->to_string() + ")";
 }
 
 ECon::ECon(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
 string ECon::to_string()
 {
-    return "(" + op1->to_string() + " \/\\ " +  op2->to_string() + ")";
+    return "(" + op1->to_string() + " /\\ " +  op2->to_string() + ")";
 }
 
 EAnt::EAnt(Expr * e1) : op1(e1) {}
