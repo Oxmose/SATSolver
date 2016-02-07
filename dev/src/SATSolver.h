@@ -30,6 +30,7 @@ class SATSolver
         bool evaluate(const std::vector<int, bool> &p_valuation);
         
         std::vector<bool> getValuation();
+	std::string getFormulaStr();
 
     private:
         std::string     m_fileName;

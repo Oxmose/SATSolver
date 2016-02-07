@@ -165,9 +165,6 @@ bool SATSolver::parse()
         cerr << "The file has " << vars.size() << " variables but " << m_maxIndex << " were announced." << endl;
         m_maxIndex = vars.size();
     }
-   
-    cout << "Parsed formula is :" << endl;
-    cout << m_strFormula << endl;
 
     file.close();
 
@@ -199,3 +196,8 @@ vector<bool> SATSolver::getValuation()
 
     return result;
 } // vector<bool> getValuation()
+
+string SATSolver::getFormulaStr()
+{
+    return m_strFormula;
+} // string getFormulaStr()

@@ -14,8 +14,16 @@ int main(int argc, char** argv)
     SATSolver solver(argv[1]);
 
     // Dummy test
-    cout << "Parse result : " << solver.parse() << endl;    
-    cout << "Is the formula solvable " << solver.isSolvable() << endl;
+    if(!solver.parse())
+    {
+        cerr << "Error while parsing the file." << endl;
+        return 2;
+    }
+
+    if(solver.isSolvable())
+        cout << solver.getFormulaStr() << endl << "SATIFIABLE" << endl;
+    else
+        cout << solver.getFormulaStr() << endl << "UNSATISFIABLE" << endl;
     
     return 0;
 }// main(int, char**)
