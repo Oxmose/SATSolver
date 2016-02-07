@@ -20,10 +20,14 @@ int main(int argc, char** argv)
         return 2;
     }
 
-    if(solver.isSolvable())
-        cout << solver.getFormulaStr() << endl << "SATIFIABLE" << endl;
+    int isSolvable = solver.isSolvable();
+
+    if(isSolvable == 1)
+        cout << "s SATIFIABLE" << endl;
+    else if(isSolvable == -1)
+	cout << "s ???" << endl;
     else
-        cout << solver.getFormulaStr() << endl << "UNSATISFIABLE" << endl;
+        cout << "s UNSATISFIABLE" << endl;
     
     return 0;
 }// main(int, char**)

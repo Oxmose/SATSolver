@@ -17,7 +17,7 @@ class Clause
         Clause(const std::vector<int> &p_literals);
         ~Clause();
 
-        bool isSolvable();
+        int isSolvable();
         bool solve();
 
         std::vector<std::pair<int, bool>> getValuation();

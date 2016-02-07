@@ -26,7 +26,7 @@ class SATSolver
         
         bool parse();
         bool solve();
-        bool isSolvable();
+        int isSolvable();
         bool evaluate(const std::vector<int, bool> &p_valuation);
         
         std::vector<bool> getValuation();

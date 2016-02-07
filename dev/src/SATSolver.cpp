@@ -176,14 +176,22 @@ bool SATSolver::solve()
     return true;
 } // bool solve()
 
-bool SATSolver::isSolvable()
+int SATSolver::isSolvable()
 {
     for(Clause clause : m_formula)
-        if(!clause.isSolvable())
-            return false;
-
-    return true;
-} // bool isSolvable()
+    {
+        int solvability = clause.isSolvable();
+        if(solvability == 0)
+        {
+            return 0;
+        }
+        else if(solvability == -1)
+        {
+            return -1;
+        }
+    }
+    return 1;
+} // int isSolvable()
 
 bool SATSolver::evaluate(const vector<int, bool> &p_valuation)
 {

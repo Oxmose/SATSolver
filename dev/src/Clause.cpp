@@ -26,7 +26,7 @@ Clause::~Clause()
 {
 } // ~Clause()
 
-bool Clause::isSolvable()
+int Clause::isSolvable()
 {
     // Simple test for now
     for(pair<int, int> lit : m_literals)
@@ -34,12 +34,12 @@ bool Clause::isSolvable()
         for(pair<int, int> litsec : m_literals)
         {
             if(litsec.first == -lit.first)
-                return false;
+                return 0;
         }
     }
 
-    return true;
-} // bool isSolvable()
+    return 1;
+} // int isSolvable()
 
 bool Clause::solve()
 {
