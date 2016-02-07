@@ -104,6 +104,9 @@ bool SATSolver::parse()
             int literal;
             while(splitter >> literal)
             {
+                if(literal == 0)
+                    break;
+
                 literals.push_back(literal);
 
                 // Vars count verification
