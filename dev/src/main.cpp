@@ -20,14 +20,17 @@ int main(int argc, char** argv)
         return 2;
     }
 
-    int isSolvable = solver.isSolvable();
+    cout << "We check SAT of :" << endl << solver.getFormulaStr() << std::endl;
+
+    solver.solve();
+    /*
 
     if(isSolvable == 1)
         cout << "s SATIFIABLE" << endl;
     else if(isSolvable == -1)
-	cout << "s ???" << endl;
+        cout << "s ???" << endl;
     else
-        cout << "s UNSATISFIABLE" << endl;
+        cout << "s UNSATISFIABLE" << endl;*/
     
     return 0;
 }// main(int, char**)

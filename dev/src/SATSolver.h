@@ -25,12 +25,9 @@ class SATSolver
         ~SATSolver();
         
         bool parse();
-        bool solve();
-        int isSolvable();
-        bool evaluate(const std::vector<int, bool> &p_valuation);
+        int solve();
         
-        std::vector<bool> getValuation();
-	std::string getFormulaStr();
+        std::string getFormulaStr();
 
     private:
         std::string     m_fileName;
@@ -39,7 +36,6 @@ class SATSolver
         unsigned int    m_clausesCount;
 
         std::vector<Clause> m_formula;
-        std::vector<bool>   m_valuation;
 }; // SATSolver 
 
 #endif // DEF_SATSOLVER_H

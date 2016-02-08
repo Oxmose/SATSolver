@@ -100,14 +100,14 @@ bool SATSolver::parse()
             //Create new clause
             stringstream splitter(line);
 
-            vector<int> literals;
+            vector<literal> literals;
             int literal;
             while(splitter >> literal)
             {
                 if(literal == 0)
                     break;
 
-                literals.push_back(literal);
+                literals.push_back(literal_from_int(literal));
 
                 // Vars count verification
                 if(literal < 0)
@@ -141,10 +141,10 @@ bool SATSolver::parse()
 
             for(unsigned int i = 0; i < literals.size(); ++i)
             {
-                if(literals[i] < 0)
-                    m_strFormula += "-x" + to_string(-literals[i]);
+                if(literals[i].bar)
+                    m_strFormula += "-x" + to_string(literals[i].index);
                 else
-                    m_strFormula += "x" + to_string(literals[i]);
+                    m_strFormula += "x" + to_string(literals[i].index);
 
                 if(i < literals.size() - 1)
                     m_strFormula += " \\/ ";
@@ -175,35 +175,6 @@ bool SATSolver::solve()
 {
     return true;
 } // bool solve()
-
-int SATSolver::isSolvable()
-{
-    for(Clause clause : m_formula)
-    {
-        int solvability = clause.isSolvable();
-        if(solvability == 0)
-        {
-            return 0;
-        }
-        else if(solvability == -1)
-        {
-            return -1;
-        }
-    }
-    return 1;
-} // int isSolvable()
-
-bool SATSolver::evaluate(const vector<int, bool> &p_valuation)
-{
-    return true;
-} // bool evaluation(const vecto<int, bool>&)
-
-vector<bool> SATSolver::getValuation()
-{
-    vector<bool> result;
-
-    return result;
-} // vector<bool> getValuation()
 
 string SATSolver::getFormulaStr()
 {
