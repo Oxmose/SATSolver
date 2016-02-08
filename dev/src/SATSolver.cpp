@@ -50,6 +50,7 @@ bool SATSolver::parse()
     // Verification vars
     set<int> vars;
     unsigned int clausesCount = 0;
+    unsigned int maxIndex = 0;
 
     // Read line by line
     while(getline(file, line))
@@ -124,6 +125,17 @@ bool SATSolver::parse()
                         vars.insert(literal);
                     }
                 }
+
+		        if(literal < 0)
+                {
+			        literal = -literal;
+                }
+		        if(literal > m_maxIndex)
+                {
+			        cerr << "The file has " << literal << " for index variable but " << m_maxIndex << " was announced as maximum index." << endl;
+                    if(literal > maxIndex)
+                        maxIndex = literal;
+                }
             }
 
             // Create and save the clause
@@ -160,10 +172,23 @@ bool SATSolver::parse()
         m_clausesCount = clausesCount;
     }
 
-    if(m_maxIndex != vars.size())
+    if(maxIndex != vars.size())
     {        
-        cerr << "The file has " << vars.size() << " variables but " << m_maxIndex << " were announced." << endl;
-        m_maxIndex = vars.size();
+	    vector<bool> used(maxIndex, false);
+
+	    for(unsigned int i : vars)
+        {
+		    used[i] = true;
+        }
+
+        for(unsigned int i = 1; i < maxIndex; ++i)
+        {
+            if(!used[i])
+            {
+                cerr << i << " was not used whereas maximum index is " << maxIndex << "." << endl;
+            }
+        }
+        m_maxIndex = maxIndex;
     }
 
     file.close();
@@ -171,9 +196,9 @@ bool SATSolver::parse()
     return noError;
 } // bool parse()
 
-bool SATSolver::solve()
+int SATSolver::solve()
 {
-    return true;
+    return 1;
 } // bool solve()
 
 string SATSolver::getFormulaStr()
