@@ -147,22 +147,6 @@ bool SATSolver::parse()
             ++clausesCount;
 
             // Create string format of the formula
-            if(clausesCount != 1)
-                m_strFormula += " /\\ ";
-
-            m_strFormula += '(';
-
-            for(unsigned int i = 0; i < literals.size(); ++i)
-            {
-                if(literals[i].bar)
-                    m_strFormula += "-" + to_string(literals[i].index);
-                else
-                    m_strFormula += "" + to_string(literals[i].index);
-
-                if(i < literals.size() - 1)
-                    m_strFormula += " \\/ ";
-            } 
-            m_strFormula += ')';
         }
     }
 
@@ -175,14 +159,16 @@ bool SATSolver::parse()
 
     if(maxIndex != vars.size())
     {        
-	    vector<bool> used(maxIndex, false);
+	    vector<bool> used;
+        for(int i = 0 ; i < maxIndex+1 ; i++)
+            used.push_back(false);
 
 	    for(unsigned int i : vars)
         {
 		    used[i] = true;
         }
 
-        for(unsigned int i = 1; i < maxIndex; ++i)
+        for(unsigned int i = 1; i < maxIndex+1; ++i)
         {
             if(!used[i])
             {
@@ -351,6 +337,7 @@ int SATSolver::solve(bool verbose)
         if(isContradictory())
         {
             printf("Contradiction!!\n");
+            printf("Bactrack\n");
             exit(1);
         }
 
