@@ -93,6 +93,7 @@ bool SATSolver::parse()
 
             // Retrive formula metadata into members
             splitter >> m_maxIndex;
+            maxIndex = m_maxIndex;
             splitter >> m_clausesCount;
         }
         else
@@ -149,7 +150,6 @@ bool SATSolver::parse()
             // Create string format of the formula
         }
     }
-
     // Error management
     if(clausesCount != m_clausesCount)
     {        
@@ -175,7 +175,6 @@ bool SATSolver::parse()
                 cerr << i << " was not used whereas maximum index is " << maxIndex << "." << endl;
             }
         }
-        m_maxIndex = maxIndex;
     }
 
     file.close();
@@ -205,9 +204,8 @@ decision SATSolver::takeABet()
     cout << to_string(firstUnassigned) + " to True" << endl;
 
     decision bet = decision(firstUnassigned,true,true);
+    cout << "Stacking bet" << endl;
     m_currentAssignement.push_back(bet);
-    m_valuation[bet.index] = bet.value;
-
     return bet;
 }
 
@@ -257,40 +255,36 @@ void SATSolver::assignVarInClause(int p_index, bool p_assign /* = true */)
 }
 
 
-//void  SATSolver::deduce(//TODO);
-
-
-void SATSolver::unitProp()
+bool SATSolver::deduce()
 {
-    bool unitClauseExists = true;
-    while(unitClauseExists)
-    {
-        unitClauseExists = false;
-        printf("\tActuellement : ");
-        cout << decisionToStr() + " # " << formulaToStr() << endl << endl;
-        for(Clause& c : m_formula)
-            if(!c.isSatisfied() && c.getAliveVars() == 1)
-            {
-                printf("\t\tDeduction grace a la clause : %s", c.toStr().c_str());
-                unitClauseExists = true;
-                int indexUnit;
-                for(const literal& l : c.getLiterals())
-                    if(!l.isAssigned)
-                    {
-                        indexUnit = l.index;
-                        break;
-                    }
+    return unitProp();
+}
 
-                bool value = !c.getLiteral(indexUnit).bar;
-                m_valuation[indexUnit] = value;
-                decision deduction = decision(indexUnit,value,false);
-                m_currentAssignement.push_back(deduction);
 
-                dropSatisfiedBy(deduction);
-                assignVarInClause(indexUnit);
-            }
-    }
-            
+bool SATSolver::unitProp()
+{
+    
+    printf("\tActuellement : ");
+    cout << decisionToStr() + " # " << formulaToStr() << endl << endl;
+    for(Clause& c : m_formula)
+        if(!c.isSatisfied() && c.getAliveVars() == 1)
+        {
+            printf("\t\tDeduction grace a la clause : %s", c.toStr().c_str());
+            int indexUnit;
+            for(const literal& l : c.getLiterals())
+                if(!l.isAssigned)
+                {
+                    indexUnit = l.index;
+                    break;
+                }
+
+            bool value = !c.getLiteral(indexUnit).bar;
+            decision deduction = decision(indexUnit,value,false);
+            cout << "Stacking deduction" << endl;
+            m_currentAssignement.push_back(deduction);   
+            return true;
+        }   
+    return false;
 }
 
 bool SATSolver::isContradictory()
@@ -313,6 +307,30 @@ void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
         }   
 }
 
+void SATSolver::applyDecision(decision p_dec)
+{
+    m_valuation[p_dec.index] = p_dec.value;
+
+    cout << "\tDroping satisfied clauses" << endl;
+    dropSatisfiedBy(p_dec);
+
+    cout << "\tRemove "+to_string(p_dec.index)+" from remaining clauses" << endl << endl;
+    assignVarInClause(p_dec.index);
+}
+
+void SATSolver::showSolution()
+{
+    for(int i = 1 ; i <= m_maxIndex ; i++)
+    {
+        string sign="";
+        if(m_valuation.find(i) != m_valuation.end())
+            sign = (m_valuation[i] == 0) ? "-" : ""; 
+        cout << sign+to_string(i)+" ";
+    }
+    cout << "0" << endl;
+    m_currentAssignement.clear();
+}
+
 int SATSolver::solve(bool verbose)
 {
     
@@ -329,29 +347,28 @@ int SATSolver::solve(bool verbose)
     
     
     cout << endl << "Main Loop" << endl;
-
-    while(m_satisfiedClause != m_formula.size())
+    cout << decisionToStr() + " # " << formulaToStr() << endl << endl;
+    cout << "First bet" << endl;
+    takeABet();
+    int k = 0;
+    while(!m_currentAssignement.empty())
     {
+        decision currDecision = m_currentAssignement.back();
+        cout << "1)Apply decision : ";
         cout << decisionToStr() + " # " << formulaToStr() << endl << endl;
-        cout << "1)Making a bet : ";
-        decision bet = takeABet();
-        
-        cout << "\tDroping satisfied clauses" << endl;
-        dropSatisfiedBy(bet);
-
-        cout << "\tRemove "+to_string(bet.index)+" from remaining clauses" << endl << endl;
-        assignVarInClause(bet.index);
+        applyDecision(currDecision);
 
         cout << "So far : " << endl;
         cout << decisionToStr() + " # " << formulaToStr() << endl << endl;
 
         cout << "2)Deduce :" << endl;
-        cout << "Unit prop" << endl;
-        unitProp();
+        bool hasDeduced = deduce();
 
         cout << "3)Check for contradictions" << endl;
+        bool backtrack = false;
         if(isContradictory())
         {
+            backtrack = true;
             printf("Contradiction!!\n");
             printf("Backtrack\n");
             while(!m_currentAssignement.back().bet)
@@ -361,11 +378,25 @@ int SATSolver::solve(bool verbose)
                 reviveClauseWithSatisfier(toErase.index);
                 m_currentAssignement.pop_back();
             }
+            assignVarInClause(m_currentAssignement.back().index, false);
+            reviveClauseWithSatisfier(m_currentAssignement.back().index);
+            if(m_currentAssignement.back().value)
+                m_currentAssignement.back().value = !m_currentAssignement.back().value;
+            else
+                cout << "UNSATISFIABLE !" << endl;
+            
             cout << decisionToStr() + " # " << formulaToStr() << endl << endl;
-            exit(1);
         }
 
         cout << "Iteration done\n\n";
+        
+        if(m_satisfiedClause == m_formula.size())
+        {
+            cout << "s SATISFIABLE" << endl;
+            showSolution();
+        }
+        else if(!hasDeduced && !backtrack)
+            takeABet();
         //m_satisfiedClause = m_formula.size();
         //cout << "\tUnit clause :" << endl;
 
