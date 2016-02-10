@@ -241,7 +241,7 @@ void SATSolver::dropSatisfiedBy(const decision& p_bet)
     {
         if(c.hasVar(p_bet.index) && c.getLiteral(p_bet.index).bar == !p_bet.value)
         {
-            c.setSatisfied();
+            c.setSatisfier(p_bet.index);
             cout << "\t\t Is satisfied : " << c.toStr() << endl;
             m_satisfiedClause++;
         }
@@ -249,12 +249,16 @@ void SATSolver::dropSatisfiedBy(const decision& p_bet)
     }
 }
 
-void SATSolver::assignVarInClause(int p_index)
+void SATSolver::assignVarInClause(int p_index, bool p_assign /* = true */)
 {
     for(Clause& c : m_formula)
         if(c.hasVar(p_index))
-            c.setAssigned(p_index);
+            c.setAssigned(p_index, p_assign);
 }
+
+
+//void  SATSolver::deduce(//TODO);
+
 
 void SATSolver::unitProp()
 {
@@ -297,6 +301,18 @@ bool SATSolver::isContradictory()
     return false;
 }
 
+void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
+{
+    for(Clause& c : m_formula)
+        if(c.getSatisfier() == p_satisfier)
+        {
+            printf("!!\n");
+            cout << c.toStr() << endl;
+            c.setSatisfier(-1);
+            m_satisfiedClause--;
+        }   
+}
+
 int SATSolver::solve(bool verbose)
 {
     
@@ -337,7 +353,15 @@ int SATSolver::solve(bool verbose)
         if(isContradictory())
         {
             printf("Contradiction!!\n");
-            printf("Bactrack\n");
+            printf("Backtrack\n");
+            while(!m_currentAssignement.back().bet)
+            {
+                decision toErase = m_currentAssignement.back();
+                assignVarInClause(toErase.index, false);
+                reviveClauseWithSatisfier(toErase.index);
+                m_currentAssignement.pop_back();
+            }
+            cout << decisionToStr() + " # " << formulaToStr() << endl << endl;
             exit(1);
         }
 

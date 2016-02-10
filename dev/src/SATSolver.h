@@ -48,9 +48,10 @@ class SATSolver
         /* DPLL intern */
         decision takeABet();
         void dropSatisfiedBy(const decision& p_bet);
-        void assignVarInClause(int p_index);
+        void assignVarInClause(int p_index, bool p_assign=true);
         void unitProp();
         bool isContradictory();
+        void reviveClauseWithSatisfier(int p_satisfier);
 
         std::string     m_fileName;
         std::string     m_strFormula;

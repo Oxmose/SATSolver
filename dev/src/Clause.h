@@ -38,7 +38,8 @@ class Clause
         const std::vector<literal>& getLiterals() const;
 
         bool isSatisfied() const;
-        void setSatisfied(bool p_isSatisfied = true);
+        int getSatisfier() const;
+        void setSatisfier(int p_satisfier);
 
         bool hasVar(int p_index) const;
         const literal& getLiteral(int p_index) const;
@@ -50,7 +51,7 @@ class Clause
 
     private:
         std::vector<literal> m_literals;
-        bool m_isSatisfied;
+        int m_satisfier;//-1 if not satisfied
         int m_aliveVars;
 }; // Clause
 
