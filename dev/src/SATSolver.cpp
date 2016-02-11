@@ -235,7 +235,7 @@ void SATSolver::dropSatisfiedBy(const decision& p_bet)
 {
     for(Clause& c : m_formula)
     {
-        if(c.hasVar(p_bet.index) && c.getLiteral(p_bet.index).bar == !p_bet.value)
+        if(!c.isSatisfied() && c.hasVar(p_bet.index) && c.getLiteral(p_bet.index).bar == !p_bet.value)
         {
             c.setSatisfier(p_bet.index);
             m_satisfiedClause++;
@@ -379,7 +379,8 @@ int SATSolver::solve(bool verbose)
             OUTDEBUG(currentStateToStr());
         }
 
-        OUTDEBUG("");
+        OUTDEBUG("SAT rate : " << m_satisfiedClause << " " << m_formula.size());
+        OUTDEBUG("");//endl
         if(m_satisfiedClause == m_formula.size())
         {
             cout << "s SATISFIABLE" << endl;
@@ -388,7 +389,6 @@ int SATSolver::solve(bool verbose)
         }
         else if(!hasDeduced && !backtrack)
             takeABet();
-
     }
 
 
