@@ -103,44 +103,55 @@ bool SATSolver::parse()
             stringstream splitter(line);
 
             vector<literal> literals;
-            int literal;
-            while(splitter >> literal)
+            int readLiteral;
+            bool hasTot = false;
+            while(splitter >> readLiteral)
             {
-                if(literal == 0)
+                if(readLiteral == 0)
                     break;
 
-                literals.push_back(literal_from_int(literal));
-
-                // Vars count verification
-                if(literal < 0)
+                bool found = false;
+                for(literal lit : literals)
                 {
-                    if(vars.find(-literal) == vars.end())
+                    if((lit.bar && -(lit.index) == readLiteral) || (!lit.bar && lit.index == readLiteral))
+                        found = true;           
+                    else if((!lit.bar && -(lit.index) == readLiteral) || (lit.bar && lit.index == readLiteral))
+                        hasTot = true;
+                }
+                        
+
+                if(!found)
+                    literals.push_back(literal_from_int(readLiteral));
+                // Vars count verification
+                if(readLiteral < 0)
+                {
+                    if(vars.find(-readLiteral) == vars.end())
                     {
-                        vars.insert(-literal);
+                        vars.insert(-readLiteral);
                     }
                 }
                 else
                 {
-                    if(vars.find(literal) == vars.end())
+                    if(vars.find(readLiteral) == vars.end())
                     {
-                        vars.insert(literal);
+                        vars.insert(readLiteral);
                     }
                 }
 
-		        if(literal < 0)
+		        if(readLiteral < 0)
                 {
-			        literal = -literal;
+			        readLiteral = -readLiteral;
                 }
-		        if(literal > m_maxIndex)
+		        if(readLiteral > m_maxIndex)
                 {
-			        cerr << "The file has " << literal << " for index variable but " << m_maxIndex << " was announced as maximum index." << endl;
-                    if(literal > maxIndex)
-                        maxIndex = literal;
+			        cerr << "The file has " << readLiteral << " for index variable but " << m_maxIndex << " was announced as maximum index." << endl;
+                    if(readLiteral > maxIndex)
+                        maxIndex = readLiteral;
                 }
             }
 
             // Create and save the clause
-            Clause clause(literals);
+            Clause clause(literals, hasTot);
             m_formula.push_back(clause);
 
             // Add one to counter for verification purposes

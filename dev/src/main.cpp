@@ -20,7 +20,7 @@ int main(int argc, char** argv)
         return 2;
     }
 
-    //cout << "We check SAT of :" << endl << solver.formulaToStr() << std::endl;
+    cout << "We check SAT of :" << endl << solver.formulaToStr() << std::endl;
 
     //solver.solve();
     /*
