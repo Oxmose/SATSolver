@@ -7,6 +7,15 @@
 #ifndef DEF_SATSOLVER_H
 #define DEF_SATSOLVER_H
 
+//#define NDEBUG
+#ifndef NDEBUG
+#define OUTDEBUG(Out) do {  \
+   std::cerr << Out << std::endl; \
+} while(0)
+#else
+#define OUTDEBUG(Out) do {}while(0)
+#endif
+
 // STD INCLUDES
 #include <string>   // sts::string
 #include <vector>   // std::vector
@@ -28,17 +37,17 @@ struct decision
     bool bet; //bet or deduction
 };
 
-class SATSolver 
+class SATSolver
 {
     public:
         SATSolver(const std::string &p_fileName);
         ~SATSolver();
-        
+
         bool parse();
 
         /* DPLL algorithm */
         int solve(bool verbose = 1);
-        
+
         std::string formulaToStr();
         std::string getFormulaStr();
         std::string decisionToStr();
@@ -54,8 +63,11 @@ class SATSolver
         bool unitProp();
         bool isContradictory();
         void reviveClauseWithSatisfier(int p_satisfier);
+        std::string currentStateToStr();
 
         void showSolution();
+
+        bool evaluate();
 
         std::string     m_fileName;
         std::string     m_strFormula;
@@ -70,6 +82,6 @@ class SATSolver
         std::map<int,std::vector<Clause>> m_clausesForVar;
         int m_satisfiedClause;
 
-}; // SATSolver 
+}; // SATSolver
 
 #endif // DEF_SATSOLVER_H

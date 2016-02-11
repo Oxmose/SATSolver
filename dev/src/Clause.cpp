@@ -1,6 +1,6 @@
 /*
  *
- *    CLASS Clause 
+ *    CLASS Clause
  *
 */
 
@@ -24,6 +24,18 @@ Clause::Clause(const vector<literal> &p_literals)
 
     m_aliveVars = p_literals.size();
 } // Clause(const vector<int>&)
+
+bool Clause::evaluate(map<int,int>& p_valuation)
+{
+    bool val = false;
+    for(literal l : m_literals)
+    {
+        if(p_valuation[l.index] == -1)
+            continue;
+        val = val || p_valuation[l.index] == !l.bar;
+    }
+    return val;
+}
 
 const std::vector<literal>& Clause::getLiterals() const
 {

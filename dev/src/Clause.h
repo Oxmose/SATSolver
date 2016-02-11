@@ -1,11 +1,12 @@
 /*
  *
- *    CLASS Clause 
+ *    CLASS Clause
  *
 */
 
 #ifndef DEF_CLAUSE_H
 #define DEF_CLAUSE_H
+
 
 // STD INCLUDES
 #include <cstdlib>
@@ -47,6 +48,7 @@ class Clause
 
         void setAssigned(int p_index, bool p_assign=true);
 
+        bool evaluate(std::map<int,int>& p_valuation);
         std::string toStr() const;
 
     private:
