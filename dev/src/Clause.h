@@ -1,11 +1,12 @@
 /*
  *
- *    CLASS Clause 
+ *    CLASS Clause
  *
 */
 
 #ifndef DEF_CLAUSE_H
 #define DEF_CLAUSE_H
+
 
 // STD INCLUDES
 #include <cstdlib>
@@ -38,7 +39,8 @@ class Clause
         const std::vector<literal>& getLiterals() const;
 
         bool isSatisfied() const;
-        void setSatisfied(bool p_isSatisfied = true);
+        int getSatisfier() const;
+        void setSatisfier(int p_satisfier);
 
         bool hasVar(int p_index) const;
         const literal& getLiteral(int p_index) const;
@@ -46,11 +48,12 @@ class Clause
 
         void setAssigned(int p_index, bool p_assign=true);
 
+        bool evaluate(std::map<int,int>& p_valuation);
         std::string toStr() const;
 
     private:
         std::vector<literal> m_literals;
-        bool m_isSatisfied;
+        int m_satisfier;//-1 if not satisfied
         int m_aliveVars;
         bool m_isTot;
 }; // Clause

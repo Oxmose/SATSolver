@@ -1,6 +1,6 @@
 /*
  *
- *    CLASS Clause 
+ *    CLASS Clause
  *
 */
 
@@ -15,8 +15,9 @@ using namespace std;
 
 Clause::Clause(const vector<literal> &p_literals, bool p_isTot)
 {
-    m_isSatisfied = false;
     m_isTot = p_isTot;
+    m_satisfier = -1;
+
     // Add literals
     for(literal l : p_literals)
     {
@@ -26,6 +27,18 @@ Clause::Clause(const vector<literal> &p_literals, bool p_isTot)
     m_aliveVars = p_literals.size();
 } // Clause(const vector<int>&)
 
+bool Clause::evaluate(map<int,int>& p_valuation)
+{
+    bool val = false;
+    for(literal l : m_literals)
+    {
+        if(p_valuation[l.index] == -1)
+            continue;
+        val = val || p_valuation[l.index] == !l.bar;
+    }
+    return val;
+}
+
 const std::vector<literal>& Clause::getLiterals() const
 {
     return m_literals;
@@ -33,12 +46,17 @@ const std::vector<literal>& Clause::getLiterals() const
 
 bool Clause::isSatisfied() const
 {
-    return m_isSatisfied;
+    return m_satisfier != -1;
 }
 
-void Clause::setSatisfied(bool p_isSatisfied)
+int Clause::getSatisfier() const
 {
-    m_isSatisfied = p_isSatisfied;
+    return m_satisfier;
+}
+
+void Clause::setSatisfier(int p_satisfier)
+{
+    m_satisfier = p_satisfier;
 }
 
 bool Clause::hasVar(int p_index) const
