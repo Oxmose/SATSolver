@@ -257,9 +257,9 @@ bool SATSolver::deduce()
     return unitProp();
 }
 
-
 bool SATSolver::unitProp()
 {
+
     for(Clause& c : m_formula)
         if(!c.isSatisfied() && c.getAliveVars() == 1)
         {
@@ -272,11 +272,13 @@ bool SATSolver::unitProp()
                 }
 
             bool value = !c.getLiteral(indexUnit).bar;
+
             decision deduction = decision(indexUnit,value,false);
             OUTDEBUG("\tDeducing: " << indexUnit << " to " << ((value) ? string("True") : string("False")));
             m_currentAssignement.push_back(deduction);
             return true;
         }
+
     return false;
 }
 
@@ -352,7 +354,6 @@ int SATSolver::solve(bool verbose)
         applyDecision(currDecision);
         OUTDEBUG("\t" << currentStateToStr());
 
-        bool hasDeduced = deduce();
         bool backtrack = isContradictory();
 
         if(backtrack)
@@ -377,7 +378,10 @@ int SATSolver::solve(bool verbose)
             m_currentAssignement.back().value = !m_currentAssignement.back().value;
             m_currentAssignement.back().bet = false;
             OUTDEBUG(currentStateToStr());
+            continue;
         }
+
+        bool hasDeduced = deduce();
 
         OUTDEBUG("SAT rate : " << m_satisfiedClause << " " << m_formula.size());
         OUTDEBUG("");//endl
