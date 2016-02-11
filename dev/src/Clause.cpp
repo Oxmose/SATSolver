@@ -13,9 +13,11 @@
 
 using namespace std;
 
-Clause::Clause(const vector<literal> &p_literals)
+Clause::Clause(const vector<literal> &p_literals, bool p_isTot)
 {
+    m_isTot = p_isTot;
     m_satisfier = -1;
+
     // Add literals
     for(literal l : p_literals)
     {

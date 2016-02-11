@@ -1,6 +1,6 @@
 /*
  *
- *    CLASS SATSolver
+ *  CLASS SATSolver
  *
 */
 
@@ -20,13 +20,14 @@
 #include <string>   // sts::string
 #include <vector>   // std::vector
 #include <set>      // std::set
-#include <map>
+#include <map>      // std::map
 #include <sstream>  // std::stringstream
 #include <iostream> // std::cout std::cerr std::endl
 #include <fstream>  // std::ifstream
 
 // PROJECT INCLUDES
-#include "Clause.h"    // Clause class
+#include "Clause.h"     // Clause class
+#include "Parser.h"     // Parser class
 
 struct decision
 {
@@ -43,7 +44,7 @@ class SATSolver
         SATSolver(const std::string &p_fileName);
         ~SATSolver();
 
-        bool parse();
+	bool parse();
 
         /* DPLL algorithm */
         int solve(bool verbose = 1);
@@ -70,9 +71,7 @@ class SATSolver
         bool evaluate();
 
         std::string     m_fileName;
-        std::string     m_strFormula;
         unsigned int    m_maxIndex;
-        unsigned int    m_clausesCount;
 
         std::vector<Clause> m_formula;
 

@@ -33,7 +33,7 @@ static literal literal_from_int(int p_l)
 class Clause
 {
     public:
-        Clause(const std::vector<literal> &p_literals);
+        Clause(const std::vector<literal> &p_literals, bool p_isTot);
         ~Clause();
 
         const std::vector<literal>& getLiterals() const;
@@ -55,6 +55,7 @@ class Clause
         std::vector<literal> m_literals;
         int m_satisfier;//-1 if not satisfied
         int m_aliveVars;
+        bool m_isTot;
 }; // Clause
 
 #endif

@@ -17,10 +17,9 @@ int main(int argc, char** argv)
     if(!solver.parse())
     {
         cerr << "Error while parsing the file." << endl;
-        return 2;
     }
 
-    //cout << "We check SAT of :" << endl << solver.formulaToStr() << std::endl;
+    cout << "We check SAT of :" << endl << solver.formulaToStr() << std::endl;
 
     solver.solve();
     /*

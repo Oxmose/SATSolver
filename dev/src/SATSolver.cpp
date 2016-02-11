@@ -8,15 +8,17 @@
 #include <string>   // sts::string
 #include <vector>   // std::vector
 #include <set>      // std::set
+#include <map>      // std::map
 #include <sstream>  // std::stringstream
-#include <iostream> // std:://cout std::cerr std::endl
+#include <iostream> // std::cout std::cerr std::endl
 #include <fstream>  // std::ifstream
 
 // CLASS HEADER INCLUDE
 #include "SATSolver.h"
 
 // PROJECT INCLUDES
-#include "Clause.h"    // Clause class
+#include "Clause.h"     // Clause class
+#include "Parser.h"     // Parser class
 
 using namespace std;
 
@@ -26,161 +28,16 @@ SATSolver::SATSolver(const string &p_fileName)
     m_satisfiedClause = 0;
 } // SATSolver(const string&)
 
+bool SATSolver::parse()
+{
+    // Create parser and parse
+    Parser parser(m_fileName);
+    parser.parse(m_maxIndex, m_formula);
+} // bool parse()
+
 SATSolver::~SATSolver()
 {
 } // ~SATSolver()
-
-bool SATSolver::parse()
-{
-    ifstream file(m_fileName);
-    if(!file.is_open())
-    {
-        cerr << "Can't open file." << endl;
-        return false;
-    }
-
-    bool noError = true;
-    /*
-    ** Simple format parse
-    */
-
-    m_strFormula = "";
-    bool parsedHeader = false;
-    string line;
-
-    // Verification vars
-    set<int> vars;
-    unsigned int clausesCount = 0;
-    unsigned int maxIndex = 0;
-
-    // Read line by line
-    while(getline(file, line))
-    {
-        // Remove possible spaces
-        for(unsigned int i = 0; line[i] == ' ' && i < line.size(); ++i)
-            line = line.substr(i);
-
-        if(line.size() == 0)
-            continue;
-
-        // We sound not to parse comment line
-        if(line[0] == 'c' && line[1] == ' ')
-            continue;
-
-
-        // Parse header if not already parsed
-        if(!parsedHeader)
-        {
-            stringstream splitter(line);
-
-            // Process header validation
-            string validator;
-            splitter >> validator;
-            if(validator != "p")
-            {
-                continue;
-            }
-
-            parsedHeader = true;
-
-            validator.clear();
-            splitter >> validator;
-            if(validator != "cnf")
-            {
-                noError = false;
-                cerr << "Not a CNF formula or header is corrupted." << endl;
-            }
-
-            // Retrive formula metadata into members
-            splitter >> m_maxIndex;
-            maxIndex = m_maxIndex;
-            splitter >> m_clausesCount;
-        }
-        else
-        {
-            // Parse clauses
-
-            //Create new clause
-            stringstream splitter(line);
-
-            vector<literal> literals;
-            int literal;
-            while(splitter >> literal)
-            {
-                if(literal == 0)
-                    break;
-
-                literals.push_back(literal_from_int(literal));
-
-                // Vars count verification
-                if(literal < 0)
-                {
-                    if(vars.find(-literal) == vars.end())
-                    {
-                        vars.insert(-literal);
-                    }
-                }
-                else
-                {
-                    if(vars.find(literal) == vars.end())
-                    {
-                        vars.insert(literal);
-                    }
-                }
-
-		        if(literal < 0)
-                {
-			        literal = -literal;
-                }
-		        if(literal > m_maxIndex)
-                {
-			        cerr << "The file has " << literal << " for index variable but " << m_maxIndex << " was announced as maximum index." << endl;
-                    if(literal > maxIndex)
-                        maxIndex = literal;
-                }
-            }
-
-            // Create and save the clause
-            Clause clause(literals);
-            m_formula.push_back(clause);
-
-            // Add one to counter for verification purposes
-            ++clausesCount;
-
-            // Create string format of the formula
-        }
-    }
-    // Error management
-    if(clausesCount != m_clausesCount)
-    {
-        cerr << "The file has " << clausesCount << " clauses but " << m_clausesCount << " were announced." << endl;
-        m_clausesCount = clausesCount;
-    }
-
-    if(maxIndex != vars.size())
-    {
-	    vector<bool> used;
-        for(int i = 0 ; i < maxIndex+1 ; i++)
-            used.push_back(false);
-
-	    for(unsigned int i : vars)
-        {
-		    used[i] = true;
-        }
-
-        for(unsigned int i = 1; i < maxIndex+1; ++i)
-        {
-            if(!used[i])
-            {
-                cerr << i << " was not used whereas maximum index is " << maxIndex << "." << endl;
-            }
-        }
-    }
-
-    file.close();
-
-    return noError;
-} // bool parse()
 
 decision SATSolver::takeABet()
 {
