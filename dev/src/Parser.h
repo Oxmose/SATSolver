@@ -21,12 +21,15 @@
 class Parser
 {
     public:
+        // Constructor / Destructor
         Parser(const std::string &p_fileName);
         ~Parser();
         
+        // Parser method
         bool parse(unsigned int &p_maxIndex, std::vector<Clause> &p_formula);
 
     private:
+        // Name of the file to parse
         std::string m_fileName;
 }; // Parser
 

@@ -23,7 +23,7 @@ using namespace std;
 Parser::Parser(const string &p_fileName)
 {
     m_fileName = p_fileName;
-} // Parser(const ifstream&)
+} // Parser(const string&)
 
 Parser::~Parser()
 {
@@ -31,6 +31,7 @@ Parser::~Parser()
 
 bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
 {
+    // Open file
     ifstream file(m_fileName);
     if(!file.is_open())
     {
@@ -39,6 +40,7 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
     }
 
     bool noError = true;
+
     /*
     ** Simple format parse
     */
@@ -55,11 +57,11 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
     while(getline(file, line))
     {
         // Remove possible spaces
-	unsigned int firstChar = 0;
+    unsigned int firstChar = 0;
         for(unsigned int i = 0; line[i] == ' ' && i < line.size(); ++i)
-	{
-	    firstChar = i + 1;
-	}
+    {
+        firstChar = i + 1;
+    }
 
         if(firstChar == line.size())
             continue;
@@ -113,6 +115,8 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
                     break;
 
                 bool found = false;
+                // Avoid mutiple same literals in the same clause
+                // Also check for tautology
                 for(literal lit : literals)
                 {
                     if((lit.bar && -(lit.index) == readLiteral) || (!lit.bar && lit.index == readLiteral))
@@ -140,13 +144,13 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
                     }
                 }
 
-		        if(readLiteral < 0)
+                if(readLiteral < 0)
                 {
-			        readLiteral = -readLiteral;
+                    readLiteral = -readLiteral;
                 }
-		        if(readLiteral > p_maxIndex)
+                if(readLiteral > p_maxIndex)
                 {
-			        cerr << "The file has " << readLiteral << " for index variable but " << p_maxIndex << " was announced as maximum index." << endl;
+                    cerr << "The file has " << readLiteral << " for index variable but " << p_maxIndex << " was announced as maximum index." << endl;
                     if(readLiteral > maxIndex)
                         maxIndex = readLiteral;
                 }
@@ -162,7 +166,12 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             // Create string format of the formula
         }
     }
-    // Error management
+
+
+    /*
+     * Error management
+    */
+
     if(clausesCount != givenClausesCount)
     {
         cerr << "The file has " << clausesCount << " clauses but " << givenClausesCount << " were announced." << endl;
@@ -171,13 +180,13 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
 
     if(maxIndex != vars.size())
     {
-	    vector<bool> used;
+        vector<bool> used;
         for(int i = 0 ; i < maxIndex+1 ; i++)
             used.push_back(false);
 
-	    for(unsigned int i : vars)
+        for(unsigned int i : vars)
         {
-		    used[i] = true;
+            used[i] = true;
         }
 
         for(unsigned int i = 1; i < maxIndex+1; ++i)
@@ -192,4 +201,4 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
     file.close();
 
     return noError;
-} // bool parse()
+} // bool parse(unsigned int &, vector<Clause>&)

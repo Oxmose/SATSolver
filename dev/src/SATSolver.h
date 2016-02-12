@@ -44,7 +44,7 @@ class SATSolver
         SATSolver(const std::string &p_fileName);
         ~SATSolver();
 
-	bool parse();
+        bool parse();
 
         /* DPLL algorithm */
         int solve(bool verbose = 1);

@@ -5,8 +5,11 @@
 */
 
 // STD INCLUDES
+#include <cstdlib>
 #include <vector>   //std::vector
 #include <utility>  //std::pair
+#include <map>      //std::map
+#include <string>   //std::string
 
 // Class Header
 #include "Clause.h"
@@ -37,27 +40,27 @@ bool Clause::evaluate(map<int,int>& p_valuation)
         val = val || p_valuation[l.index] == !l.bar;
     }
     return val;
-}
+} // bool evaluate(map<int,int>&)
 
-const std::vector<literal>& Clause::getLiterals() const
+const vector<literal>& Clause::getLiterals() const
 {
     return m_literals;
-}
+} // const vector<literal>& getliterals() const
 
 bool Clause::isSatisfied() const
 {
     return m_satisfier != -1;
-}
+} // bool isSatified() const
 
 int Clause::getSatisfier() const
 {
     return m_satisfier;
-}
+} // int getSatifier() const
 
 void Clause::setSatisfier(int p_satisfier)
 {
     m_satisfier = p_satisfier;
-}
+} // setSatisfier(int)
 
 bool Clause::hasVar(int p_index) const
 {
@@ -65,7 +68,7 @@ bool Clause::hasVar(int p_index) const
         if(l.index == p_index)
             return true;
     return false;
-}
+} // bool hasVar(int) const
 
 const literal& Clause::getLiteral(int p_index) const
 {
@@ -73,12 +76,12 @@ const literal& Clause::getLiteral(int p_index) const
         if(l.index == p_index)
             return l;
     //todo
-}
+} // const literal& getLiteral(int) const
 
-int Clause::getAliveVars()
+int Clause::getAliveVars() const
 {
     return m_aliveVars;
-}
+} // int getAliveVars()
 
 void Clause::setAssigned(int p_index, bool p_assign /*=true*/)
 {
@@ -86,7 +89,7 @@ void Clause::setAssigned(int p_index, bool p_assign /*=true*/)
         if(l.index == p_index)
             l.isAssigned = p_assign;
     m_aliveVars += (p_assign) ? -1 : 1;
-}
+} // setAssigned(int, bool)
 
 string Clause::toStr() const
 {
@@ -103,7 +106,7 @@ string Clause::toStr() const
     }
     toReturn += ")";
     return toReturn;
-}
+} // string toStr() const
 
 Clause::~Clause()
 {
