@@ -5,7 +5,7 @@
 */
 
 // STD INCLUDES
-#include <cstdlib>
+#include <cstdlib>  //std::abs
 #include <vector>   //std::vector
 #include <utility>  //std::pair
 #include <map>      //std::map

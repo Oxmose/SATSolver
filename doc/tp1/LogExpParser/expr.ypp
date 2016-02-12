@@ -1,0 +1,63 @@
+%{
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+#include "expr.hpp"
+
+// stuff from flex that bison needs to know about:
+extern "C" int yylex();
+
+void yyerror(const char *s);
+
+Expr *res = NULL;
+%}
+
+// Bison fundamentally works by asking flex to get the next token, which it
+// returns as an object of type "yystype".  But tokens could be of any
+// arbitrary data type!  So we deal with that in Bison by defining a C union
+// holding each of the types of tokens that Flex could return, and have Bison
+// use that union instead of "int" for the definition of "yystype":
+%union {
+    int ival;
+    class Expr *exp;
+}
+
+%start input
+
+// define the "terminal symbol" token types I'm going to use (in CAPS
+// by convention), and associate each with a field of the union:
+%token TK_DIS TK_CON TK_XOR TK_IMP TK_EQU TK_ANT TK_NEG
+%token TK_LPAREN TK_RPAREN
+%token TK_ZERO
+%token <ival> TK_VAR
+%type <exp> expression
+
+%left TK_EQU
+%left TK_IMP
+%left TK_XOR 
+%left TK_DIS
+%left TK_CON
+%left TK_ANT TK_NEG
+
+
+%%
+// this is the actual grammar that bison will parse, but for right now it's just
+// something silly to echo to the screen what bison gets from flex.  We'll
+// make a real one shortly:
+
+input: expression TK_ZERO { res = $1; }
+     ;
+
+expression:
+      TK_VAR                                     {$$ = new EVar($1);}
+    | TK_LPAREN expression TK_RPAREN             {$$ = $2;}
+    | expression TK_EQU expression               {$$ = new EEqu($1, $3);}
+    | expression TK_IMP expression               {$$ = new EImp($1, $3);}
+    | expression TK_XOR expression               {$$ = new EXor($1, $3);}
+    | expression TK_DIS expression               {$$ = new EDis($1, $3);}
+    | expression TK_CON expression               {$$ = new ECon($1, $3);}
+    | TK_ANT expression                          {$$ = new EAnt($2);}
+    | TK_NEG expression                          {$$ = new ENeg($2);}
+    ;
+%%

@@ -1,11 +1,11 @@
 /*
  *
- *  CLASS Parser
+ *  CLASS CNFParser
  *
 */
 
-#ifndef DEF_PARSER_H
-#define DEF_PARSER_H
+#ifndef DEF_CNFPARSER_H
+#define DEF_CNFPARSER_H
 
 // STD INCLUDES
 #include <fstream>  // std::ifstream
@@ -16,14 +16,14 @@
 #include <iostream> // std::cout std::cerr std::endl
 
 // OTHER INCLUDES FROM PROJECT
-#include "Clause.h"
+#include "../Core/Clause.h" // Clause class
 
-class Parser
+class CNFParser
 {
     public:
         // Constructor / Destructor
-        Parser(const std::string &p_fileName);
-        ~Parser();
+        CNFParser(const std::string &p_fileName);
+        ~CNFParser();
         
         // Parser method
         bool parse(unsigned int &p_maxIndex, std::vector<Clause> &p_formula);
@@ -33,4 +33,4 @@ class Parser
         std::string m_fileName;
 }; // Parser
 
-#endif // DEF_PARSER_H
+#endif // DEF_CNFPARSER_H

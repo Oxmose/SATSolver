@@ -1,2 +1,21 @@
-all:
-	g++ *.cpp -o ../bin/a.out -std=c++14
+#example name
+NAME=expr
+#compiler name
+CC=g++
+#lex name+path
+LEX=flex
+LIBLEX=-lfl
+#yacc/bison
+YACC=bison
+
+all: CNFParser/*.cpp Core/*.cpp main.cpp LogExpParser/LOGParser.cpp LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).cpp
+	$(CC) -g -Wno-write-strings -o ../bin/reso1 $^ $(LIBLEX) -std=c++14
+
+LogExpParser/$(NAME).yy.c :  LogExpParser/$(NAME).l
+	$(LEX)  -o $@ $^
+
+LogExpParser/$(NAME).tab.cpp : LogExpParser/$(NAME).ypp
+	$(YACC) --report=all -o $@ -d $^
+
+clean:
+	rm -f *~ LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).tab.hpp ../bin/reso1

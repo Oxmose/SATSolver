@@ -17,8 +17,9 @@
 #include "SATSolver.h"
 
 // PROJECT INCLUDES
-#include "Clause.h"     // Clause class
-#include "Parser.h"     // Parser class
+#include "Clause.h"                 	// Clause class
+#include "../CNFParser/CNFParser.h" 	// CNFParser class
+#include "../LogExpParser/LOGParser.h"	// LOGParser class
 
 using namespace std;
 
@@ -28,12 +29,20 @@ SATSolver::SATSolver(const string &p_fileName)
     m_satisfiedClause = 0;
 } // SATSolver(const string&)
 
-bool SATSolver::parse()
+bool SATSolver::parse(PARSE_TYPE p_parseType /* = CNF_PARSE */)
 {
-    // Create parser and parse
-    Parser parser(m_fileName);
-    parser.parse(m_maxIndex, m_formula);
-} // bool parse()
+    if(p_parseType == CNF_PARSE)
+    {
+        // Create parser and parse
+        CNFParser parser(m_fileName);
+        return parser.parse(m_maxIndex, m_formula);
+    }
+    else
+    {
+        LOGParser parser(m_fileName);
+	return parser.parse(m_maxIndex, m_formula);
+    }
+} // bool parse(PARSE_TYPE)
 
 SATSolver::~SATSolver()
 {
@@ -62,7 +71,7 @@ decision SATSolver::takeABet()
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
     m_currentAssignement.push_back(bet);
     return bet;
-}
+} // decision takeABet()
 
 string SATSolver::formulaToStr()
 {
@@ -78,7 +87,7 @@ string SATSolver::formulaToStr()
     }
 
     return toReturn;
-}
+} // string formulaToStr()
 
 string SATSolver::decisionToStr()
 {
@@ -86,7 +95,7 @@ string SATSolver::decisionToStr()
     for(auto d : m_currentAssignement)
         toReturn += string((d.value) ? "" : "-") + to_string(d.index) + string((d.bet) ? "b" : "d");
     return toReturn;
-}
+} // string decisionToStr()
 
 void SATSolver::dropSatisfiedBy(const decision& p_bet)
 {
@@ -99,20 +108,19 @@ void SATSolver::dropSatisfiedBy(const decision& p_bet)
         }
 
     }
-}
+} // dropSatisfiedBy(const decision&)
 
 void SATSolver::assignVarInClause(int p_index, bool p_assign /* = true */)
 {
     for(Clause& c : m_formula)
         if(c.hasVar(p_index))
             c.setAssigned(p_index, p_assign);
-}
-
+} // assigneVarInClause(int, bool)
 
 bool SATSolver::deduce()
 {
     return unitProp();
-}
+} // bool deduce()
 
 bool SATSolver::unitProp()
 {
@@ -137,7 +145,7 @@ bool SATSolver::unitProp()
         }
 
     return false;
-}
+} // bool unitProp()
 
 bool SATSolver::isContradictory()
 {
@@ -148,7 +156,7 @@ bool SATSolver::isContradictory()
             return true;
         }
     return false;
-}
+} // bool isContradictory()
 
 void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
 {
@@ -158,14 +166,14 @@ void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
             c.setSatisfier(-1);
             m_satisfiedClause--;
         }
-}
+} // reviveClauseWithSatisfier(int)
 
 void SATSolver::applyDecision(decision p_dec)
 {
     m_valuation[p_dec.index] = p_dec.value;
     dropSatisfiedBy(p_dec);
     assignVarInClause(p_dec.index);
-}
+} // applyDecision(decision)
 
 void SATSolver::showSolution()
 {
@@ -178,7 +186,7 @@ void SATSolver::showSolution()
     }
     cout << "0" << endl;
     m_currentAssignement.clear();
-}
+} // showSolution()
 
 bool SATSolver::evaluate()
 {
@@ -186,12 +194,12 @@ bool SATSolver::evaluate()
     for(Clause c: m_formula)
         val = val && c.evaluate(m_valuation);
     return val;
-}
+} // bool evaluate()
 
 string SATSolver::currentStateToStr()
 {
     return decisionToStr() + "# " + formulaToStr();
-}
+} // string currentStateToStr()
 
 int SATSolver::solve(bool verbose)
 {
@@ -255,4 +263,4 @@ int SATSolver::solve(bool verbose)
 
     return true;
 
-} // bool solve()
+} // int solve(bool)

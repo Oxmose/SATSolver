@@ -1,6 +1,6 @@
 /*
  *
- *  CLASS Parser
+ *  CLASS CNFParser
  *
 */
 
@@ -13,23 +13,23 @@
 #include <iostream> // std::cout std::cerr std::endl
 
 // CLASS HEADER
-#include "Parser.h"
+#include "CNFParser.h"
 
 // OTHER INCLUDES FROM PROJECT
-#include "Clause.h"
+#include "../Core/Clause.h" // Clause class
 
 using namespace std;
 
-Parser::Parser(const string &p_fileName)
+CNFParser::CNFParser(const string &p_fileName)
 {
     m_fileName = p_fileName;
-} // Parser(const string&)
+} // CNFParser(const string&)
 
-Parser::~Parser()
+CNFParser::~CNFParser()
 {
-} // ~Parser()
+} // ~CNFParser()
 
-bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
+bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
 {
     // Open file
     ifstream file(m_fileName);
@@ -92,6 +92,7 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             {
                 noError = false;
                 cerr << "Not a CNF formula or header is corrupted." << endl;
+		return noError;
             }
 
             // Retrive formula metadata into members

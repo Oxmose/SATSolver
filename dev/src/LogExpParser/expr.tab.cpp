@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "expr.ypp" /* yacc.c:339  */
+#line 1 "LogExpParser/expr.ypp" /* yacc.c:339  */
 
 #include <cstdio>
 #include <iostream>
@@ -77,7 +77,7 @@ void yyerror(const char *s);
 
 Expr *res = NULL;
 
-#line 81 "expr.tab.cpp" /* yacc.c:339  */
+#line 81 "LogExpParser/expr.tab.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -97,8 +97,8 @@ Expr *res = NULL;
 
 /* In a future release of Bison, this section will be replaced
    by #include "expr.tab.hpp".  */
-#ifndef YY_YY_EXPR_TAB_HPP_INCLUDED
-# define YY_YY_EXPR_TAB_HPP_INCLUDED
+#ifndef YY_YY_LOGEXPPARSER_EXPR_TAB_HPP_INCLUDED
+# define YY_YY_LOGEXPPARSER_EXPR_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -128,16 +128,18 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
-#line 21 "expr.ypp" /* yacc.c:355  */
+#line 21 "LogExpParser/expr.ypp" /* yacc.c:355  */
 
     int ival;
     class Expr *exp;
 
-#line 140 "expr.tab.cpp" /* yacc.c:355  */
+#line 140 "LogExpParser/expr.tab.cpp" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -147,11 +149,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_EXPR_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_LOGEXPPARSER_EXPR_TAB_HPP_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 155 "expr.tab.cpp" /* yacc.c:358  */
+#line 157 "LogExpParser/expr.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1232,67 +1234,67 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 49 "expr.ypp" /* yacc.c:1646  */
+#line 49 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     { res = (yyvsp[-1].exp); }
-#line 1238 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1240 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 53 "expr.ypp" /* yacc.c:1646  */
+#line 53 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EVar((yyvsp[0].ival));}
-#line 1244 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1246 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 54 "expr.ypp" /* yacc.c:1646  */
+#line 54 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = (yyvsp[-1].exp);}
-#line 1250 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1252 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 55 "expr.ypp" /* yacc.c:1646  */
+#line 55 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EEqu((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1256 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1258 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 56 "expr.ypp" /* yacc.c:1646  */
+#line 56 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EImp((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1262 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1264 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 57 "expr.ypp" /* yacc.c:1646  */
+#line 57 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EXor((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1268 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1270 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 58 "expr.ypp" /* yacc.c:1646  */
+#line 58 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EDis((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1274 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1276 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 59 "expr.ypp" /* yacc.c:1646  */
+#line 59 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new ECon((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1280 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1282 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 60 "expr.ypp" /* yacc.c:1646  */
+#line 60 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EAnt((yyvsp[0].exp));}
-#line 1286 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1288 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 61 "expr.ypp" /* yacc.c:1646  */
+#line 61 "LogExpParser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new ENeg((yyvsp[0].exp));}
-#line 1292 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1294 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1296 "expr.tab.cpp" /* yacc.c:1646  */
+#line 1298 "LogExpParser/expr.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1520,5 +1522,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 63 "expr.ypp" /* yacc.c:1906  */
+#line 63 "LogExpParser/expr.ypp" /* yacc.c:1906  */
 
