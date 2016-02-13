@@ -107,6 +107,7 @@ bool SATSolver::backtrack(bool& p_unsat)
             for(int iClause : m_clauseWithVar[toErase.index])
                 if(m_formula[0].find(makeSearchClause(iClause)) != m_formula[0].end())
                     m_formula[0].find(makeSearchClause(iClause))->setAssigned(toErase.index,false);
+            m_valuation[toErase.index] = -1;
             m_currentAssignement.pop_back();
         }
 
@@ -234,29 +235,24 @@ int SATSolver::solve()
         if(backtrack(unsat))
         {
             if(unsat)
-            {
-                cout << "s UNSATISFIABLE" << endl;
-                return false;
-            }
+                return false;//UNSATISFIABLE !
             continue;
         }
 
-        bool hasDeduced = deduce();
-
         OUTDEBUG("SAT rate : " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size());
         OUTDEBUG("");//endl
-        if(m_formula[0].empty())
+
+        if(m_formula[0].empty())//SATISFIABLE !
         {
-            cout << "s SATISFIABLE" << endl;
-            showSolution();
             OUTDEBUG("Evaluation: " << evaluate());
+            return true;
         }
-        else if(!hasDeduced)
-            takeABet();
+
+        if(deduce())
+            continue;
+
+        takeABet();
     }
-
-
-    return true;
 } // bool solve()
 
 void SATSolver::showSolution()
@@ -276,7 +272,11 @@ bool SATSolver::evaluate()
 {
     bool val = true;
     for(Clause c: m_formula[1])
+    {
         val = val && c.evaluate(m_valuation);
+        if(!val)
+            break;
+    }
     return val;
 }
 

@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     else
     {
         fileName = argv[1];
-    }    
+    }
 
     // Create the solver
     SATSolver solver(fileName);
@@ -41,7 +41,10 @@ int main(int argc, char** argv)
     OUTDEBUG("We check SAT of :" << endl << solver.formulaToStr());
 
     if(solver.solve())
+    {
         cout << "s SATIFIABLE" << endl;
+        solver.showSolution();
+    }
     else
         cout << "s UNSATISFIABLE" << endl;
 
