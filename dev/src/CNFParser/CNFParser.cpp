@@ -116,6 +116,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
                     break;
 
                 bool found = false;
+
                 // Avoid mutiple same literals in the same clause
                 // Also check for tautology
                 for(literal lit : literals)
@@ -129,6 +130,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
 
                 if(!found)
                     literals.push_back(literal_from_int(readLiteral));
+
                 // Vars count verification
                 if(readLiteral < 0)
                 {
@@ -164,7 +166,6 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             // Add one to counter for verification purposes
             ++clausesCount;
 
-            // Create string format of the formula
         }
     }
 
@@ -179,6 +180,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
         givenClausesCount = clausesCount;
     }
 
+    // If some variables were not used or too much were
     if(maxIndex != vars.size())
     {
         vector<bool> used;
@@ -190,6 +192,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             used[i] = true;
         }
 
+        // We check which ones were used and shouldn't have been
         for(unsigned int i = 1; i < maxIndex+1; ++i)
         {
             if(!used[i])

@@ -8,9 +8,9 @@
 #include <fstream>  // std::ifstream
 #include <vector>   // std::vector
 #include <string>   // std::string
-#include <map>      // std::mapa
+#include <map>      // std::map
 #include <sstream>  // std::stringstream
-#include <iostream> // std::cout std::cerr std::endl
+#include <iostream> // std::cerr std::endl
 
 // CLASS HEADER INCLUDE
 #include "LOGParser.h"
@@ -48,20 +48,134 @@ bool LOGParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
     /*
     ** Log expression format parse
     */
-
+    vector<Expr*> exps;
     do 
     {
         yy_flex_debug = 1;
         yyparse();
-        cout << res->to_string() << endl;
-    } while (!feof(yyin));
-    
+        exps = tseitinTransform(res, p_maxIndex);        
+    } while (!feof(yyin));   
 
     fclose(yyin);
+
+
+    // Browse each clause extracted and create the formula
+    vector<literal> clause;
+    bool hasTot = false;
+    for(Expr* exp : exps)
+    {
+        string strForm = exp->to_string();
+        for(unsigned int i = 0; i < strForm.size() - 1; ++i)
+        {
+            // Check for parenthesis
+            if(strForm[i] == '(') continue;
+
+            // Check if var is negative
+            if(strForm[i] == '-')
+            {
+                string var("");
+                while(isdigit(strForm[++i]))
+                {
+                    var += strForm[i];
+                }
+
+                int varInt = -stoi(var);
+
+                // Avoid mutiple same literals in the same clause
+                // Also check for tautology
+                bool found = false;
+                for(literal lit : clause)
+                {
+                    if((lit.bar && -(lit.index) == varInt) || (!lit.bar && lit.index == varInt))
+                        found = true;           
+                    else if((!lit.bar && -(lit.index) == varInt) || (lit.bar && lit.index == varInt))
+                        hasTot = true;
+                }
+
+                // Add the variable
+                if(!found)
+                    clause.push_back(literal_from_int(varInt));
+
+                continue;
+            }
+
+            // If we are at the end of a clause
+            if(strForm[i] == '/' && strForm[i + 1] == '\\')
+            {
+                // Create and add the new clause
+                p_formula.push_back(Clause(clause, hasTot));
+                hasTot = false;
+                clause.clear();
+                continue;
+            }
+
+            string var("");
+            while(isdigit(strForm[i]))
+            {
+                var += strForm[i];
+                ++i;
+            }
+            if(var.size() > 0)
+            {
+                int varInt = stoi(var);
+                // Avoid mutiple same literals in the same clause
+                // Also check for tautology
+                bool found = false;
+                for(literal lit : clause)
+                {
+                    if((lit.bar && -(lit.index) == varInt) || (!lit.bar && lit.index == varInt))
+                        found = true;           
+                    else if((!lit.bar && -(lit.index) == varInt) || (lit.bar && lit.index == varInt))
+                        hasTot = true;
+                }
+
+                if(!found)
+                    clause.push_back(literal_from_int(varInt));
+            }
+        }
+
+        // Create and add the last clause
+        p_formula.push_back(Clause(clause, hasTot));
+        hasTot = false;
+        clause.clear();
+    }
+    
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
+vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex)
+{
+    // Get the set af vars in the expression
+    res->getVars(m_originalVars);
+
+    // Get the greatest index used
+    int maxIndex = 0;
+    for(unsigned int i = 0; i < m_originalVars.size(); ++i)
+        if(maxIndex < m_originalVars[i])
+            maxIndex = m_originalVars[i];
+
+    vector<Expr*> exps;
+    // Transform the expression
+    res->tseitin(maxIndex, exps);
+    p_maxIndex = maxIndex;
+
+    return exps;
+} // bool tseitinTransform(Expr*, unsigned int&, std::vector<Clause>&)
+
+bool LOGParser::tseitinResolution(map<int,int> &p_valuation)
+{
+    // For each vars that appeared in the original formula
+    // Just keep them and forget about the others
+    map<int, int> newValuation;
+    for(int var : m_originalVars)
+        newValuation.emplace(var, p_valuation[var]);
+
+    p_valuation = newValuation;
+    return true;
+} // bool tseitinResolution(map<int,int>&);
+
 void yyerror(const char *s) 
 {
-    cout << "Parse error!  Message: " << s << endl;
+    cerr << "Parse error!  Message: " << s << endl;
+    exit(-1);
 } // yyerror(const char*)
