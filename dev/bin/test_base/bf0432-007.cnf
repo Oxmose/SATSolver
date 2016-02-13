@@ -1,7 +1,7 @@
 c FILE:  bf0432-007.cnf
 c
 c SOURCE: Allen Van Gelder (avg@cs.ucsd.edu) and Yumi Tsuji
-c        (tsuji@cse.ucsc.edu) 
+c        (tsuji@cse.ucsc.edu)
 c
 c Nemesis formula in 6CNF in accordance with DIMACS CNF format:
 c    Filename: MCNC/c432/c432.tdl
@@ -9,7 +9,9 @@ c    Formula number 7
 c    1317 variables (range: 2 - 1318)
 c    3668 clauses
 c
-c p cnf 1318 3668
+c NOTE: UNSATISFIABLE
+c
+c
 p cnf 1040 3668
 700	0
 -985	0
