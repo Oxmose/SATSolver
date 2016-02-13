@@ -33,7 +33,7 @@ LOGParser::~LOGParser()
 {
 } // ~LOGParser()
 
-bool LOGParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
+bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 {
     // Open file
     yyin = fopen(m_fileName.c_str(), "r");
@@ -48,6 +48,7 @@ bool LOGParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
     /*
     ** Log expression format parse
     */
+
     vector<Expr*> exps;
     do 
     {
@@ -58,6 +59,7 @@ bool LOGParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
 
     fclose(yyin);
 
+    vector<pair<vector<literal>, bool>> clauses;
 
     // Browse each clause extracted and create the formula
     vector<literal> clause;
@@ -103,7 +105,7 @@ bool LOGParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             if(strForm[i] == '/' && strForm[i + 1] == '\\')
             {
                 // Create and add the new clause
-                p_formula.push_back(Clause(clause, hasTot));
+                clauses.push_back(make_pair(clause, hasTot));
                 hasTot = false;
                 clause.clear();
                 continue;
@@ -135,11 +137,17 @@ bool LOGParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
         }
 
         // Create and add the last clause
-        p_formula.push_back(Clause(clause, hasTot));
+        clauses.push_back(make_pair(clause, hasTot));
         hasTot = false;
         clause.clear();
     }
+
+    unsigned int clausesCount = clauses.size();
     
+    for(pair<vector<literal>, bool> clause : clauses)
+    {
+        p_formula.insert(Clause(clause.first, clause.second, clausesCount));
+    }
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
@@ -174,7 +182,7 @@ bool LOGParser::tseitinResolution(map<int,int> &p_valuation)
     return true;
 } // bool tseitinResolution(map<int,int>&);
 
-void yyerror(const char *s) 
+void yyerror(const char *s)
 {
     cerr << "Parse error!  Message: " << s << endl;
     exit(-1);

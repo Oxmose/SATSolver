@@ -1,0 +1,6 @@
+URL avec fichiers tests:
+benchmark : http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html
+generation : https://toughsat.appspot.com/ 
+
+minisat online
+http://www.msoos.org/2013/09/minisat-in-your-browser/
