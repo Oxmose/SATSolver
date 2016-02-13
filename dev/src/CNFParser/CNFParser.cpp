@@ -57,11 +57,9 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     while(getline(file, line))
     {
         // Remove possible spaces
-    unsigned int firstChar = 0;
+        unsigned int firstChar = 0;
         for(unsigned int i = 0; line[i] == ' ' && i < line.size(); ++i)
-    {
-        firstChar = i + 1;
-    }
+            firstChar = i + 1;
 
         if(firstChar == line.size())
             continue;
@@ -92,7 +90,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             {
                 noError = false;
                 cerr << "Not a CNF formula or header is corrupted." << endl;
-		return noError;
+                return noError;
             }
 
             // Retrive formula metadata into members
@@ -167,10 +165,8 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             p_formula.insert(clause);
             // Add one to counter for verification purposes
             ++clausesCount;
-
         }
     }
-
 
     /*
      * Error management
@@ -196,15 +192,11 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
         // We check which ones were used and shouldn't have been
         for(unsigned int i = 1; i < maxIndex+1; ++i)
-        {
             if(!used[i])
-            {
                 cerr << i << " was not used whereas maximum index is " << maxIndex << "." << endl;
-            }
-        }
     }
 
     file.close();
 
     return noError;
-} // bool parse(unsigned int &, vector<Clause>&)
+} // bool parse(unsigned int &, ClauseSet&)

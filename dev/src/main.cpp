@@ -135,7 +135,7 @@ int main(int argc, char** argv)
     {
         cerr << "Error while parsing the file." << endl;
     }
-    
+
     OUTDEBUG("We check SAT of :" << endl << solver.formulaToStr());
 
     if(solver.solve())

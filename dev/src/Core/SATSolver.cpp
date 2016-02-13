@@ -32,6 +32,7 @@ SATSolver::SATSolver(const string &p_fileName)
 
 bool SATSolver::parse(PARSE_TYPE p_parseType /* = CNF_PARSE */)
 {
+    m_parseType = p_parseType;
     if(p_parseType == CNF_PARSE)
     {
         // Create parser and parse
@@ -40,8 +41,8 @@ bool SATSolver::parse(PARSE_TYPE p_parseType /* = CNF_PARSE */)
     }
     else
     {
-        LOGParser parser(m_fileName);
-        return parser.parse(m_maxIndex, m_formula[0]);
+        m_parser.setFileName(m_fileName);
+        return m_parser.parse(m_maxIndex, m_formula[0]);
     }
 } // bool parse(PARSE_TYPE)
 
@@ -257,6 +258,12 @@ int SATSolver::solve()
 
 void SATSolver::showSolution()
 {
+    if(m_parseType == LOG_PARSE)
+    {
+        m_parser.tseitinResolution(m_valuation, m_maxIndex);
+    }
+    
+
     for(int i = 1 ; i <= m_maxIndex ; i++)
     {
         string sign="";

@@ -21,9 +21,11 @@
 class CNFParser
 {
     public:
+        // Constructor / Destructor
         CNFParser(const std::string &p_fileName);
         ~CNFParser();
-
+        
+        // Parse
         bool parse(unsigned int &p_maxIndex, ClauseSet& p_formula);
 
     private:

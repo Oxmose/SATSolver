@@ -67,6 +67,10 @@ class SATSolver
 
     private:
 
+	// LOGParser
+	PARSE_TYPE m_parseType;
+	LOGParser m_parser;
+
         /* DPLL intern */
         void flushTaut();
         decision takeABet();

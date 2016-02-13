@@ -24,7 +24,7 @@
 
 using namespace std;
 
-LOGParser::LOGParser(const string &p_fileName)
+LOGParser::LOGParser(const string &p_fileName /* = ""  */)
 {
     m_fileName = p_fileName;
 } // LOGParser(const string&)
@@ -32,6 +32,11 @@ LOGParser::LOGParser(const string &p_fileName)
 LOGParser::~LOGParser()
 {
 } // ~LOGParser()
+
+void LOGParser::setFileName(const string &p_fileName)
+{
+    m_fileName = p_fileName;
+} // setFileName(const string&)
 
 bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 {
@@ -146,6 +151,10 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     
     for(pair<vector<literal>, bool> clause : clauses)
     {
+	cout << "(" ;
+	for(literal : clause.first)
+		cout << literal.index << " ";
+	cout << ")" << endl;
         p_formula.insert(Clause(clause.first, clause.second, clausesCount));
     }
     return noParseError;
@@ -170,17 +179,23 @@ vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex)
     return exps;
 } // bool tseitinTransform(Expr*, unsigned int&, std::vector<Clause>&)
 
-bool LOGParser::tseitinResolution(map<int,int> &p_valuation)
+bool LOGParser::tseitinResolution(map<int,int> &p_valuation, unsigned int &p_maxIndex)
 {
     // For each vars that appeared in the original formula
     // Just keep them and forget about the others
     map<int, int> newValuation;
+    unsigned int maxIndex = 0;
     for(int var : m_originalVars)
+    {
+        if(var > maxIndex)
+            maxIndex = var;
         newValuation.emplace(var, p_valuation[var]);
+    }
 
+    p_maxIndex = maxIndex;
     p_valuation = newValuation;
     return true;
-} // bool tseitinResolution(map<int,int>&);
+} // bool tseitinResolution(map<int,int>&, unsigned int&);
 
 void yyerror(const char *s)
 {

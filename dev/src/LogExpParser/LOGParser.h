@@ -35,13 +35,16 @@ class LOGParser
 {
     public:
         // Constructor / Destructor
-        LOGParser(const std::string &p_fileName);
+        LOGParser(const std::string &p_fileName = "");
         ~LOGParser();
+
+        // Setters
+        void setFileName(const std::string &p_fileName);
 
         // Parser methods
         bool parse(unsigned int &p_maxIndex, ClauseSet& p_formula);
 	std::vector<Expr*> tseitinTransform(Expr *exp, unsigned int &p_maxIndex);
-        bool tseitinResolution(std::map<int,int> &p_valuation);
+        bool tseitinResolution(std::map<int,int> &p_valuation, unsigned int &p_maxIndex);
 
     private:
         // Name of the file to parse
