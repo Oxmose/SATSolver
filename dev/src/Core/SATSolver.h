@@ -10,7 +10,7 @@
 /*
     Uncomment the following define for debug output
 */
-//#define NDEBUG
+#define NDEBUG
 #ifndef NDEBUG
 #define OUTDEBUG(Out) do {  \
    std::cerr << Out << std::endl; \
@@ -58,6 +58,7 @@ class SATSolver
 
         /* DPLL algorithm */
         int solve();
+        void showSolution();
 
         /* Debug stuff */
         std::string currentStateToStr();//State = decision + formula
@@ -77,8 +78,7 @@ class SATSolver
         bool isContradictory();
         void reviveClauseWithSatisfier(int p_satisfier);
 
-        /* Solution and testing */
-        void showSolution();
+
         bool evaluate();
 
         std::string     m_fileName;

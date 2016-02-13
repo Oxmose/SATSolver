@@ -8,7 +8,7 @@ LIBLEX=-lfl
 #yacc/bison
 YACC=bison
 
-all: CNFParser/*.cpp Core/*.cpp main.cpp LogExpParser/LOGParser.cpp LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).cpp
+all: RandomSatExpGenerator/*.cpp CNFParser/*.cpp Core/*.cpp main.cpp LogExpParser/LOGParser.cpp LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).cpp
 	$(CC) -g -Wno-write-strings -o ../bin/reso1 $^ $(LIBLEX) -std=c++14
 
 LogExpParser/$(NAME).yy.c :  LogExpParser/$(NAME).l
