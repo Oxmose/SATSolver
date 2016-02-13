@@ -19,17 +19,14 @@ int main(int argc, char** argv)
         cerr << "Error while parsing the file." << endl;
     }
 
-    cout << "We check SAT of :" << endl << solver.formulaToStr() << std::endl;
+    OUTDEBUG("We check SAT of :" << endl << solver.formulaToStr());
 
-    solver.solve();
-    /*
-
-    if(isSolvable == 1)
+    if(solver.solve())
         cout << "s SATIFIABLE" << endl;
-    else if(isSolvable == -1)
-        cout << "s ???" << endl;
     else
-        cout << "s UNSATISFIABLE" << endl;*/
-    
+        cout << "s UNSATISFIABLE" << endl;
+
+    //Not handling ??? for the moment (time limit ? heuristics ?).
+
     return 0;
 }// main(int, char**)

@@ -29,7 +29,7 @@ Parser::~Parser()
 {
 } // ~Parser()
 
-bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
+bool Parser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 {
     ifstream file(m_fileName);
     if(!file.is_open())
@@ -94,7 +94,7 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
 
             // Retrive formula metadata into members
             splitter >> p_maxIndex;
-            maxIndex = p_maxIndex;            
+            maxIndex = p_maxIndex;
             splitter >> givenClausesCount;
         }
         else
@@ -116,11 +116,14 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
                 for(literal lit : literals)
                 {
                     if((lit.bar && -(lit.index) == readLiteral) || (!lit.bar && lit.index == readLiteral))
-                        found = true;           
+                        found = true;
                     else if((!lit.bar && -(lit.index) == readLiteral) || (lit.bar && lit.index == readLiteral))
+                    {
+                        cout << "oui" << endl;
                         hasTot = true;
+                    }
                 }
-                        
+
 
                 if(!found)
                     literals.push_back(literal_from_int(readLiteral));
@@ -153,9 +156,8 @@ bool Parser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             }
 
             // Create and save the clause
-            Clause clause(literals, hasTot);
-            p_formula.push_back(clause);
-
+            Clause clause(literals, hasTot,clausesCount);
+            p_formula.insert(clause);
             // Add one to counter for verification purposes
             ++clausesCount;
 

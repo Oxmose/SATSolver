@@ -13,40 +13,24 @@
 
 using namespace std;
 
-Clause::Clause(const vector<literal> &p_literals, bool p_isTot)
+Clause::Clause(const vector<literal> &p_literals, bool p_isTaut, int p_id)
 {
-    m_isTot = p_isTot;
+    m_isTaut = p_isTaut;
+    m_id = p_id;
     m_satisfier = -1;
-
-    // Add literals
+    // Add literals as unassigned
     for(literal l : p_literals)
-    {
-        m_literals.push_back(l);
-    }
-
-    m_aliveVars = p_literals.size();
+        m_literals[0].insert(l);
 } // Clause(const vector<int>&)
 
-bool Clause::evaluate(map<int,int>& p_valuation)
+bool Clause::isTaut() const
 {
-    bool val = false;
-    for(literal l : m_literals)
-    {
-        if(p_valuation[l.index] == -1)
-            continue;
-        val = val || p_valuation[l.index] == !l.bar;
-    }
-    return val;
+    return m_isTaut;
 }
 
-const std::vector<literal>& Clause::getLiterals() const
+std::set<literal>& Clause::getLiterals(int p_which /* = 0 */) const
 {
-    return m_literals;
-}
-
-bool Clause::isSatisfied() const
-{
-    return m_satisfier != -1;
+    return m_literals[p_which];
 }
 
 int Clause::getSatisfier() const
@@ -59,47 +43,47 @@ void Clause::setSatisfier(int p_satisfier)
     m_satisfier = p_satisfier;
 }
 
-bool Clause::hasVar(int p_index) const
+void Clause::setAssigned(int p_index, bool p_assign /* = true */) const
 {
-    for(auto l : m_literals)
-        if(l.index == p_index)
-            return true;
-    return false;
+    auto l_it = m_literals[int(!p_assign)].find(literal(p_index,false));
+    if(l_it != m_literals[int(!p_assign)].end())
+    {
+        literal toCopy = *l_it;
+        m_literals[int(!p_assign)].erase(l_it);
+        m_literals[int(p_assign)].insert(toCopy);
+    }
 }
 
-const literal& Clause::getLiteral(int p_index) const
+int Clause::getId() const
 {
-    for(const literal& l : m_literals)
-        if(l.index == p_index)
-            return l;
-    //todo
+    return m_id;
 }
 
-int Clause::getAliveVars()
+bool Clause::evaluate(map<int,int>& p_valuation)
 {
-    return m_aliveVars;
-}
-
-void Clause::setAssigned(int p_index, bool p_assign /*=true*/)
-{
-    for(literal& l : m_literals)
-        if(l.index == p_index)
-            l.isAssigned = p_assign;
-    m_aliveVars += (p_assign) ? -1 : 1;
+    bool val = false;
+    for(literal l : m_literals[1])
+    {
+        if(p_valuation[l.index] == -1)
+        {
+            //Should never happen (assigned vars are assigned), but who knows ?
+            cerr << "Something went really wrong in Clause::evaluate..." << endl;
+            exit(0);
+            continue;
+        }
+        val = val || p_valuation[l.index] == !l.bar;
+    }
+    return val;
 }
 
 string Clause::toStr() const
 {
     string toReturn = "(";
-    for(int iLit = 0 ; iLit < m_literals.size() ; iLit++)
+    for(auto l : m_literals[0])
     {
-        auto l = m_literals[iLit];
-        if(!l.isAssigned)
-        {
-            string sign = (l.bar) ? "-" : "";
-            string dis = (iLit == m_literals.size()-1) ? "" : "\\/";
-            toReturn += sign + to_string(l.index) + dis;
-        }
+        string sign = (l.bar) ? "-" : "";
+        string dis =  "\\/";
+        toReturn += sign + to_string(l.index) + dis;
     }
     toReturn += ")";
     return toReturn;

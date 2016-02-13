@@ -23,8 +23,8 @@ class Parser
     public:
         Parser(const std::string &p_fileName);
         ~Parser();
-        
-        bool parse(unsigned int &p_maxIndex, std::vector<Clause> &p_formula);
+
+        bool parse(unsigned int &p_maxIndex, ClauseSet& p_formula);
 
     private:
         std::string m_fileName;
