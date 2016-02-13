@@ -17,8 +17,9 @@
 #include "SATSolver.h"
 
 // PROJECT INCLUDES
-#include "Clause.h"     // Clause class
-#include "Parser.h"     // Parser class
+#include "Clause.h"                 	// Clause class
+#include "../CNFParser/CNFParser.h" 	// CNFParser class
+#include "../LogExpParser/LOGParser.h"	// LOGParser class
 
 using namespace std;
 
@@ -29,12 +30,20 @@ SATSolver::SATSolver(const string &p_fileName)
     m_formula.push_back(ClauseSet(compareSat));
 } // SATSolver(const string&)
 
-bool SATSolver::parse()
+bool SATSolver::parse(PARSE_TYPE p_parseType /* = CNF_PARSE */)
 {
-    // Create parser and parse
-    Parser parser(m_fileName);
-    return parser.parse(m_maxIndex, m_formula[0]);
-} // bool parse()
+    if(p_parseType == CNF_PARSE)
+    {
+        // Create parser and parse
+        CNFParser parser(m_fileName);
+        return parser.parse(m_maxIndex, m_formula[0]);
+    }
+    else
+    {
+        LOGParser parser(m_fileName);
+        return parser.parse(m_maxIndex, m_formula[0]);
+    }
+} // bool parse(PARSE_TYPE)
 
 SATSolver::~SATSolver()
 {
@@ -63,7 +72,6 @@ void SATSolver::satisfyClause(It p_it, int p_satisfier)
     m_formula[0].insert(c);
 }
 
-
 void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
 {
     Clause searchClause = makeSearchClause2(p_satisfier);
@@ -74,6 +82,7 @@ void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
     for(auto it : toRevive)
         satisfyClause(it,-1);
 }
+
 
 bool SATSolver::isContradictory()
 {
@@ -136,7 +145,7 @@ bool SATSolver::unitProp()
             return true;
         }
     return false;
-}
+} // bool unitProp()
 
 bool SATSolver::deduce()
 {
@@ -193,7 +202,7 @@ void SATSolver::flushTaut()
         }
 }
 
-int SATSolver::solve(bool verbose)
+int SATSolver::solve()
 {
     //Get rid of tautologies
     //TODO : buffer overflow...
@@ -248,7 +257,6 @@ int SATSolver::solve(bool verbose)
 
 
     return true;
-
 } // bool solve()
 
 void SATSolver::showSolution()

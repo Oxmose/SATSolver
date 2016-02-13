@@ -29,8 +29,9 @@
 #include <fstream>  // std::ifstream
 
 // PROJECT INCLUDES
-#include "Clause.h"     // Clause class
-#include "Parser.h"     // Parser class
+#include "Clause.h"                 	// Clause class
+#include "../CNFParser/CNFParser.h"    	// CNFParser class
+#include "../LogExpParser/LOGParser.h"	// LOGParser class
 
 struct decision
 {
@@ -41,21 +42,27 @@ struct decision
     bool bet; //bet or deduction
 };
 
+enum PARSE_TYPE
+{
+    CNF_PARSE,
+    LOG_PARSE
+};
+
 class SATSolver
 {
     public:
         SATSolver(const std::string &p_fileName);
         ~SATSolver();
 
-	    bool parse();
+        bool parse(PARSE_TYPE p_parseType = CNF_PARSE);
+
+        /* DPLL algorithm */
+        int solve();
 
         /* Debug stuff */
         std::string currentStateToStr();//State = decision + formula
         std::string formulaToStr();
         std::string decisionToStr();
-
-        /* DPLL algorithm */
-        int solve(bool verbose = 1);
 
     private:
 

@@ -1,20 +1,39 @@
-#include "SATSolver.h" // SATSolver class
+#include "Core/SATSolver.h" // SATSolver class
 
 using namespace std;
 
 int main(int argc, char** argv)
 {
-    if(argc != 2)
+    PARSE_TYPE parserType = CNF_PARSE;
+    string fileName;
+    if(argc == 3)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " <file_name>" << endl;
+        if(string(argv[1]) != "-tseitin")
+        {
+            cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name>" << endl;
+            return 1;
+        }
+        else
+        {
+            parserType = LOG_PARSE;
+            fileName = argv[2];
+        }
+    }
+    else if(argc != 2)
+    {
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name>" << endl;
         return 1;
     }
+    else
+    {
+        fileName = argv[1];
+    }    
 
     // Create the solver
-    SATSolver solver(argv[1]);
+    SATSolver solver(fileName);
 
     // Dummy test
-    if(!solver.parse())
+    if(!solver.parse(parserType))
     {
         cerr << "Error while parsing the file." << endl;
     }

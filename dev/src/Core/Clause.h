@@ -17,12 +17,13 @@
 #include <map>
 #include <string>
 
+typedef struct literal literal;
 struct literal
 {
 	literal(int index, bool bar) : index(index), bar(bar) {}
 
-	int index; // index of the variable
-	bool bar; // x or bar x
+    int index; // index of the variable
+    bool bar;  // x or bar x
 
     bool operator < (const literal& b) const
     {
@@ -32,8 +33,8 @@ struct literal
 
 static literal literal_from_int(int p_l)//parsing utility
 {
-	return literal(abs(p_l),(p_l < 0));
-}
+    return literal(abs(p_l),(p_l < 0));
+} // static literal literal_from_int(int);
 
 class Clause
 {

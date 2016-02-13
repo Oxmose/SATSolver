@@ -5,8 +5,11 @@
 */
 
 // STD INCLUDES
+#include <cstdlib>  //std::abs
 #include <vector>   //std::vector
 #include <utility>  //std::pair
+#include <map>      //std::map
+#include <string>   //std::string
 
 // Class Header
 #include "Clause.h"
@@ -36,12 +39,12 @@ std::set<literal>& Clause::getLiterals(int p_which /* = 0 */) const
 int Clause::getSatisfier() const
 {
     return m_satisfier;
-}
+} // int getSatifier() const
 
 void Clause::setSatisfier(int p_satisfier)
 {
     m_satisfier = p_satisfier;
-}
+} // setSatisfier(int)
 
 void Clause::setAssigned(int p_index, bool p_assign /* = true */) const
 {
@@ -87,7 +90,7 @@ string Clause::toStr() const
     }
     toReturn += ")";
     return toReturn;
-}
+} // string toStr() const
 
 Clause::~Clause()
 {
