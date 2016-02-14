@@ -33,7 +33,7 @@ LOGParser::~LOGParser()
 {
 } // ~LOGParser()
 
-bool LOGParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
+bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 {
     // Open file
     yyin = fopen(m_fileName.c_str(), "r");
@@ -49,19 +49,19 @@ bool LOGParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
     ** Log expression format parse
     */
 
-    do 
+    do
     {
         yy_flex_debug = 1;
         yyparse();
         cout << res->to_string() << endl;
     } while (!feof(yyin));
-    
+
 
     fclose(yyin);
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
-void yyerror(const char *s) 
+void yyerror(const char *s)
 {
     cout << "Parse error!  Message: " << s << endl;
 } // yyerror(const char*)
