@@ -7,14 +7,11 @@
 #ifndef DEF_SATSOLVER_H
 #define DEF_SATSOLVER_H
 
-<<<<<<< HEAD
-#define NDEBUG
-=======
 /*
     Uncomment the following define for debug output
 */
 //#define NDEBUG
->>>>>>> 4d8a134e8934deb14418123ad29aee8b6a767286
+
 #ifndef NDEBUG
 #define OUTDEBUG(Out) do {  \
    std::cerr << Out << std::endl; \
