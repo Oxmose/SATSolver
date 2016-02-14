@@ -123,7 +123,6 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
                         found = true;
                     else if((!lit.bar && -(lit.index) == readLiteral) || (lit.bar && lit.index == readLiteral))
                     {
-                        cout << "oui" << endl;
                         hasTot = true;
                     }
                 }

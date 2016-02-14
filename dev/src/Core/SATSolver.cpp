@@ -196,19 +196,28 @@ decision SATSolver::takeABet()
 
 void SATSolver::flushTaut()
 {
-    for(It it = m_formula[0].begin() ; it != m_formula[0].begin() ; ++it)
+    vector<It> toSatisfy;
+    for(It it = m_formula[0].begin() ; it != m_formula[0].end() ; ++it)
+    {
         if(it->isTaut())
         {
             OUTDEBUG("Tautologie detected in " << it->toStr());
-            satisfyClause(it,-2);//Special satisfier for taut
+            toSatisfy.push_back(it);            
         }
+    }
+
+    // Avoid concurency (we can't delet elements in the previous loop
+    for(It it : toSatisfy)
+    {
+        satisfyClause(it,-2);//Special satisfier for taut
+    }
 }
 
 int SATSolver::solve()
 {
     //Get rid of tautologies
     //TODO : buffer overflow...
-    //flushTaut();
+    flushTaut();
 
     //Pre-calculus :
     //associates each variable to all the clause containing it as literal
