@@ -10,7 +10,7 @@
 /*
     Uncomment the following define for debug output
 */
-#define NDEBUG
+//#define NDEBUG
 #ifndef NDEBUG
 #define OUTDEBUG(Out) do {  \
    std::cerr << Out << std::endl; \

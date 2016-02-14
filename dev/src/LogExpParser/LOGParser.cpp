@@ -72,7 +72,8 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
-        for(unsigned int i = 0; i < strForm.size() - 1; ++i)
+	cout << strForm << endl;
+        for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
             if(strForm[i] == '(') continue;
@@ -81,7 +82,7 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             if(strForm[i] == '-')
             {
                 string var("");
-                while(isdigit(strForm[++i]))
+                while(i < strForm.size() && isdigit(strForm[++i]))
                 {
                     var += strForm[i];
                 }
@@ -107,7 +108,7 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             }
 
             // If we are at the end of a clause
-            if(strForm[i] == '/' && strForm[i + 1] == '\\')
+            if(i < strForm.size() -1 && strForm[i] == '/' && strForm[i + 1] == '\\')
             {
                 // Create and add the new clause
                 clauses.push_back(make_pair(clause, hasTot));
@@ -117,7 +118,7 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             }
 
             string var("");
-            while(isdigit(strForm[i]))
+            while(i < strForm.size() && isdigit(strForm[i]))
             {
                 var += strForm[i];
                 ++i;
@@ -147,16 +148,21 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
         clause.clear();
     }
 
-    unsigned int clausesCount = clauses.size();
+    unsigned int clausesCount = 0;
     
     for(pair<vector<literal>, bool> clause : clauses)
     {
-	cout << "(" ;
-	for(literal : clause.first)
-		cout << literal.index << " ";
-	cout << ")" << endl;
+	for(unsigned int i = 0; i < clause.first.size(); ++i)
+	{
+		if(i != 0)
+			cout << " \\/";
+		cout << " " << (clause.first[i].bar ? "-" : "") << clause.first[i].index;
+	}
+	cout << endl;
         p_formula.insert(Clause(clause.first, clause.second, clausesCount));
+	++clausesCount;
     }
+
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
@@ -173,7 +179,8 @@ vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex)
 
     vector<Expr*> exps;
     // Transform the expression
-    res->tseitin(maxIndex, exps);
+    Expr* global = res->tseitin(maxIndex, exps);
+    exps.push_back(global);
     p_maxIndex = maxIndex;
 
     return exps;

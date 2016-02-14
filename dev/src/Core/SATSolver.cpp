@@ -263,13 +263,14 @@ void SATSolver::showSolution()
         m_parser.tseitinResolution(m_valuation, m_maxIndex);
     }
     
-
     for(int i = 1 ; i <= m_maxIndex ; i++)
     {
         string sign="";
         if(m_valuation.find(i) != m_valuation.end())
+        {
             sign = (m_valuation[i] == 0) ? "-" : "";
-        cout << sign+to_string(i)+" ";
+            cout << sign+to_string(i)+" ";
+        }
     }
     cout << "0" << endl;
     m_currentAssignement.clear();

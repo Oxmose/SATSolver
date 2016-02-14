@@ -163,6 +163,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             // Create and save the clause
             Clause clause(literals, hasTot, clausesCount);
             p_formula.insert(clause);
+            p_maxIndex = maxIndex;
             // Add one to counter for verification purposes
             ++clausesCount;
         }
