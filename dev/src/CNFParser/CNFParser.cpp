@@ -29,7 +29,7 @@ CNFParser::~CNFParser()
 {
 } // ~CNFParser()
 
-bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
+bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 {
     // Open file
     ifstream file(m_fileName);
@@ -57,11 +57,9 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
     while(getline(file, line))
     {
         // Remove possible spaces
-    unsigned int firstChar = 0;
+        unsigned int firstChar = 0;
         for(unsigned int i = 0; line[i] == ' ' && i < line.size(); ++i)
-    {
-        firstChar = i + 1;
-    }
+            firstChar = i + 1;
 
         if(firstChar == line.size())
             continue;
@@ -92,12 +90,12 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             {
                 noError = false;
                 cerr << "Not a CNF formula or header is corrupted." << endl;
-		return noError;
+                return noError;
             }
 
             // Retrive formula metadata into members
             splitter >> p_maxIndex;
-            maxIndex = p_maxIndex;            
+            maxIndex = p_maxIndex;
             splitter >> givenClausesCount;
         }
         else
@@ -116,19 +114,24 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
                     break;
 
                 bool found = false;
+
                 // Avoid mutiple same literals in the same clause
                 // Also check for tautology
                 for(literal lit : literals)
                 {
                     if((lit.bar && -(lit.index) == readLiteral) || (!lit.bar && lit.index == readLiteral))
-                        found = true;           
+                        found = true;
                     else if((!lit.bar && -(lit.index) == readLiteral) || (lit.bar && lit.index == readLiteral))
+                    {
+                        cout << "oui" << endl;
                         hasTot = true;
+                    }
                 }
-                        
+
 
                 if(!found)
                     literals.push_back(literal_from_int(readLiteral));
+
                 // Vars count verification
                 if(readLiteral < 0)
                 {
@@ -158,16 +161,13 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             }
 
             // Create and save the clause
-            Clause clause(literals, hasTot);
-            p_formula.push_back(clause);
-
+            Clause clause(literals, hasTot, clausesCount);
+            p_formula.insert(clause);
+            p_maxIndex = maxIndex;
             // Add one to counter for verification purposes
             ++clausesCount;
-
-            // Create string format of the formula
         }
     }
-
 
     /*
      * Error management
@@ -179,6 +179,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
         givenClausesCount = clausesCount;
     }
 
+    // If some variables were not used or too much were
     if(maxIndex != vars.size())
     {
         vector<bool> used;
@@ -190,16 +191,13 @@ bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
             used[i] = true;
         }
 
+        // We check which ones were used and shouldn't have been
         for(unsigned int i = 1; i < maxIndex+1; ++i)
-        {
             if(!used[i])
-            {
                 cerr << i << " was not used whereas maximum index is " << maxIndex << "." << endl;
-            }
-        }
     }
 
     file.close();
 
     return noError;
-} // bool parse(unsigned int &, vector<Clause>&)
+} // bool parse(unsigned int &, ClauseSet&)

@@ -25,8 +25,8 @@ class CNFParser
         CNFParser(const std::string &p_fileName);
         ~CNFParser();
         
-        // Parser method
-        bool parse(unsigned int &p_maxIndex, std::vector<Clause> &p_formula);
+        // Parse
+        bool parse(unsigned int &p_maxIndex, ClauseSet& p_formula);
 
     private:
         // Name of the file to parse

@@ -28,24 +28,30 @@ extern "C" FILE *yyin;
 extern Expr *res;
 extern int yy_flex_debug;
 
+// Function that stop the programm on error (kind of excpetion)
 void yyerror(const char *s);
 
 class LOGParser
 {
     public:
         // Constructor / Destructor
-        LOGParser(const std::string &p_fileName);
+        LOGParser(const std::string &p_fileName = "");
         ~LOGParser();
-        
+
+        // Setters
+        void setFileName(const std::string &p_fileName);
+
         // Parser methods
-        bool parse(unsigned int &p_maxIndex, std::vector<Clause> &p_formula);
-        bool tseitinResolution(std::vector<Clause> &p_formula, std::map<int,int> m_valuation);
+        bool parse(unsigned int &p_maxIndex, ClauseSet& p_formula);
+	std::vector<Expr*> tseitinTransform(Expr *exp, unsigned int &p_maxIndex);
+        bool tseitinResolution(std::map<int,int> &p_valuation, unsigned int &p_maxIndex);
 
     private:
-
         // Name of the file to parse
         std::string m_fileName;
-        std::atomic<bool> m_noError;
+
+	// Vars contained in the original formula
+        std::vector<int> m_originalVars;
 }; // Parser
 
 #endif // DEF_LOGPARSER_H
