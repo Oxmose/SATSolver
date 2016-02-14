@@ -36,10 +36,10 @@ class LOGParser
         // Constructor / Destructor
         LOGParser(const std::string &p_fileName);
         ~LOGParser();
-
+        
         // Parser methods
-        bool parse(unsigned int &p_maxIndex, ClauseSet &p_formula);
-        bool tseitinResolution(ClauseSet &p_formula, std::map<int,int> m_valuation);
+        bool parse(unsigned int &p_maxIndex, std::vector<Clause> &p_formula);
+        bool tseitinResolution(std::vector<Clause> &p_formula, std::map<int,int> m_valuation);
 
     private:
 

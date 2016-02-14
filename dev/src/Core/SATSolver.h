@@ -7,9 +7,6 @@
 #ifndef DEF_SATSOLVER_H
 #define DEF_SATSOLVER_H
 
-/*
-    Uncomment the following define for debug output
-*/
 #define NDEBUG
 #ifndef NDEBUG
 #define OUTDEBUG(Out) do {  \
@@ -57,39 +54,40 @@ class SATSolver
         bool parse(PARSE_TYPE p_parseType = CNF_PARSE);
 
         /* DPLL algorithm */
-        int solve();
-        void showSolution();
+        int solve(bool verbose = 1);
 
-        /* Debug stuff */
-        std::string currentStateToStr();//State = decision + formula
         std::string formulaToStr();
+        std::string getFormulaStr();
         std::string decisionToStr();
 
     private:
 
         /* DPLL intern */
-        void flushTaut();
         decision takeABet();
-        void satisfyClause(It p_it, int p_satisfier);
-        void applyDecision(const decision& p_dec);
+        void applyDecision(decision p_dec);
+        void dropSatisfiedBy(const decision& p_bet);
+        void assignVarInClause(int p_index, bool p_assign=true);
         bool deduce();
         bool unitProp();
-        bool backtrack(bool& p_unsat);
         bool isContradictory();
         void reviveClauseWithSatisfier(int p_satisfier);
+        std::string currentStateToStr();
 
+        void showSolution();
 
         bool evaluate();
 
         std::string     m_fileName;
         unsigned int    m_maxIndex;
 
-        std::vector<ClauseSet> m_formula;//0: unsat clauses, 1: sat clauses
+        std::vector<Clause> m_formula;
 
         /*DPLL stuff*/
-        std::vector<decision> m_currentAssignement;//Stack of decisions
-        std::map<int,int> m_valuation;//Current valuation
-        std::map<int,std::vector<int>> m_clauseWithVar;//Direct access to Clauses
+        std::vector<decision> m_currentAssignement;
+        std::map<int,int> m_valuation;
+        std::map<int,std::vector<Clause>> m_clausesForVar;
+        int m_satisfiedClause;
+
 }; // SATSolver
 
 #endif // DEF_SATSOLVER_H

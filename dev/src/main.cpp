@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     else
     {
         fileName = argv[1];
-    }
+    }    
 
     // Create the solver
     SATSolver solver(fileName);
@@ -38,17 +38,17 @@ int main(int argc, char** argv)
         cerr << "Error while parsing the file." << endl;
     }
 
-    OUTDEBUG("We check SAT of :" << endl << solver.formulaToStr());
+    cout << "We check SAT of :" << endl << solver.formulaToStr() << std::endl;
 
-    if(solver.solve())
-    {
+    solver.solve();
+    /*
+
+    if(isSolvable == 1)
         cout << "s SATIFIABLE" << endl;
-        solver.showSolution();
-    }
+    else if(isSolvable == -1)
+        cout << "s ???" << endl;
     else
-        cout << "s UNSATISFIABLE" << endl;
-
-    //Not handling ??? for the moment (time limit ? heuristics ?).
-
+        cout << "s UNSATISFIABLE" << endl;*/
+    
     return 0;
 }// main(int, char**)

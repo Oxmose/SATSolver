@@ -26,8 +26,7 @@ using namespace std;
 SATSolver::SATSolver(const string &p_fileName)
 {
     m_fileName = p_fileName;
-    m_formula.push_back(ClauseSet(compareUnsat));
-    m_formula.push_back(ClauseSet(compareSat));
+    m_satisfiedClause = 0;
 } // SATSolver(const string&)
 
 bool SATSolver::parse(PARSE_TYPE p_parseType /* = CNF_PARSE */)
@@ -36,12 +35,12 @@ bool SATSolver::parse(PARSE_TYPE p_parseType /* = CNF_PARSE */)
     {
         // Create parser and parse
         CNFParser parser(m_fileName);
-        return parser.parse(m_maxIndex, m_formula[0]);
+        return parser.parse(m_maxIndex, m_formula);
     }
     else
     {
         LOGParser parser(m_fileName);
-        return parser.parse(m_maxIndex, m_formula[0]);
+	return parser.parse(m_maxIndex, m_formula);
     }
 } // bool parse(PARSE_TYPE)
 
@@ -49,211 +48,132 @@ SATSolver::~SATSolver()
 {
 } // ~SATSolver()
 
-/*
-    Functions are stacked over solve() in more or less the order
-in which they appear in it .
-    Goto l.178
-*/
-
-void SATSolver::satisfyClause(It p_it, int p_satisfier)
-{
-    if(p_satisfier != -1)
-    {
-        Clause c = *p_it;
-        c.setSatisfier(p_satisfier);
-        m_formula[0].erase(p_it);
-        m_formula[1].insert(c);
-        return;
-    }
-
-    Clause c = *p_it;
-    c.setSatisfier(-1);
-    m_formula[1].erase(p_it);
-    m_formula[0].insert(c);
-}
-
-void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
-{
-    Clause searchClause = makeSearchClause2(p_satisfier);
-    auto its = m_formula[1].equal_range(searchClause);
-    vector<It> toRevive;
-    for(auto it = its.first ; it != its.second ; ++it)
-        toRevive.push_back(it);
-    for(auto it : toRevive)
-        satisfyClause(it,-1);
-}
-
-
-bool SATSolver::isContradictory()
-{
-    for(Clause c : m_formula[0])
-        if(c.getLiterals(0).size() == 0)
-        {
-            OUTDEBUG("Contradiction");
-            return true;
-        }
-    return false;
-}
-
-bool SATSolver::backtrack(bool& p_unsat)
-{
-    if(isContradictory())
-    {
-        OUTDEBUG("Backtracking");
-        while(!m_currentAssignement.empty() && !m_currentAssignement.back().bet)
-        {
-            decision toErase = m_currentAssignement.back();
-            reviveClauseWithSatisfier(toErase.index);
-            for(int iClause : m_clauseWithVar[toErase.index])
-                if(m_formula[0].find(makeSearchClause(iClause)) != m_formula[0].end())
-                    m_formula[0].find(makeSearchClause(iClause))->setAssigned(toErase.index,false);
-            m_valuation[toErase.index] = -1;
-            m_currentAssignement.pop_back();
-        }
-
-        if(m_currentAssignement.empty())
-        {
-            p_unsat = true;
-            return true;
-        }
-
-        reviveClauseWithSatisfier(m_currentAssignement.back().index);
-
-        for(int iClause : m_clauseWithVar[m_currentAssignement.back().index])
-            if(m_formula[0].find(makeSearchClause(iClause)) != m_formula[0].end())
-                m_formula[0].find(makeSearchClause(iClause))->setAssigned(m_currentAssignement.back().index,false);
-
-        m_currentAssignement.back().value = !m_currentAssignement.back().value;
-        m_currentAssignement.back().bet = false;
-        OUTDEBUG(currentStateToStr());
-
-        return true;
-    }
-    return false;
-}
-
-bool SATSolver::unitProp()
-{
-    for(Clause c : m_formula[0])
-        if(c.getLiterals(0).size() == 1)
-        {
-            int indexUnit = c.getLiterals(0).begin()->index;
-            bool value = !c.getLiterals(0).begin()->bar;
-
-            decision deduction = decision(indexUnit,value,false);
-            OUTDEBUG("\tDeducing: " << indexUnit << " to " << ((value) ? string("True") : string("False")));
-            m_currentAssignement.push_back(deduction);
-            return true;
-        }
-    return false;
-} // bool unitProp()
-
-bool SATSolver::deduce()
-{
-    return unitProp();
-}
-
-void SATSolver::applyDecision(const decision& p_dec)
-{
-    std::vector<It> toErase;
-    for(int iClause : m_clauseWithVar[p_dec.index])
-    {
-        Clause searchClause = makeSearchClause(iClause);
-        It it = m_formula[0].find(searchClause);
-        literal searchLit = literal(p_dec.index,!p_dec.value);
-        if(it != m_formula[0].end() && (it->getLiterals(0).find(searchLit) != it->getLiterals(0).end()))
-        {
-            if(it->getLiterals(0).find(searchLit)->bar == !p_dec.value)
-                toErase.push_back(it);
-            it->setAssigned(p_dec.index);
-        }
-    }
-
-    //Drop satisfied clauses
-    for(It it : toErase)
-        satisfyClause(it,p_dec.index);
-
-    m_valuation[p_dec.index] = p_dec.value;
-}
-
 decision SATSolver::takeABet()
 {
     int firstUnassigned = -1;
 
-    for(auto it=m_formula[0].begin() ; it != m_formula[0].end() ; ++it)
-        if(!it->getLiterals(0).empty())
+    for(Clause c : m_formula)
+        if(!c.isSatisfied())
         {
-            firstUnassigned = it->getLiterals(0).begin()->index;
-            break;
+            for(literal l : c.getLiterals())
+            {
+                if(!l.isAssigned)
+                {
+                    firstUnassigned = l.index;
+                    break;
+                }
+            }
+            if(firstUnassigned != -1)
+                break;
         }
 
     decision bet = decision(firstUnassigned,true,true);
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
     m_currentAssignement.push_back(bet);
     return bet;
-}
+} // decision takeABet()
 
-void SATSolver::flushTaut()
+string SATSolver::formulaToStr()
 {
-    for(It it = m_formula[0].begin() ; it != m_formula[0].begin() ; ++it)
-        if(it->isTaut())
-        {
-            OUTDEBUG("Tautologie detected in " << it->toStr());
-            satisfyClause(it,-2);//Special satisfier for taut
-        }
-}
-
-int SATSolver::solve()
-{
-    //Get rid of tautologies
-    //TODO : buffer overflow...
-    //flushTaut();
-
-    //Pre-calculus :
-    //associates each variable to all the clause containing it as literal
-    for(It it = m_formula[0].begin() ; it != m_formula[0].end() ; ++it)
+    string toReturn = "";
+    for(int iClause = 0 ; iClause < m_formula.size() ; iClause++)
     {
-        for(auto l : it->getLiterals())
+        const Clause& c = m_formula[iClause];
+        if(!c.isSatisfied())
         {
-            m_clauseWithVar[l.index].push_back(it->getId());
-            m_valuation[l.index] = -1;//Initialization aswell
+            string con = (iClause == m_formula.size()-1) ? "" : "/\\";
+            toReturn +=  c.toStr() + con;
         }
     }
 
-    OUTDEBUG(endl << currentStateToStr());
-    takeABet();//Initial bet
-    while(!m_currentAssignement.empty())
+    return toReturn;
+} // string formulaToStr()
+
+string SATSolver::decisionToStr()
+{
+    string toReturn = "";
+    for(auto d : m_currentAssignement)
+        toReturn += string((d.value) ? "" : "-") + to_string(d.index) + string((d.bet) ? "b" : "d");
+    return toReturn;
+} // string decisionToStr()
+
+void SATSolver::dropSatisfiedBy(const decision& p_bet)
+{
+    for(Clause& c : m_formula)
     {
-        decision currDecision = m_currentAssignement.back();
-        OUTDEBUG("Handling " << ((currDecision.bet) ? string("bet") : string("deduction")) << ": "
-        << currDecision.index << " to " << ((currDecision.value) ? string("True") : string("False")));
-
-        applyDecision(currDecision);
-        OUTDEBUG("\t" << currentStateToStr());
-
-        bool unsat = false;
-        if(backtrack(unsat))
+        if(!c.isSatisfied() && c.hasVar(p_bet.index) && c.getLiteral(p_bet.index).bar == !p_bet.value)
         {
-            if(unsat)
-                return false;//UNSATISFIABLE !
-            continue;
+            c.setSatisfier(p_bet.index);
+            m_satisfiedClause++;
         }
 
-        OUTDEBUG("SAT rate : " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size());
-        OUTDEBUG("");//endl
+    }
+} // dropSatisfiedBy(const decision&)
 
-        if(m_formula[0].empty())//SATISFIABLE !
+void SATSolver::assignVarInClause(int p_index, bool p_assign /* = true */)
+{
+    for(Clause& c : m_formula)
+        if(c.hasVar(p_index))
+            c.setAssigned(p_index, p_assign);
+} // assigneVarInClause(int, bool)
+
+bool SATSolver::deduce()
+{
+    return unitProp();
+} // bool deduce()
+
+bool SATSolver::unitProp()
+{
+
+    for(Clause& c : m_formula)
+        if(!c.isSatisfied() && c.getAliveVars() == 1)
         {
-            OUTDEBUG("Evaluation: " << evaluate());
+            int indexUnit;
+            for(const literal& l : c.getLiterals())
+                if(!l.isAssigned)
+                {
+                    indexUnit = l.index;
+                    break;
+                }
+
+            bool value = !c.getLiteral(indexUnit).bar;
+
+            decision deduction = decision(indexUnit,value,false);
+            OUTDEBUG("\tDeducing: " << indexUnit << " to " << ((value) ? string("True") : string("False")));
+            m_currentAssignement.push_back(deduction);
             return true;
         }
 
-        if(deduce())
-            continue;
+    return false;
+} // bool unitProp()
 
-        takeABet();
-    }
-} // bool solve()
+bool SATSolver::isContradictory()
+{
+    for(Clause c : m_formula)
+        if(!c.isSatisfied() && c.getAliveVars() == 0)
+        {
+            OUTDEBUG("Contradiction");
+            return true;
+        }
+    return false;
+} // bool isContradictory()
+
+void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
+{
+    for(Clause& c : m_formula)
+        if(c.getSatisfier() == p_satisfier)
+        {
+            c.setSatisfier(-1);
+            m_satisfiedClause--;
+        }
+} // reviveClauseWithSatisfier(int)
+
+void SATSolver::applyDecision(decision p_dec)
+{
+    m_valuation[p_dec.index] = p_dec.value;
+    dropSatisfiedBy(p_dec);
+    assignVarInClause(p_dec.index);
+} // applyDecision(decision)
 
 void SATSolver::showSolution()
 {
@@ -266,41 +186,81 @@ void SATSolver::showSolution()
     }
     cout << "0" << endl;
     m_currentAssignement.clear();
-}
+} // showSolution()
 
 bool SATSolver::evaluate()
 {
     bool val = true;
-    for(Clause c: m_formula[1])
-    {
+    for(Clause c: m_formula)
         val = val && c.evaluate(m_valuation);
-        if(!val)
-            break;
-    }
     return val;
-}
+} // bool evaluate()
 
 string SATSolver::currentStateToStr()
 {
     return decisionToStr() + "# " + formulaToStr();
-}
+} // string currentStateToStr()
 
-string SATSolver::formulaToStr()
+int SATSolver::solve(bool verbose)
 {
-    string toReturn = "";
-    for(auto c : m_formula[0])
+    for(auto c : m_formula)
+        for(auto l : c.getLiterals())
+            if(m_valuation.find(l.index) == m_valuation.end())
+                m_valuation[l.index] = -1;
+
+    OUTDEBUG(endl << currentStateToStr());
+    takeABet();//Initial bet
+    while(!m_currentAssignement.empty())
     {
-        string con =  "/\\";
-        toReturn +=  c.toStr() + con;
+        decision currDecision = m_currentAssignement.back();
+        OUTDEBUG("Handling " << ((currDecision.bet) ? string("bet") : string("deduction")) << ": "
+        << currDecision.index << " to " << ((currDecision.value) ? string("True") : string("False")));
+
+        applyDecision(currDecision);
+        OUTDEBUG("\t" << currentStateToStr());
+
+        bool backtrack = isContradictory();
+
+        if(backtrack)
+        {
+            OUTDEBUG("Backtracking");
+            while(!m_currentAssignement.empty() && !m_currentAssignement.back().bet)
+            {
+                decision toErase = m_currentAssignement.back();
+                assignVarInClause(toErase.index, false);
+                reviveClauseWithSatisfier(toErase.index);
+                m_currentAssignement.pop_back();
+            }
+
+            if(m_currentAssignement.empty())
+            {
+                cout << "s UNSATISFIABLE" << endl;
+                return false;
+            }
+
+            assignVarInClause(m_currentAssignement.back().index, false);
+            reviveClauseWithSatisfier(m_currentAssignement.back().index);
+            m_currentAssignement.back().value = !m_currentAssignement.back().value;
+            m_currentAssignement.back().bet = false;
+            OUTDEBUG(currentStateToStr());
+            continue;
+        }
+
+        bool hasDeduced = deduce();
+
+        OUTDEBUG("SAT rate : " << m_satisfiedClause << " " << m_formula.size());
+        OUTDEBUG("");//endl
+        if(m_satisfiedClause == m_formula.size())
+        {
+            cout << "s SATISFIABLE" << endl;
+            showSolution();
+            OUTDEBUG("Evaluation: " << evaluate());
+        }
+        else if(!hasDeduced && !backtrack)
+            takeABet();
     }
 
-    return toReturn;
-}
 
-string SATSolver::decisionToStr()
-{
-    string toReturn = "";
-    for(auto d : m_currentAssignement)
-        toReturn += string((d.value) ? "" : "-") + to_string(d.index) + string((d.bet) ? "b" : "d");
-    return toReturn;
-}
+    return true;
+
+} // int solve(bool)

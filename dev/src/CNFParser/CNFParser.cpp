@@ -29,7 +29,7 @@ CNFParser::~CNFParser()
 {
 } // ~CNFParser()
 
-bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
+bool CNFParser::parse(unsigned int &p_maxIndex, vector<Clause>& p_formula)
 {
     // Open file
     ifstream file(m_fileName);
@@ -97,7 +97,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
             // Retrive formula metadata into members
             splitter >> p_maxIndex;
-            maxIndex = p_maxIndex;
+            maxIndex = p_maxIndex;            
             splitter >> givenClausesCount;
         }
         else
@@ -121,14 +121,11 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
                 for(literal lit : literals)
                 {
                     if((lit.bar && -(lit.index) == readLiteral) || (!lit.bar && lit.index == readLiteral))
-                        found = true;
+                        found = true;           
                     else if((!lit.bar && -(lit.index) == readLiteral) || (lit.bar && lit.index == readLiteral))
-                    {
-                        cout << "oui" << endl;
                         hasTot = true;
-                    }
                 }
-
+                        
 
                 if(!found)
                     literals.push_back(literal_from_int(readLiteral));
@@ -161,8 +158,9 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             }
 
             // Create and save the clause
-            Clause clause(literals, hasTot,clausesCount);
-            p_formula.insert(clause);
+            Clause clause(literals, hasTot);
+            p_formula.push_back(clause);
+
             // Add one to counter for verification purposes
             ++clausesCount;
 
