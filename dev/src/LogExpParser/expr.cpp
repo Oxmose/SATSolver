@@ -10,10 +10,10 @@
 */
 
 // STD INCLUDES
-#include <sstream>      //osstringstream
-#include <string>       //string
-#include <vector>       //sd::vector
-#include <algorithm>    //find
+#include <sstream>      //std::osstringstream
+#include <string>       //std::string
+#include <vector>       //std::vector
+#include <algorithm>    //stdfind
 
 // CLASS HEADER INCLUDE
 #include "expr.hpp"

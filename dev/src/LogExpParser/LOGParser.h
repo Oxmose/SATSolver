@@ -23,6 +23,9 @@
 #include "expr.hpp"
 #include "expr.tab.hpp"
 
+// GLOBAL FLAGS/VARS
+#include "../Global/Global.h"
+
 // extern "C" int yyparse();
 extern "C" FILE *yyin;
 extern Expr *res;

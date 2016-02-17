@@ -35,7 +35,7 @@ CNFParser::~CNFParser()
 
 bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 {
-    OUTDEBUG("Parsing");
+    OUTDEBUG("CNF PARSE BEGIN");
     // Open file
     ifstream file(m_fileName);
     if(!file.is_open())
@@ -206,7 +206,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
     file.close();
     
-    OUTDEBUG("Parse ended with status " << noError);
+    OUTDEBUG("LOG PARSE END WITH STATUS " << noError);
 
     return noError;
 } // bool parse(unsigned int &, ClauseSet&)
