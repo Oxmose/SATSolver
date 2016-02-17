@@ -1,5 +1,6 @@
 # SATSolver
 SAT Solver by Tristan Stérin and Alexy Torres at the ENS Lyon 2015-216
+Powered by git: https://github.com/Oxmose/SATSolver
 
 ## Arguments de la ligne de commande
 ./reso1 : Démmare l'interface utilisateur du programme.
