@@ -7,6 +7,7 @@
 #ifndef DEF_SATSOLVER_H
 #define DEF_SATSOLVER_H
 
+
 // STD INCLUDES
 #include <string>   // sts::string
 #include <vector>   // std::vector
@@ -68,6 +69,7 @@ class SATSolver
         void satisfyClause(It p_it, int p_satisfier);
         void applyDecision(const decision& p_dec);
         bool deduce();
+        void firstDeduce();
         bool unitProp();
         bool backtrack(bool& p_unsat);
         bool isContradictory();

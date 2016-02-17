@@ -112,7 +112,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
             vector<literal> literals;
             int readLiteral;
-            bool hasTot = false;
+            bool hasTaut = false;
             while(splitter >> readLiteral)
             {
                 if(readLiteral == 0)
@@ -128,7 +128,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
                         found = true;
                     else if((!lit.bar && -(lit.index) == readLiteral) || (lit.bar && lit.index == readLiteral))
                     {
-                        hasTot = true;
+                        hasTaut = true;
                     }
                 }
 

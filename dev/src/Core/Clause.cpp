@@ -64,6 +64,9 @@ int Clause::getId() const
 
 bool Clause::evaluate(map<int,int>& p_valuation)
 {
+    if(m_isTaut)
+        return true;
+        
     bool val = false;
     for(literal l : m_literals[1])
     {
