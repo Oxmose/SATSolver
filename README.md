@@ -6,7 +6,7 @@ SAT Solver by Tristan Stérin and Alexy Torres at the ENS Lyon 2015-216
 
 -Le parser LOG permet de parser les fichiers FOR qui contiennent des clauses logiques plus convivialles pour l'utilisateur.
 
-*Améliorations:
+Améliorations:
 
 
 Le parser LOG applique la transformation de Tseitin à la formule originelle et parse de nouveau la formule récupérée afin de la rendre compatible avec nos structures de données, il serait plus convenable d'intégrer cette transformation directement dans le parser.
@@ -15,7 +15,6 @@ Le parser LOG applique la transformation de Tseitin à la formule originelle et 
 Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucuns arguments. Un menu vous sera alors présenté et vous aurez le choix de générer une formule SAT CNF. Pour ce faire suivez les instructions.
 
 ## Structure des fichiers
-
 -doc contient le premier TD
 
 -dev/bin contient l'éxécutable de notre programme
@@ -37,7 +36,7 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 -dev/src/RandomSatExpGenerator contient les sources sur générateur d'expressions CNF.
 
 ## Performances
--Optimisation à la compilation
+###Optimisation à la compilation
 
 Test de aim-100-1_6-no-1.cnf 
 
