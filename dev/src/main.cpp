@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     // Init debug flag
     debugFlag = false;
 
-    // Parse the command line error
+    // Parse the command line
     int commandError = parseCommand(argc, argv, fileName, parserType, debugFlag);
 
 
