@@ -153,19 +153,49 @@ bool SATSolver::unitProp()
             bool value = !c.getLiterals(0).begin()->bar;
 
             decision deduction = decision(indexUnit,value,false);
-            OUTDEBUG("\tDeducing: " << indexUnit << " to " << ((value) ? string("True") : string("False")));
+            OUTDEBUG("\tDeducing (unit prop): " << indexUnit << " to " << ((value) ? string("True") : string("False")));
             m_currentAssignement.push_back(deduction);
             return true;
         }
     return false;
 } // bool unitProp()
 
+bool SATSolver::uniquePol()
+{
+    //In the pair, first : sum of polarities, second: number of occurencies
+    //We sum the polarities and check if it matches with +- #occurencies
+    map<int,pair<int,int>> countPol;
+
+    for(Clause c : m_formula[0])
+        for(literal l : c.getLiterals())
+        {
+            if(countPol.find(l.index) == countPol.end())
+                countPol[l.index] = make_pair(0,0);
+            countPol[l.index].first += (l.bar) ? -1 : 1;
+            countPol[l.index].second++;
+        }
+
+    for(auto it = countPol.begin(); it != countPol.end(); ++it)
+        if(it->second.first == it->second.second || it->second.first == -1*it->second.second)
+        {
+            decision deduction = decision(it->first,(it->second.first > 0),false);
+            m_currentAssignement.push_back(deduction);
+            OUTDEBUG("\tDeducing (unique pol): " << it->first << " to " << ((it->second.first > 0) ? "True" : "False"));
+            return true;
+        }
+
+    return false;
+}
+
 bool SATSolver::deduce()
 {
     if(m_formula[0].empty())
         return false;
 
-    return unitProp();
+    if(unitProp())
+        return true;
+
+    return uniquePol();
 } // bool deduce()
 
 void SATSolver::applyDecision(const decision& p_dec)
