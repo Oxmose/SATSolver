@@ -49,8 +49,7 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     yyin = fopen(m_fileName.c_str(), "r");
     if(yyin == NULL)
     {
-        cerr << "Can't open file." << endl;
-        return false;
+        OUTERROR("Can't open file.");
     }
 
     bool noParseError = true;
@@ -77,7 +76,6 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
-	cout << strForm << endl;
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
@@ -157,13 +155,6 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     
     for(pair<vector<literal>, bool> clause : clauses)
     {
-	for(unsigned int i = 0; i < clause.first.size(); ++i)
-	{
-		if(i != 0)
-			cout << " \\/";
-		cout << " " << (clause.first[i].bar ? "-" : "") << clause.first[i].index;
-	}
-	cout << endl;
         p_formula.insert(Clause(clause.first, clause.second, clausesCount));
 	++clausesCount;
     }
@@ -213,6 +204,5 @@ bool LOGParser::tseitinResolution(map<int,int> &p_valuation, unsigned int &p_max
 
 void yyerror(const char *s)
 {
-    cerr << "Parse error!  Message: " << s << endl;
-    exit(-1);
+    OUTERROR("Parse error!  Message: " << s);
 } // yyerror(const char*)
