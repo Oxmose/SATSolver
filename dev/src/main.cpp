@@ -9,9 +9,14 @@
 // OTHERS INCLUDES FROM PROJECT
 #include "RandomSatExpGenerator/randomGen.h"
 
+// GLOBAL FLAGS/VARS
+#include "Global/Global.h"
+
 using namespace std;
 
 #define VERSION "0.1"
+
+bool debugFlag;
 
 void displayMenu(char *softName)
 {
@@ -48,14 +53,13 @@ void displayMenu(char *softName)
 
     cout << "How to use :" << endl;
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " <file_name>" << endl;
+    cout << "\t\t" << softName << " <file_name> [-debug]" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " -tseitin <file_name>" << endl;
-    cout << "\t At the moment, this software does not read standard input, but it will be solved in the next version." << endl << endl;
+    cout << "\t\t" << softName << " -tseitin <file_name> [-debug]" << endl;
 
-    cout << "\t If you want to generate a DIMAC CNF file, please type 1 and then [ENTER]" << endl;
-    cout << "\t If tou want to read the about text of this software, please type 2 and then [ENTER]" << endl;
-    cout << "\t To quit, please type 3 and then [ENTER]" << endl;    
+    cout << "\t To generate DIMAC CNF file, press 1 and then [ENTER]" << endl;
+    cout << "\t To read the credits, press 2 and then [ENTER]" << endl;
+    cout << "\t To quit, press 3 and then [ENTER]" << endl;    
     
 } // displayMenu()
 
@@ -63,10 +67,12 @@ int main(int argc, char** argv)
 {
     PARSE_TYPE parserType = CNF_PARSE;
     string fileName;
+    debugFlag = false;
 
     if(argc == 1)
     {
         displayMenu(argv[0]);
+
         // Get the user choice
         unsigned short int choice; 
         bool ok = false;       
@@ -103,20 +109,49 @@ int main(int argc, char** argv)
     }
     else if(argc == 3)
     {
-        if(string(argv[1]) != "-tseitin")
+        if(string(argv[1]) != "-tseitin" && string(argv[2]) != "-debug")
         {
-            cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name>" << endl;
+            cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name> [-debug]" << endl;
             return 1;
         }
         else
         {
+            int index = 1;
+            if(string(argv[2]) == "-debug")
+            {
+                parserType = CNF_PARSE;
+		        debugFlag = true;
+            }
+            else
+            {
+                index = 2;
+                parserType = LOG_PARSE;
+            }
+            fileName = argv[index];
+        }
+    }
+    else if(argc == 4)
+    {
+        if(string(argv[1]) != "-tseitin")
+        {
+            cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name> [-debug]" << endl;
+            return 1;
+        }
+	    else if(string(argv[3]) != "-debug")
+	    {
+		    cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name> [-debug]" << endl;
+            return 1;
+	    }
+        else
+        {
+            debugFlag = true;
             parserType = LOG_PARSE;
             fileName = argv[2];
         }
-    }
+    }    
     else if(argc != 2)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name> [-debug]" << endl;
         return 1;
     }
     else
@@ -126,6 +161,8 @@ int main(int argc, char** argv)
     std::clock_t start;
     double duration;
     start = std::clock();
+
+    OUTDEBUG("DEBUG ENABLED");
 
     // Create the solver
     SATSolver solver(fileName);
@@ -148,7 +185,7 @@ int main(int argc, char** argv)
 
     // Display time
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    std::cout<<"Solved int: "<< duration << "s" << endl;
+    std::cout<<"Solved in: "<< duration << "s" << endl;
 
     return 0;
 }// main(int, char**)

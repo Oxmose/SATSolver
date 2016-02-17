@@ -18,6 +18,9 @@
 // OTHER INCLUDES FROM PROJECT
 #include "../Core/Clause.h" // Clause class
 
+// GLOBAL FLAGS/VARS
+#include "../Global/Global.h"
+
 class CNFParser
 {
     public:
@@ -31,6 +34,7 @@ class CNFParser
     private:
         // Name of the file to parse
         std::string m_fileName;
+	
 }; // Parser
 
 #endif // DEF_CNFPARSER_H

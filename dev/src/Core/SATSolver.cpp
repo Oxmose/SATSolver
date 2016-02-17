@@ -21,6 +21,9 @@
 #include "../CNFParser/CNFParser.h" 	// CNFParser class
 #include "../LogExpParser/LOGParser.h"	// LOGParser class
 
+// GLOBAL FLAGS/VARS
+#include "../Global/Global.h"
+
 using namespace std;
 
 SATSolver::SATSolver(const string &p_fileName)
@@ -209,7 +212,7 @@ void SATSolver::flushTaut()
     // Avoid concurency (we can't delet elements in the previous loop
     for(It it : toSatisfy)
     {
-        satisfyClause(it,-2);//Special satisfier for taut
+        satisfyClause(it, -2);//Special satisfier for taut
     }
 }
 
@@ -218,6 +221,8 @@ int SATSolver::solve()
     //Get rid of tautologies
     //TODO : buffer overflow...
     flushTaut();
+    for(It it = m_formula[1].begin(); it != m_formula[0].end(); ++it)
+        cout << it->toStr() << " ";
 
     //Pre-calculus :
     //associates each variable to all the clause containing it as literal

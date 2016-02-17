@@ -7,19 +7,6 @@
 #ifndef DEF_SATSOLVER_H
 #define DEF_SATSOLVER_H
 
-/*
-    Uncomment the following define for debug output
-*/
-//#define NDEBUG
-
-#ifndef NDEBUG
-#define OUTDEBUG(Out) do {  \
-   std::cerr << Out << std::endl; \
-} while(0)
-#else
-#define OUTDEBUG(Out) do {}while(0)
-#endif
-
 // STD INCLUDES
 #include <string>   // sts::string
 #include <vector>   // std::vector
@@ -33,6 +20,9 @@
 #include "Clause.h"                 	// Clause class
 #include "../CNFParser/CNFParser.h"    	// CNFParser class
 #include "../LogExpParser/LOGParser.h"	// LOGParser class
+
+// GLOBAL FLAGS/VARS
+#include "../Global/Global.h"
 
 struct decision
 {
