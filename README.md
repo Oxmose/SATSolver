@@ -1,10 +1,21 @@
 # SATSolver
 SAT Solver by Tristan Stérin and Alexy Torres at the ENS Lyon 2015-216
 
-## Parsers
--Le parser CNF permet de parser les fichiers CNF au format DIMACS.
+## Arguments de la ligne de commande
+./reso1 : Démmare l'interface utilisateur du programme.
 
--Le parser LOG permet de parser les fichiers FOR qui contiennent des clauses logiques plus convivialles pour l'utilisateur.
+Arguments
+-tseitin <file_name> parse et résoud le fichier file_name à l'aide de la transformation de Tseitin.
+
+<file_name> parse et résoud le fichier file_name à la norme DIMACS CNF.
+
+Voud pourrez utiliser -debug en dernier argument afin d'activer les sorties de debug du programme.
+Ex : ./reso1 -tseitin test.for -debug
+
+## Parsers
+Le parser CNF permet de parser les fichiers CNF au format DIMACS.
+
+Le parser LOG permet de parser les fichiers FOR qui contiennent des clauses logiques plus convivialles pour l'utilisateur.
 
 Améliorations:
 

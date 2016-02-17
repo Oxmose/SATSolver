@@ -66,7 +66,7 @@ int main(int argc, char** argv)
 
     // Display time
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    cout<<"Solved in: "<< duration << "s" << endl;
+    OUTDEBUG("Solved in: "<< duration << "s");
 
     return 0;
 }// main(int, char**)
