@@ -180,15 +180,6 @@ void SATSolver::applyDecision(const decision& p_dec)
     m_valuation[p_dec.index] = p_dec.value;
 }
 
-void SATSolver::firstDeduce()
-{
-    while(deduce())
-        applyDecision(m_currentAssignement.back());
-    
-    OUTDEBUG("First deductions: " <<  currentStateToStr());
-    m_currentAssignement.clear();
-}
-
 decision SATSolver::takeABet()
 {
     int firstUnassigned = -1;
@@ -237,21 +228,20 @@ int SATSolver::solve()
         }
 
     flushTaut();//Get rid of tautologie
-    firstDeduce();//1ere passe
-
-    takeABet();//Initial bet
 
     bool unsat = false;
     while(!m_formula[0].empty() && !unsat)
     {
-        decision currDecision = m_currentAssignement.back();
-        OUTDEBUG("Handling " << ((currDecision.bet) ? string("bet") : string("deduction")) << ": "
-        << currDecision.index << " to " << ((currDecision.value) ? string("True") : string("False")));
+        if(!m_currentAssignement.empty())
+        {
+            decision currDecision = m_currentAssignement.back();
+            OUTDEBUG("Handling " << ((currDecision.bet) ? string("bet") : string("deduction")) << ": "
+            << currDecision.index << " to " << ((currDecision.value) ? string("True") : string("False")));
 
-        applyDecision(currDecision);
-        OUTDEBUG("\t" << currentStateToStr());
+            applyDecision(currDecision);
+            OUTDEBUG("\t" << currentStateToStr());
+        }
 
-        bool unsat = false;
         if(backtrack(unsat))
             continue;
 

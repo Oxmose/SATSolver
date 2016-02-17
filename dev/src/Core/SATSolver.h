@@ -10,8 +10,7 @@
 /*
     Uncomment the following define for debug output
 */
-#define NDEBUG
-
+//#define NDEBUG
 #ifndef NDEBUG
 #define OUTDEBUG(Out) do {  \
    std::cerr << Out << std::endl; \
@@ -78,7 +77,6 @@ class SATSolver
         void satisfyClause(It p_it, int p_satisfier);
         void applyDecision(const decision& p_dec);
         bool deduce();
-        void firstDeduce();
         bool unitProp();
         bool backtrack(bool& p_unsat);
         bool isContradictory();
