@@ -6,8 +6,10 @@
 
 // STD INCLUDES
 #include <cstdlib>  //std::abs
+#include <iostream> //std::cout std::cerr
 #include <vector>   //std::vector
 #include <utility>  //std::pair
+#include <set>      //std::set
 #include <map>      //std::map
 #include <string>   //std::string
 
@@ -29,12 +31,12 @@ Clause::Clause(const vector<literal> &p_literals, bool p_isTaut, int p_id)
 bool Clause::isTaut() const
 {
     return m_isTaut;
-}
+} // bool isTaut() const
 
-std::set<literal>& Clause::getLiterals(int p_which /* = 0 */) const
+set<literal>& Clause::getLiterals(int p_which /* = 0 */) const
 {
     return m_literals[p_which];
-}
+} // set<literal>& getLiterals(int) const
 
 int Clause::getSatisfier() const
 {
@@ -55,12 +57,12 @@ void Clause::setAssigned(int p_index, bool p_assign /* = true */) const
         m_literals[int(!p_assign)].erase(l_it);
         m_literals[int(p_assign)].insert(toCopy);
     }
-}
+} // Clause setAssigned(int, bool) const
 
 int Clause::getId() const
 {
     return m_id;
-}
+} // int getId() const
 
 bool Clause::evaluate(map<int,int>& p_valuation)
 {
@@ -80,7 +82,7 @@ bool Clause::evaluate(map<int,int>& p_valuation)
         val = val || p_valuation[l.index] == !l.bar;
     }
     return val;
-}
+} // bool evaluate(map<int, int>&)
 
 string Clause::toStr() const
 {

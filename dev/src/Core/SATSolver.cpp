@@ -14,12 +14,15 @@
 #include <fstream>  // std::ifstream
 
 // CLASS HEADER INCLUDE
-#include "SATSolver.h"	// SATSolver Class header
+#include "SATSolver.h"    // SATSolver Class header
 
 // PROJECT INCLUDES
-#include "Clause.h"                 	// Clause class
-#include "../CNFParser/CNFParser.h" 	// CNFParser class
-#include "../LogExpParser/LOGParser.h"	// LOGParser class
+#include "Clause.h"                     // Clause class
+#include "../CNFParser/CNFParser.h"     // CNFParser class
+#include "../LogExpParser/LOGParser.h"    // LOGParser class
+
+// GLOBAL FLAGS/VARS
+#include "../Global/Global.h"
 
 using namespace std;
 
@@ -35,12 +38,13 @@ bool SATSolver::parse(PARSE_TYPE p_parseType /* = CNF_PARSE */)
     m_parseType = p_parseType;
     if(p_parseType == CNF_PARSE)
     {
-        // Create parser and parse
+        // Create parser and parse CNF formula
         CNFParser parser(m_fileName);
         return parser.parse(m_maxIndex, m_formula[0]);
     }
     else
     {
+    // Used built-in parser and parse LOG formula
         m_parser.setFileName(m_fileName);
         return m_parser.parse(m_maxIndex, m_formula[0]);
     }
@@ -58,6 +62,7 @@ in which they appear in it .
 
 void SATSolver::satisfyClause(It p_it, int p_satisfier)
 {
+
     if(p_satisfier != -1)
     {
         Clause c = *p_it;
@@ -71,22 +76,28 @@ void SATSolver::satisfyClause(It p_it, int p_satisfier)
     c.setSatisfier(-1);
     m_formula[1].erase(p_it);
     m_formula[0].insert(c);
-}
+} // satisfyClause(It, int)
 
 void SATSolver::reviveClauseWithSatisfier(int p_satisfier)
 {
+
     Clause searchClause = makeSearchClause2(p_satisfier);
     auto its = m_formula[1].equal_range(searchClause);
     vector<It> toRevive;
+
+    // Collect clauses to revive
     for(auto it = its.first ; it != its.second ; ++it)
         toRevive.push_back(it);
+
+    // Satisfy clauses
     for(auto it : toRevive)
         satisfyClause(it,-1);
-}
+} // reviveClauseWithSatisfier(int)
 
 
 bool SATSolver::isContradictory()
 {
+    // Simple check on the Clause size
     for(Clause c : m_formula[0])
         if(c.getLiterals(0).size() == 0)
         {
@@ -94,7 +105,7 @@ bool SATSolver::isContradictory()
             return true;
         }
     return false;
-}
+} // bool isContradictory()
 
 bool SATSolver::backtrack(bool& p_unsat)
 {
@@ -131,7 +142,7 @@ bool SATSolver::backtrack(bool& p_unsat)
         return true;
     }
     return false;
-}
+} // bool backtrack(bool&)
 
 bool SATSolver::unitProp()
 {
@@ -155,7 +166,7 @@ bool SATSolver::deduce()
         return false;
 
     return unitProp();
-}
+} // bool deduce()
 
 void SATSolver::applyDecision(const decision& p_dec)
 {
@@ -178,7 +189,7 @@ void SATSolver::applyDecision(const decision& p_dec)
         satisfyClause(it,p_dec.index);
 
     m_valuation[p_dec.index] = p_dec.value;
-}
+} // applyDecision(const decision&)
 
 decision SATSolver::takeABet()
 {
@@ -199,11 +210,12 @@ decision SATSolver::takeABet()
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
     m_currentAssignement.push_back(bet);
     return bet;
-}
+} // decision takeABet()
 
 void SATSolver::flushTaut()
 {
     vector<It> toSatisfy;
+    // For each tautologie, add it to the list of  the clauses to satisfy
     for(It it = m_formula[0].begin() ; it != m_formula[0].end() ; ++it)
     {
         if(it->isTaut())
@@ -215,11 +227,15 @@ void SATSolver::flushTaut()
 
     // Avoid concurency (we can't delet elements in the previous loop
     for(It it : toSatisfy)
-        satisfyClause(it,-2);//Special satisfier for taut
-}
+    {
+        satisfyClause(it, -2);//Special satisfier for taut
+    }
+} // flushTaut()
 
 int SATSolver::solve()
 {
+    //Pre-calculus :
+    //associates each variable to all the clause containing it as literal
     for(It it = m_formula[0].begin() ; it != m_formula[0].end() ; ++it)
         for(auto l : it->getLiterals())
         {
@@ -260,11 +276,13 @@ int SATSolver::solve()
 
 void SATSolver::showSolution()
 {
+    // If using tseitin transformation, we have to display only the originals variables
     if(m_parseType == LOG_PARSE)
     {
         m_parser.tseitinResolution(m_valuation, m_maxIndex);
     }
 
+    // Display user-friendly output
     for(int i = 1 ; i <= m_maxIndex ; i++)
     {
         string sign="";
@@ -274,9 +292,11 @@ void SATSolver::showSolution()
             cout << sign+to_string(i)+" ";
         }
     }
+
+    // End of the valuation
     cout << "0" << endl;
     m_currentAssignement.clear();
-}
+} // showSolution()
 
 bool SATSolver::evaluate()
 {
@@ -288,12 +308,12 @@ bool SATSolver::evaluate()
             break;
     }
     return val;
-}
+} // bool evaluate()
 
 string SATSolver::currentStateToStr()
 {
     return decisionToStr() + "# " + formulaToStr();
-}
+} // string currentStateToStr()
 
 string SATSolver::formulaToStr()
 {
@@ -305,7 +325,7 @@ string SATSolver::formulaToStr()
     }
 
     return toReturn;
-}
+} // string formulaToStr()
 
 string SATSolver::decisionToStr()
 {
@@ -313,4 +333,4 @@ string SATSolver::decisionToStr()
     for(auto d : m_currentAssignement)
         toReturn += string((d.value) ? "" : "-") + to_string(d.index) + string((d.bet) ? "b" : "d");
     return toReturn;
-}
+} // string decisionToStr()

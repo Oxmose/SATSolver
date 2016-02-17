@@ -18,7 +18,11 @@
 // OTHER INCLUDES FROM PROJECT
 #include "../Core/Clause.h" // Clause class
 
+// GLOBAL FLAGS/VARS
+#include "../Global/Global.h"
+
 using namespace std;
+
 
 CNFParser::CNFParser(const string &p_fileName)
 {
@@ -31,6 +35,7 @@ CNFParser::~CNFParser()
 
 bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 {
+    OUTDEBUG("CNF PARSE BEGIN");
     // Open file
     ifstream file(m_fileName);
     if(!file.is_open())
@@ -171,11 +176,11 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     /*
      * Error management
     */
-
     if(clausesCount != givenClausesCount)
     {
         cerr << "The file has " << clausesCount << " clauses but " << givenClausesCount << " were announced." << endl;
         givenClausesCount = clausesCount;
+	noError = false;
     }
 
     // If some variables were not used or too much were
@@ -193,10 +198,15 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
         // We check which ones were used and shouldn't have been
         for(unsigned int i = 1; i < maxIndex+1; ++i)
             if(!used[i])
+            {
+                noError = false;
                 cerr << i << " was not used whereas maximum index is " << maxIndex << "." << endl;
+            }
     }
 
     file.close();
+
+    OUTDEBUG("LOG PARSE END WITH STATUS " << noError);
 
     return noError;
 } // bool parse(unsigned int &, ClauseSet&)

@@ -22,6 +22,9 @@
 #include "expr.hpp"
 #include "expr.tab.hpp"
 
+// GLOBAL FLAGS/VARS
+#include "../Global/Global.h"
+
 using namespace std;
 
 LOGParser::LOGParser(const string &p_fileName /* = ""  */)
@@ -40,6 +43,8 @@ void LOGParser::setFileName(const string &p_fileName)
 
 bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 {
+
+    OUTDEBUG("LOG PARSE BEGIN");
     // Open file
     yyin = fopen(m_fileName.c_str(), "r");
     if(yyin == NULL)
@@ -162,6 +167,8 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
         p_formula.insert(Clause(clause.first, clause.second, clausesCount));
 	++clausesCount;
     }
+
+    OUTDEBUG("LOG PARSE END WITH STATUS" << noParseError);
 
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)

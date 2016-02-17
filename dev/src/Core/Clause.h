@@ -7,15 +7,14 @@
 #ifndef DEF_CLAUSE_H
 #define DEF_CLAUSE_H
 
-
 // STD INCLUDES
-#include <cstdlib>
-#include <iostream>
-#include <vector>    //std::vector
-#include <utility>   //std::pair
-#include <set>
-#include <map>
-#include <string>
+#include <cstdlib>  //std::abs
+#include <iostream> //std::cout std::cerr
+#include <vector>   //std::vector
+#include <utility>  //std::pair
+#include <set>      //std::set
+#include <map>      //std::map
+#include <string>   //std::string
 
 typedef struct literal literal;
 struct literal
@@ -29,7 +28,7 @@ struct literal
     {
         return index < b.index;//For a log(n) access in set structure
     }
-};
+}; // struct literal
 
 static literal literal_from_int(int p_l)//parsing utility
 {
@@ -78,7 +77,7 @@ static Clause makeSearchClause(int p_indice)
 {
     std::vector<literal> lit;
     return Clause(lit,false,p_indice);
-}
+} // static Clause makeSearchClause(int)
 
 static Clause makeSearchClause2(int p_satisfier)
 {
@@ -86,7 +85,7 @@ static Clause makeSearchClause2(int p_satisfier)
     Clause c = Clause(lit,false,-1);
     c.setSatisfier(p_satisfier);
     return c;
-}
+} // static Clause makeSearchClause2(int)
 
 typedef std::multiset<Clause,bool (*) (const Clause&,const Clause&)> ClauseSet;
 typedef ClauseSet::iterator It;
@@ -94,12 +93,12 @@ typedef ClauseSet::iterator It;
 static bool compareUnsat(const Clause& p_a, const Clause& p_b)
 {
     return p_a.getId() < p_b.getId();//Sort unsat Clauses by id for log(n) find
-}
+} // static bool compareUnsat(const Clause&, const Clause&)
 
 static bool compareSat(const Clause& p_a, const Clause& p_b)
 {
     //Using multiset, Clause with same satisfier are equivalent
     return p_a.getSatisfier() < p_b.getSatisfier();
-}
+} // static bool compareSat(const Clause&, const Clause&);
 
 #endif
