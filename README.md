@@ -154,3 +154,10 @@ Temps d'éxécution : 3m50.931s
 SATIFIABLE
 
 Temps d'éxécution : 0.028s
+
+## Qui a fait quoi
+#Tristan
+Implémentation DPLL, optimisation avec liste de priorité, structures de données et test
+
+#Alexy
+Parser CNF, transformation de Tseitin, structures de données, interface, générateur de formules et test
