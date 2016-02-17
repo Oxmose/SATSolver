@@ -61,6 +61,12 @@ le même dans l'implémentation : l'un central dans le backtrack et l'autre pure
 Ces choix d'implémentation se révèlent payant en pratique: on gagne en moyenne 30% de temps de calcul par rapport
 à l'implémentation naïve (l'un des premiers commits sur le git).
 
+Ce qui n'est pas méga satisfaisant sur le principe:
+    -les copies que l'on doit faire pour passer de m_formula[0] à m_formula[1]
+    et vice versa (delete/insert), voir SATSolver::satisfyClause.
+    -idem avec les littéraux (Clause::setAssigned)
+    -surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux ?)
+
 ## Parsers
 Le parser CNF permet de parser les fichiers CNF au format DIMACS.
 
@@ -103,7 +109,7 @@ Sans flag -O2 : 37.75s
 
 Avec flag -O2 : 7.052s
 
-### simple_v3_c2.cnf 
+### simple_v3_c2.cnf
 SATIFIABLE
 
 Temps d'éxécution : 0.003s
@@ -113,32 +119,32 @@ SATIFIABLE
 
 Temps d'éxécution : 0.002s
 
-### aim-50-1_6-yes1-4.cnf 
+### aim-50-1_6-yes1-4.cnf
 SATIFIABLE
 
 Temps d'éxécution : 0.006s
 
-### aim-100-1_6-no-1.cnf 
+### aim-100-1_6-no-1.cnf
 UNSATIFIABLE
 
 Temps d'éxécution : 7.052s
 
-### hole6.cnf 
+### hole6.cnf
 UNSATISFIABLE
 
 Temps d'éxécution : 0.761s
 
-### dubois20.cnf 
+### dubois20.cnf
 UNSATISFIABLE
 
 Temps d'éxécution : 54.320s
 
-### dubois21.cnf 
+### dubois21.cnf
 UNSATISFIABLE
 
 Temps d'éxécution : 1m49.677s
 
-### dubois22.cnf 
+### dubois22.cnf
 UNSATISFIABLE
 
 Temps d'éxécution : 3m50.931s

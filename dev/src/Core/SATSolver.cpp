@@ -62,7 +62,7 @@ in which they appear in it .
 
 void SATSolver::satisfyClause(It p_it, int p_satisfier)
 {
-
+    //p_satisfier == -1 signifie rétrograder la clause
     if(p_satisfier != -1)
     {
         Clause c = *p_it;
