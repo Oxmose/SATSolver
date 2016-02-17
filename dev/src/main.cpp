@@ -59,8 +59,8 @@ void displayMenu(char *softName)
 
     cout << "\t To generate DIMAC CNF file, press 1 and then [ENTER]" << endl;
     cout << "\t To read the credits, press 2 and then [ENTER]" << endl;
-    cout << "\t To quit, press 3 and then [ENTER]" << endl;    
-    
+    cout << "\t To quit, press 3 and then [ENTER]" << endl;
+
 } // displayMenu()
 
 int main(int argc, char** argv)
@@ -74,10 +74,11 @@ int main(int argc, char** argv)
         displayMenu(argv[0]);
 
         // Get the user choice
-        unsigned short int choice; 
-        bool ok = false;       
+        unsigned short int choice;
+        bool ok = false;
         do
-        {        
+        {
+            cout << ">";
             cin >> choice;
             if(choice == 1)
             {
@@ -148,14 +149,14 @@ int main(int argc, char** argv)
             parserType = LOG_PARSE;
             fileName = argv[2];
         }
-    }    
+    }
     else if(argc != 2)
     {
         cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name> [-debug]" << endl;
         return 1;
     }
     else
-        fileName = argv[1];   
+        fileName = argv[1];
 
     // Time computation
     std::clock_t start;
@@ -170,7 +171,7 @@ int main(int argc, char** argv)
     // Parse test
     if(!solver.parse(parserType))
     {
-        cerr << "Error while parsing the file." << endl;
+        cerr << "[WARNING]Errors while parsing the file." << endl;
     }
 
     OUTDEBUG("We check SAT of :" << endl << solver.formulaToStr());

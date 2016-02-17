@@ -40,7 +40,8 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     ifstream file(m_fileName);
     if(!file.is_open())
     {
-        cerr << "Can't open file." << endl;
+        cerr << "[ERROR]Can't open file." << endl;
+        exit(EXIT_FAILURE);
         return false;
     }
 
@@ -94,7 +95,8 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             if(validator != "cnf")
             {
                 noError = false;
-                cerr << "Not a CNF formula or header is corrupted." << endl;
+                cerr << "[ERROR]Not a CNF formula or header is corrupted." << endl;
+                exit(EXIT_FAILURE);
                 return noError;
             }
 
@@ -158,7 +160,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
                 }
                 if(readLiteral > p_maxIndex)
                 {
-                    cerr << "The file has " << readLiteral << " for index variable but " << p_maxIndex << " was announced as maximum index." << endl;
+                    cerr << "[WARNING]The file has " << readLiteral << " for index variable but " << p_maxIndex << " was announced as maximum index." << endl;
                     if(readLiteral > maxIndex)
                         maxIndex = readLiteral;
                 }
@@ -178,7 +180,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
     */
     if(clausesCount != givenClausesCount)
     {
-        cerr << "The file has " << clausesCount << " clauses but " << givenClausesCount << " were announced." << endl;
+        cerr << "[WARNING]The file has " << clausesCount << " clauses but " << givenClausesCount << " were announced." << endl;
         givenClausesCount = clausesCount;
 	noError = false;
     }
@@ -200,13 +202,13 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             if(!used[i])
             {
                 noError = false;
-                cerr << i << " was not used whereas maximum index is " << maxIndex << "." << endl;
+                cerr <<"[WARNING]" << i << " was not used whereas maximum index is " << maxIndex << "." << endl;
             }
     }
 
     file.close();
 
-    OUTDEBUG("LOG PARSE END WITH STATUS " << noError);
+    OUTDEBUG("CNF PARSE END WITH STATUS " << noError);
 
     return noError;
 } // bool parse(unsigned int &, ClauseSet&)
