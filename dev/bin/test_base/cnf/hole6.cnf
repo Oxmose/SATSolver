@@ -9,6 +9,7 @@ c NOTE: Part of the collection at the Forschungsinstitut fuer
 c       anwendungsorientierte Wissensverarbeitung in Ulm Germany.
 c
 c NOTE: Not satisfiable
+c exec : 0.761s
 c
 p cnf 42 133
 -1     -7    0
