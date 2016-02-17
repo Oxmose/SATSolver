@@ -9,9 +9,7 @@ c
 c NOTE: Satisfiable
 c
 c CURRENT EXE TIME:
-c   real	0m0.093s
-c   user	0m0.010s
-c   sys	0m0.003s
+c   real	0m0.006s
 c
 p cnf 50 80
 16 17 30 0

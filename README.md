@@ -99,6 +99,51 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 
 Test de aim-100-1_6-no-1.cnf
 
-Sans flag -O2 : 37,75s
+Sans flag -O2 : 37.75s
 
-Avec flag -O2 : 7,02s
+Avec flag -O2 : 7.052s
+
+### simple_v3_c2.cnf 
+SATIFIABLE
+
+Temps d'éxécution : 0.003s
+
+### quinn.cnf
+SATIFIABLE
+
+Temps d'éxécution : 0.002s
+
+### aim-50-1_6-yes1-4.cnf 
+SATIFIABLE
+
+Temps d'éxécution : 0.006s
+
+### aim-100-1_6-no-1.cnf 
+UNSATIFIABLE
+
+Temps d'éxécution : 7.052s
+
+### hole6.cnf 
+UNSATISFIABLE
+
+Temps d'éxécution : 0.761s
+
+### dubois20.cnf 
+UNSATISFIABLE
+
+Temps d'éxécution : 54.320s
+
+### dubois21.cnf 
+UNSATISFIABLE
+
+Temps d'éxécution : 1m49.677s
+
+### dubois22.cnf 
+UNSATISFIABLE
+
+Temps d'éxécution : 3m50.931s
+
+### par8-1-c.cnf
+SATIFIABLE
+
+Temps d'éxécution : 0.028s
