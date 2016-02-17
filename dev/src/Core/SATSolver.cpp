@@ -151,6 +151,9 @@ bool SATSolver::unitProp()
 
 bool SATSolver::deduce()
 {
+    if(m_formula[0].empty())
+        return false;
+
     return unitProp();
 }
 
@@ -177,6 +180,15 @@ void SATSolver::applyDecision(const decision& p_dec)
     m_valuation[p_dec.index] = p_dec.value;
 }
 
+void SATSolver::firstDeduce()
+{
+    while(deduce())
+        applyDecision(m_currentAssignement.back());
+    
+    OUTDEBUG("First deductions: " <<  currentStateToStr());
+    m_currentAssignement.clear();
+}
+
 decision SATSolver::takeABet()
 {
     int firstUnassigned = -1;
@@ -189,6 +201,10 @@ decision SATSolver::takeABet()
         }
 
     decision bet = decision(firstUnassigned,true,true);
+
+    if(m_formula[0].empty())
+        return bet;
+
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
     m_currentAssignement.push_back(bet);
     return bet;
@@ -202,37 +218,31 @@ void SATSolver::flushTaut()
         if(it->isTaut())
         {
             OUTDEBUG("Tautologie detected in " << it->toStr());
-            toSatisfy.push_back(it);            
+            toSatisfy.push_back(it);
         }
     }
 
     // Avoid concurency (we can't delet elements in the previous loop
     for(It it : toSatisfy)
-    {
         satisfyClause(it,-2);//Special satisfier for taut
-    }
 }
 
 int SATSolver::solve()
 {
-    //Get rid of tautologies
-    //TODO : buffer overflow...
-    flushTaut();
-
-    //Pre-calculus :
-    //associates each variable to all the clause containing it as literal
     for(It it = m_formula[0].begin() ; it != m_formula[0].end() ; ++it)
-    {
         for(auto l : it->getLiterals())
         {
+            m_valuation[l.index] = -1;
             m_clauseWithVar[l.index].push_back(it->getId());
-            m_valuation[l.index] = -1;//Initialization aswell
         }
-    }
 
-    OUTDEBUG(endl << currentStateToStr());
+    flushTaut();//Get rid of tautologie
+    firstDeduce();//1ere passe
+
     takeABet();//Initial bet
-    while(!m_currentAssignement.empty())
+
+    bool unsat = false;
+    while(!m_formula[0].empty() && !unsat)
     {
         decision currDecision = m_currentAssignement.back();
         OUTDEBUG("Handling " << ((currDecision.bet) ? string("bet") : string("deduction")) << ": "
@@ -243,26 +253,19 @@ int SATSolver::solve()
 
         bool unsat = false;
         if(backtrack(unsat))
-        {
-            if(unsat)
-                return false;//UNSATISFIABLE !
             continue;
-        }
 
         OUTDEBUG("SAT rate : " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size());
         OUTDEBUG("");//endl
-
-        if(m_formula[0].empty())//SATISFIABLE !
-        {
-            OUTDEBUG("Evaluation: " << evaluate());
-            return true;
-        }
 
         if(deduce())
             continue;
 
         takeABet();
     }
+
+    OUTDEBUG("evaluate : " << evaluate());
+    return !unsat;
 } // bool solve()
 
 void SATSolver::showSolution()
@@ -271,7 +274,7 @@ void SATSolver::showSolution()
     {
         m_parser.tseitinResolution(m_valuation, m_maxIndex);
     }
-    
+
     for(int i = 1 ; i <= m_maxIndex ; i++)
     {
         string sign="";
