@@ -150,7 +150,7 @@ bool SATSolver::unitProp()
         if(c.getLiterals().size() == 1)
         {
             int indexUnit = c.getLiterals().begin()->index;
-            bool value = !c.getLiterals(aux ).begin()->bar;
+            bool value = !c.getLiterals().begin()->bar;
 
             decision deduction = decision(indexUnit,value,false);
             OUTDEBUG("\tDeducing (unit prop): " << indexUnit << " to " << ((value) ? string("True") : string("False")));
@@ -310,7 +310,7 @@ void SATSolver::showSolution()
     // If using tseitin transformation, we have to display only the originals variables
     if(m_parseType == LOG_PARSE)
         m_parser.tseitinResolution(m_valuation, m_maxIndex);
-    
+
 
     // Display user-friendly output
     for(int i = 1 ; i <= m_maxIndex ; i++)
