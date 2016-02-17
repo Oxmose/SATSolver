@@ -64,6 +64,11 @@ int main(int argc, char** argv)
     else
         cout << "s UNSATISFIABLE" << endl;
 
+    /*
+        N.B:There's no "s ???" output as we do not impose any time limit or run
+        any bizarre heuristic.
+     */
+
     // Display time
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
     OUTDEBUG("Solved in: "<< duration << "s");

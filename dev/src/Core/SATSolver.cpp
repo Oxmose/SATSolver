@@ -147,10 +147,10 @@ bool SATSolver::backtrack(bool& p_unsat)
 bool SATSolver::unitProp()
 {
     for(Clause c : m_formula[0])
-        if(c.getLiterals(0).size() == 1)
+        if(c.getLiterals().size() == 1)
         {
-            int indexUnit = c.getLiterals(0).begin()->index;
-            bool value = !c.getLiterals(0).begin()->bar;
+            int indexUnit = c.getLiterals().begin()->index;
+            bool value = !c.getLiterals(aux ).begin()->bar;
 
             decision deduction = decision(indexUnit,value,false);
             OUTDEBUG("\tDeducing (unit prop): " << indexUnit << " to " << ((value) ? string("True") : string("False")));
@@ -257,12 +257,10 @@ void SATSolver::flushTaut()
 
     // Avoid concurency (we can't delet elements in the previous loop
     for(It it : toSatisfy)
-    {
         satisfyClause(it, -2);//Special satisfier for taut
-    }
 } // flushTaut()
 
-int SATSolver::solve()
+bool SATSolver::solve()
 {
     //Pre-calculus :
     //associates each variable to all the clause containing it as literal
@@ -275,6 +273,9 @@ int SATSolver::solve()
 
     flushTaut();//Get rid of tautologie
 
+    /*  The preprocessing (initial init prop etc) are
+        part of the main loop. (when m_currentAssignement is empty)
+    */
     bool unsat = false;
     while(!m_formula[0].empty() && !unsat)
     {
@@ -291,7 +292,7 @@ int SATSolver::solve()
         if(backtrack(unsat))
             continue;
 
-        OUTDEBUG("SAT rate : " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size());
+        OUTDEBUG("SAT rate: " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size());
         OUTDEBUG("");//endl
 
         if(deduce())
@@ -308,9 +309,8 @@ void SATSolver::showSolution()
 {
     // If using tseitin transformation, we have to display only the originals variables
     if(m_parseType == LOG_PARSE)
-    {
         m_parser.tseitinResolution(m_valuation, m_maxIndex);
-    }
+    
 
     // Display user-friendly output
     for(int i = 1 ; i <= m_maxIndex ; i++)

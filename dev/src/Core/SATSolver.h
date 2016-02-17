@@ -48,7 +48,7 @@ class SATSolver
         bool parse(PARSE_TYPE p_parseType = CNF_PARSE);
 
         /* DPLL algorithm */
-        int solve();
+        bool solve();
         void showSolution();
 
         /* Debug stuff */
