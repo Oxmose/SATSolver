@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     if(!solver.parse(parserType))
         OUTWARNING("Errors while parsing the file.");
 
-    OUTDEBUG("We check SAT of :" << endl << solver.formulaToStr());
+    OUTDEBUG("We check SAT of :" << solver.formulaToStr());
 
     // Solve SAT formula
     if(solver.solve())

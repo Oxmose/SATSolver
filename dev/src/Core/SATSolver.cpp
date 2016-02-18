@@ -292,8 +292,7 @@ bool SATSolver::solve()
         if(backtrack(unsat))
             continue;
 
-        OUTDEBUG("SAT rate: " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size());
-        OUTDEBUG("");//endl
+        OUTDEBUG("SAT rate: " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size() << endl);
 
         if(deduce())
             continue;
