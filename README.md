@@ -20,23 +20,18 @@ On y prend des décisions qui sont soit des bets soit des déductions.
 Les décisions sont stackées dans m_currentAssignement.   
 
 La formule que l'on manipule est décomposée en deux ensembles de clauses :
-
     - les non actuellement satisfaites (m_formula[0])
-
     - les actuellement satisfaites (m_formula[1])
 
 Ces deux ensembles de clauses sont munis d'une structure de multiset dont l'ordre
-est différent.
-On considère les clauses non satisfaites dans l'ordre de leur ID.
-On trouve les clauses non satisfaites qui possèdent la variable d'index x en
+est différent :
+    - On trouve les clauses non satisfaites qui possèdent la variable d'index x en
 nlog(n) grâce à la map précalculée m_clauseWithVar qui associe à chaque variable
 la liste des clauses qui la contienne et le multiset.    
 
-On considère les clauses satisfaites par classe d'équivalence de même "satisfier" :
+    - On considère les clauses satisfaites par classe d'équivalence de même "satisfier" :
 quand on satisfait une clause c'est grace à un satisfier (index de la variable qui a permis de satisfaire)
-et donc pour les ressusciter dans le backtrack on appelle toutes les clauses avec le satisfier i.
-C'est ici qu'est vraiment exploitée la structure de multiset.
-On a choisi de la garder pour les deux par soucis d'uniformité.     
+et donc pour les ressusciter dans le backtrack on appelle toutes les clauses avec le satisfier i. C'est ici qu'est vraiment exploitée la structure de multiset. On a choisi de la garder pour les deux par soucis d'uniformité.     
 
 Les clauses contiennent sont construites à l'image de la formule.
 Deux sets : les littéraux assignés et ceux non assignés.
@@ -64,12 +59,12 @@ le même dans l'implémentation : l'un central dans le backtrack et l'autre pure
 Ces choix d'implémentation se révèlent payant en pratique: on gagne en moyenne 30% de temps de calcul par rapport
 à l'implémentation naïve (l'un des premiers commits sur le git).     
 
+### Améliorations:    
+
 Ce qui n'est pas méga satisfaisant sur le principe:
     - les copies que l'on doit faire pour passer de m_formula[0] à m_formula[1]
     et vice versa (delete/insert), voir SATSolver::satisfyClause.
-
     - idem avec les littéraux (Clause::setAssigned)
-
     - surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux ?)    
 
 
@@ -78,7 +73,7 @@ Le parser CNF permet de parser les fichiers CNF au format DIMACS.
 
 Le parser LOG permet de parser les fichiers FOR qui contiennent des clauses logiques plus conviviales pour l'utilisateur.      
 
-Améliorations:     
+### Améliorations:     
 
 Le parser LOG applique la transformation de Tseitin à la formule originelle et parse de nouveau la formule récupérée afin de la rendre compatible avec nos structures de données, il serait plus convenable d'intégrer cette transformation directement dans le parser.       
 
