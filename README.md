@@ -20,7 +20,9 @@ On y prend des décisions qui sont soit des bets soit des déductions.
 Les décisions sont stackées dans m_currentAssignement.   
 
 La formule que l'on manipule est décomposée en deux ensembles de clauses :
+
     - les non actuellement satisfaites (m_formula[0])
+
     - les actuellement satisfaites (m_formula[1])
 
 Ces deux ensembles de clauses sont munis d'une structure de multiset dont l'ordre
