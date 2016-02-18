@@ -107,7 +107,6 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 
 ## Performances
 ###Optimisation à la compilation
-
 Il s'avère que -O2 fait gagner beaucoup de temps, donc tous les tests
 présentés ont été fait en -O2.  
 Un exemple de comparaison sur aim-100-1_6-no-1.cnf :  
@@ -117,6 +116,15 @@ Sans flag -O2 : 37.75s
 Avec flag -O2 : 7.052s
 
 ### Dummy tests CNF
+
+Tous les tests dummy_ dans dev/bin/test_base/cnf montrent les fonctionnalités implémentées
+dans DPLL, pour bien le voir lancer en -debug.
+
+* \_sat: dummy satisfiable
+* \_taut: dummy tautologie
+* \_uniquepol: dummy deduce avec 1 seule polarité
+* \_unitprop: dummy deduce clauses unitaires
+* \_unsat: dummy unsat
 
 ### Base de test CNF (cf: dev/bin/test_base/cnf)
 
