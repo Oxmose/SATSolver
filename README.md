@@ -91,7 +91,7 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 
     * dev/bin/test_base/cnf contient les formules CNF utilisées pour les tests
 
-    * dev/bin/test_base/log contient les formules logiques utilisées pour les tests
+    * dev/bin/test_base/for contient les formules logiques utilisées pour les tests
 
 * dev/src contient les sources du programme (main et makefile à la racine)
 
@@ -174,6 +174,21 @@ SATIFIABLE
 Temps d'éxécution : 0.028s
 
 ### Dummy tests FOR
+
+* \_ant: dummy antithèse
+* \_con: dummy conjonction
+* \_dis: dummy disjonction
+* \_eq: dummy equivalence
+* \_imp: dummy implication
+* \_neg: dummy negation
+* \_xor: dummy xor
+* \_simple: dummy simple
+
+### Base de test FOR (cf: dev/bin/test_base/for)
+* \_test
+* \_test1
+* \_test2
+* \_test3
 
 ### La clause de l'horreur
 
