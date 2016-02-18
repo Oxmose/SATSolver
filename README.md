@@ -110,60 +110,66 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 
 Il s'avère que -O2 fait gagner beaucoup de temps, donc tous les tests
 présentés ont été fait en -O2.  
-Un exemple de comparaison sur aim-100-1_6-no-1.cnf  
+Un exemple de comparaison sur aim-100-1_6-no-1.cnf :  
 
 Sans flag -O2 : 37.75s
 
 Avec flag -O2 : 7.052s
 
-### simple_v3_c2.cnf
+### Dummy tests CNF
+
+### Base de test CNF (cf: dev/bin/test_base/cnf)
+
+#### simple_v3_c2.cnf
 SATIFIABLE
 
 Temps d'éxécution : 0.003s
 
-### quinn.cnf
+#### quinn.cnf
 SATIFIABLE
 
 Temps d'éxécution : 0.002s
 
-### aim-50-1_6-yes1-4.cnf
+#### aim-50-1_6-yes1-4.cnf
 SATIFIABLE
 
 Temps d'éxécution : 0.006s
 
-### aim-100-1_6-no-1.cnf
+#### aim-100-1_6-no-1.cnf
 UNSATIFIABLE
 
 Temps d'éxécution : 7.052s
 
-### hole6.cnf
+#### hole6.cnf
 UNSATISFIABLE
 
 Temps d'éxécution : 0.761s
 
-### dubois20.cnf
+#### dubois20.cnf
 UNSATISFIABLE
 
 Temps d'éxécution : 54.320s
 
-### dubois21.cnf
+#### dubois21.cnf
 UNSATISFIABLE
 
 Temps d'éxécution : 1m49.677s
 
-### dubois22.cnf
+#### dubois22.cnf
 UNSATISFIABLE
 
 Temps d'éxécution : 3m50.931s
 
-### par8-1-c.cnf
+#### par8-1-c.cnf
 SATIFIABLE
 
 Temps d'éxécution : 0.028s
 
+### Dummy tests FOR
+
 ## Qui a fait quoi
 #Tristan
-Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et test
+Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.
 
 #Alexy
-Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et test
+Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
