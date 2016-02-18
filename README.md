@@ -21,6 +21,7 @@ Les décisions sont stackées dans m_currentAssignement.
 
 La formule que l'on manipule est décomposée en deux ensembles de clauses :   
     * les non actuellement satisfaites (m_formula[0])
+
     * les actuellement satisfaites (m_formula[1])
 
 Ces deux ensembles de clauses sont munis d'une structure de multiset dont l'ordre
@@ -65,8 +66,11 @@ Ces choix d'implémentation se révèlent payant en pratique: on gagne en moyenn
 Ce qui n'est pas méga satisfaisant sur le principe:
     * les copies que l'on doit faire pour passer de m_formula[0] à m_formula[1]
     et vice versa (delete/insert), voir SATSolver::satisfyClause.
+
     * idem avec les littéraux (Clause::setAssigned)
-    * surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux ?)     
+
+    * surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux ?)    
+     
 
 ## Parsers
 Le parser CNF permet de parser les fichiers CNF au format DIMACS.     
