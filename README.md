@@ -108,7 +108,9 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 ## Performances
 ###Optimisation à la compilation
 
-Test de aim-100-1_6-no-1.cnf
+Il s'avère que -O2 fait gagner beaucoup de temps, donc tous les tests
+présentés ont été fait en -O2.  
+Un exemple de comparaison sur aim-100-1_6-no-1.cnf  
 
 Sans flag -O2 : 37.75s
 
