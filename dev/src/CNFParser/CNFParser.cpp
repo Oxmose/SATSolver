@@ -170,6 +170,8 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
         }
     }
 
+    if(!parsedHeader)
+        OUTERROR("Not a CNF file/formula.");
     /*
      * Error management
     */
