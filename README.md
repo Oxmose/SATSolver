@@ -28,10 +28,9 @@ La formule que l'on manipule est décomposée en deux ensembles de clauses :
 Ces deux ensembles de clauses sont munis d'une structure de multiset dont l'ordre
 est différent :   
 
-    - On trouve les clauses non satisfaites qui possèdent la variable d'index x en nlog(n) grâce à la map précalculée m_clauseWithVar qui associe à chaque variable la liste des clauses qui la contienne et le multiset.    
+On trouve les clauses non satisfaites qui possèdent la variable d'index x en nlog(n) grâce à la map précalculée m_clauseWithVar qui associe à chaque variable la liste des clauses qui la contienne et le multiset.    
 
-    - On considère les clauses satisfaites par classe d'équivalence de même "satisfier"
-
+On considère les clauses satisfaites par classe d'équivalence de même "satisfier".
 Quand on satisfait une clause c'est grace à un satisfier (index de la variable qui a permis de satisfaire)
 et donc pour les ressusciter dans le backtrack on appelle toutes les clauses avec le satisfier i. C'est ici qu'est vraiment exploitée la structure de multiset. On a choisi de la garder pour les deux par soucis d'uniformité.     
 
