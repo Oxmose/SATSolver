@@ -175,6 +175,13 @@ Temps d'éxécution : 0.028s
 
 ### Dummy tests FOR
 
+### La clause de l'horreur
+
+dev/bin/test_base/cnf/bf0432-007.cnf
+
+On ne finit pas en un temps raisonnable (> 1jour aux derniers tests).
+Minisat la finit en 1s.  
+
 ## Qui a fait quoi
 #Tristan
 Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.
