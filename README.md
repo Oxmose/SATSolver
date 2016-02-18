@@ -5,7 +5,7 @@ Powered by git: https://github.com/Oxmose/SATSolver
 ## Arguments de la ligne de commande
 ./reso1 : Démmare l'interface utilisateur du programme.     
 
-Arguments
+### Arguments
 -tseitin \<file_name\> parse et résout le fichier file_name à l'aide de la transformation de Tseitin.   
 
 \<file_name\> parse et résout le fichier file_name à la norme DIMACS CNF.     
@@ -19,10 +19,11 @@ Le coeur de DPLL est SATSolver::solve() (Core/SATSolver.cpp).
 On y prend des décisions qui sont soit des bets soit des déductions.   
 Les décisions sont stackées dans m_currentAssignement.   
 
-La formule que l'on manipule est décomposée en deux ensembles de clauses :   
-    * les non actuellement satisfaites (m_formula[0])
+La formule que l'on manipule est décomposée en deux ensembles de clauses :
 
-    * les actuellement satisfaites (m_formula[1])
+    - les non actuellement satisfaites (m_formula[0])
+
+    - les actuellement satisfaites (m_formula[1])
 
 Ces deux ensembles de clauses sont munis d'une structure de multiset dont l'ordre
 est différent.
@@ -64,13 +65,13 @@ Ces choix d'implémentation se révèlent payant en pratique: on gagne en moyenn
 à l'implémentation naïve (l'un des premiers commits sur le git).     
 
 Ce qui n'est pas méga satisfaisant sur le principe:
-    * les copies que l'on doit faire pour passer de m_formula[0] à m_formula[1]
+    - les copies que l'on doit faire pour passer de m_formula[0] à m_formula[1]
     et vice versa (delete/insert), voir SATSolver::satisfyClause.
 
-    * idem avec les littéraux (Clause::setAssigned)
+    - idem avec les littéraux (Clause::setAssigned)
 
-    * surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux ?)    
-     
+    - surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux ?)    
+
 
 ## Parsers
 Le parser CNF permet de parser les fichiers CNF au format DIMACS.     
