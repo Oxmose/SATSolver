@@ -48,7 +48,7 @@ class SATSolver
         bool parse(PARSE_TYPE p_parseType = CNF_PARSE);
 
         /* DPLL algorithm */
-        int solve();
+        bool solve();
         void showSolution();
 
         /* Debug stuff */
@@ -64,11 +64,15 @@ class SATSolver
 
         /* DPLL intern */
         void flushTaut();
+
         decision takeABet();
-        void satisfyClause(It p_it, int p_satisfier);
         void applyDecision(const decision& p_dec);
+        void satisfyClause(It p_it, int p_satisfier);
+
         bool deduce();
         bool unitProp();
+        bool uniquePol();
+
         bool backtrack(bool& p_unsat);
         bool isContradictory();
         void reviveClauseWithSatisfier(int p_satisfier);

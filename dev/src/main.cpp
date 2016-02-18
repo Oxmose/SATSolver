@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     // Init debug flag
     debugFlag = false;
 
-    // Parse the command line error
+    // Parse the command line
     int commandError = parseCommand(argc, argv, fileName, parserType, debugFlag);
 
 
@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     if(!solver.parse(parserType))
         OUTWARNING("Errors while parsing the file.");
 
-    OUTDEBUG("We check SAT of :" << endl << solver.formulaToStr());
+    OUTDEBUG("We check SAT of :" << solver.formulaToStr());
 
     // Solve SAT formula
     if(solver.solve())
@@ -63,6 +63,11 @@ int main(int argc, char** argv)
     }
     else
         cout << "s UNSATISFIABLE" << endl;
+
+    /*
+        N.B:There's no "s ???" output as we do not impose any time limit or run
+        any bizarre heuristic.
+     */
 
     // Display time
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;

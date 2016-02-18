@@ -62,7 +62,7 @@ in which they appear in it .
 
 void SATSolver::satisfyClause(It p_it, int p_satisfier)
 {
-
+    //p_satisfier == -1 signifie rétrograder la clause
     if(p_satisfier != -1)
     {
         Clause c = *p_it;
@@ -147,25 +147,55 @@ bool SATSolver::backtrack(bool& p_unsat)
 bool SATSolver::unitProp()
 {
     for(Clause c : m_formula[0])
-        if(c.getLiterals(0).size() == 1)
+        if(c.getLiterals().size() == 1)
         {
-            int indexUnit = c.getLiterals(0).begin()->index;
-            bool value = !c.getLiterals(0).begin()->bar;
+            int indexUnit = c.getLiterals().begin()->index;
+            bool value = !c.getLiterals().begin()->bar;
 
             decision deduction = decision(indexUnit,value,false);
-            OUTDEBUG("\tDeducing: " << indexUnit << " to " << ((value) ? string("True") : string("False")));
+            OUTDEBUG("\tDeducing (unit prop): " << indexUnit << " to " << ((value) ? string("True") : string("False")));
             m_currentAssignement.push_back(deduction);
             return true;
         }
     return false;
 } // bool unitProp()
 
+bool SATSolver::uniquePol()
+{
+    //In the pair, first : sum of polarities, second: number of occurencies
+    //We sum the polarities and check if it matches with +- #occurencies
+    map<int,pair<int,int>> countPol;
+
+    for(Clause c : m_formula[0])
+        for(literal l : c.getLiterals())
+        {
+            if(countPol.find(l.index) == countPol.end())
+                countPol[l.index] = make_pair(0,0);
+            countPol[l.index].first += (l.bar) ? -1 : 1;
+            countPol[l.index].second++;
+        }
+
+    for(auto it = countPol.begin(); it != countPol.end(); ++it)
+        if(it->second.first == it->second.second || it->second.first == -1*it->second.second)
+        {
+            decision deduction = decision(it->first,(it->second.first > 0),false);
+            m_currentAssignement.push_back(deduction);
+            OUTDEBUG("\tDeducing (unique pol): " << it->first << " to " << ((it->second.first > 0) ? "True" : "False"));
+            return true;
+        }
+
+    return false;
+}
+
 bool SATSolver::deduce()
 {
     if(m_formula[0].empty())
         return false;
 
-    return unitProp();
+    if(unitProp())
+        return true;
+
+    return uniquePol();
 } // bool deduce()
 
 void SATSolver::applyDecision(const decision& p_dec)
@@ -227,12 +257,10 @@ void SATSolver::flushTaut()
 
     // Avoid concurency (we can't delet elements in the previous loop
     for(It it : toSatisfy)
-    {
         satisfyClause(it, -2);//Special satisfier for taut
-    }
 } // flushTaut()
 
-int SATSolver::solve()
+bool SATSolver::solve()
 {
     //Pre-calculus :
     //associates each variable to all the clause containing it as literal
@@ -245,6 +273,9 @@ int SATSolver::solve()
 
     flushTaut();//Get rid of tautologie
 
+    /*  The preprocessing (initial init prop etc) are
+        part of the main loop. (when m_currentAssignement is empty)
+    */
     bool unsat = false;
     while(!m_formula[0].empty() && !unsat)
     {
@@ -261,8 +292,7 @@ int SATSolver::solve()
         if(backtrack(unsat))
             continue;
 
-        OUTDEBUG("SAT rate : " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size());
-        OUTDEBUG("");//endl
+        OUTDEBUG("SAT rate: " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size() << endl);
 
         if(deduce())
             continue;
@@ -278,9 +308,8 @@ void SATSolver::showSolution()
 {
     // If using tseitin transformation, we have to display only the originals variables
     if(m_parseType == LOG_PARSE)
-    {
         m_parser.tseitinResolution(m_valuation, m_maxIndex);
-    }
+
 
     // Display user-friendly output
     for(int i = 1 ; i <= m_maxIndex ; i++)
