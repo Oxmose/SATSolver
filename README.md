@@ -68,8 +68,8 @@ Ce qui n'est pas méga satisfaisant sur le principe:
     et vice versa (delete/insert), voir SATSolver::satisfyClause.
 
     - idem avec les littéraux (Clause::setAssigned)
-    
-    - surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux ?)    
+
+    - surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux pour ces requêtes ?)    
 
 
 ## Parsers
@@ -89,21 +89,21 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 
 * dev/bin contient l'éxécutable de notre programme    
 
-* dev/bin/test_base/cnf contient les formules CNF utilisées pour les tests
+    * dev/bin/test_base/cnf contient les formules CNF utilisées pour les tests
 
-* dev/bin/test_base/log contient les formules logiques utilisées pour les tests
+    * dev/bin/test_base/log contient les formules logiques utilisées pour les tests
 
 * dev/src contient les sources du programme (main et makefile à la racine)
 
-* dev/src/CNFParser contient les sources du parser CNF
+    * dev/src/CNFParser contient les sources du parser CNF
 
-* dev/src/LogExpParser contient les sources du parser de formules logiques
+    * dev/src/LogExpParser contient les sources du parser de formules logiques
 
-* dev/src/Core contient les sources des structures de données et du coeur du solveur SAT
+    * dev/src/Core contient les sources des structures de données et du coeur du solveur SAT
 
-* dev/src/Global contient les variables globales et toutes autre macros relative au debug de l'application
+    * dev/src/Global contient les variables globales et toutes autre macros relative au debug de l'application
 
-* dev/src/RandomSatExpGenerator contient les sources sur générateur d'expressions CNF.      
+    * dev/src/RandomSatExpGenerator contient les sources sur générateur d'expressions CNF.      
 
 ## Performances
 ###Optimisation à la compilation
