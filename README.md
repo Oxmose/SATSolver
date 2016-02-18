@@ -31,10 +31,10 @@ est différent :
 On trouve les clauses non satisfaites qui possèdent la variable d'index x en nlog(n) grâce à la map précalculée m_clauseWithVar qui associe à chaque variable la liste des clauses qui la contienne et le multiset.    
 
 On considère les clauses satisfaites par classe d'équivalence de même "satisfier".
-Quand on satisfait une clause c'est grace à un satisfier (index de la variable qui a permis de satisfaire)
+Quand on satisfait une clause c'est grâce à un satisfier (index de la variable qui a permis de satisfaire)
 et donc pour les ressusciter dans le backtrack on appelle toutes les clauses avec le satisfier i. C'est ici qu'est vraiment exploitée la structure de multiset. On a choisi de la garder pour les deux par soucis d'uniformité.     
 
-Les clauses contiennent sont construites à l'image de la formule.
+Les clauses sont construites à l'image de la formule.
 Deux sets : les littéraux assignés et ceux non assignés.
 Cela permet de détecter efficacement le cas UnitProp et de manière générale de travailler
 avec uniquement ce dont on a besoin.
@@ -46,14 +46,14 @@ En effet, tant qu'on peut déduire initialement takeABet() qui prend les paris n
 appelée.      
 
 takeABet() met à vrai la première variable vue non assignée.
-On constate des différences de performances en moins ou en plus suivant les tests
+On constate des différences de performance en moins ou en plus suivant les tests
 avec les copains qui prennent les paris dans l'ordre croissant pour l'index de la variable.       
 
 Le nom des fonctions et la construction de la boucle ont été pensés pour tracer au mieux
 le déroulé de DPLL.      
 
 On retient la valuation en cours dans la map m_valuation et on met arbitrairement la valeur 1
-aux variables non assignées à la fin de l'algo (m_valuation[index] = -1). (SATSolver::showSolution() l.321)
+aux variables non assignées à la fin de l'algo (m_valuation[index] = -1).
 Cela peut être vu comme redondant d'avec m_currentAssignement mais le role de ces deux structures n'est pas du tout
 le même dans l'implémentation : l'un central dans le backtrack et l'autre purement visuel pour afficher la solution.      
 
@@ -63,9 +63,12 @@ Ces choix d'implémentation se révèlent payant en pratique: on gagne en moyenn
 ### Améliorations:    
 
 Ce qui n'est pas méga satisfaisant sur le principe:
+
     - les copies que l'on doit faire pour passer de m_formula[0] à m_formula[1]
     et vice versa (delete/insert), voir SATSolver::satisfyClause.
+
     - idem avec les littéraux (Clause::setAssigned)
+    
     - surement d'autres choses (m_formula[0] multiset au lieu de set, peut on faire mieux ?)    
 
 
