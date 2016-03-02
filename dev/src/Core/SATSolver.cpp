@@ -26,29 +26,31 @@
 
 using namespace std;
 
-SATSolver::SATSolver(const string &p_fileName)
+SATSolver::SATSolver(bool p_watchedLitMeth, BET_METHOD p_betMethod)
 {
-    m_fileName = p_fileName;
+    m_watchedLitMeht = p_watchedLitMeth;
+    m_betMethod = p_betMethod;
     m_formula.push_back(ClauseSet(compareUnsat));
     m_formula.push_back(ClauseSet(compareSat));
-} // SATSolver(const string&)
+} // SATSolver(bool)
 
-bool SATSolver::parse(PARSE_TYPE p_parseType /* = CNF_PARSE */)
+void SATSolver::reset()
 {
-    m_parseType = p_parseType;
-    if(p_parseType == CNF_PARSE)
-    {
-        // Create parser and parse CNF formula
-        CNFParser parser(m_fileName);
-        return parser.parse(m_maxIndex, m_formula[0]);
-    }
-    else
-    {
-    // Used built-in parser and parse LOG formula
-        m_parser.setFileName(m_fileName);
-        return m_parser.parse(m_maxIndex, m_formula[0]);
-    }
-} // bool parse(PARSE_TYPE)
+    m_formula.clear();
+    m_formula.push_back(ClauseSet(compareUnsat));
+    m_formula.push_back(ClauseSet(compareSat));
+    m_maxIndex = 0;
+} // reset()
+
+void SATSolver::setMaxIndex(int p_maxIndex)
+{
+    m_maxIndex = p_maxIndex;
+} // setMaxIndex(int)
+
+void SATSolver::setOriginFormula(const ClauseSet &initClauseSet)
+{
+    m_formula[0] = initClauseSet;
+} // setOriginFormula(const ClauseSet&)
 
 SATSolver::~SATSolver()
 {
@@ -304,13 +306,17 @@ bool SATSolver::solve()
     return !unsat;
 } // bool solve()
 
-void SATSolver::showSolution()
+void SATSolver::showSolution(LOGParser &parser)
 {
     // If using tseitin transformation, we have to display only the originals variables
-    if(m_parseType == LOG_PARSE)
-        m_parser.tseitinResolution(m_valuation, m_maxIndex);
+    parser.tseitinResolution(m_valuation, m_maxIndex);
 
 
+    showSolution();
+} // showSolution(LOGParser&)
+
+void SATSolver::showSolution()
+{
     // Display user-friendly output
     for(int i = 1 ; i <= m_maxIndex ; i++)
     {

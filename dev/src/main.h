@@ -25,13 +25,11 @@
 // HEADER FILE
 #include "main.h"
 
-#define VERSION "0.1"
-
 bool debugFlag;
 
 int main(int argc, char** argv);
 
-int parseCommand(int argc, char **argv, std::string &fileName, PARSE_TYPE &parserType, bool &debugFlag);
+int parseCommand(int argc, char **argv, std::string &fileName, PARSE_TYPE &parserType, bool &debugFlag, bool &watchedLitMeth, BET_METHOD &betMeth);
 void displayMenu(char *softName);
 void menuChoice();
 

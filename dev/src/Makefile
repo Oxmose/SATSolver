@@ -9,7 +9,7 @@ LIBLEX=-lfl
 YACC=bison
 
 all: Global/*.cpp RandomSatExpGenerator/*.cpp CNFParser/*.cpp Core/*.cpp main.cpp LogExpParser/LOGParser.cpp LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).cpp
-	$(CC) -std=c++11 -O2 -g -Wno-write-strings -o ../bin/reso1 $^ $(LIBLEX)
+	$(CC) -std=c++11 -O2 -g -Wno-write-strings -o ../bin/resol $^ $(LIBLEX)
 
 LogExpParser/$(NAME).yy.c :  LogExpParser/$(NAME).l
 	$(LEX)  -o $@ $^
@@ -18,4 +18,4 @@ LogExpParser/$(NAME).tab.cpp : LogExpParser/$(NAME).ypp
 	$(YACC) --report=all -o $@ -d $^
 
 clean:
-	rm -f *~ LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).tab.hpp ../bin/reso1
+	rm -f *~ LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).tab.hpp ../bin/resol

@@ -45,15 +45,31 @@ void randomGenerator(const string &p_fileName)
         std::transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
     }while(answer != "yes" && answer != "no" && answer != "");
 
+    string randomSize;
+    bool randomize;
+    cout << "Should it generate clauses size randomly? (YES/no)" << endl;
+    cin >> randomSize;
+    std::transform(randomSize.begin(), randomSize.end(), randomSize.begin(), ::tolower);
+    randomize = (randomSize != "no");
+    
+
     if(answer == "no")
     {
         string formula("");
         for(unsigned int i = 0; i < clausesCount; ++i)
         {
+             
             unsigned int clausesSize;
-            cout << "Size of the clause " << i + 1 << ": ";
-            cin >> clausesSize;
-            cin.ignore();
+            if(!randomize)
+	    {
+		cout << "Size of the clause " << i + 1 << ": ";
+        	cin >> clausesSize;
+            	cin.ignore();
+	    }
+	    else
+	    {
+		clausesSize = 1 + rand() % 19;
+	    }
             for(unsigned int j = 0; j < clausesSize; ++j)
             {
                 int random;
@@ -71,8 +87,16 @@ void randomGenerator(const string &p_fileName)
     else
     {
         unsigned int clausesSize;
-        cout << "Size of the clauses: ";
-        cin >> clausesSize;
+	if(!randomize)
+	{
+            cout << "Size of the clauses: ";
+            cin >> clausesSize;
+	}
+	else
+	{
+	   clausesSize = 1 + rand() % 19;
+	}
+
 
         string formula("");
         for(unsigned int i = 0; i < clausesCount; ++i)

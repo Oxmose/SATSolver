@@ -17,9 +17,8 @@
 #include <fstream>  // std::ifstream
 
 // PROJECT INCLUDES
-#include "Clause.h"                 	// Clause class
-#include "../CNFParser/CNFParser.h"    	// CNFParser class
-#include "../LogExpParser/LOGParser.h"	// LOGParser class
+#include "Clause.h"                     // Clause class
+#include "../LogExpParser/LOGParser.h"    // LOGParser class
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"
@@ -39,16 +38,28 @@ enum PARSE_TYPE
     LOG_PARSE
 };
 
+enum BET_METHOD
+{
+    NORM,
+    RAND,
+    MOMS,
+    DLIS
+};
+
 class SATSolver
 {
     public:
-        SATSolver(const std::string &p_fileName);
+        SATSolver(bool p_watchedLitMeth, BET_METHOD p_betMethod);
         ~SATSolver();
 
-        bool parse(PARSE_TYPE p_parseType = CNF_PARSE);
+        void setMaxIndex(int p_maxIndex);
+        void setOriginFormula(const ClauseSet &initClauseSet);
+        void reset();
+        
 
         /* DPLL algorithm */
         bool solve();
+        void showSolution(LOGParser &parser);
         void showSolution();
 
         /* Debug stuff */
@@ -57,10 +68,6 @@ class SATSolver
         std::string decisionToStr();
 
     private:
-
-	// LOGParser
-	PARSE_TYPE m_parseType;
-	LOGParser m_parser;
 
         /* DPLL intern */
         void flushTaut();
@@ -80,8 +87,9 @@ class SATSolver
 
         bool evaluate();
 
-        std::string     m_fileName;
         unsigned int    m_maxIndex;
+        bool m_watchedLitMeht;
+        BET_METHOD m_betMethod;
 
         std::vector<ClauseSet> m_formula;//0: unsat clauses, 1: sat clauses
 

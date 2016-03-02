@@ -5,6 +5,8 @@
 #ifndef DEF_GLOBAL_H
 #define DEF_GLOBAL_H
 
+#define VERSION "0.2"
+
 #define OUTDEBUG(Out) do {  \
     if(debugFlag) { \
         std::cerr << "[DEBUG] " << Out << std::endl; \

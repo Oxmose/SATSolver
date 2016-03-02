@@ -1,6 +1,10 @@
 // SATSolver class
 #include "Core/SATSolver.h"
 
+// Parsers classes
+#include "CNFParser/CNFParser.h"
+#include "LogExpParser/LOGParser.h"
+
 // STD INCLUDES
 #include <ctime>        //std::clock
 #include <string>       //std::string
@@ -9,6 +13,7 @@
 
 // OTHERS INCLUDES FROM PROJECT
 #include "RandomSatExpGenerator/randomGen.h"
+#include "Core/Clause.h"
 
 // GLOBAL FLAGS/VARS
 #include "Global/Global.h"
@@ -26,14 +31,16 @@ int main(int argc, char** argv)
 
     // Init debug flag
     debugFlag = false;
+    bool watchedLitMeth;
+    BET_METHOD betMeth;
 
     // Parse the command line
-    int commandError = parseCommand(argc, argv, fileName, parserType, debugFlag);
+    int commandError = parseCommand(argc, argv, fileName, parserType, debugFlag, watchedLitMeth, betMeth);
 
 
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] <file_name> [-debug]" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-w1] [-rand | -moms | -dlis] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
@@ -47,11 +54,31 @@ int main(int argc, char** argv)
     OUTDEBUG("DEBUG ENABLED");
 
     // Create the solver
-    SATSolver solver(fileName);
+    SATSolver solver(watchedLitMeth, betMeth);
 
-    // Parse test
-    if(!solver.parse(parserType))
-        OUTWARNING("Errors while parsing the file.");
+    // Create the LOGParser
+    LOGParser logParser(fileName);
+    unsigned int maxIndex;
+    ClauseSet initClausesSet(compareUnsat);
+
+
+    if(parserType == CNF_PARSE)
+    {
+        // Create parser and parse CNF formula
+        CNFParser parser(fileName);
+        if(!parser.parse(maxIndex, initClausesSet))
+            OUTWARNING("Errors while parsing the file.");
+        solver.setMaxIndex(maxIndex);
+        solver.setOriginFormula(initClausesSet);
+    }
+    else
+    {
+        // Parse logExpFormula
+        if(!logParser.parse(maxIndex, initClausesSet))
+            OUTWARNING("Errors while parsing the file.");
+        solver.setMaxIndex(maxIndex);
+        solver.setOriginFormula(initClausesSet);
+    }
 
     OUTDEBUG("We check SAT of :" << solver.formulaToStr());
 
@@ -59,7 +86,10 @@ int main(int argc, char** argv)
     if(solver.solve())
     {
         cout << "s SATIFIABLE" << endl;
-        solver.showSolution();
+        if(parserType == CNF_PARSE)
+            solver.showSolution();
+        else
+            solver.showSolution(logParser);
     }
     else
         cout << "s UNSATISFIABLE" << endl;
@@ -73,12 +103,22 @@ int main(int argc, char** argv)
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
     OUTDEBUG("Solved in: "<< duration << "s");
 
+    // Only for loop instances (may be added later)
+    // solver.reset();
+
     return 0;
 }// main(int, char**)
 
-int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType, bool &debugFlag)
+int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType, bool &debugFlag, bool &watchedLitMeth, BET_METHOD &betMeth)
 {
+    
+    watchedLitMeth = false;
+    betMeth = NORM;
     int commandError = 0;
+    parserType = CNF_PARSE;
+    bool argsValid[4] = {false, false, false, false};
+
+    
     if(argc == 1)
     {
         // Display user interface and enable user to choose the action
@@ -86,47 +126,63 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
         menuChoice();
         return -1;
     }
-    else if(argc == 3)
+    else
     {
-        if(string(argv[1]) != "-tseitin" && string(argv[2]) != "-debug")
+        for(unsigned int i = 1; i < argc; ++i)
         {
-            commandError = 1;
-        }
-        else
-        {
-            int index = 1;
-            if(string(argv[2]) == "-debug")
+            string value = string(argv[i]);
+            if(i == argc - 1)
             {
-                parserType = CNF_PARSE;
-                debugFlag = true;
+                fileName = value;
             }
+            else if(value == "-tseitin" && !argsValid[0])
+            {
+                parserType = LOG_PARSE;
+                argsValid[0] = true;
+            }
+            else if(value == "-w1" && !argsValid[1])
+            {
+                watchedLitMeth = true;
+                argsValid[1] = true;
+            }
+            else if(value == "-rand" && !argsValid[2])
+            {
+                betMeth = RAND;
+                argsValid[2] = true;
+            }
+            else if(value == "-moms" && !argsValid[2])
+            {
+                betMeth = MOMS;
+                argsValid[2] = true;
+            }
+            else if(value == "-dlis" && !argsValid[2])
+            {
+                betMeth = DLIS;
+                argsValid[2] = true;
+            }
+            else if(value == "-debug" && !argsValid[3])
+            {
+                debugFlag = true;
+                argsValid[3] = true;
+            }            
             else
             {
-                index = 2;
-                parserType = LOG_PARSE;
+                commandError = 1;
+                break;
             }
-            fileName = argv[index];
         }
-    }
-    else if(argc == 4)
-    {
-        if(string(argv[1]) != "-tseitin" || string(argv[3]) != "-debug")
+        unsigned int count = 0;
+        for(unsigned int i = 0; i < 4; ++i)
+        {
+            if(argsValid[i])
+                ++count;
+        }
+        if(count != argc - 2)
         {
             commandError = 1;
         }
-        else
-        {
-            debugFlag = true;
-            parserType = LOG_PARSE;
-            fileName = argv[2];
-        }
+        return commandError;
     }
-    else if(argc != 2)
-    {
-        commandError = 1;
-    }
-    else
-        fileName = argv[1];
 
     return commandError;
 }
@@ -166,9 +222,14 @@ void displayMenu(char *softName)
 
     cout << "How to use :" << endl;
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " <file_name> [-debug]" << endl;
+    cout << "\t\t" << softName << " [-w1] [-rand | -moms | -dlis] [-debug] <file_name>" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " -tseitin <file_name> [-debug]" << endl;
+    cout << "\t\t" << softName << " [-tseitin] [-w1] [-rand | -moms | -dlis] [-debug] <file_name>" << endl;
+    cout << "\t The argument -w1 enable the watched literals method." << endl;
+    cout << "\t [-rand | -moms | -dlis] define the used heuristic to bet on the next literal :" << endl;
+    cout << "\t\t -rand : next bet on a random literal." << endl;
+    cout << "\t\t -moms : next bet on the variable which has the maximum occurences count in clauses of minimum size." << endl;
+    cout << "\t\t -dlis : next bet on next variable which can satify the maximum count of clauses." << endl;
 
     cout << "\t To generate DIMAC CNF file, press 1 and then [ENTER]" << endl;
     cout << "\t To read the credits, press 2 and then [ENTER]" << endl;
