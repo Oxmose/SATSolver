@@ -5,6 +5,12 @@
 #include "CNFParser/CNFParser.h"
 #include "LogExpParser/LOGParser.h"
 
+// Bet heuristics classes
+#include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
+#include "BETHeuristic/StandardBet.h"   // Standard bet heuristic
+#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
+#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
+
 // STD INCLUDES
 #include <ctime>        //std::clock
 #include <string>       //std::string
@@ -40,7 +46,7 @@ int main(int argc, char** argv)
 
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-w1] [-rand | -moms | -dlis] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-w1] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
@@ -54,8 +60,31 @@ int main(int argc, char** argv)
     OUTDEBUG("DEBUG ENABLED");
 
     // Create the solver
-    SATSolver solver(watchedLitMeth, betMeth);
+    SATSolver solver(watchedLitMeth);
 
+    // Set strategy
+    switch(betMeth)
+    {
+        case NORM:
+            solver.setStrategy(new StandardBet());
+            break;
+        case RAND0:
+            solver.setStrategy(new RandomBet(false));
+            break;
+        case RAND1:
+            solver.setStrategy(new RandomBet(true));
+            break;
+        case MOMS:
+            break;
+        case DLIS:
+            solver.setStrategy(new DLISBet(false));
+            break;
+        case DLIS1:
+            solver.setStrategy(new DLISBet(true));
+            break;
+        default:
+            solver.setStrategy(new StandardBet());
+    }
     // Create the LOGParser
     LOGParser logParser(fileName);
     unsigned int maxIndex;
@@ -147,7 +176,12 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
             }
             else if(value == "-rand" && !argsValid[2])
             {
-                betMeth = RAND;
+                betMeth = RAND0;
+                argsValid[2] = true;
+            }
+            else if(value == "-rand0" && !argsValid[2])
+            {
+                betMeth = RAND1;
                 argsValid[2] = true;
             }
             else if(value == "-moms" && !argsValid[2])
@@ -158,6 +192,11 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
             else if(value == "-dlis" && !argsValid[2])
             {
                 betMeth = DLIS;
+                argsValid[2] = true;
+            }
+            else if(value == "-dlis" && !argsValid[2])
+            {
+                betMeth = DLIS1;
                 argsValid[2] = true;
             }
             else if(value == "-debug" && !argsValid[3])

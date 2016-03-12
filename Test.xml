@@ -1,0 +1,16 @@
+<!DOCTYPE patchbay>
+<patchbay version="0.4.1" name="Test">
+ <output-sockets>
+  <socket type="jack-audio" exclusive="off" client="system" name="system 1">
+   <plug>capture_1</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket type="alsa-midi" exclusive="off" client="Midi Through" name="Midi Through 1">
+   <plug>Midi Through Port-0</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables/>
+</patchbay>
+

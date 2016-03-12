@@ -17,19 +17,19 @@
 #include "SATSolver.h"    // SATSolver Class header
 
 // PROJECT INCLUDES
-#include "Clause.h"                     // Clause class
-#include "../CNFParser/CNFParser.h"     // CNFParser class
-#include "../LogExpParser/LOGParser.h"    // LOGParser class
+#include "Clause.h"                         // Clause class
+#include "../CNFParser/CNFParser.h"         // CNFParser class
+#include "../LogExpParser/LOGParser.h"      // LOGParser class
+#include "../BETHeuristic/IBet.h"           // Bet Heuristic Interface
 
 // GLOBAL FLAGS/VARS
-#include "../Global/Global.h"
+#include "../Global/Global.h"   // DEBUG
 
 using namespace std;
 
-SATSolver::SATSolver(bool p_watchedLitMeth, BET_METHOD p_betMethod)
+SATSolver::SATSolver(bool p_watchedLitMeth)
 {
     m_watchedLitMeht = p_watchedLitMeth;
-    m_betMethod = p_betMethod;
     m_formula.push_back(ClauseSet(compareUnsat));
     m_formula.push_back(ClauseSet(compareSat));
 } // SATSolver(bool)
@@ -41,6 +41,11 @@ void SATSolver::reset()
     m_formula.push_back(ClauseSet(compareSat));
     m_maxIndex = 0;
 } // reset()
+
+void SATSolver::setStrategy(IBet *p_betMethod)
+{
+    m_betHeuristic = p_betMethod;
+} // setStrategy(IBet*)
 
 void SATSolver::setMaxIndex(int p_maxIndex)
 {
@@ -225,23 +230,7 @@ void SATSolver::applyDecision(const decision& p_dec)
 
 decision SATSolver::takeABet()
 {
-    int firstUnassigned = -1;
-
-    for(auto it=m_formula[0].begin() ; it != m_formula[0].end() ; ++it)
-        if(!it->getLiterals(0).empty())
-        {
-            firstUnassigned = it->getLiterals(0).begin()->index;
-            break;
-        }
-
-    decision bet = decision(firstUnassigned,true,true);
-
-    if(m_formula[0].empty())
-        return bet;
-
-    OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
-    m_currentAssignement.push_back(bet);
-    return bet;
+    return m_betHeuristic->takeABet(m_formula, m_currentAssignement);
 } // decision takeABet()
 
 void SATSolver::flushTaut()
