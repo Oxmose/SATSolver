@@ -10,6 +10,7 @@
 #include "BETHeuristic/StandardBet.h"   // Standard bet heuristic
 #include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
 #include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
+#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
 
 // STD INCLUDES
 #include <ctime>        //std::clock
@@ -75,6 +76,7 @@ int main(int argc, char** argv)
             solver.setStrategy(new RandomBet(true));
             break;
         case MOMS:
+            solver.setStrategy(new MOMSBet());
             break;
         case DLIS:
             solver.setStrategy(new DLISBet(false));
@@ -194,7 +196,7 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
                 betMeth = DLIS;
                 argsValid[2] = true;
             }
-            else if(value == "-dlis" && !argsValid[2])
+            else if(value == "-dlis0" && !argsValid[2])
             {
                 betMeth = DLIS1;
                 argsValid[2] = true;

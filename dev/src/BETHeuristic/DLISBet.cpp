@@ -8,6 +8,7 @@
 #include <vector>   // std::vector
 #include <map>      // std::map
 #include <utility>  // std::pair
+#include <cmath>    // std::exp2
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -33,7 +34,10 @@ DLISBet::~DLISBet()
 decision DLISBet::takeABet(const vector<ClauseSet> &p_formula, vector<decision> &p_currentAssignement)
 {
     OUTDEBUG("DLIS bet");
-    map<int, unsigned int> unassignedLits;
+
+    // First of pair : number of appearence of the literal
+    // Second of pair : sum of the 2^(-|C|)
+    map<int, pair<unsigned int, double>> unassignedLits;
     int selectedUnassigned = -1;
 
     // Gather non assigned literals
@@ -52,9 +56,12 @@ decision DLISBet::takeABet(const vector<ClauseSet> &p_formula, vector<decision> 
                     lit = it2->index;
 
                 if(unassignedLits.find(lit) == unassignedLits.end())
-                    unassignedLits.emplace(lit, 1);
+                    unassignedLits.emplace(lit, make_pair(1, exp2(-((double)(it->getLiterals(0).size())))));
                 else
-                    ++unassignedLits[lit];
+                {
+                    ++unassignedLits[lit].first;
+                    unassignedLits[lit].second += exp2(-((double)(it->getLiterals(0).size())));
+                }
             }
         }
     }
@@ -62,22 +69,40 @@ decision DLISBet::takeABet(const vector<ClauseSet> &p_formula, vector<decision> 
     bool value = true;
     if(unassignedLits.size() > 0)
     {
-        // Get the literal that appear the most
-        int max = 0;
-        for(pair<int, unsigned int> entry : unassignedLits)
+        if(m_scoreMethod)
         {
-            if(entry.second > max)
+            // Get the literal that appear the most, 
+            // duplicated code to avoid multiple useless condition test
+            double max = 0;
+            for(pair<int, pair<unsigned int, double>> entry : unassignedLits)
             {
-                max = entry.second;
-                selectedUnassigned = abs(entry.first);
-                if(entry.first < 0)
-                    value = false;
-                else 
-                    value = true;
+                if(entry.second.second > max)
+                {
+                    max = entry.second.second;
+                    selectedUnassigned = abs(entry.first);
+                    if(entry.first < 0)
+                        value = false;
+                    else 
+                        value = true;
+                }
             }
         }
-
-        
+        else
+        {
+            int max = 0;
+            for(pair<int, pair<unsigned int, double>> entry : unassignedLits)
+            {
+                if(entry.second.first > max)
+                {
+                    max = entry.second.first;
+                    selectedUnassigned = abs(entry.first);
+                    if(entry.first < 0)
+                        value = false;
+                    else 
+                        value = true;
+                }
+            }
+        }              
     }
     decision bet = decision(selectedUnassigned, value, true);
 

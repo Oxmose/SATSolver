@@ -1,17 +1,15 @@
 /*
  *
- *  CLASS DLISBet
+ *  CLASS MOMSBet
  *
 */
 
-#ifndef DEF_DLISBET_H
-#define DEF_DLISBET_H
+#ifndef DEF_MOMSBET_H
+#define DEF_MOMSBET_H
 
 // STD INCLUDES
 #include <vector>   // std::vector
 #include <map>      // std::map
-#include <utility>  // std::pair
-#include <cmath>    // std::pow
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -20,15 +18,13 @@
 // INHERITANCE CLASS
 #include "IBet.h"
 
-class DLISBet : public IBet
+class MOMSBet : public IBet
 {
     public:
-        DLISBet(bool p_scoreMethod);
-        virtual ~DLISBet();
+        virtual ~MOMSBet();
         virtual decision takeABet(const std::vector<ClauseSet> &p_formula, std::vector<decision> &p_currentAssignement);
-
     private:
-        bool m_scoreMethod;
-}; // DLISBet
 
-#endif // DEF_DLISBET_H
+}; // MOMSBet
+
+#endif // DEF_MOMSBET_H

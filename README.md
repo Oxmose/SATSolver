@@ -203,3 +203,6 @@ Implémentation DPLL, prétraitement, optimisation avec liste de priorité, stru
 
 #Alexy
 Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
+
+#TODO
+Optimiser les parcour dans les heuritiques pour trouver le max
