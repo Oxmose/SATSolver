@@ -17,11 +17,13 @@
 #include <fstream>  // std::ifstream
 
 // PROJECT INCLUDES
-#include "Clause.h"                     // Clause class
-#include "../LogExpParser/LOGParser.h"    // LOGParser class
+#include "Clause.h"                         // Clause class
+#include "../CNFParser/CNFParser.h"         // CNFParser class
+#include "../LogExpParser/LOGParser.h"      // LOGParser class
+#include "../BETHeuristic/IBet.h"           // Bet Heuristic Interface
 
 // GLOBAL FLAGS/VARS
-#include "../Global/Global.h"
+#include "../Global/Global.h" // DEBUG
 
 struct decision
 {
@@ -38,19 +40,14 @@ enum PARSE_TYPE
     LOG_PARSE
 };
 
-enum BET_METHOD
-{
-    NORM,
-    RAND,
-    MOMS,
-    DLIS
-};
-
 class SATSolver
 {
     public:
-        SATSolver(bool p_watchedLitMeth, BET_METHOD p_betMethod);
+        SATSolver(bool p_watchedLitMeth);
         ~SATSolver();
+
+        // Bet strategy
+        void setStrategy(IBet *p_betMethod);
 
         void setMaxIndex(int p_maxIndex);
         void setOriginFormula(const ClauseSet &initClauseSet);
@@ -92,7 +89,8 @@ class SATSolver
 
         unsigned int    m_maxIndex;
         bool m_watchedLitMeht;
-        BET_METHOD m_betMethod;
+
+	    IBet *m_betHeuristic;
 
         std::vector<ClauseSet> m_formula;//0: unsat clauses, 1: sat clauses
 
