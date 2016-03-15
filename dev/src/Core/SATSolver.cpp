@@ -146,6 +146,32 @@ bool SATSolver::backtrack(bool& p_unsat)
     return false;
 } // bool backtrack(bool&)
 
+bool SATSolver::unitProp(int p_iClause)
+{
+    Clause searchClause = makeSearchClause(p_iClause);
+    auto theClause = m_formula[0].find(searchClause);
+
+    if(theClause != m_formula[0].end())
+    {
+        if(theClause->getLiterals().size() == 1)
+        {
+            int indexUnit = theClause->getLiterals().begin()->index;
+            bool value = !theClause->getLiterals().begin()->bar;
+
+            decision deduction = decision(indexUnit,value,false);
+            OUTDEBUG("\tDeducing (unit prop): " << indexUnit << " to " << ((value) ? string("True") : string("False")));
+            m_currentAssignement.push_back(deduction);
+            return true;
+
+        }
+        else
+            OUTERROR("Critical issue unitProp(i) : as being called the clause should be unitary");
+    }
+    else
+        OUTERROR("Critical issue unitProp(i) : as being called the clause shouldn't be sat");
+    return false;
+}
+
 bool SATSolver::unitProp()
 {
     for(Clause c : m_formula[0])
@@ -202,7 +228,6 @@ bool SATSolver::deduce()
 
 void SATSolver::applyDecision(const decision& p_dec)
 {
-    std::vector<It> toErase;
     for(int iClause : m_clauseWithVar[p_dec.index])
     {
         Clause searchClause = makeSearchClause(iClause);
@@ -211,17 +236,96 @@ void SATSolver::applyDecision(const decision& p_dec)
         if(it != m_formula[0].end() && (it->getLiterals(0).find(searchLit) != it->getLiterals(0).end()))
         {
             if(it->getLiterals(0).find(searchLit)->bar == !p_dec.value)
-                toErase.push_back(it);
-            it->setAssigned(p_dec.index);
+            {
+                it->setAssigned(p_dec.index);
+                satisfyClause(it,p_dec.index);
+                continue;
+            }
+            it->setAssigned(p_dec.index);//after satisfyClause this would point to nothing
         }
     }
 
-    //Drop satisfied clauses
-    for(It it : toErase)
-        satisfyClause(it,p_dec.index);
-
     m_valuation[p_dec.index] = p_dec.value;
 } // applyDecision(const decision&)
+
+bool SATSolver::isWatchedIn(int p_index, int p_iClause)
+{
+    return m_clauseWatchedBy[p_index].find(p_iClause) != m_clauseWatchedBy[p_index].end();
+
+}
+
+void SATSolver::applyDecisionWL(const decision& p_dec)
+{
+    m_valuation[p_dec.index] = p_dec.value;
+    vector<int> toErase;//In order to remove clause from map after
+    //deal with watched clauses
+    for(int iClause : m_clauseWatchedBy[p_dec.index])
+    {
+        Clause searchClause = makeSearchClause(iClause);
+        It it = m_formula[0].find(searchClause);
+        literal searchLit = literal(p_dec.index,!p_dec.value);
+
+        //Clause is not yet sat
+        if(it != m_formula[0].end())
+        {
+            set<literal>::iterator it_oldWatched = it->getLiterals(0).find(searchLit);
+            if(it_oldWatched != it->getLiterals(0).end())
+            {
+                if(it_oldWatched->bar == !p_dec.value)
+                {
+                    it->setAssigned(p_dec.index);  
+                    satisfyClause(it,p_dec.index);
+                    continue;
+                }
+
+                /* Need to move trigger or unit prop */
+                
+                decltype(it_oldWatched) it_newWatched = it->getLiterals(0).end();
+                for(auto it_lit = it->getLiterals(0).begin() ; it_lit != it->getLiterals(0).end() ; ++it_lit)
+                    if(!isWatchedIn(it_lit->index,iClause))
+                    {
+                        it_newWatched = it_lit;
+                        break;
+                    }
+                
+                //No remaining triggers
+                if(it_newWatched == it->getLiterals(0).end())
+                {
+                    it->setAssigned(p_dec.index);
+                    unitProp(iClause);                                                    }    
+                else
+                {
+                    toErase.push_back(iClause);//the lit doesn't watch the clause anymore
+
+                    //Set new trigger
+                    m_clauseWatchedBy[it_newWatched->index].insert(iClause);
+                    it->setAssigned(p_dec.index);                   
+                }
+            }
+            else
+            {
+                //Should definitely exist
+                OUTERROR("Critical issue in applyDecisionWL");
+            }
+
+        }
+
+    }   
+    
+    //Flush to Erase
+    for(int iClause_toErase : toErase)
+        m_clauseWatchedBy[p_dec.index].erase(m_clauseWatchedBy[p_dec.index].find(iClause_toErase));
+     
+    //Assign var in all relevant clauses
+    for(int iClause : m_clauseWithVar[p_dec.index])
+    {
+        Clause searchClause = makeSearchClause(iClause);
+        It it = m_formula[0].find(searchClause);
+        if(it != m_formula[0].end())
+            it->setAssigned(p_dec.index);
+    }
+
+} // applyDecisionWL(const decision&)
 
 decision SATSolver::takeABet()
 {
@@ -274,11 +378,12 @@ bool SATSolver::solve()
         }
 
     flushTaut();//Get rid of tautologie
-
+    printf("Here : %d\n", m_watchedLitMeht);
     /*  The preprocessing (initial init prop etc) are
         part of the main loop. (when m_currentAssignement is empty)
     */
     bool unsat = false;
+    bool firstBet = false;//To intercept when we start to bet
     while(!m_formula[0].empty() && !unsat)
     {
         if(!m_currentAssignement.empty())
@@ -286,8 +391,9 @@ bool SATSolver::solve()
             decision currDecision = m_currentAssignement.back();
             OUTDEBUG("Handling " << ((currDecision.bet) ? string("bet") : string("deduction")) << ": "
             << currDecision.index << " to " << ((currDecision.value) ? string("True") : string("False")));
-
-            applyDecision(currDecision);
+            
+            
+            (m_watchedLitMeht) ?  applyDecisionWL(currDecision) : applyDecision(currDecision);
             OUTDEBUG("\t" << currentStateToStr());
         }
 
@@ -296,9 +402,33 @@ bool SATSolver::solve()
 
         OUTDEBUG("SAT rate: " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size() << endl);
 
-        if(deduce())
+        //To have preprocessing even with WL but not the standard decucing process if WL
+        if((!m_watchedLitMeht && deduce()) || (m_watchedLitMeht && !firstBet && deduce()))
             continue;
+       
+        if(!firstBet && m_watchedLitMeht)
+        {
+            /*
+                From there each clause should have at least 2 elems we can set initial triggers
+            */
 
+            for(const Clause& c : m_formula[0])
+            {
+               if(c.getLiterals().size() >= 2) 
+               {
+                    int idClause = c.getId();
+                    int index1 = c.getLiterals().begin()->index;
+                    int index2 = next(c.getLiterals().begin())->index;
+                   
+                    m_clauseWatchedBy[index1].insert(idClause);
+                    m_clauseWatchedBy[index2].insert(idClause);
+               }
+               else
+                   OUTERROR("solve() critical issue : clause should contain at least 2 unassigned lit after preprocessing");
+            }
+        }
+
+        firstBet = true;
         takeABet();
     }
 

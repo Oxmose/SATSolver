@@ -28,7 +28,7 @@ struct decision
     decision(int index, bool value, bool bet) : index(index), value(value), bet(bet) {}
 
     int index;
-    bool value;//useless
+    bool value;
     bool bet; //bet or deduction
 };
 
@@ -74,17 +74,20 @@ class SATSolver
 
         decision takeABet();
         void applyDecision(const decision& p_dec);
+        void applyDecisionWL(const decision& p_dec);
         void satisfyClause(It p_it, int p_satisfier);
 
         bool deduce();
         bool unitProp();
+        bool unitProp(int p_iClause);
         bool uniquePol();
 
         bool backtrack(bool& p_unsat);
         bool isContradictory();
         void reviveClauseWithSatisfier(int p_satisfier);
 
-
+        bool isWatchedIn(int p_index, int p_iClause);      
+ 
         bool evaluate();
 
         unsigned int    m_maxIndex;
@@ -97,6 +100,8 @@ class SATSolver
         std::vector<decision> m_currentAssignement;//Stack of decisions
         std::map<int,int> m_valuation;//Current valuation
         std::map<int,std::vector<int>> m_clauseWithVar;//Direct access to Clauses
+        std::map<int,std::set<int>> m_clauseWatchedBy;//Says for each lit the list of watched clause
+        
 }; // SATSolver
 
 #endif // DEF_SATSOLVER_H
