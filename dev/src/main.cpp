@@ -47,7 +47,7 @@ int main(int argc, char** argv)
 
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-w1] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-wl] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
@@ -171,7 +171,7 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
                 parserType = LOG_PARSE;
                 argsValid[0] = true;
             }
-            else if(value == "-w1" && !argsValid[1])
+            else if(value == "-wl" && !argsValid[1])
             {
                 watchedLitMeth = true;
                 argsValid[1] = true;
@@ -263,10 +263,10 @@ void displayMenu(char *softName)
 
     cout << "How to use :" << endl;
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-w1] [-rand | -moms | -dlis] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-wl] [-rand | -moms | -dlis] [-debug] <file_name>" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-tseitin] [-w1] [-rand | -moms | -dlis] [-debug] <file_name>" << endl;
-    cout << "\t The argument -w1 enable the watched literals method." << endl;
+    cout << "\t\t" << softName << " [-tseitin] [-wl] [-rand | -moms | -dlis] [-debug] <file_name>" << endl;
+    cout << "\t The argument -wl enable the watched literals method." << endl;
     cout << "\t [-rand | -moms | -dlis] define the used heuristic to bet on the next literal :" << endl;
     cout << "\t\t -rand : next bet on a random literal." << endl;
     cout << "\t\t -moms : next bet on the variable which has the maximum occurences count in clauses of minimum size." << endl;
