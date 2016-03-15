@@ -170,7 +170,10 @@ bool SATSolver::unitProp(int p_iClause)
 
         }
         else
+        {
+            printf("%d\n", theClause->getLiterals().size());
             OUTERROR("Critical issue unitProp(i) : as being called the clause should be unitary");
+        }
     }
     else
         OUTERROR("Critical issue unitProp(i) : as being called the clause shouldn't be sat");
@@ -227,6 +230,9 @@ bool SATSolver::deduce()
 
     if(unitProp())
         return true;
+
+    if(m_watchedLitMeht)
+        return false;
 
     return uniquePol();
 } // bool deduce()
@@ -293,19 +299,15 @@ void SATSolver::applyDecisionWL(const decision& p_dec)
                         break;
                     }
                 
-                //No remaining triggers
-                if(it_newWatched == it->getLiterals(0).end())
-                {
-                    it->setAssigned(p_dec.index);
-                    unitProp(iClause);                                                    }    
-                else
+                //move trigger if possible else way deduce will unit prop
+                if(it_newWatched != it->getLiterals(0).end())
                 {
                     toErase.push_back(iClause);//the lit doesn't watch the clause anymore
-
                     //Set new trigger
                     m_clauseWatchedBy[it_newWatched->index].insert(iClause);
-                    it->setAssigned(p_dec.index);                   
                 }
+                it->setAssigned(p_dec.index);
+                continue;
             }
             else
             {
@@ -367,7 +369,6 @@ bool SATSolver::solve()
         }
 
     flushTaut();//Get rid of tautologie
-    printf("Here : %d\n", m_watchedLitMeht);
     /*  The preprocessing (initial init prop etc) are
         part of the main loop. (when m_currentAssignement is empty)
     */
@@ -392,7 +393,7 @@ bool SATSolver::solve()
         OUTDEBUG("SAT rate: " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size() << endl);
 
         //To have preprocessing even with WL but not the standard decucing process if WL
-        if((!m_watchedLitMeht && deduce()) || (m_watchedLitMeht && !firstBet && deduce()))
+        if(deduce())
             continue;
        
         if(!firstBet && m_watchedLitMeht)
