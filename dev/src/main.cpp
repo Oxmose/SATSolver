@@ -113,8 +113,9 @@ int main(int argc, char** argv)
 
     OUTDEBUG("We check SAT of :" << solver.formulaToStr());
 
+    bool sat;
     // Solve SAT formula
-    if(solver.solve())
+    if((sat=solver.solve()))
     {
         cout << "s SATIFIABLE" << endl;
         if(parserType == CNF_PARSE)
@@ -137,7 +138,7 @@ int main(int argc, char** argv)
     // Only for loop instances (may be added later)
     // solver.reset();
 
-    return 0;
+    return !sat;
 }// main(int, char**)
 
 int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType, bool &debugFlag, bool &watchedLitMeth, BET_METHOD &betMeth)

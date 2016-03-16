@@ -223,17 +223,19 @@ bool SATSolver::uniquePol()
     return false;
 }
 
-bool SATSolver::deduce()
+//p_first_bet is true if we have made first bet yet
+bool SATSolver::deduce(bool p_first_bet)
 {
     if(m_formula[0].empty())
         return false;
-
+    if(!p_first_bet)
+        OUTDEBUG("Preprocessing step");
     if(unitProp())
         return true;
 
-    if(m_watchedLitMeht)
+    if(m_watchedLitMeht && p_first_bet)
         return false;
-
+    //If !p_first_bet we want to do uniquePol in all cases
     return uniquePol();
 } // bool deduce()
 
@@ -252,7 +254,8 @@ void SATSolver::applyDecision(const decision& p_dec)
                 satisfyClause(it,p_dec.index);
                 continue;
             }
-            it->setAssigned(p_dec.index);//after satisfyClause this would point to nothing
+            if(!m_watchedLitMeht)
+                it->setAssigned(p_dec.index);//after satisfyClause this would point to nothing
         }
     }
 
@@ -267,6 +270,7 @@ bool SATSolver::isWatchedIn(int p_index, int p_iClause)
 
 void SATSolver::applyDecisionWL(const decision& p_dec)
 {
+    applyDecision(p_dec);
     m_valuation[p_dec.index] = p_dec.value;
     vector<int> toErase;//In order to remove clause from map after
     //deal with watched clauses
@@ -393,7 +397,7 @@ bool SATSolver::solve()
         OUTDEBUG("SAT rate: " << m_formula[1].size() << " " << m_formula[1].size()+m_formula[0].size() << endl);
 
         //To have preprocessing even with WL but not the standard decucing process if WL
-        if(deduce())
+        if(deduce(firstBet))
             continue;
        
         if(!firstBet && m_watchedLitMeht)
@@ -409,7 +413,7 @@ bool SATSolver::solve()
                     int idClause = c.getId();
                     int index1 = c.getLiterals().begin()->index;
                     int index2 = next(c.getLiterals().begin())->index;
-                   
+                    OUTDEBUG("WL: " << index1 << " and " << index2 << " are watched in " << idClause);                  
                     m_clauseWatchedBy[index1].insert(idClause);
                     m_clauseWatchedBy[index2].insert(idClause);
                }

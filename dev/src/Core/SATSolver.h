@@ -74,7 +74,7 @@ class SATSolver
         void applyDecisionWL(const decision& p_dec);
         void satisfyClause(It p_it, int p_satisfier);
 
-        bool deduce();
+        bool deduce(bool p_first_bet);
         bool unitProp();
         bool unitProp(int p_iClause);
         bool uniquePol();
