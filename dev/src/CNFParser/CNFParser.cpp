@@ -33,7 +33,7 @@ CNFParser::~CNFParser()
 {
 } // ~CNFParser()
 
-bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
+bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
 {
     OUTDEBUG("CNF PARSE BEGIN");
     // Open file
@@ -107,7 +107,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
             //Create new clause
             stringstream splitter(line);
 
-            vector<literal> literals;
+            map<int,bool> literals;
             int readLiteral;
             bool hasTaut = false;
             while(splitter >> readLiteral)
@@ -119,11 +119,12 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
                 // Avoid mutiple same literals in the same clause
                 // Also check for tautology
-                for(literal lit : literals)
+                for(auto lit : literals)
                 {
-                    if((lit.bar && -(lit.index) == readLiteral) || (!lit.bar && lit.index == readLiteral))
+                    //lit.first = index, lit.second = isBar?
+                    if((lit.second && -(lit.first) == readLiteral) || (!lit.second && lit.first == readLiteral))
                         found = true;
-                    else if((!lit.bar && -(lit.index) == readLiteral) || (lit.bar && lit.index == readLiteral))
+                    else if((!lit.second && -(lit.first) == readLiteral) || (lit.second && lit.first == readLiteral))
                     {
                         hasTaut = true;
                     }
@@ -131,7 +132,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
 
                 if(!found)
-                    literals.push_back(literal_from_int(readLiteral));
+                    literals[abs(readLiteral)] = (readLiteral < 0);
 
                 // Vars count verification
                 if(readLiteral < 0)
@@ -163,7 +164,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
             // Create and save the clause
             Clause clause(literals, hasTaut, clausesCount);
-            p_formula.insert(clause);
+            p_clauses.push_back(clause);
             p_maxIndex = maxIndex;
             // Add one to counter for verification purposes
             ++clausesCount;

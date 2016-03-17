@@ -21,7 +21,7 @@ class StandardBet : public IBet
 {
     public:
         virtual ~StandardBet();
-        virtual decision takeABet(const std::vector<ClauseSet> &p_formula, std::vector<decision> &p_currentAssignement);
+        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation);
 
     private:
 }; // StandardBet

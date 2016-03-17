@@ -23,25 +23,36 @@ StandardBet::~StandardBet()
 {
 } // ~StandardBet()
 
-decision StandardBet::takeABet(const vector<ClauseSet> &p_formula, vector<decision> &p_currentAssignement)
+decision StandardBet::takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation)
 {
     OUTDEBUG("Standard bet");
     int firstUnassigned = -1;
 
-    for(auto it = p_formula[0].begin() ; it != p_formula[0].end() ; ++it)
-        if(!it->getLiterals(0).empty())
-        {
-            firstUnassigned = it->getLiterals(0).begin()->index;
+    for(int iClause: p_unsatClauses)
+    {
+        for(auto lit: p_clauses[iClause].getLiterals())
+            if(p_valuation[lit.first] == -1)
+            {
+                OUTDEBUG(iClause);
+                //first = key, second = value
+                //first = index, second = polarization
+                firstUnassigned = lit.first;
+                break;
+            }
+        if(firstUnassigned != -1)
             break;
-        }
+    }
 
     decision bet = decision(firstUnassigned,true,true);
 
-    if(p_formula[0].empty())
-        return bet;
+    if(firstUnassigned == -1)
+    {
+
+        printf("%d\n", p_unsatClauses.size());
+        OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
+    }
 
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
-    p_currentAssignement.push_back(bet);
     return bet;
 } // decision takeABet(const std::vector<ClauseSet>&, std::vector<decision>&)
 

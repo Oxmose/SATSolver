@@ -15,11 +15,12 @@
 #include <sstream>  // std::stringstream
 #include <iostream> // std::cout std::cerr std::endl
 #include <fstream>  // std::ifstream
+#include <memory>
 
 // PROJECT INCLUDES
 #include "Clause.h"                         // Clause class
 #include "../CNFParser/CNFParser.h"         // CNFParser class
-#include "../LogExpParser/LOGParser.h"      // LOGParser class
+//#include "../LogExpParser/LOGParser.h"      // LOGParser class
 #include "../BETHeuristic/IBet.h"           // Bet Heuristic Interface
 
 // GLOBAL FLAGS/VARS
@@ -40,23 +41,34 @@ enum PARSE_TYPE
     LOG_PARSE
 };
 
+/*
+    Looks horrible but in fact simple, it represents a multiset of couples (iClause, iSatisfier)
+    It allows us to efficiently get all clauses with given satisfier.
+*/
+typedef std::multiset<std::pair<int,int>, bool (*) (const std::pair<int,int>&,const std::pair<int,int>&)> satClausesSet;
+static bool compareSat(const std::pair<int,int>& p_a, const std::pair<int,int>& p_b)
+{
+    return p_a.second < p_b.second;//Sort unsat Clauses by id for log(n) find
+} // static bool compareUnsat(const Clause&, const Clause&)
+
+
 class SATSolver
 {
     public:
-        SATSolver(bool p_watchedLitMeth);
-        ~SATSolver();
+        SATSolver();
+        virtual ~SATSolver();
 
         // Bet strategy
-        void setStrategy(IBet *p_betMethod);
+        void setStrategy(IBet* p_betMethod);
 
         void setMaxIndex(int p_maxIndex);
-        void setOriginFormula(const ClauseSet &initClauseSet);
+        void setOriginFormula(const std::vector<Clause> &p_clauses);
         void reset();
-        
 
         /* DPLL algorithm */
-        bool solve();
-        void showSolution(LOGParser &parser);
+        virtual void initializeMethod() = 0;
+        virtual bool solve()=0;
+        //void showSolution(LOGParser &parser);
         void showSolution();
 
         /* Debug stuff */
@@ -64,41 +76,42 @@ class SATSolver
         std::string formulaToStr();
         std::string decisionToStr();
 
-    private:
+    protected:
 
-        /* DPLL intern */
-        void flushTaut();
+        void satisfyClause(int p_iClause, int p_satisfier);
+        virtual void applyLastDecision() = 0;
+        virtual bool deduce()=0;
+        virtual bool unitProp()=0;
+        virtual bool uniquePol()=0;
+        virtual bool backtrack(bool& p_unsat)=0;
 
-        decision takeABet();
-        void applyDecision(const decision& p_dec);
-        void applyDecisionWL(const decision& p_dec);
-        void satisfyClause(It p_it, int p_satisfier);
 
-        bool deduce(bool p_first_bet);
-        bool unitProp();
-        bool unitProp(int p_iClause);
-        bool uniquePol();
+        std::unique_ptr<IBet> m_betHeuristic;
 
-        bool backtrack(bool& p_unsat);
-        bool isContradictory();
-        void reviveClauseWithSatisfier(int p_satisfier);
-
-        bool isWatchedIn(int p_index, int p_iClause);      
- 
-        bool evaluate();
-
-        unsigned int    m_maxIndex;
-        bool m_watchedLitMeht;
-
-	    IBet *m_betHeuristic;
-
-        std::vector<ClauseSet> m_formula;//0: unsat clauses, 1: sat clauses
+        std::vector<Clause> m_clauses;
+        std::set<int>  m_unsatClauses;
+        std::unique_ptr<satClausesSet> m_satClauses;
 
         /*DPLL stuff*/
         std::vector<decision> m_currentAssignement;//Stack of decisions
         std::map<int,int> m_valuation;//Current valuation
-        std::map<int,std::vector<int>> m_clauseWithVar;//Direct access to Clauses
-        std::map<int,std::set<int>> m_clauseWatchedBy;//Says for each lit the list of watched clause
+
+        bool m_isContradictory;
+
+        void flushTaut();
+
+        decision takeABet();
+
+
+        bool isContradictory();
+        void reviveClauseWithSatisfier(int p_satisfier);
+
+        bool evaluate();
+
+    private:
+        /* DPLL intern */
+
+        unsigned int    m_maxIndex;
         
 }; // SATSolver
 

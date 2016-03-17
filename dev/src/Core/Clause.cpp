@@ -18,14 +18,12 @@
 
 using namespace std;
 
-Clause::Clause(const vector<literal> &p_literals, bool p_isTaut, int p_id)
+Clause::Clause(const map<int,bool> &p_literals, bool p_isTaut, int p_id)
 {
+    m_literals = p_literals;
     m_isTaut = p_isTaut;
     m_id = p_id;
-    m_satisfier = -1;
-    // Add literals as unassigned
-    for(literal l : p_literals)
-        m_literals[0].insert(l);
+    
 } // Clause(const vector<int>&)
 
 bool Clause::isTaut() const
@@ -33,31 +31,10 @@ bool Clause::isTaut() const
     return m_isTaut;
 } // bool isTaut() const
 
-set<literal>& Clause::getLiterals(int p_which /* = 0 */) const
+map<int,bool>& Clause::getLiterals()
 {
-    return m_literals[p_which];
+    return m_literals;
 } // set<literal>& getLiterals(int) const
-
-int Clause::getSatisfier() const
-{
-    return m_satisfier;
-} // int getSatifier() const
-
-void Clause::setSatisfier(int p_satisfier)
-{
-    m_satisfier = p_satisfier;
-} // setSatisfier(int)
-
-void Clause::setAssigned(int p_index, bool p_assign /* = true */) const
-{
-    auto l_it = m_literals[int(!p_assign)].find(literal(p_index,false));
-    if(l_it != m_literals[int(!p_assign)].end())
-    {
-        literal toCopy = *l_it;
-        m_literals[int(!p_assign)].erase(l_it);
-        m_literals[int(p_assign)].insert(toCopy);
-    }
-} // Clause setAssigned(int, bool) const
 
 int Clause::getId() const
 {
@@ -70,28 +47,21 @@ bool Clause::evaluate(map<int,int>& p_valuation)
         return true;
         
     bool val = false;
-    for(literal l : m_literals[1])
-    {
-        if(p_valuation[l.index] == -1)
-        {
-            //Should never happen (assigned vars are assigned), but who knows ?
-            cerr << "Something went really wrong in Clause::evaluate..." << endl;
-            exit(0);
-            continue;
-        }
-        val = val || p_valuation[l.index] == !l.bar;
-    }
+    for(auto l : m_literals)
+        if(p_valuation[l.first] != -1)
+            val = val || p_valuation[l.first] == !l.second;
+    
     return val;
 } // bool evaluate(map<int, int>&)
 
 string Clause::toStr() const
 {
     string toReturn = "(";
-    for(auto l : m_literals[0])
+    for(auto l : m_literals)
     {
-        string sign = (l.bar) ? "-" : "";
+        string sign = (l.second) ? "-" : "";
         string dis =  "\\/";
-        toReturn += sign + to_string(l.index) + dis;
+        toReturn += sign + to_string(l.first) + dis;
     }
     toReturn += ")";
     return toReturn;

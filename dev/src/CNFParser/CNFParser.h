@@ -29,7 +29,7 @@ class CNFParser
         ~CNFParser();
         
         // Parse
-        bool parse(unsigned int &p_maxIndex, ClauseSet& p_formula);
+        bool parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses);
 
     private:
         // Name of the file to parse

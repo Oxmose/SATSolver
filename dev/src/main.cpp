@@ -1,16 +1,17 @@
 // SATSolver class
 #include "Core/SATSolver.h"
+#include "Core/SATSolverSTD.h"
 
 // Parsers classes
 #include "CNFParser/CNFParser.h"
-#include "LogExpParser/LOGParser.h"
+//#include "LogExpParser/LOGParser.h"
 
 // Bet heuristics classes
 #include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
 #include "BETHeuristic/StandardBet.h"   // Standard bet heuristic
-#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
-#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
-#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
+//#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
+//#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
+//#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
 
 // STD INCLUDES
 #include <ctime>        //std::clock
@@ -61,67 +62,69 @@ int main(int argc, char** argv)
     OUTDEBUG("DEBUG ENABLED");
 
     // Create the solver
-    SATSolver solver(watchedLitMeth);
+    unique_ptr<SATSolver> solver = unique_ptr<SATSolver>(new SATSolverSTD());
+    //(watchedLitMeth) ?
 
+    solver->setStrategy(new StandardBet());
     // Set strategy
-    switch(betMeth)
+    /*switch(betMeth)
     {
         case NORM:
-            solver.setStrategy(new StandardBet());
+            solver->setStrategy(new StandardBet());
             break;
         case RAND0:
-            solver.setStrategy(new RandomBet(false));
+            solver->setStrategy(new RandomBet(false));
             break;
         case RAND1:
-            solver.setStrategy(new RandomBet(true));
+            solver->setStrategy(new RandomBet(true));
             break;
         case MOMS:
-            solver.setStrategy(new MOMSBet());
+            solver->setStrategy(new MOMSBet());
             break;
         case DLIS:
-            solver.setStrategy(new DLISBet(false));
+            solver->setStrategy(new DLISBet(false));
             break;
         case DLIS1:
-            solver.setStrategy(new DLISBet(true));
+            solver->setStrategy(new DLISBet(true));
             break;
         default:
-            solver.setStrategy(new StandardBet());
-    }
+            solver->setStrategy(new StandardBet());
+    }*/
     // Create the LOGParser
-    LOGParser logParser(fileName);
+    //LOGParser logParser(fileName);
     unsigned int maxIndex;
-    ClauseSet initClausesSet(compareUnsat);
+    vector<Clause> clauses;
 
 
     if(parserType == CNF_PARSE)
     {
         // Create parser and parse CNF formula
         CNFParser parser(fileName);
-        if(!parser.parse(maxIndex, initClausesSet))
+        if(!parser.parse(maxIndex, clauses))
             OUTWARNING("Errors while parsing the file.");
-        solver.setMaxIndex(maxIndex);
-        solver.setOriginFormula(initClausesSet);
+        solver->setMaxIndex(maxIndex);
+        solver->setOriginFormula(clauses);
     }
     else
     {
         // Parse logExpFormula
-        if(!logParser.parse(maxIndex, initClausesSet))
-            OUTWARNING("Errors while parsing the file.");
-        solver.setMaxIndex(maxIndex);
-        solver.setOriginFormula(initClausesSet);
+        //if(!logParser.parse(maxIndex, initClausesSet))
+          //  OUTWARNING("Errors while parsing the file.");
+        //solver->setMaxIndex(maxIndex);
+        //solver->setOriginFormula(initClausesSet);
     }
 
-    OUTDEBUG("We check SAT of :" << solver.formulaToStr());
+    OUTDEBUG("We check SAT of :" << solver->formulaToStr());
 
     bool sat;
     // Solve SAT formula
-    if((sat=solver.solve()))
+    if((sat=solver->solve()))
     {
         cout << "s SATIFIABLE" << endl;
         if(parserType == CNF_PARSE)
-            solver.showSolution();
-        else
-            solver.showSolution(logParser);
+            solver->showSolution();
+        //else
+         //   solver->showSolution(logParser);
     }
     else
         cout << "s UNSATISFIABLE" << endl;
@@ -136,7 +139,7 @@ int main(int argc, char** argv)
     OUTDEBUG("Solved in: "<< duration << "s");
 
     // Only for loop instances (may be added later)
-    // solver.reset();
+    // solver->reset();
 
     return !sat;
 }// main(int, char**)
