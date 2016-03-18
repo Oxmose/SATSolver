@@ -41,9 +41,8 @@ void LOGParser::setFileName(const string &p_fileName)
     m_fileName = p_fileName;
 } // setFileName(const string&)
 
-bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
+bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
 {
-
     OUTDEBUG("LOG PARSE BEGIN");
     // Open file
     yyin = fopen(m_fileName.c_str(), "r");
@@ -68,10 +67,10 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
     fclose(yyin);
 
-    vector<pair<vector<literal>, bool>> clauses;
+    vector<pair<map<int,bool>, bool>> clauses;
 
     // Browse each clause extracted and create the formula
-    vector<literal> clause;
+    map<int,bool> clause;
     bool hasTot = false;
     for(Expr* exp : exps)
     {
@@ -95,17 +94,17 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
                 // Avoid mutiple same literals in the same clause
                 // Also check for tautology
                 bool found = false;
-                for(literal lit : clause)
+                for(auto lit : clause)
                 {
-                    if((lit.bar && -(lit.index) == varInt) || (!lit.bar && lit.index == varInt))
+                    if((lit.second && -(lit.first) == varInt) || (!lit.second && lit.first == varInt))
                         found = true;           
-                    else if((!lit.bar && -(lit.index) == varInt) || (lit.bar && lit.index == varInt))
+                    else if((!lit.second && -(lit.first) == varInt) || (lit.second && lit.first == varInt))
                         hasTot = true;
                 }
 
                 // Add the variable
                 if(!found)
-                    clause.push_back(literal_from_int(varInt));
+                    clause[abs(varInt)] = varInt < 0;
 
                 continue;
             }
@@ -132,16 +131,16 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
                 // Avoid mutiple same literals in the same clause
                 // Also check for tautology
                 bool found = false;
-                for(literal lit : clause)
+                for(auto lit : clause)
                 {
-                    if((lit.bar && -(lit.index) == varInt) || (!lit.bar && lit.index == varInt))
+                    if((lit.second && -(lit.first) == varInt) || (!lit.second && lit.first == varInt))
                         found = true;           
-                    else if((!lit.bar && -(lit.index) == varInt) || (lit.bar && lit.index == varInt))
+                    else if((!lit.second && -(lit.first) == varInt) || (lit.second && lit.first == varInt))
                         hasTot = true;
                 }
 
                 if(!found)
-                    clause.push_back(literal_from_int(varInt));
+                    clause[abs(varInt)] = varInt < 0;
             }
         }
 
@@ -153,10 +152,10 @@ bool LOGParser::parse(unsigned int &p_maxIndex, ClauseSet& p_formula)
 
     unsigned int clausesCount = 0;
     
-    for(pair<vector<literal>, bool> clause : clauses)
+    for(auto clause : clauses)
     {
-        p_formula.insert(Clause(clause.first, clause.second, clausesCount));
-	++clausesCount;
+        p_clauses.push_back(Clause(clause.first, clause.second, clausesCount));
+	   ++clausesCount;
     }
 
     OUTDEBUG("LOG PARSE END WITH STATUS" << noParseError);

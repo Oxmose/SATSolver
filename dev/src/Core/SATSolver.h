@@ -20,7 +20,7 @@
 // PROJECT INCLUDES
 #include "Clause.h"                         // Clause class
 #include "../CNFParser/CNFParser.h"         // CNFParser class
-//#include "../LogExpParser/LOGParser.h"      // LOGParser class
+#include "../LogExpParser/LOGParser.h"      // LOGParser class
 #include "../BETHeuristic/IBet.h"           // Bet Heuristic Interface
 
 // GLOBAL FLAGS/VARS
@@ -68,7 +68,7 @@ class SATSolver
         /* DPLL algorithm */
         virtual void initializeMethod() = 0;
         virtual bool solve()=0;
-        //void showSolution(LOGParser &parser);
+        void showSolution(LOGParser &parser);
         void showSolution();
 
         /* Debug stuff */

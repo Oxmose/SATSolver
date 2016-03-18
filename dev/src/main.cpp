@@ -4,7 +4,7 @@
 
 // Parsers classes
 #include "CNFParser/CNFParser.h"
-//#include "LogExpParser/LOGParser.h"
+#include "LogExpParser/LOGParser.h"
 
 // Bet heuristics classes
 #include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
@@ -90,8 +90,8 @@ int main(int argc, char** argv)
         default:
             solver->setStrategy(new StandardBet());
     }*/
-    // Create the LOGParser
-    //LOGParser logParser(fileName);
+    
+    LOGParser logParser(fileName);//Has to be declared outside for solution showing
     unsigned int maxIndex;
     vector<Clause> clauses;
 
@@ -108,10 +108,10 @@ int main(int argc, char** argv)
     else
     {
         // Parse logExpFormula
-        //if(!logParser.parse(maxIndex, initClausesSet))
-          //  OUTWARNING("Errors while parsing the file.");
-        //solver->setMaxIndex(maxIndex);
-        //solver->setOriginFormula(initClausesSet);
+        if(!logParser.parse(maxIndex, clauses))
+            OUTWARNING("Errors while parsing the file.");
+        solver->setMaxIndex(maxIndex);
+        solver->setOriginFormula(clauses);
     }
 
     OUTDEBUG("We check SAT of :" << solver->formulaToStr());
@@ -123,8 +123,8 @@ int main(int argc, char** argv)
         cout << "s SATIFIABLE" << endl;
         if(parserType == CNF_PARSE)
             solver->showSolution();
-        //else
-         //   solver->showSolution(logParser);
+        else
+            solver->showSolution(logParser);
     }
     else
         cout << "s UNSATISFIABLE" << endl;

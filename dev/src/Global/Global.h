@@ -5,7 +5,7 @@
 #ifndef DEF_GLOBAL_H
 #define DEF_GLOBAL_H
 
-#define VERSION "0.2"
+#define VERSION "0.5"
 
 #define OUTDEBUG(Out) do {  \
     if(debugFlag) { \

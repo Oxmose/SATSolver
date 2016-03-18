@@ -19,7 +19,7 @@
 // PROJECT INCLUDES
 #include "Clause.h"                         // Clause class
 #include "../CNFParser/CNFParser.h"         // CNFParser class
-//#include "../LogExpParser/LOGParser.h"      // LOGParser class
+#include "../LogExpParser/LOGParser.h"      // LOGParser class
 #include "../BETHeuristic/IBet.h"           // Bet Heuristic Interface
 
 // GLOBAL FLAGS/VARS
@@ -121,6 +121,14 @@ void SATSolver::flushTaut()
         satisfyClause(iClause, -2);//Special satisfier for taut
 } // flushTaut()
 
+void SATSolver::showSolution(LOGParser &parser)
+{
+    // If using tseitin transformation, we have to display only the originals variables
+    parser.tseitinResolution(m_valuation, m_maxIndex);
+
+
+    showSolution();
+} // showSolution(LOGParser&)
 
 void SATSolver::showSolution()
 {

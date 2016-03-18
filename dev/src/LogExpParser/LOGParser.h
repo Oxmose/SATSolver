@@ -45,7 +45,7 @@ class LOGParser
         void setFileName(const std::string &p_fileName);
 
         // Parser methods
-        bool parse(unsigned int &p_maxIndex, ClauseSet& p_formula);
+        bool parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses);
 	std::vector<Expr*> tseitinTransform(Expr *exp, unsigned int &p_maxIndex);
         bool tseitinResolution(std::map<int,int> &p_valuation, unsigned int &p_maxIndex);
 
