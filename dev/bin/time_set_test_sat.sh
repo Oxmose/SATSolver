@@ -12,7 +12,7 @@ do
     #STD
     (/usr/bin/time -f "%e r" ./resol $f) |& sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"std\":\ \"/ | sed s/$/\",/
     #WL
-    (/usr/bin/time -f "%e r" ./resol -wl $f) |& sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"wl\":\ \"/ | sed s/$/\",/
+    #(/usr/bin/time -f "%e r" ./resol -wl $f) |& sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"wl\":\ \"/ | sed s/$/\",/
 
     #RAND
     (/usr/bin/time -f "%e r" ./resol -rand $f) |& grep r | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"rand\":\ \"/ | sed s/$/\",/
