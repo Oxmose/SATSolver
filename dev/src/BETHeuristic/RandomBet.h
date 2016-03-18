@@ -9,7 +9,7 @@
 
 // STD INCLUDES
 #include <vector>   // std::vector
-#include <ctime>     // std::time
+#include <ctime>    // std::time
 #include <cstdlib>  // std::rand
 
 // PROJECT INCLUDES
@@ -24,7 +24,7 @@ class RandomBet : public IBet
     public:
         RandomBet(bool p_randomBet);
         virtual ~RandomBet();
-        virtual decision takeABet(const std::vector<ClauseSet> &p_formula, std::vector<decision> &p_currentAssignement);
+        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation);
 
     private:
         bool m_randomBet;

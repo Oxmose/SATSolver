@@ -25,6 +25,9 @@
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"
 
+// INHERITANCE INCLUDE
+#include "IParser.h"
+
 using namespace std;
 
 LOGParser::LOGParser(const string &p_fileName /* = ""  */)
@@ -35,11 +38,6 @@ LOGParser::LOGParser(const string &p_fileName /* = ""  */)
 LOGParser::~LOGParser()
 {
 } // ~LOGParser()
-
-void LOGParser::setFileName(const string &p_fileName)
-{
-    m_fileName = p_fileName;
-} // setFileName(const string&)
 
 bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
 {
@@ -188,7 +186,7 @@ bool LOGParser::tseitinResolution(map<int,int> &p_valuation, unsigned int &p_max
     // For each vars that appeared in the original formula
     // Just keep them and forget about the others
     map<int, int> newValuation;
-    unsigned int maxIndex = 0;
+    int maxIndex = 0;
     for(int var : m_originalVars)
     {
         if(var > maxIndex)

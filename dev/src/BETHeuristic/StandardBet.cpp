@@ -5,7 +5,7 @@
 */
 
 // STD INCLUDES
-#include <vector>   // std::vector
+#include <vector>   // vector
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -23,7 +23,7 @@ StandardBet::~StandardBet()
 {
 } // ~StandardBet()
 
-decision StandardBet::takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation)
+decision StandardBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
 {
     OUTDEBUG("Standard bet");
     int firstUnassigned = -1;
@@ -47,12 +47,10 @@ decision StandardBet::takeABet(std::vector<Clause> &p_clauses, const std::set<in
 
     if(firstUnassigned == -1)
     {
-
-        printf("%d\n", p_unsatClauses.size());
         OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
     }
 
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
     return bet;
-} // decision takeABet(const std::vector<ClauseSet>&, std::vector<decision>&)
+} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
 

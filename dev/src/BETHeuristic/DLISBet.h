@@ -10,8 +10,7 @@
 // STD INCLUDES
 #include <vector>   // std::vector
 #include <map>      // std::map
-#include <utility>  // std::pair
-#include <cmath>    // std::pow
+#include <cmath>    // std::exp2, std::abs
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -25,7 +24,7 @@ class DLISBet : public IBet
     public:
         DLISBet(bool p_scoreMethod);
         virtual ~DLISBet();
-        virtual decision takeABet(const std::vector<ClauseSet> &p_formula, std::vector<decision> &p_currentAssignement);
+        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation);
 
     private:
         bool m_scoreMethod;

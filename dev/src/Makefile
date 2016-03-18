@@ -8,14 +8,14 @@ LIBLEX=-lfl
 #yacc/bison
 YACC=bison
 
-all: Global/*.cpp BETHeuristic/*.cpp RandomSatExpGenerator/*.cpp CNFParser/*.cpp Core/*.cpp main.cpp LogExpParser/LOGParser.cpp LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).cpp
-	$(CC) -std=c++11 -O3 -Wno-write-strings -fdiagnostics-color=always -o ../bin/resol $^ $(LIBLEX)
+all: Global/*.cpp BETHeuristic/*.cpp RandomSatExpGenerator/*.cpp Parser/*.cpp Core/*.cpp main.cpp Parser/$(NAME).tab.cpp Parser/$(NAME).yy.c Parser/$(NAME).cpp
+	$(CC) -std=c++11 -O3 -Wno-write-strings -Wall -fdiagnostics-color=always -o ../bin/resol $^ $(LIBLEX)
 
-LogExpParser/$(NAME).yy.c :  LogExpParser/$(NAME).l
+Parser/$(NAME).yy.c :  Parser/$(NAME).l
 	$(LEX)  -o $@ $^
 
-LogExpParser/$(NAME).tab.cpp : LogExpParser/$(NAME).ypp
+Parser/$(NAME).tab.cpp : Parser/$(NAME).ypp
 	$(YACC) --report=all -o $@ -d $^
 
 clean:
-	rm -f *~ LogExpParser/$(NAME).yy.c LogExpParser/$(NAME).tab.cpp LogExpParser/$(NAME).tab.hpp ../bin/resol
+	rm -f *~ Parser/$(NAME).yy.c Parser/$(NAME).tab.cpp Parser/$(NAME).tab.hpp ../bin/resol

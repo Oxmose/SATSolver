@@ -18,10 +18,9 @@
 #include <memory>
 
 // PROJECT INCLUDES
-#include "Clause.h"                         // Clause class
-#include "../CNFParser/CNFParser.h"         // CNFParser class
-#include "../LogExpParser/LOGParser.h"      // LOGParser class
-#include "../BETHeuristic/IBet.h"           // Bet Heuristic Interface
+#include "Clause.h"                     // Clause class
+#include "../Parser/IParser.h"          // Parsers Interface
+#include "../BETHeuristic/IBet.h"       // Bet Heuristic Interface
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h" // DEBUG
@@ -33,12 +32,6 @@ struct decision
     int index;
     bool value;
     bool bet; //bet or deduction
-};
-
-enum PARSE_TYPE
-{
-    CNF_PARSE,
-    LOG_PARSE
 };
 
 /*
@@ -61,6 +54,9 @@ class SATSolver
         // Bet strategy
         void setStrategy(IBet* p_betMethod);
 
+	    // Parser strategy
+	    void setParser(IParser* p_parser);
+
         void setMaxIndex(int p_maxIndex);
         void setOriginFormula(const std::vector<Clause> &p_clauses);
         void reset();
@@ -68,7 +64,6 @@ class SATSolver
         /* DPLL algorithm */
         virtual void initializeMethod() = 0;
         virtual bool solve()=0;
-        void showSolution(LOGParser &parser);
         void showSolution();
 
         /* Debug stuff */
@@ -85,6 +80,8 @@ class SATSolver
         virtual bool uniquePol()=0;
         virtual bool backtrack(bool& p_unsat)=0;
 
+	//Parser strategy
+        IParser *m_parser;
 
         std::unique_ptr<IBet> m_betHeuristic;
 

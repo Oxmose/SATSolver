@@ -2,16 +2,17 @@
 #include "Core/SATSolver.h"
 #include "Core/SATSolverSTD.h"
 
-// Parsers classes
-#include "CNFParser/CNFParser.h"
-#include "LogExpParser/LOGParser.h"
+// Parser interface / classes
+#include "Parser/IParser.h"
+#include "Parser/CNFParser.h"
+#include "Parser/LOGParser.h"
 
 // Bet heuristics classes
 #include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
 #include "BETHeuristic/StandardBet.h"   // Standard bet heuristic
-//#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
-//#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
-//#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
+#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
+#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
+#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
 
 // STD INCLUDES
 #include <ctime>        //std::clock
@@ -65,9 +66,8 @@ int main(int argc, char** argv)
     unique_ptr<SATSolver> solver = unique_ptr<SATSolver>(new SATSolverSTD());
     //(watchedLitMeth) ?
 
-    solver->setStrategy(new StandardBet());
     // Set strategy
-    /*switch(betMeth)
+    switch(betMeth)
     {
         case NORM:
             solver->setStrategy(new StandardBet());
@@ -89,30 +89,29 @@ int main(int argc, char** argv)
             break;
         default:
             solver->setStrategy(new StandardBet());
-    }*/
+    }
     
-    LOGParser logParser(fileName);//Has to be declared outside for solution showing
+    IParser *parser;
+    switch(parserType)
+    {
+        case CNF_PARSE:
+            parser = new CNFParser(fileName);
+            break;
+        case LOG_PARSE:
+            parser = new LOGParser(fileName);
+            break;
+        default:
+            parser = new CNFParser(fileName);
+    }
+
     unsigned int maxIndex;
     vector<Clause> clauses;
 
-
-    if(parserType == CNF_PARSE)
-    {
-        // Create parser and parse CNF formula
-        CNFParser parser(fileName);
-        if(!parser.parse(maxIndex, clauses))
-            OUTWARNING("Errors while parsing the file.");
-        solver->setMaxIndex(maxIndex);
-        solver->setOriginFormula(clauses);
-    }
-    else
-    {
-        // Parse logExpFormula
-        if(!logParser.parse(maxIndex, clauses))
-            OUTWARNING("Errors while parsing the file.");
-        solver->setMaxIndex(maxIndex);
-        solver->setOriginFormula(clauses);
-    }
+    if(!parser->parse(maxIndex, clauses))
+        OUTWARNING("Errors while parsing the file.");
+    solver->setMaxIndex(maxIndex);
+    solver->setOriginFormula(clauses);
+    solver->setParser(parser);
 
     OUTDEBUG("We check SAT of :" << solver->formulaToStr());
 
@@ -121,10 +120,7 @@ int main(int argc, char** argv)
     if((sat=solver->solve()))
     {
         cout << "s SATIFIABLE" << endl;
-        if(parserType == CNF_PARSE)
-            solver->showSolution();
-        else
-            solver->showSolution(logParser);
+        solver->showSolution();
     }
     else
         cout << "s UNSATISFIABLE" << endl;
@@ -163,7 +159,7 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
     }
     else
     {
-        for(unsigned int i = 1; i < argc; ++i)
+        for(int i = 1; i < argc; ++i)
         {
             string value = string(argv[i]);
             if(i == argc - 1)
@@ -216,7 +212,7 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
                 break;
             }
         }
-        unsigned int count = 0;
+        int count = 0;
         for(unsigned int i = 0; i < 4; ++i)
         {
             if(argsValid[i])
@@ -239,7 +235,7 @@ void displayMenu(char *softName)
 
     unsigned int total = 0;
 
-    for(unsigned int i = 0; i < w.ws_col / 2 - 8; ++i)
+    for(int i = 0; i < w.ws_col / 2 - 8; ++i)
     {
         cout << "=";
         ++total;
@@ -251,17 +247,17 @@ void displayMenu(char *softName)
     cout << endl;
     total = 0;
     cout << "#";
-    for(unsigned int i = 0; i < w.ws_col / 2 - 19; ++i)
+    for(int i = 0; i < w.ws_col / 2 - 19; ++i)
     {
         cout << " ";
         ++total;
     }
     cout << " By Tristan Sterin and Alexy Torres ";
     total += 36;
-    for(unsigned int i = total; i < w.ws_col - 2; ++i)
+    for(int i = total; i < w.ws_col - 2; ++i)
         cout << " ";
     cout << "#" << endl;
-    for(unsigned int i = 0; i < w.ws_col; ++i)
+    for(int i = 0; i < w.ws_col; ++i)
         cout << "=";
     cout << endl;
 

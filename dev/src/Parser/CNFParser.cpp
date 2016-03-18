@@ -21,8 +21,10 @@
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"
 
-using namespace std;
+// INHERITANCE INCLUDE
+#include "IParser.h"
 
+using namespace std;
 
 CNFParser::CNFParser(const string &p_fileName)
 {
@@ -154,10 +156,10 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
                 {
                     readLiteral = -readLiteral;
                 }
-                if(readLiteral > p_maxIndex)
+                if(readLiteral > (int)p_maxIndex)
                 {
                     OUTWARNING("The file has " << readLiteral << " for index variable but " << p_maxIndex << " was announced as maximum index.");
-                    if(readLiteral > maxIndex)
+                    if(readLiteral > (int)maxIndex)
                         maxIndex = readLiteral;
                 }
             }
@@ -187,7 +189,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
     if(maxIndex != vars.size())
     {
         vector<bool> used;
-        for(int i = 0 ; i < maxIndex+1 ; i++)
+        for(unsigned int i = 0 ; i < maxIndex + 1 ; i++)
             used.push_back(false);
 
         for(unsigned int i : vars)
@@ -196,7 +198,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
         }
 
         // We check which ones were used and shouldn't have been
-        for(unsigned int i = 1; i < maxIndex+1; ++i)
+        for(unsigned int i = 1; i < maxIndex + 1; ++i)
             if(!used[i])
             {
                 noError = false;
@@ -210,3 +212,8 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
 
     return noError;
 } // bool parse(unsigned int &, ClauseSet&)
+
+bool CNFParser::tseitinResolution(map<int,int> &p_valuation, unsigned int &p_maxIndex)
+{
+    return true;
+} // bool tseitinResolution(map<int,int>&, unsigned int&);

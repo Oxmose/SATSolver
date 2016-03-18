@@ -21,7 +21,10 @@
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"
 
-class CNFParser
+// INHERITANCE INCLUDE
+#include "IParser.h"
+
+class CNFParser : public IParser
 {
     public:
         // Constructor / Destructor
@@ -30,11 +33,12 @@ class CNFParser
         
         // Parse
         bool parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses);
+        bool tseitinResolution(std::map<int,int> &p_valuation, unsigned int &p_maxIndex);
 
     private:
         // Name of the file to parse
         std::string m_fileName;
 	
-}; // Parser
+}; // CNFParser
 
 #endif // DEF_CNFPARSER_H
