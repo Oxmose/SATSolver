@@ -4,22 +4,22 @@
 echo "{"
 echo "    \"SAT\": ["
 
-for f in test_base/cnf/serial_test/sat/*/*.cnf
+for f in test_base/cnf/serial_test/sat/*.cnf
 do
     echo "        {"
     echo "            \"file\": \"$f\"," | sed s/test_base\\/cnf\\/serial_test\\/sat\\///
 
     #STD
-    (/usr/bin/time -f "%e r" ./resol $f) |& sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"std\":\ \"/ | sed s/$/\",/
+    (/usr/bin/time -f "%e r" ./resol $f) |&  grep r | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"std\":\ \"/ | sed s/$/\",/
     #WL
     #(/usr/bin/time -f "%e r" ./resol -wl $f) |& sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"wl\":\ \"/ | sed s/$/\",/
 
     #RAND
-    (/usr/bin/time -f "%e r" ./resol -rand $f) |& grep r | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"rand\":\ \"/ | sed s/$/\",/
+    #(/usr/bin/time -f "%e r" ./resol -rand $f) |& grep r | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"rand\":\ \"/ | sed s/$/\",/
     #RAND0
-    (/usr/bin/time -f "%e r" ./resol -rand0 $f) |& grep r | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"rand0\":\ \"/ | sed s/$/\",/
+    #(/usr/bin/time -f "%e r" ./resol -rand0 $f) |& grep r | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"rand0\":\ \"/ | sed s/$/\",/
     #MOMS
-    (/usr/bin/time -f "%e r" ./resol -moms $f) |& sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"moms\":\ \"/ | sed s/$/\",/
+    (/usr/bin/time -f "%e r" ./resol -moms $f) |& grep r | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"moms\":\ \"/ | sed s/$/\",/
     #DLIS
     (/usr/bin/time -f "%e r" ./resol -dlis $f) |& grep r | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"dlis\":\ \"/ | sed s/$/\",/
     #DLIS0
