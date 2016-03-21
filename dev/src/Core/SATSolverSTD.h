@@ -1,6 +1,6 @@
 /*
  *
- *  CLASS SATSolver
+ *  CLASS SATSolverSTD
  *
 */
 
@@ -35,8 +35,8 @@ class SATSolverSTD : public SATSolver
         virtual bool backtrack(bool& p_unsat);
 
 
-        std::map<int,std::vector<int>> m_clauseWithVar;//Direct access to Clauses
-        std::map<int,std::set<int>> m_aliveVarIn;//Might be used only in preprocess
+        std::map<int,std::vector<int>> m_clausesWithVar;//Direct access to Clauses
+        std::map<int,std::set<int>> m_aliveVarIn;
 }; // SATSolver
 
 #endif // DEF_SATSOLVERSTD_H

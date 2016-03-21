@@ -201,13 +201,18 @@ bool SATSolver::deduce()
     return false;
 } // bool deduce()
 
+void SATSolver::afterPreprocess()
+{
+    return;
+}
+
 bool SATSolver::solve()
 {   
     initializeMethod();
     flushTaut();
 
     preprocess();
-
+    afterPreprocess();
     bool unsat = false;
     while(!m_unsatClauses.empty() && !unsat)
     {

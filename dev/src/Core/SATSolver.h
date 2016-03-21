@@ -74,6 +74,7 @@ class SATSolver
     protected:
         
         void flushTaut();
+        virtual void afterPreprocess();
         void preprocess();
 
         virtual bool applyLastDecision() = 0;

@@ -1,11 +1,11 @@
 /*
  *
- *  CLASS SATSolver
+ *  CLASS SATSolverWL
  *
 */
 
-#ifndef DEF_SATSOLVERSTD_H
-#define DEF_SATSOLVERSTD_H
+#ifndef DEF_SATSOLVERWL_H
+#define DEF_SATSOLVERWL_H
 
 // STD INCLUDES
 #include <string>   // sts::string
@@ -22,22 +22,21 @@
 class SATSolverWL : public SATSolver
 {
     public:
-        virtual ~SATSolverSTD();
+        virtual ~SATSolverWL();
 
     private:
 
         virtual void initializeMethod();
+        virtual void afterPreprocess();
 
-        virtual void applyLastDecision();
+        virtual bool applyLastDecision();
 
-        virtual bool solve();
+        virtual bool uniquePol(bool p_preprocess = false);
+
         virtual bool backtrack(bool& p_unsat);
 
-        void watchClauses();
 
-
-        std::map<int,std::set<int>> m_clauseWatchedBy;//Direct access to Clauses
-        
+        std::map<int,std::set<int>> m_clausesWatchedBy;//Direct access to Clauses
 }; // SATSolver
 
-#endif // DEF_SATSOLVERSTD_H
+#endif // DEF_SATSOLVERWL_H

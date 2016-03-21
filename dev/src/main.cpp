@@ -1,6 +1,7 @@
 // SATSolver class
 #include "Core/SATSolver.h"
 #include "Core/SATSolverSTD.h"
+#include "Core/SATSolverWL.h"
 
 // Parser interface / classes
 #include "Parser/IParser.h"
@@ -63,7 +64,9 @@ int main(int argc, char** argv)
     OUTDEBUG("DEBUG ENABLED");
 
     // Create the solver
-    unique_ptr<SATSolver> solver = unique_ptr<SATSolver>(new SATSolverSTD());
+    unique_ptr<SATSolver> solver;
+    if(!watchedLitMeth) solver = unique_ptr<SATSolver>(new SATSolverSTD());
+    else solver = unique_ptr<SATSolver>(new SATSolverWL());
     //(watchedLitMeth) ?
 
     // Set strategy

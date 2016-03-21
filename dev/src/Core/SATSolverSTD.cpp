@@ -13,7 +13,7 @@ void SATSolverSTD::initializeMethod()
         for(auto lit : m_clauses[iClause].getLiterals())
         {
             m_valuation[lit.first] = -1;
-            m_clauseWithVar[lit.first].push_back(iClause);
+            m_clausesWithVar[lit.first].push_back(iClause);
             m_aliveVarIn[iClause].insert(lit.first);
         }
 }
@@ -35,7 +35,7 @@ bool SATSolverSTD::backtrack(bool& p_unsat)
             lastBetFound = toCancel.bet;
             reviveClauseWithSatisfier(toCancel.index);
 
-            for(int iClause : m_clauseWithVar[toCancel.index])
+            for(int iClause : m_clausesWithVar[toCancel.index])
                 m_aliveVarIn[iClause].insert(toCancel.index);
 
             m_valuation[toCancel.index] = -1;
@@ -65,8 +65,6 @@ bool SATSolverSTD::backtrack(bool& p_unsat)
 
 bool SATSolverSTD::applyLastDecision()
 {
-    //for(int iClause: m_clauseWithVar[78])
-     //   OUTDEBUG("ICI " << m_clauses[iClause].toStr());
 	if(m_currentAssignement.empty())
 		return false;
 
@@ -80,12 +78,10 @@ bool SATSolverSTD::applyLastDecision()
 
     m_isContradictory = false;
 
-    for(int iClause : m_clauseWithVar[p_dec.index])
+    for(int iClause : m_clausesWithVar[p_dec.index])
     {
-        //OUTDEBUG("LA " << m_clauses[iClause].toStr());
         if(m_unsatClauses.find(iClause) != m_unsatClauses.end())
         {
-            OUTDEBUG(m_clauses[iClause].toStr() << " " << m_aliveVarIn[iClause].size());
             if(m_clauses[iClause].getLiterals()[p_dec.index] == !p_dec.value)
                 satisfyClause(iClause,p_dec.index);
             else

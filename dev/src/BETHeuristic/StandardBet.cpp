@@ -47,6 +47,8 @@ decision StandardBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsa
 
     if(firstUnassigned == -1)
     {
+        for(auto lit: p_clauses[*p_unsatClauses.begin()].getLiterals())
+            printf("%d\n", p_valuation[lit.first]);
         OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
     }
 
