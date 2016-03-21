@@ -25,16 +25,20 @@ bool SATSolverSTD::backtrack(bool& p_unsat)
     {
         OUTDEBUG("Backtracking");
         bool lastBetFound = false;
+
+        std::queue<decision> empty;
+        std::swap(m_deductionQueue, empty );
+
         while(!m_currentAssignement.empty() && !lastBetFound)
         {
-            decision toErase = m_currentAssignement.back();
-            lastBetFound = toErase.bet;
-            reviveClauseWithSatisfier(toErase.index);
+            decision toCancel = m_currentAssignement.back();
+            lastBetFound = toCancel.bet;
+            reviveClauseWithSatisfier(toCancel.index);
 
-            for(int iClause : m_clauseWithVar[toErase.index])
-                m_aliveVarIn[iClause].insert(toErase.index);
+            for(int iClause : m_clauseWithVar[toCancel.index])
+                m_aliveVarIn[iClause].insert(toCancel.index);
 
-            m_valuation[toErase.index] = -1;
+            m_valuation[toCancel.index] = -1;
             if(!lastBetFound)
                 m_currentAssignement.pop_back();
             else
@@ -59,8 +63,67 @@ bool SATSolverSTD::backtrack(bool& p_unsat)
     return false;
 } // bool backtrack(bool&)
 
+bool SATSolverSTD::applyLastDecision()
+{
+    //for(int iClause: m_clauseWithVar[78])
+     //   OUTDEBUG("ICI " << m_clauses[iClause].toStr());
+	if(m_currentAssignement.empty())
+		return false;
 
-bool SATSolverSTD::uniquePol()
+	decision p_dec = m_currentAssignement.back();
+    OUTDEBUG("Handling " << ((p_dec.bet) ? string("bet") : string("deduction")) << ": "
+            << p_dec.index << " to " << ((p_dec.value) ? string("True") : string("False")));
+            
+    OUTDEBUG("\t" << currentStateToStr());
+    
+	m_valuation[p_dec.index] = p_dec.value;
+
+    m_isContradictory = false;
+
+    for(int iClause : m_clauseWithVar[p_dec.index])
+    {
+        //OUTDEBUG("LA " << m_clauses[iClause].toStr());
+        if(m_unsatClauses.find(iClause) != m_unsatClauses.end())
+        {
+            OUTDEBUG(m_clauses[iClause].toStr() << " " << m_aliveVarIn[iClause].size());
+            if(m_clauses[iClause].getLiterals()[p_dec.index] == !p_dec.value)
+                satisfyClause(iClause,p_dec.index);
+            else
+            {
+                m_aliveVarIn[iClause].erase(p_dec.index);
+                if(m_aliveVarIn[iClause].size()==1)
+                {
+                    int remainingVar = *m_aliveVarIn[iClause].begin();
+                    bool pol = m_clauses[iClause].getLiterals()[remainingVar];
+                    m_deductionQueue.push(decision(remainingVar,!pol,false));
+                    OUTDEBUG("\tDeducing (unit prop) : " << remainingVar << " to " << ((!pol) ? "True" : "False"));
+                }
+                m_isContradictory = m_aliveVarIn[iClause].size() == 0;
+                if(m_isContradictory)
+                {
+                    OUTDEBUG("\tContradiction spotted! : " << m_clauses[iClause].toStr());
+                    return false;
+                }
+            }
+        }
+   	}
+
+
+    /*for(int iClause: m_unsatClauses)
+        if(m_aliveVarIn[iClause].size() == 1)
+        {
+            printf("B %s\n\n", m_clauses[iClause].toStr().c_str());
+            int remainingVar = *m_aliveVarIn[iClause].begin();
+            bool pol = m_clauses[iClause].getLiterals()[remainingVar];
+            m_deductionQueue.push(decision(remainingVar,!pol,false));
+            cout << "\tDeducing (unit prop): " << remainingVar << " to " << !pol << endl;
+            return false;
+        }*/
+    return m_unsatClauses.empty();
+}
+
+
+bool SATSolverSTD::uniquePol(bool p_preprocess /* = false */)
 {
     //In the pair, first : sum of polarities, second: number of occurencies
     //We sum the polarities and check if it matches with +- #occurencies
@@ -79,98 +142,15 @@ bool SATSolverSTD::uniquePol()
         if(it->second.first == it->second.second || it->second.first == -1*it->second.second)
         {
             decision deduction = decision(it->first,(it->second.first > 0),false);
-            m_currentAssignement.push_back(deduction);
             OUTDEBUG("\tDeducing (unique pol): " << it->first << " to " << ((it->second.first > 0) ? "True" : "False"));
-            return true;
-        }
-
-    return false;
-}
-
-bool SATSolverSTD::unitProp()
-{
-	for(auto iClause : m_unsatClauses)
-        if(m_aliveVarIn[iClause].size() == 1)
-        {
-            int indexUnit = *m_aliveVarIn[iClause].begin();
-            bool value = !m_clauses[iClause].getLiterals()[indexUnit];
-
-            decision deduction = decision(indexUnit,value,false);
-            OUTDEBUG("\tDeducing (unit prop): " << indexUnit << " to " << ((value) ? string("True") : string("False")));
-            m_currentAssignement.push_back(deduction);
-            return true;
-        }
-    return false;
-}
-
-
-bool SATSolverSTD::deduce()
-{
-    if(m_unsatClauses.empty())
-        return false;
-    
-    if(unitProp())
-        return true;
-
-    //If !p_first_bet we want to do uniquePol in all cases
-    return uniquePol();
-} // bool deduce()
-
-void SATSolverSTD::applyLastDecision()
-{
-	if(m_currentAssignement.empty())
-		return;
-
-	decision p_dec = m_currentAssignement.back();
-    OUTDEBUG("Handling " << ((p_dec.bet) ? string("bet") : string("deduction")) << ": "
-            << p_dec.index << " to " << ((p_dec.value) ? string("True") : string("False")));
-            
-    OUTDEBUG("\t" << currentStateToStr());
-    
-	m_valuation[p_dec.index] = p_dec.value;
-    m_isContradictory = false;
-    for(int iClause : m_clauseWithVar[p_dec.index])
-        if(m_unsatClauses.find(iClause) != m_unsatClauses.end())
-        {
-            if(m_clauses[iClause].getLiterals()[p_dec.index] == !p_dec.value)
-                satisfyClause(iClause,p_dec.index);
-            else
+            if(!p_preprocess)
             {
-                m_aliveVarIn[iClause].erase(p_dec.index);
-                m_isContradictory = m_aliveVarIn[iClause].size() == 0;
-                if(m_isContradictory)
-                    return;
+                m_deductionQueue.push(deduction);
+                return true;
             }
+            else
+                m_preprocessQueue.push(deduction);
         }
-   	
 
+    return false;
 }
-
-bool SATSolverSTD::solve()
-{
-    
-    
-    initializeMethod();
-    flushTaut();
-    bool unsat = false;
-    while(!m_unsatClauses.empty() && !unsat)
-    {
-        applyLastDecision();
-        OUTDEBUG("\t" << currentStateToStr() );
-        if(m_unsatClauses.empty())
-            continue;
-
-        if(backtrack(unsat))
-            continue;
-
-        OUTDEBUG("SAT rate: " << m_satClauses->size() << " " << m_satClauses->size()+m_unsatClauses.size() << endl);
-
-        if(deduce())
-            continue;
-        
-        takeABet();
-    }
-
-    OUTDEBUG("evaluate : " << evaluate());
-    return !unsat;
-} // bool solve()

@@ -10,6 +10,7 @@
 // STD INCLUDES
 #include <string>   // sts::string
 #include <vector>   // std::vector
+#include <queue>
 #include <set>      // std::set
 #include <map>      // std::map
 #include <sstream>  // std::stringstream
@@ -67,7 +68,7 @@ class SATSolver
 
         /* DPLL algorithm */
         virtual void initializeMethod() = 0;
-        virtual bool solve()=0;
+        bool solve();
         void showSolution(LOGParser &parser);
         void showSolution();
 
@@ -77,17 +78,28 @@ class SATSolver
         std::string decisionToStr();
 
     protected:
+        
+        void flushTaut();
+        void preprocess();
 
+        virtual bool applyLastDecision() = 0;
         void satisfyClause(int p_iClause, int p_satisfier);
-        virtual void applyLastDecision() = 0;
-        virtual bool deduce()=0;
-        virtual bool unitProp()=0;
-        virtual bool uniquePol()=0;
-        virtual bool backtrack(bool& p_unsat)=0;
 
+        bool deduce();
+        virtual bool uniquePol(bool p_preprocess = false) = 0;
+
+        bool isContradictory();
+        void reviveClauseWithSatisfier(int p_satisfier);
+        virtual bool backtrack(bool& p_unsat) = 0;
+
+        decision takeABet();
+
+        bool evaluate();
+        
 
         std::unique_ptr<IBet> m_betHeuristic;
 
+        /*Formula representation*/
         std::vector<Clause> m_clauses;
         std::set<int>  m_unsatClauses;
         std::unique_ptr<satClausesSet> m_satClauses;
@@ -95,18 +107,11 @@ class SATSolver
         /*DPLL stuff*/
         std::vector<decision> m_currentAssignement;//Stack of decisions
         std::map<int,int> m_valuation;//Current valuation
+        std::queue<decision> m_deductionQueue;
+        std::queue<decision> m_preprocessQueue;
 
         bool m_isContradictory;
 
-        void flushTaut();
-
-        decision takeABet();
-
-
-        bool isContradictory();
-        void reviveClauseWithSatisfier(int p_satisfier);
-
-        bool evaluate();
 
     private:
         /* DPLL intern */

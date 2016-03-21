@@ -56,6 +56,7 @@ void SATSolver::setOriginFormula(const std::vector<Clause> &p_clauses)
     //Set all to unsat
     for(auto c : p_clauses)
         m_unsatClauses.insert(c.getId());
+
 } // setOriginFormula(const ClauseSet&)
 
 SATSolver::~SATSolver()
@@ -97,6 +98,136 @@ bool SATSolver::isContradictory()
 {
     return m_isContradictory;
 } // bool isContradictory()
+
+bool SATSolver::uniquePol(bool p_preprocess /* = false */)
+{
+    //In the pair, first : sum of polarities, second: number of occurencies
+    //We sum the polarities and check if it matches with +- #occurencies
+    map<int,pair<int,int>> countPol;
+
+    for(int iClause : m_unsatClauses)
+        for(auto l : m_clauses[iClause].getLiterals())
+            if(m_valuation[l.first] == -1)
+            {
+                if(countPol.find(l.first) == countPol.end())
+                    countPol[l.first] = make_pair(0,0);
+                countPol[l.first].first += (l.second) ? -1 : 1;
+                countPol[l.first].second++;
+            }
+
+    for(auto it = countPol.begin(); it != countPol.end(); ++it)
+        if(it->second.first == it->second.second || it->second.first == -1*it->second.second)
+        {
+            decision deduction = decision(it->first,(it->second.first > 0),false);
+            OUTDEBUG("\tDeducing (unique pol): " << it->first << " to " << ((it->second.first > 0) ? "True" : "False"));
+            if(!p_preprocess)
+            {
+                m_deductionQueue.push(deduction);
+                return true;
+            }
+            else
+                m_preprocessQueue.push(deduction);
+        }
+
+    return false;
+}
+
+void SATSolver::preprocess()
+{
+    OUTDEBUG("Preprocessing formula");
+    /*
+        Dedect unitary clauses in input
+    */
+    map<int,bool> deductionOn;
+    for(int iClause: m_unsatClauses)
+        if(m_clauses[iClause].getLiterals().size() == 1)
+        {
+            int indexUnit = m_clauses[iClause].getLiterals().begin()->first;
+            if(deductionOn.find(indexUnit) == deductionOn.end())
+            {
+                bool value = !m_clauses[iClause].getLiterals()[indexUnit];
+                m_preprocessQueue.push(decision(indexUnit,value,false));
+                deductionOn[indexUnit] = true;
+                OUTDEBUG("\tDeducing (unitary clause): " << indexUnit << " to " << ((value) ? "True" : "False"));
+            }
+        }
+
+    uniquePol(true);
+
+}   
+
+bool SATSolver::deduce()
+{  
+    if(m_unsatClauses.empty())
+        return true;
+
+    /*
+        We stack deduction only if their variable hasn't been assigned yet.    
+    */
+
+    if(!m_preprocessQueue.empty())
+    {
+        while(!m_preprocessQueue.empty() && m_valuation[m_preprocessQueue.front().index] != -1)
+            m_preprocessQueue.pop();
+        if(!m_preprocessQueue.empty())
+        {
+            m_currentAssignement.push_back(m_preprocessQueue.front());
+            m_preprocessQueue.pop();
+            return true;
+        }
+    }
+    
+
+    if(!m_deductionQueue.empty() || uniquePol())
+    {
+        while(!m_deductionQueue.empty() && m_valuation[m_deductionQueue.front().index] != -1)
+        {
+            printf("OO %d %d\n", m_deductionQueue.front().value, m_valuation[m_deductionQueue.front().index]);
+            m_deductionQueue.pop();
+        }
+    
+        
+        if(!m_deductionQueue.empty())
+        {
+            m_currentAssignement.push_back(m_deductionQueue.front());
+            OUTDEBUG("\tStack deduction: " << m_deductionQueue.front().index << " to " << m_deductionQueue.front().value << " " << m_valuation[m_deductionQueue.front().index]  << endl);
+            m_deductionQueue.pop();
+
+            return true;
+        }
+        return false;
+    }
+
+    return false;
+} // bool deduce()
+
+bool SATSolver::solve()
+{   
+    initializeMethod();
+    flushTaut();
+
+    preprocess();
+
+    bool unsat = false;
+    while(!m_unsatClauses.empty() && !unsat)
+    {
+        if(applyLastDecision())
+            continue;
+
+        if(backtrack(unsat))
+            continue;
+
+        if(deduce())
+            continue;
+        
+        takeABet();
+    }
+
+    OUTDEBUG("evaluate : " << evaluate());
+    return !unsat;
+} // bool solve()
+
+
 
 decision SATSolver::takeABet()
 {

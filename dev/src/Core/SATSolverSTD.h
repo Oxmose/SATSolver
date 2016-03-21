@@ -28,19 +28,15 @@ class SATSolverSTD : public SATSolver
 
         virtual void initializeMethod();
 
-        virtual void applyLastDecision();
+        virtual bool applyLastDecision();
 
-        virtual bool solve();
+        virtual bool uniquePol(bool p_preprocess = false);
 
-        virtual bool deduce();
-        virtual bool unitProp();
-        virtual bool uniquePol();
         virtual bool backtrack(bool& p_unsat);
 
 
         std::map<int,std::vector<int>> m_clauseWithVar;//Direct access to Clauses
-        std::map<int,std::set<int>> m_aliveVarIn;
-        
+        std::map<int,std::set<int>> m_aliveVarIn;//Might be used only in preprocess
 }; // SATSolver
 
 #endif // DEF_SATSOLVERSTD_H
