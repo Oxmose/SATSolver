@@ -83,7 +83,7 @@ decision RandomBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatC
     
     if(selectedUnassigned == -1)
     {
-        OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
+        OUTERROR("Critical issue in RandBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
     }
 
     OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);

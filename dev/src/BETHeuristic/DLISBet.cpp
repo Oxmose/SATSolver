@@ -103,7 +103,7 @@ decision DLISBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
     
     if(firstUnassigned == -1)
     {
-        OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
+        OUTERROR("Critical issue in DLISBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
     }
 
     OUTDEBUG("Taking bet: " << firstUnassigned << " to " << value);
