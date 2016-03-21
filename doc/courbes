@@ -1,0 +1,20 @@
+Un graph avec :
+    x : tmps
+    y : # de problems resolus
+    pour chaque methodes
+    comparer avec une courbe de minisat
+Un graph avec :
+    x : tmps
+    y : # clauses dans la formule
+    pour chaque methodes?
+    comparer avec une courbe minisat
+Un graph avec seulement des sat:
+    x : tmps
+    y : # de problems resolus
+Un grapg avec seulement des unsat:
+    x : tmps
+    y : # problèmes résolus
+
+Un graph avec seulement une 50eme de problems:
+    x : methode utilisé
+    y : temps pour les problems resolus
