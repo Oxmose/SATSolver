@@ -10,16 +10,17 @@
 // SATSolver class
 #include "Core/SATSolver.h"
 
-// Parsers classes
-#include "CNFParser/CNFParser.h"
-//#include "LogExpParser/LOGParser.h"
+// Parser interface / classes
+#include "Parser/IParser.h"
+#include "Parser/CNFParser.h"
+#include "Parser/LOGParser.h"
 
 // Bet heuristics classes
 #include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
 #include "BETHeuristic/StandardBet.h"   // Standard bet heuristic
-//#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
-//#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
-//#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
+#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
+#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
+#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
 
 // STD INCLUDES
 #include <ctime>        //std::clock

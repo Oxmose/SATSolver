@@ -199,10 +199,6 @@ Minisat la finit en 1s.
 
 ## Qui a fait quoi
 #Tristan
-Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.
-
+Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests, Watched Literals, redesign en statégies, scripts de tests.
 #Alexy
-Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
-
-#TODO
-Optimiser les parcour dans les heuritiques pour trouver le max
+Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests, heuristiques de paris, redesign en statégies, scripts de tests.

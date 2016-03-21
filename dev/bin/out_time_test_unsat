@@ -1,0 +1,76 @@
+{
+    "UNSAT": [
+        {
+            "file": "test_base/cnf/serial_test/unsat/aim-100-1_6-no-1.cnf",
+            "std": "2.26",
+            "moms": "13.77",
+            "dlis": "13.80",
+            "dlis0": "14.04",
+        },
+        {
+            "file": "test_base/cnf/serial_test/unsat/aim-100-1_6-no-2.cnf",
+            "std": "4.72",
+            "moms": "18.27",
+            "dlis": "17.82",
+            "dlis0": "17.21",
+        },
+        {
+            "file": "test_base/cnf/serial_test/unsat/aim-100-1_6-no-3.cnf",
+            "std": "1.41",
+            "moms": "51.69",
+            "dlis": "51.42",
+            "dlis0": "51.83",
+        },
+        {
+            "file": "test_base/cnf/serial_test/unsat/aim-100-1_6-no-4.cnf",
+            "std": "0.80",
+            "moms": "56.07",
+            "dlis": "41.41",
+            "dlis0": "36.80",
+        },
+        {
+            "file": "test_base/cnf/serial_test/unsat/aim-100-2_0-no-1.cnf",
+            
+            "std": "0.00",
+            
+            "moms": "0.01",
+            
+            "dlis": "0.01",
+            
+            "dlis0": "0.01",
+        },
+        {
+            "file": "test_base/cnf/serial_test/unsat/aim-100-2_0-no-2.cnf",
+            
+            "std": "2.00",
+            
+            "moms": "13.05",
+            
+            "dlis": "12.81",
+            
+            "dlis0": "13.04",
+        },
+        {
+            "file": "test_base/cnf/serial_test/unsat/aim-100-2_0-no-3.cnf",
+            
+            "std": "0.04",
+            
+            "moms": "65.17",
+            
+            "dlis": "31.77",
+            
+            "dlis0": "63.64",
+        },
+        {
+            "file": "test_base/cnf/serial_test/unsat/aim-100-2_0-no-4.cnf",
+            
+            "std": "0.06",
+            
+            "moms": "0.02",
+            
+            "dlis": "0.02",
+            
+            "dlis0": "0.02",
+        }
+    ]
+}

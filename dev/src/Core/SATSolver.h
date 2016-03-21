@@ -19,10 +19,9 @@
 #include <memory>
 
 // PROJECT INCLUDES
-#include "Clause.h"                         // Clause class
-#include "../CNFParser/CNFParser.h"         // CNFParser class
-#include "../LogExpParser/LOGParser.h"      // LOGParser class
-#include "../BETHeuristic/IBet.h"           // Bet Heuristic Interface
+#include "Clause.h"                     // Clause class
+#include "../Parser/IParser.h"          // Parsers Interface
+#include "../BETHeuristic/IBet.h"       // Bet Heuristic Interface
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h" // DEBUG
@@ -36,22 +35,11 @@ struct decision
     bool bet; //bet or deduction
 };
 
-enum PARSE_TYPE
-{
-    CNF_PARSE,
-    LOG_PARSE
-};
-
 /*
     Looks horrible but in fact simple, it represents a multiset of couples (iClause, iSatisfier)
     It allows us to efficiently get all clauses with given satisfier.
 */
 typedef std::multiset<std::pair<int,int>, bool (*) (const std::pair<int,int>&,const std::pair<int,int>&)> satClausesSet;
-static bool compareSat(const std::pair<int,int>& p_a, const std::pair<int,int>& p_b)
-{
-    return p_a.second < p_b.second;//Sort unsat Clauses by id for log(n) find
-} // static bool compareUnsat(const Clause&, const Clause&)
-
 
 class SATSolver
 {
@@ -62,6 +50,9 @@ class SATSolver
         // Bet strategy
         void setStrategy(IBet* p_betMethod);
 
+	    // Parser strategy
+	    void setParser(IParser* p_parser);
+
         void setMaxIndex(int p_maxIndex);
         void setOriginFormula(const std::vector<Clause> &p_clauses);
         void reset();
@@ -69,7 +60,6 @@ class SATSolver
         /* DPLL algorithm */
         virtual void initializeMethod() = 0;
         bool solve();
-        void showSolution(LOGParser &parser);
         void showSolution();
 
         /* Debug stuff */
@@ -77,6 +67,10 @@ class SATSolver
         std::string formulaToStr();
         std::string decisionToStr();
 
+        static bool compareSat(const std::pair<int,int>& p_a, const std::pair<int,int>& p_b)
+        {
+            return p_a.second < p_b.second;//Sort unsat Clauses by id for log(n) find
+        } // static bool compareSat(const Clause&, const Clause&)
     protected:
         
         void flushTaut();
@@ -96,6 +90,8 @@ class SATSolver
 
         bool evaluate();
         
+	//Parser strategy
+        IParser *m_parser;
 
         std::unique_ptr<IBet> m_betHeuristic;
 

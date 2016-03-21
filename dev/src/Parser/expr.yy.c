@@ -1,6 +1,6 @@
-#line 2 "LogExpParser/expr.yy.c"
+#line 2 "Parser/expr.yy.c"
 
-#line 4 "LogExpParser/expr.yy.c"
+#line 4 "Parser/expr.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -476,15 +476,15 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "LogExpParser/expr.l"
-#line 2 "LogExpParser/expr.l"
+#line 1 "Parser/expr.l"
+#line 2 "Parser/expr.l"
 #include <iostream>
 #include <cstdlib>
 using namespace std;
 #define YY_DECL extern "C" int yylex()
 
 #include "expr.tab.hpp"
-#line 488 "LogExpParser/expr.yy.c"
+#line 488 "Parser/expr.yy.c"
 
 #define INITIAL 0
 
@@ -702,9 +702,9 @@ YY_DECL
 		}
 
 	{
-#line 9 "LogExpParser/expr.l"
+#line 9 "Parser/expr.l"
 
-#line 708 "LogExpParser/expr.yy.c"
+#line 708 "Parser/expr.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -763,82 +763,82 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "LogExpParser/expr.l"
+#line 10 "Parser/expr.l"
 {}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "LogExpParser/expr.l"
+#line 11 "Parser/expr.l"
 { yylval.ival = atoi(yytext); return TK_VAR; } //don't want 0
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "LogExpParser/expr.l"
+#line 12 "Parser/expr.l"
 { return TK_LPAREN; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 13 "LogExpParser/expr.l"
+#line 13 "Parser/expr.l"
 { return TK_RPAREN; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 14 "LogExpParser/expr.l"
+#line 14 "Parser/expr.l"
 { return TK_DIS; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 15 "LogExpParser/expr.l"
+#line 15 "Parser/expr.l"
 { return TK_CON; }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 16 "LogExpParser/expr.l"
+#line 16 "Parser/expr.l"
 { return TK_CON;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "LogExpParser/expr.l"
+#line 17 "Parser/expr.l"
 { return TK_XOR; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 18 "LogExpParser/expr.l"
+#line 18 "Parser/expr.l"
 { return TK_IMP; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 19 "LogExpParser/expr.l"
+#line 19 "Parser/expr.l"
 { return TK_EQU; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 20 "LogExpParser/expr.l"
+#line 20 "Parser/expr.l"
 { return TK_ANT; } //Antithese
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 21 "LogExpParser/expr.l"
+#line 21 "Parser/expr.l"
 { return TK_NEG;}
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 22 "LogExpParser/expr.l"
+#line 22 "Parser/expr.l"
 { return TK_ZERO;}//End Of Formule, the HEX 0a is a pain in the 
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 23 "LogExpParser/expr.l"
+#line 23 "Parser/expr.l"
 ;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 24 "LogExpParser/expr.l"
+#line 24 "Parser/expr.l"
 ECHO;
 	YY_BREAK
-#line 842 "LogExpParser/expr.yy.c"
+#line 842 "Parser/expr.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1513,7 +1513,7 @@ static void yyensure_buffer_stack (void)
 		 * scanner will even need a stack. We use 2 instead of 1 to avoid an
 		 * immediate realloc on the next call.
          */
-		num_to_alloc = 1; // After all that talk, this was set to 1 anyways...
+		num_to_alloc = 1; /* After all that talk, this was set to 1 anyways... */
 		(yy_buffer_stack) = (struct yy_buffer_state**)yyalloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
@@ -1839,7 +1839,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 24 "LogExpParser/expr.l"
+#line 24 "Parser/expr.l"
 
 
 

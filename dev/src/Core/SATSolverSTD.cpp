@@ -108,17 +108,6 @@ bool SATSolverSTD::applyLastDecision()
         }
    	}
 
-
-    /*for(int iClause: m_unsatClauses)
-        if(m_aliveVarIn[iClause].size() == 1)
-        {
-            printf("B %s\n\n", m_clauses[iClause].toStr().c_str());
-            int remainingVar = *m_aliveVarIn[iClause].begin();
-            bool pol = m_clauses[iClause].getLiterals()[remainingVar];
-            m_deductionQueue.push(decision(remainingVar,!pol,false));
-            cout << "\tDeducing (unit prop): " << remainingVar << " to " << !pol << endl;
-            return false;
-        }*/
     return m_unsatClauses.empty();
 }
 

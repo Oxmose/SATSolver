@@ -17,10 +17,9 @@
 #include "SATSolver.h"    // SATSolver Class header
 
 // PROJECT INCLUDES
-#include "Clause.h"                         // Clause class
-#include "../CNFParser/CNFParser.h"         // CNFParser class
-#include "../LogExpParser/LOGParser.h"      // LOGParser class
-#include "../BETHeuristic/IBet.h"           // Bet Heuristic Interface
+#include "Clause.h"                     // Clause class
+#include "../Parser/IParser.h"          // Parsers Interface
+#include "../BETHeuristic/IBet.h"       // Bet Heuristic Interface
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"   // DEBUG
@@ -44,6 +43,11 @@ void SATSolver::setStrategy(IBet* p_betMethod)
 {
     m_betHeuristic = unique_ptr<IBet>(p_betMethod);
 } // setStrategy(IBet*)
+
+void SATSolver::setParser(IParser* p_parser)
+{
+    m_parser = p_parser;
+} // setParser(IParser*)
 
 void SATSolver::setMaxIndex(int p_maxIndex)
 {
@@ -181,11 +185,7 @@ bool SATSolver::deduce()
     if(!m_deductionQueue.empty() || uniquePol())
     {
         while(!m_deductionQueue.empty() && m_valuation[m_deductionQueue.front().index] != -1)
-        {
-            printf("OO %d %d\n", m_deductionQueue.front().value, m_valuation[m_deductionQueue.front().index]);
             m_deductionQueue.pop();
-        }
-    
         
         if(!m_deductionQueue.empty())
         {
@@ -252,19 +252,14 @@ void SATSolver::flushTaut()
         satisfyClause(iClause, -2);//Special satisfier for taut
 } // flushTaut()
 
-void SATSolver::showSolution(LOGParser &parser)
-{
-    // If using tseitin transformation, we have to display only the originals variables
-    parser.tseitinResolution(m_valuation, m_maxIndex);
-
-
-    showSolution();
-} // showSolution(LOGParser&)
-
 void SATSolver::showSolution()
 {
+    // If using tseitin transformation, we have to display only the originals variables
+    // Strategy handle the choice of resolution (tseitin of cnf)
+    m_parser->tseitinResolution(m_valuation, m_maxIndex);
+
     // Display user-friendly output
-    for(int i = 1 ; i <= m_maxIndex ; i++)
+    for(unsigned int i = 1 ; i <= m_maxIndex ; i++)
     {
         string sign="";
         if(m_valuation.find(i) != m_valuation.end())
