@@ -4,10 +4,10 @@
 echo "{"
 echo "    \"SAT\": ["
 
-for f in test_base/cnf/serial_test/sat/*.cnf
+for f in ../test_base/cnf/serial_test/sat/*/*.cnf
 do
     echo "        {"
-    echo "            \"file\": \"$f\"," | sed s/test_base\\/cnf\\/serial_test\\/sat\\///
+    echo "            \"file\": \"$f\"," | sed s/\\.\\.\\/test_base\\/cnf\\/serial_test\\/sat\\///
 
     #MINISAT
     (/usr/bin/time -f "%e r" minisat $f) |&  grep r$ | sed s/\ r// | sed s/^/\ \ \ \ \ \ \ \ \ \ \ \ \"minisat\":\ \"/ | sed s/$/\",/
