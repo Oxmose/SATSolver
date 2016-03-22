@@ -49,8 +49,8 @@ class SATSolver
 
         // Bet strategy
         void setStrategy(IBet* p_betMethod);
-	    // Parser strategy
-	    void setParser(IParser* p_parser);
+        // Parser strategy
+        void setParser(IParser* p_parser);
 
         void setMaxIndex(int p_maxIndex);
         void setOriginFormula(const std::vector<Clause> &p_clauses);
@@ -94,7 +94,7 @@ class SATSolver
 
         bool evaluate();
         
-	//Parser strategy
+    //Parser strategy
         IParser *m_parser;
 
         std::unique_ptr<IBet> m_betHeuristic;

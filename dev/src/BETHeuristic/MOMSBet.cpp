@@ -44,47 +44,47 @@ decision MOMSBet::takeABet(SATSolver &p_solver)
     for(int iClause: unsatClausesIndex)
     {
         unsigned int clauseSize = unsatLitsByClauses[iClause].size();
-       	if(clauseSize < min || min == -1)
-			min = clauseSize;
-		clausesSizes.emplace(iClause, clauseSize);
+           if(clauseSize < min || min == -1)
+            min = clauseSize;
+        clausesSizes.emplace(iClause, clauseSize);
     }    
 
-	for(pair<int, unsigned int> entry : clausesSizes)
+    for(pair<int, unsigned int> entry : clausesSizes)
     {
-		if(entry.second == min)
-		{
+        if(entry.second == min)
+        {
             
-			for(auto iVar: unsatLitsByClauses[entry.first])
+            for(auto iVar: unsatLitsByClauses[entry.first])
             {
                 
-                    int polLit = (clauses[entry.first].getLiterals()[iVar]) ? -iVar : iVar;
-                    // If we never encountred the literal
-                    if(unassignedLits.find(polLit) == unassignedLits.end())
-                        unassignedLits.emplace(polLit, 1);
-                    else
-                        ++unassignedLits[polLit];
+                int polLit = (clauses[entry.first].getLiterals()[iVar]) ? -iVar : iVar;
+                // If we never encountred the literal
+                if(unassignedLits.find(polLit) == unassignedLits.end())
+                    unassignedLits.emplace(polLit, 1);
+                else
+                    ++unassignedLits[polLit];
            
             }
-		}
-	}
+        }
+    }
 
-	unsigned int max = 0;
-	for(pair<int, unsigned int> entry : unassignedLits)
-	{
-		if(max < entry.second)
-		{
-			selectedUnassigned = entry.first;
-			max = entry.second;
-		}	
-	}
+    unsigned int max = 0;
+    for(pair<int, unsigned int> entry : unassignedLits)
+    {
+        if(max < entry.second)
+        {
+            selectedUnassigned = entry.first;
+            max = entry.second;
+        }    
+    }
 
-	if(selectedUnassigned < 0)
-	{
-		selectedUnassigned = -selectedUnassigned;
-		value = false;
-	}
-	else
-		value = true;
+    if(selectedUnassigned < 0)
+    {
+        selectedUnassigned = -selectedUnassigned;
+        value = false;
+    }
+    else
+        value = true;
 
     decision bet = decision(selectedUnassigned, value, true);
     

@@ -11,9 +11,9 @@
 // Bet heuristics classes
 #include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
 #include "BETHeuristic/StandardBet.h"   // Standard bet heuristic
-#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
-#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
-#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
+#include "BETHeuristic/RandomBet.h"        // Random bet heuristic
+#include "BETHeuristic/DLISBet.h"        // DLIS bet heuristic
+#include "BETHeuristic/MOMSBet.h"        // MOMS bet heuristic
 
 // STD INCLUDES
 #include <ctime>        //std::clock
