@@ -49,7 +49,6 @@ class SATSolver
 
         // Bet strategy
         void setStrategy(IBet* p_betMethod);
-
 	    // Parser strategy
 	    void setParser(IParser* p_parser);
 
@@ -69,6 +68,8 @@ class SATSolver
 
         std::set<int>& getUnsatClauses() {return m_unsatClauses;}
         std::vector<Clause>& getClauses() {return m_clauses; }
+        virtual std::map<int,std::set<int>>& getAliveVars() = 0;
+
 
         static bool compareSat(const std::pair<int,int>& p_a, const std::pair<int,int>& p_b)
         {
@@ -81,8 +82,6 @@ class SATSolver
 
         virtual bool applyLastDecision() = 0;
         void satisfyClause(int p_iClause, int p_satisfier);
-
-        virtual std::map<int,std::set<int>>& getAliveVars() = 0;
 
         bool deduce();
         virtual bool uniquePol(bool p_preprocess = false) = 0;
