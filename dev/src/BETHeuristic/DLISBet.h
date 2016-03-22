@@ -25,7 +25,7 @@ class DLISBet : public IBet
     public:
         DLISBet(bool p_scoreMethod);
         virtual ~DLISBet();
-        virtual decision takeABet(SATSolver &p_solver);
+        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation);
 
     private:
         bool m_scoreMethod;

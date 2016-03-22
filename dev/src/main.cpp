@@ -11,9 +11,9 @@
 // Bet heuristics classes
 #include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
 #include "BETHeuristic/StandardBet.h"   // Standard bet heuristic
-//#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
-//#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
-//#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
+#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
+#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
+#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
 
 // STD INCLUDES
 #include <ctime>        //std::clock
@@ -70,8 +70,7 @@ int main(int argc, char** argv)
     //(watchedLitMeth) ?
 
     // Set strategy
-    solver->setStrategy(new StandardBet());
-    /*switch(betMeth)
+    switch(betMeth)
     {
         case NORM:
             solver->setStrategy(new StandardBet());
@@ -93,7 +92,7 @@ int main(int argc, char** argv)
             break;
         default:
             solver->setStrategy(new StandardBet());
-    }*/
+    }
 
     IParser *parser;
     switch(parserType)
@@ -141,7 +140,7 @@ int main(int argc, char** argv)
     // Only for loop instances (may be added later)
     // solver->reset();
 
-    return !sat;
+    return 0;
 }// main(int, char**)
 
 int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType, bool &debugFlag, bool &watchedLitMeth, BET_METHOD &betMeth)

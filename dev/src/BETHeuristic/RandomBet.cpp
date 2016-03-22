@@ -32,7 +32,7 @@ RandomBet::~RandomBet()
 {
 } // ~RandomBet()
 
-decision RandomBet::takeABet(SATSolver &p_solver)
+decision RandomBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
 {
     OUTDEBUG("Random bet");
 
@@ -40,18 +40,16 @@ decision RandomBet::takeABet(SATSolver &p_solver)
     int selectedUnassigned = -1;
     bool value = true;
 
-    // Retreive data
-    map<int, set<int>> unsatLitsByClauses = p_solver.getAliveVars();
-    set<int> unsatClausesIndex = p_solver.getUnsatClauses();
-    vector<Clause> clauses = p_solver.getClauses();
-
     // Gather non assigned literals
-    for(int iClause: unsatClausesIndex)
+    for(int iClause: p_unsatClauses)
     {
-        for(auto iVar: unsatLitsByClauses[iClause])
-        {    
-            int polLit = (clauses[iClause].getLiterals()[iVar]) ? -iVar : iVar;
-            unassignedLits.emplace(polLit);       
+        for(auto lit: p_clauses[iClause].getLiterals())
+        {   
+            if(p_valuation[lit.first] == -1)
+            {
+                int polLit = lit.second ? -lit.first : lit.first;
+                unassignedLits.emplace(polLit); 
+            }      
         }
     }
 
@@ -91,5 +89,5 @@ decision RandomBet::takeABet(SATSolver &p_solver)
 
     OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);
     return bet;
-} // decision takeABet(SATSolver &p_solver)
+} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
 

@@ -140,3 +140,23 @@ Minisat la finit en 1s.
 Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests, Watched Literals, redesign en statégies, scripts de tests.
 #Alexy
 Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests, heuristiques de paris, redesign en statégies, scripts de tests.
+
+# Scripts de test
+Deux bateries de tests sont disponibles :
+##Correction
+Dans bin
+
+test_correction.sh permet de vérifier que le resultat renvoyé par le solveur est correcte. Pour ce faire, lancer le, les tests sont éfféctués sur les CNF dans le dossier bin/test_base/cnf/corr_test.
+
+Vous pourrez y mettre les CNF que vous voullez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
+
+##Temps
+Dans bin
+
+test_total_time.sh permet de vérifier que les temps de résolution pour les heuristique ou non, watched literals activé ou non sur les CNF.
+
+Les tests sont éfféctués sur les CNF dans le dossier bin/test_base/cnf/serial_test.
+
+Vous pourrez y mettre les CNF que vous voullez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
+
+

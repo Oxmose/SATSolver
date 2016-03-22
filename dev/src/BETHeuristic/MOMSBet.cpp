@@ -25,7 +25,7 @@ MOMSBet::~MOMSBet()
 {
 } // ~MOMSBet()
 
-decision MOMSBet::takeABet(SATSolver &p_solver)
+decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
 {
     OUTDEBUG("MOMS bet");
     map<int, unsigned int> clausesSizes;
@@ -35,16 +35,19 @@ decision MOMSBet::takeABet(SATSolver &p_solver)
     int selectedUnassigned = -1;
     bool value = true;
 
-    // Retreive data
-    map<int, set<int>> unsatLitsByClauses = p_solver.getAliveVars();
-    set<int> unsatClausesIndex = p_solver.getUnsatClauses();
-    vector<Clause> clauses = p_solver.getClauses();
-
     // Gather minimal clauses
-    for(int iClause: unsatClausesIndex)
+    for(int iClause: p_unsatClauses)
     {
-        unsigned int clauseSize = unsatLitsByClauses[iClause].size();
-           if(clauseSize < min || min == -1)
+        unsigned int clauseSize = 0;
+        for(auto lit: p_clauses[iClause].getLiterals())
+        {
+            // Get the size of the alive lits in clause 
+            if(p_valuation[lit.first] == -1)
+            {
+                ++clauseSize;
+            }
+        }
+        if(clauseSize < min || min == -1)
             min = clauseSize;
         clausesSizes.emplace(iClause, clauseSize);
     }    
@@ -52,17 +55,18 @@ decision MOMSBet::takeABet(SATSolver &p_solver)
     for(pair<int, unsigned int> entry : clausesSizes)
     {
         if(entry.second == min)
-        {
-            
-            for(auto iVar: unsatLitsByClauses[entry.first])
+        {            
+            for(auto iVar: p_clauses[entry.first].getLiterals())
             {
-                
-                int polLit = (clauses[entry.first].getLiterals()[iVar]) ? -iVar : iVar;
-                // If we never encountred the literal
-                if(unassignedLits.find(polLit) == unassignedLits.end())
-                    unassignedLits.emplace(polLit, 1);
-                else
-                    ++unassignedLits[polLit];
+                if(p_valuation[iVar.first] == -1)
+                {
+                    int polLit = iVar.second ? -iVar.first : iVar.first;
+                    // If we never encountred the literal
+                    if(unassignedLits.find(polLit) == unassignedLits.end())
+                        unassignedLits.emplace(polLit, 1);
+                    else
+                        ++unassignedLits[polLit];
+                }
            
             }
         }
@@ -95,4 +99,4 @@ decision MOMSBet::takeABet(SATSolver &p_solver)
 
     OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);
     return bet;
-} // decision takeABet(SATSolver&)
+} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)

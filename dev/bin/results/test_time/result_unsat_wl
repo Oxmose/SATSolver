@@ -1,0 +1,17 @@
+{
+    "UNSAT_WL": [
+        {
+            "file": "*/*.cnf",
+            "minisat": "0.00",
+            "wl": "Command exited with non-zero status 1",
+            "wl": "0.00",
+            "momswl": "Command exited with non-zero status 1",
+            "momswl": "0.00",
+            "dliswl": "Command exited with non-zero status 1",
+            "dliswl": "0.00",
+            "dlis0wl": "Command exited with non-zero status 1"
+            "dlis0wl": "0.00"
+        },
+        { "file": "end" }
+    ]
+}

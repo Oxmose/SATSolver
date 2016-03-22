@@ -5,7 +5,8 @@
 */
 
 // STD INCLUDES
-#include <vector>   // std::vector
+#include <vector>   // vector
+#include <set>      // std::set
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -54,4 +55,4 @@ decision StandardBet::takeABet(std::vector<Clause> &p_clauses, const std::set<in
 
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
     return bet;
-} // decision takeABet(const std::vector<ClauseSet>&, std::vector<decision>&)
+} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)

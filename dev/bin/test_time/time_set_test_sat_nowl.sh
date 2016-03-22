@@ -4,7 +4,7 @@
 echo "{"
 echo "    \"SAT\": ["
 
-for f in ../test_base/cnf/serial_test/sat/*/*.cnf
+for f in test_base/cnf/serial_test/sat/*/*.cnf
 do
     echo "        {"
     echo "            \"file\": \"$f\"," | sed s/\\.\\.\\/test_base\\/cnf\\/serial_test\\/sat\\///
