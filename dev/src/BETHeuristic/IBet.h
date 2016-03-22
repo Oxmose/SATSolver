@@ -25,6 +25,8 @@ enum BET_METHOD
 };
 
 typedef struct decision decision;
+class SATSolver;
+
 class IBet
 {
     public:

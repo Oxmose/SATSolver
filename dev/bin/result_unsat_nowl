@@ -2,67 +2,6 @@
     "UNSAT": [
         {
             "file": "aim-100-1_6-no-1.cnf",
-            "minisat": "0.04",
-            "std": "1.92",
-            "moms": "11.97",
-            "dlis": "12.11",
-            "dlis0": "12.43"
-        },
-        {
-            "file": "aim-100-1_6-no-2.cnf",
-            "minisat": "0.01",
-            "std": "4.31",
-            "moms": "16.05",
-            "dlis": "15.65",
-            "dlis0": "14.97"
-        },
-        {
-            "file": "aim-100-1_6-no-3.cnf",
-            "minisat": "0.04",
-            "std": "1.18",
-            "moms": "45.39",
-            "dlis": "45.61",
-            "dlis0": "46.53"
-        },
-        {
-            "file": "aim-100-1_6-no-4.cnf",
             "minisat": "0.00",
-            "std": "0.71",
-            "moms": "49.39",
-            "dlis": "35.13",
-            "dlis0": "31.38"
-        },
-        {
-            "file": "aim-100-2_0-no-1.cnf",
-            "minisat": "0.00",
-            "std": "0.00",
-            "moms": "0.01",
-            "dlis": "0.01",
-            "dlis0": "0.01"
-        },
-        {
-            "file": "aim-100-2_0-no-2.cnf",
-            "minisat": "0.00",
-            "std": "1.75",
-            "moms": "11.41",
-            "dlis": "11.59",
-            "dlis0": "11.62"
-        },
-        {
-            "file": "aim-100-2_0-no-3.cnf",
-            "minisat": "0.00",
-            "std": "0.04",
-            "moms": "57.04",
-            "dlis": "27.76",
-            "dlis0": "55.79"
-        },
-        {
-            "file": "aim-100-2_0-no-4.cnf",
-            "minisat": "0.00",
-            "std": "0.05",
-            "moms": "0.02",
-            "dlis": "0.02",
-            "dlis0": "0.02"
-        }
-    ]
-}
+            "std": "Command exited with non-zero status 1",
+            "std": "6.63",

@@ -7,7 +7,7 @@
 // STD INCLUDES
 #include <vector>   // std::vector
 #include <map>      // std::map
-#include <set>
+#include <set>      // std::set
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -36,12 +36,14 @@ decision MOMSBet::takeABet(SATSolver &p_solver)
     bool value = true;
 
     // Retreive data
-    map<int, set<int>> unsatLitsByClauses;
+    map<int, set<int>> unsatLitsByClauses = p_solver.getAliveVars();
+    set<int> unsatClausesIndex = p_solver.getUnsatClauses();
+    vector<Clause> clauses = p_solver.getClauses();
 
     // Gather minimal clauses
-    for(int iClause: p_unsatClauses)
+    for(int iClause: unsatClausesIndex)
     {
-        unsigned int clauseSize = p_clauses[iClause].getLiterals().size();
+        unsigned int clauseSize = unsatLitsByClauses[iClause].size();
        	if(clauseSize < min || min == -1)
 			min = clauseSize;
 		clausesSizes.emplace(iClause, clauseSize);
@@ -51,17 +53,17 @@ decision MOMSBet::takeABet(SATSolver &p_solver)
     {
 		if(entry.second == min)
 		{
-			for(auto lit: p_clauses[entry.first].getLiterals())
+            
+			for(auto iVar: unsatLitsByClauses[entry.first])
             {
-                if(p_valuation[lit.first] == -1)
-                {
-                    int polLit = (lit.second ? -lit.first : lit.first);
+                
+                    int polLit = (clauses[entry.first].getLiterals()[iVar]) ? -iVar : iVar;
                     // If we never encountred the literal
                     if(unassignedLits.find(polLit) == unassignedLits.end())
                         unassignedLits.emplace(polLit, 1);
                     else
                         ++unassignedLits[polLit];
-                }
+           
             }
 		}
 	}
@@ -88,7 +90,7 @@ decision MOMSBet::takeABet(SATSolver &p_solver)
     
     if(selectedUnassigned == -1)
     {
-        OUTERROR("Critical issue in MOMSBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
+        OUTERROR("Critical issue in MOMSBet, a bet should exist .");
     }
 
     OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);

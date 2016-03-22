@@ -30,21 +30,17 @@ decision StandardBet::takeABet(SATSolver &p_solver)
     int firstUnassigned = -1;
 
     // Retreive data
-    vector<Clause> &p_clauses;
-    const set<int> &p_unsatClauses;
-    map<int,int> &p_valuation;
+    map<int, set<int>> unsatLitsByClauses = p_solver.getAliveVars();
+    set<int> unsatClausesIndex = p_solver.getUnsatClauses();
+    vector<Clause> clauses = p_solver.getClauses();
 
-    for(int iClause: p_unsatClauses)
+    for(int iClause: unsatClausesIndex)
     {
-        for(auto lit: p_clauses[iClause].getLiterals())
-            if(p_valuation[lit.first] == -1)
-            {
-                OUTDEBUG(iClause);
-                //first = key, second = value
-                //first = index, second = polarization
-                firstUnassigned = lit.first;
-                break;
-            }
+        for(auto lit: unsatLitsByClauses[iClause])
+        {
+            firstUnassigned = lit;
+            break;
+        }
         if(firstUnassigned != -1)
             break;
     }
@@ -53,7 +49,7 @@ decision StandardBet::takeABet(SATSolver &p_solver)
 
     if(firstUnassigned == -1)
     {
-        OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
+        OUTERROR("Critical issue in StdBet, a bet should exist.");
     }
 
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");

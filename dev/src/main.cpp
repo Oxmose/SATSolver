@@ -93,7 +93,7 @@ int main(int argc, char** argv)
         default:
             solver->setStrategy(new StandardBet());
     }
-    
+
     IParser *parser;
     switch(parserType)
     {
@@ -272,8 +272,10 @@ void displayMenu(char *softName)
     cout << "\t The argument -wl enable the watched literals method." << endl;
     cout << "\t [-rand | -moms | -dlis] define the used heuristic to bet on the next literal :" << endl;
     cout << "\t\t -rand : next bet on a random literal." << endl;
+    cout << "\t\t -rand0 : next bet on a random literal (the bet is random here)." << endl;
     cout << "\t\t -moms : next bet on the variable which has the maximum occurences count in clauses of minimum size." << endl;
     cout << "\t\t -dlis : next bet on next variable which can satify the maximum count of clauses." << endl;
+    cout << "\t\t -dlis0 : next bet on next variable which can satify the maximum count of clauses with score sum(pow(2, -C)) with C the size of the clauses the variable appears in." << endl;
 
     cout << "\t To generate DIMAC CNF file, press 1 and then [ENTER]" << endl;
     cout << "\t To read the credits, press 2 and then [ENTER]" << endl;

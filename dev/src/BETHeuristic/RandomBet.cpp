@@ -32,7 +32,7 @@ RandomBet::~RandomBet()
 {
 } // ~RandomBet()
 
-decision RandomBet::takeABet(const SATSolver &p_solver)
+decision RandomBet::takeABet(SATSolver &p_solver)
 {
     OUTDEBUG("Random bet");
 
@@ -41,20 +41,17 @@ decision RandomBet::takeABet(const SATSolver &p_solver)
     bool value = true;
 
     // Retreive data
-    vector<Clause> &p_clauses;
-    const set<int> &p_unsatClauses;
-    map<int,int> &p_valuation;
+    map<int, set<int>> unsatLitsByClauses = p_solver.getAliveVars();
+    set<int> unsatClausesIndex = p_solver.getUnsatClauses();
+    vector<Clause> clauses = p_solver.getClauses();
 
     // Gather non assigned literals
-    for(int iClause: p_unsatClauses)
+    for(int iClause: unsatClausesIndex)
     {
-        for(auto lit: p_clauses[iClause].getLiterals())
-        {
-            if(p_valuation[lit.first] == -1)
-            {
-                int polLit = (lit.second ? -lit.first : lit.first);
-                unassignedLits.emplace(polLit);
-            }
+        for(auto iVar: unsatLitsByClauses[iClause])
+        {	
+	    int polLit = (clauses[iClause].getLiterals()[iVar]) ? -iVar : iVar;
+            unassignedLits.emplace(polLit);       
         }
     }
 
@@ -62,7 +59,7 @@ decision RandomBet::takeABet(const SATSolver &p_solver)
     {
         // Select a random literal
         unsigned int index = rand() % (unassignedLits.size() - 1);
-	    set<int>::iterator it = unassignedLits.begin();
+	set<int>::iterator it = unassignedLits.begin();
 
         for(unsigned int i = 0; i < index; ++i)
             ++it;
@@ -89,7 +86,7 @@ decision RandomBet::takeABet(const SATSolver &p_solver)
     
     if(selectedUnassigned == -1)
     {
-        OUTERROR("Critical issue in RandBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
+        OUTERROR("Critical issue in RandBet, a bet should exist.");
     }
 
     OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);
