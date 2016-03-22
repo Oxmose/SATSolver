@@ -34,9 +34,8 @@ class SATSolverSTD : public SATSolver
 
         virtual bool backtrack(bool& p_unsat);
 
-        virtual std::map<int,std::set<int>>& getAliveVars();
-
         std::map<int,std::vector<int>> m_clausesWithVar;//Direct access to Clauses
+        std::map<int,std::set<int>> m_aliveVarsIn;
 }; // SATSolver
 
 #endif // DEF_SATSOLVERSTD_H

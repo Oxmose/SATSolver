@@ -139,8 +139,3 @@ bool SATSolverSTD::uniquePol(bool p_preprocess /* = false */)
 
     return false;
 }
-
-std::map<int,std::set<int>>& SATSolverSTD::getAliveVars()
-{
-    return m_aliveVarsIn;
-}

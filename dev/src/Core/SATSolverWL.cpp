@@ -155,15 +155,3 @@ bool SATSolverWL::applyLastDecision()
 
     return m_unsatClauses.empty();
 }
-
-std::map<int,std::set<int>>& SATSolverWL::getAliveVars()
-{
-    for(int iClause : m_unsatClauses)
-    {
-        m_aliveVarsIn[iClause].clear();
-        for(auto lit : m_clauses[iClause].getLiterals())
-            if(m_valuation[lit.first] == -1)
-                m_aliveVarsIn[iClause].insert(lit.first);
-    }
-    return m_aliveVarsIn;
-}

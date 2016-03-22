@@ -66,12 +66,6 @@ class SATSolver
         std::string formulaToStr();
         std::string decisionToStr();
 
-        std::set<int>& getUnsatClauses() {return m_unsatClauses;}
-        std::vector<Clause>& getClauses() {return m_clauses; }
-        std::map<int,int>& getValuation() {return m_valuation;}
-        virtual std::map<int,std::set<int>>& getAliveVars() = 0;
-
-
         static bool compareSat(const std::pair<int,int>& p_a, const std::pair<int,int>& p_b)
         {
             return p_a.second < p_b.second;//Sort unsat Clauses by id for log(n) find
@@ -110,8 +104,6 @@ class SATSolver
         std::map<int,int> m_valuation;//Current valuation
         std::queue<decision> m_deductionQueue;
         std::queue<decision> m_preprocessQueue;
-
-        std::map<int,std::set<int>> m_aliveVarsIn;
 
         bool m_isContradictory;
 

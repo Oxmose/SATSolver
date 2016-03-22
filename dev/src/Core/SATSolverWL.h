@@ -33,9 +33,6 @@ class SATSolverWL : public SATSolver
 
         virtual bool backtrack(bool& p_unsat);
 
-        virtual std::map<int,std::set<int>>& getAliveVars();
-
-
         std::map<int,std::set<int>> m_clausesWatchedBy;//Direct access to Clauses
 }; // SATSolver
 

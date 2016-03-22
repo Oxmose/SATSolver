@@ -12,25 +12,30 @@ L'architecture du projet a changé.
 L'implémentation générale de DPLL est similaire à la précédente mais a été allegée (gros gain de temps), on ne manipule plus que des structures assez légères se basant sur l'ID des clauses (on a une table m_clauses qui permet d'accéder à l'objet Clause avec l'ID).    
 On fait les déductions à la volée avec une deductionQueue (avant on reparcourait tout pour spotter les déductions).    
 Le preprocess est maintenant mis en évidence.  
+m_valuation joue un rôle beaucoup plus central qu'avant, c'est par exemple dans les WL notre seul manière de savoir si un litéral est vivant ou pas.  
 
 Nous avons choisi d'exploiter un paradigme de stratégies.  
 C'est à dire que toutes les portions de codes qui dépendent du choix de l'utilisateur
 sont virtualisées et implémentées par héritage, typiquement les choix de stratégies de bets et les watch literals.  
 
 Sur la forme cela permet d'avoir un code plus concis, plus clair.  
-Sur le fond le changement est aussi jsutifié, un exemple.  
+Sur le fond le changement est aussi justifié, un exemple.  
 Sans les watch literals, on peut maintenir pour chaque clause la liste de ses variables vivantes mais avec watch literals ça tue l'idée de la méthode,
-on ne veut rien faire sur litéraux non watched, cela se répercute au niveau des bets qui sont donc plus lent car il faut tester tous les litéraux tout cela est facilement implémentable avec notre archi.    
+on ne veut rien faire sur litéraux non watched. Mais dans le cas standard c'est pertinent. On implémente donc les deux variantes et cela est facilité par l'utilisation des stratégies.    
 
 Tous ces détails d'implémentations relatifs à chaque méthode sont donc écrits dans SATSolverSTD (standard) et SATSolverWL, sachant qu'ils ont toujours accès aux fonctions qu'ils partagent implémentées dans SATSolver.    
 
 Cela permet par exemple (pour l'instant) d'avoir une fonction solve() ou deduce() générique.   
 Les fonctions virtuelles pures sont celles qui représentent les changement à implémenter dans chaque variante de DPLL.  
-Idem pour les bets et les deux parsers.  
+Idem pour les bets et les deux parsers.    
+
+Pour la polarisation unique on veut dans tous les cas, quelque soit la méthode, qu'elle existe pour le prétraitement c'est le but de l'implémentation dans SATSolver.cpp, on la désactive pour les WL avec le flag m_isWL. SATSolverSTD.cpp possède une spécialisation car on peut tirer profit de ses structures propres pour aller plus vite dans ce cas. Le flag m_isWL relève d'un détail d'implémentation (on ne peut pas facilement utiliser l'héritage dans ce cas) que l'on peut détailler si nécessaire.
+
+Les backtracks de STD et WL diffèrent de très peu (dans le cas STD on met à jour m_aliveVarsIn) mais on le laisse virtuel pur (donc à implémenter) car il avait été dit que les backtracks allaient changer dans les prochains rendus.
 
 ### Améliorations:         
 
-Les heuristiques sont lentes avec les WL on doit creuser pour comprendre pourquoi.     
+On pourrait tirer profit des structures de la variante standard pour aller plus vite dans les bets (là on doit toujours parcourir tous les litéraux et vérifier leur affectation).   
 
 
 ## Générateur de formules CNF
