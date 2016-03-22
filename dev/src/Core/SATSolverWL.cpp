@@ -12,22 +12,19 @@ void SATSolverWL::initializeMethod()
     for(auto iClause : m_unsatClauses)
         for(auto lit : m_clauses[iClause].getLiterals())
             m_valuation[lit.first] = -1;
-}
 
-void SATSolverWL::afterPreprocess()
-{
-    /* Each clause has now 2 variables at least */
     for(int iClause : m_unsatClauses)
     {
-        int putTrigger = 0;
-        for(auto lit : m_clauses[iClause].getLiterals())
-            if(m_valuation[lit.first] == -1 && putTrigger < 2)
-            {
-                m_clausesWatchedBy[lit.first].insert(iClause);
-                putTrigger++;
-            }
-        if(putTrigger != 2)
-            OUTERROR("Critical issue after preprocess : each reamining clause should have at least 2 unassigned vars");
+        if(m_clauses[iClause].getLiterals().size() >= 2)
+        {
+            int putTrigger = 0;
+            for(auto lit : m_clauses[iClause].getLiterals())
+                if(m_valuation[lit.first] == -1 && putTrigger < 2)
+                {
+                    m_clausesWatchedBy[lit.first].insert(iClause);
+                    putTrigger++;
+                }
+        }
     }
 
 }
@@ -163,4 +160,16 @@ bool SATSolverWL::applyLastDecision()
 bool SATSolverWL::uniquePol(bool p_preprocess /* = false */)//We don't want unique pol with WL
 {
     return false;
+}
+
+std::map<int,std::set<int>>& SATSolverWL::getAliveVars()
+{
+    for(int iClause : m_unsatClauses)
+    {
+        m_aliveVarsIn[iClause].clear();
+        for(auto lit : m_clauses[iClause].getLiterals())
+            if(m_valuation[lit.first] == -1)
+                m_aliveVarsIn[iClause].insert(lit.first);
+    }
+    return m_aliveVarsIn;
 }

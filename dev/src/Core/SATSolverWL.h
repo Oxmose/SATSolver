@@ -27,13 +27,14 @@ class SATSolverWL : public SATSolver
     private:
 
         virtual void initializeMethod();
-        virtual void afterPreprocess();
 
         virtual bool applyLastDecision();
 
         virtual bool uniquePol(bool p_preprocess = false);
 
         virtual bool backtrack(bool& p_unsat);
+
+        virtual std::map<int,std::set<int>>& getAliveVars();
 
 
         std::map<int,std::set<int>> m_clausesWatchedBy;//Direct access to Clauses

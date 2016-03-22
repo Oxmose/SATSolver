@@ -201,18 +201,13 @@ bool SATSolver::deduce()
     return false;
 } // bool deduce()
 
-void SATSolver::afterPreprocess()
-{
-    return;
-}
-
 bool SATSolver::solve()
 {   
     initializeMethod();
     flushTaut();
 
     preprocess();
-    afterPreprocess();
+
     bool unsat = false;
     while(!m_unsatClauses.empty() && !unsat)
     {
@@ -236,7 +231,7 @@ bool SATSolver::solve()
 
 decision SATSolver::takeABet()
 {
-    decision bet = m_betHeuristic->takeABet(m_clauses, m_unsatClauses, m_valuation);
+    decision bet = m_betHeuristic->takeABet(*this);
     m_currentAssignement.push_back(bet);
     return bet;
 } // decision takeABet()

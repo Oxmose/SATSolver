@@ -14,7 +14,7 @@ void SATSolverSTD::initializeMethod()
         {
             m_valuation[lit.first] = -1;
             m_clausesWithVar[lit.first].push_back(iClause);
-            m_aliveVarIn[iClause].insert(lit.first);
+            m_aliveVarsIn[iClause].insert(lit.first);
         }
 }
 
@@ -36,7 +36,7 @@ bool SATSolverSTD::backtrack(bool& p_unsat)
             reviveClauseWithSatisfier(toCancel.index);
 
             for(int iClause : m_clausesWithVar[toCancel.index])
-                m_aliveVarIn[iClause].insert(toCancel.index);
+                m_aliveVarsIn[iClause].insert(toCancel.index);
 
             m_valuation[toCancel.index] = -1;
             if(!lastBetFound)
@@ -86,15 +86,15 @@ bool SATSolverSTD::applyLastDecision()
                 satisfyClause(iClause,p_dec.index);
             else
             {
-                m_aliveVarIn[iClause].erase(p_dec.index);
-                if(m_aliveVarIn[iClause].size()==1)
+                m_aliveVarsIn[iClause].erase(p_dec.index);
+                if(m_aliveVarsIn[iClause].size()==1)
                 {
-                    int remainingVar = *m_aliveVarIn[iClause].begin();
+                    int remainingVar = *m_aliveVarsIn[iClause].begin();
                     bool pol = m_clauses[iClause].getLiterals()[remainingVar];
                     m_deductionQueue.push(decision(remainingVar,!pol,false));
                     OUTDEBUG("\tDeducing (unit prop) : " << remainingVar << " to " << ((!pol) ? "True" : "False"));
                 }
-                m_isContradictory = m_aliveVarIn[iClause].size() == 0;
+                m_isContradictory = m_aliveVarsIn[iClause].size() == 0;
                 if(m_isContradictory)
                 {
                     OUTDEBUG("\tContradiction spotted! : " << m_clauses[iClause].toStr());
@@ -115,7 +115,7 @@ bool SATSolverSTD::uniquePol(bool p_preprocess /* = false */)
     map<int,pair<int,int>> countPol;
 
     for(int iClause : m_unsatClauses)
-        for(auto l : m_aliveVarIn[iClause])
+        for(auto l : m_aliveVarsIn[iClause])
         {
             if(countPol.find(l) == countPol.end())
                 countPol[l] = make_pair(0,0);
@@ -138,4 +138,9 @@ bool SATSolverSTD::uniquePol(bool p_preprocess /* = false */)
         }
 
     return false;
+}
+
+std::map<int,std::set<int>>& SATSolverSTD::getAliveVars()
+{
+    return m_aliveVarsIn;
 }
