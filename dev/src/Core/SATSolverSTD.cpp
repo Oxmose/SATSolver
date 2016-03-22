@@ -9,7 +9,7 @@ SATSolverSTD::~SATSolverSTD()
 
 void SATSolverSTD::initializeMethod()
 {
-	for(auto iClause : m_unsatClauses)
+    for(auto iClause : m_unsatClauses)
         for(auto lit : m_clauses[iClause].getLiterals())
         {
             m_valuation[lit.first] = -1;
@@ -65,16 +65,16 @@ bool SATSolverSTD::backtrack(bool& p_unsat)
 
 bool SATSolverSTD::applyLastDecision()
 {
-	if(m_currentAssignement.empty())
-		return false;
+    if(m_currentAssignement.empty())
+        return false;
 
-	decision p_dec = m_currentAssignement.back();
+    decision p_dec = m_currentAssignement.back();
     OUTDEBUG("Handling " << ((p_dec.bet) ? string("bet") : string("deduction")) << ": "
             << p_dec.index << " to " << ((p_dec.value) ? string("True") : string("False")));
             
     //OUTDEBUG("\t" << currentStateToStr());
     
-	m_valuation[p_dec.index] = p_dec.value;
+    m_valuation[p_dec.index] = p_dec.value;
 
     m_isContradictory = false;
 
@@ -102,7 +102,7 @@ bool SATSolverSTD::applyLastDecision()
                 }
             }
         }
-   	}
+       }
 
     return m_unsatClauses.empty();
 }

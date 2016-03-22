@@ -4,3 +4,12 @@
             "file": "aim-100-1_6-yes1-1.cnf",
             "minisat": "0.00",
             "wl": "0.00",
+            "momswl": "1218.54",
+            "dliswl": "8.59",
+            "dlis0wl": "11.24"
+        },
+        {
+            "file": "aim-100-1_6-yes1-2.cnf",
+            "minisat": "0.00",
+            "wl": "0.00",
+            "momswl": "0.00",

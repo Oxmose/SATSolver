@@ -49,8 +49,8 @@ decision RandomBet::takeABet(SATSolver &p_solver)
     for(int iClause: unsatClausesIndex)
     {
         for(auto iVar: unsatLitsByClauses[iClause])
-        {	
-	    int polLit = (clauses[iClause].getLiterals()[iVar]) ? -iVar : iVar;
+        {    
+            int polLit = (clauses[iClause].getLiterals()[iVar]) ? -iVar : iVar;
             unassignedLits.emplace(polLit);       
         }
     }
@@ -59,7 +59,7 @@ decision RandomBet::takeABet(SATSolver &p_solver)
     {
         // Select a random literal
         unsigned int index = rand() % (unassignedLits.size() - 1);
-	set<int>::iterator it = unassignedLits.begin();
+        set<int>::iterator it = unassignedLits.begin();
 
         for(unsigned int i = 0; i < index; ++i)
             ++it;
