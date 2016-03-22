@@ -95,6 +95,7 @@ Pas re-testée depuis le rendu1.
 #Tristan
 * rendu1 : Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.
 * rendu2 : Refonte DPLL, implémentation Watched Literals, redesign en statégies, scripts de tests, optimisation.
+
 #Alexy
 * rendu1 : Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
 * rendu2 :  heuristiques de paris, redesign en statégies, modifications du parser, scripts de tests, optimisation.
