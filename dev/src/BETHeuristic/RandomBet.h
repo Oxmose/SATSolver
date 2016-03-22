@@ -25,7 +25,7 @@ class RandomBet : public IBet
     public:
         RandomBet(bool p_randomBet);
         virtual ~RandomBet();
-        virtual decision takeABet(SATSolver &p_solver);
+        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation);
 
     private:
         bool m_randomBet;
