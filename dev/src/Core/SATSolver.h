@@ -68,6 +68,7 @@ class SATSolver
         std::string decisionToStr();
 
         std::set<int>& getUnsatClauses() {return m_unsatClauses;}
+        std::vector<Clause>& getClauses() {return m_clauses; }
 
         static bool compareSat(const std::pair<int,int>& p_a, const std::pair<int,int>& p_b)
         {
