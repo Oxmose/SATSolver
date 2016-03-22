@@ -29,13 +29,16 @@ Cela permet par exemple (pour l'instant) d'avoir une fonction solve() ou deduce(
 Les fonctions virtuelles pures sont celles qui représentent les changement à implémenter dans chaque variante de DPLL.  
 Idem pour les bets et les deux parsers.    
 
-Pour la polarisation unique on veut dans tous les cas, quelque soit la méthode, qu'elle existe pour le prétraitement c'est le but de l'implémentation dans SATSolver.cpp, on la désactive pour les WL avec le flag m_isWL. SATSolverSTD.cpp possède une spécialisation car on peut tirer profit de ses structures propres pour aller plus vite dans ce cas. Le flag m_isWL relève d'un détail d'implémentation (on ne peut pas facilement utiliser l'héritage dans ce cas) que l'on peut détailler si nécessaire.
+Pour la polarisation unique on veut dans tous les cas, quelque soit la méthode, qu'elle existe pour le prétraitement c'est le but de l'implémentation dans SATSolver.cpp, on la désactive pour les WL avec le flag m_isWL. SATSolverSTD.cpp possède une spécialisation car on peut tirer profit de ses structures propres pour aller plus vite dans ce cas. Le flag m_isWL relève d'un détail d'implémentation (on ne peut pas facilement utiliser l'héritage dans ce cas) que l'on peut détailler si nécessaire.    
 
-Les backtracks de STD et WL diffèrent de très peu (dans le cas STD on met à jour m_aliveVarsIn) mais on le laisse virtuel pur (donc à implémenter) car il avait été dit que les backtracks allaient changer dans les prochains rendus.
+Les backtracks de STD et WL diffèrent de très peu (dans le cas STD on met à jour m_aliveVarsIn) mais on le laisse virtuel pur (donc à implémenter) car il avait été dit que les backtracks allaient changer dans les prochains rendus.   
+
+On ne renumérote pas les variables comme proposé dans le sujet supposant que l'utilisateur rentre une entrée qui lui convient. Et même, si l'utilisateur veut juste faire un test sur une grosse en supprimant des variables pour debuguer son fichier, ce n'est pas pratique pour lui si notre solver renumérote tout.    
 
 ### Améliorations:         
 
-On pourrait tirer profit des structures de la variante standard pour aller plus vite dans les bets (là on doit toujours parcourir tous les litéraux et vérifier leur affectation).   
+- On pourrait tirer profit des structures de la variante standard pour aller plus vite dans les bets (là on doit toujours parcourir tous les litéraux et vérifier leur affectation).   
+- On pourrait améliorer notre Makefile pour garder des .o et ne pas avoir à tout recompiler à chaque fois ce qui devient long.  
 
 
 ## Générateur de formules CNF
@@ -45,101 +48,56 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 
 
 ## Performances
-###Optimisation à la compilationTous les tests
-présentés ont été fait en -O3.  
-Un exemple de comparaison sur aim-100-1_6-no-1.cnf :  
+###Optimisation à la compilation  
+Tous les tests présentés ont été fait en -O3.  
+Un exemple de comparaison sur aim-100-1_6-no-1.cnf sans WL et standard bet:  
 
-Sans flag -O2 : 37.75s
-
-Avec flag -O2 : 7.052s
-
-### Dummy tests CNF
-
-Tous les tests dummy_ dans dev/bin/test_base/cnf montrent les fonctionnalités implémentées
-dans DPLL, pour bien le voir lancer en -debug.
-
-* \_sat: dummy satisfiable
-* \_taut: dummy tautologie
-* \_uniquepol: dummy deduce avec 1 seule polarité
-* \_unitprop: dummy deduce clauses unitaires
-* \_unsat: dummy unsat
 
 ### Base de test CNF (cf: dev/bin/test_base/first_set/cnf)
+Sans flag -O3 : 14.652s
 
-#### simple_v3_c2.cnf
-SATIFIABLE
+Avec flag -O3 : 1.977s 
 
-Temps d'éxécution : 0.003s
+###Structure du répertoire de test, bin/test_base
 
-#### quinn.cnf
-SATIFIABLE
+* cnf/for : différents formats
+* cnf/first_set : les dummy tests présentés au rendu 1
+* cnf/corr_test : nos tests de correction pour tester les nouvelles mise à jour du code
+* cnf/time_test : nos tests de performance
 
-Temps d'éxécution : 0.002s
+###Courbes
 
-#### aim-50-1_6-yes1-4.cnf
-SATIFIABLE
+Voir doc/courbes/ (sur le github très certainement soumission un peu tardive)
 
-Temps d'éxécution : 0.006s
+###Gain en performance
 
-#### aim-100-1_6-no-1.cnf
-UNSATIFIABLE
+Un petit exemple qui compare le rendu1 avec le meilleur résultat du rendu2 sur un exemple : 
 
-Temps d'éxécution : 7.052s
-
-#### hole6.cnf
-UNSATISFIABLE
-
-Temps d'éxécution : 0.761s
-
-#### dubois20.cnf
-UNSATISFIABLE
-
-Temps d'éxécution : 54.320s
-
-#### dubois21.cnf
-UNSATISFIABLE
-
-Temps d'éxécution : 1m49.677s
-
-#### dubois22.cnf
+#### dubois22.cnf rendu 1
 UNSATISFIABLE
 
 Temps d'éxécution : 3m50.931s
 
-#### par8-1-c.cnf
-SATIFIABLE
+#### dubois22.cnf rendu 2 en WL standard Bet
+UNSATISFIABLE
 
-Temps d'éxécution : 0.028s
+Temps d'éxécution : 1m9.022s
 
-### Dummy tests FOR
-
-* \_ant: dummy antithèse
-* \_con: dummy conjonction
-* \_dis: dummy disjonction
-* \_eq: dummy equivalence
-* \_imp: dummy implication
-* \_neg: dummy negation
-* \_xor: dummy xor
-* \_simple: dummy simple
-
-### Base de test FOR (cf: dev/bin/test_base/for)
-* \_test
-* \_test1
-* \_test2
-* \_test3
 
 ### La clause de l'horreur
 
-dev/bin/test_base/cnf/bf0432-007.cnf
+dev/bin/test_base/cnf/first_set/bf0432-007.cnf
 
-On ne finit pas en un temps raisonnable (> 1jour aux derniers tests).  
-Minisat la finit en 1s.  
+Pas re-testée depuis le rendu1.
+
 
 ## Qui a fait quoi
 #Tristan
-Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests, Watched Literals, redesign en statégies, scripts de tests.
+* rendu1 : Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.
+* rendu2 : Refonte DPLL, implémentation Watched Literals, redesign en statégies, scripts de tests, optimisation.
 #Alexy
-Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests, heuristiques de paris, redesign en statégies, modificatiosn du parser, scripts de tests.
+* rendu1 : Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
+* rendu2 :  heuristiques de paris, redesign en statégies, modifications du parser, scripts de tests, optimisation.
 
 # Scripts de test
 Deux bateries de tests sont disponibles :
@@ -148,7 +106,7 @@ Dans bin
 
 test_correction.sh permet de vérifier que le resultat renvoyé par le solveur est correcte. Pour ce faire, lancer le, les tests sont éfféctués sur les CNF dans le dossier bin/test_base/cnf/corr_test.
 
-Vous pourrez y mettre les CNF que vous voullez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
+Vous pourrez y mettre les CNF que vous voulez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
 
 ##Temps
 Dans bin
@@ -168,6 +126,3 @@ On gagne en moyenne 20% de temps par rapport au moment ou les watched literals n
 
 ## Heuristiques
 Nous n'avons pas encore déterminé pourquoi la résolurtion formules sont plus rapides en mettant en places les différentes heuristiques et d'autre non.
-
-## Courbes
-Le courbes des tests seront présentes sur le GIT sous deux jours afin de comparer les heuristiques ainsi que l'emploi des watched literals ou non.
