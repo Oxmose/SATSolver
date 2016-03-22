@@ -9,7 +9,6 @@
 
 // STD INCLUDES
 #include <vector>   // std::vector
-#include <set>      // std::set
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -22,7 +21,7 @@ class StandardBet : public IBet
 {
     public:
         virtual ~StandardBet();
-        virtual decision takeABet(SATSolver &p_solver);
+        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation);
 
     private:
 }; // StandardBet
