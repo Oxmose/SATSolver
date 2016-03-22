@@ -22,6 +22,7 @@
 class SATSolverWL : public SATSolver
 {
     public:
+    	SATSolverWL() { m_isWL = true; }
         virtual ~SATSolverWL();
 
     private:

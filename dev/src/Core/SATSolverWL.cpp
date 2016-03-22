@@ -5,7 +5,6 @@ using namespace std;
 
 SATSolverWL::~SATSolverWL()
 {
-    m_isWL = true;
 }
 
 void SATSolverWL::initializeMethod()
