@@ -68,6 +68,7 @@ class SATSolver
 
         std::set<int>& getUnsatClauses() {return m_unsatClauses;}
         std::vector<Clause>& getClauses() {return m_clauses; }
+        std::map<int,int>& getValuation() {return m_valuation;}
         virtual std::map<int,std::set<int>>& getAliveVars() = 0;
 
 
@@ -84,7 +85,7 @@ class SATSolver
         void satisfyClause(int p_iClause, int p_satisfier);
 
         bool deduce();
-        virtual bool uniquePol(bool p_preprocess = false) = 0;
+        virtual bool uniquePol(bool p_preprocess = false);
 
         bool isContradictory();
         void reviveClauseWithSatisfier(int p_satisfier);
@@ -114,6 +115,7 @@ class SATSolver
 
         bool m_isContradictory;
 
+        bool m_isWL;
 
     private:
         /* DPLL intern */

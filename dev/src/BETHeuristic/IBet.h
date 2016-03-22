@@ -25,13 +25,11 @@ enum BET_METHOD
 };
 
 typedef struct decision decision;
-class SATSolver;
-
 class IBet
 {
     public:
         virtual ~IBet(){}
-        virtual decision takeABet(SATSolver &p_solver) = 0;
+        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation) = 0;
 
     private:
 }; // IBet

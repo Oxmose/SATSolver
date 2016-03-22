@@ -5,6 +5,7 @@ using namespace std;
 
 SATSolverWL::~SATSolverWL()
 {
+    m_isWL = true;
 }
 
 void SATSolverWL::initializeMethod()
@@ -154,12 +155,6 @@ bool SATSolverWL::applyLastDecision()
         m_clausesWatchedBy[p_dec.index].erase(iClause);
 
     return m_unsatClauses.empty();
-}
-
-
-bool SATSolverWL::uniquePol(bool p_preprocess /* = false */)//We don't want unique pol with WL
-{
-    return false;
 }
 
 std::map<int,std::set<int>>& SATSolverWL::getAliveVars()

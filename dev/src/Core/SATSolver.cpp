@@ -29,6 +29,7 @@ using namespace std;
 SATSolver::SATSolver()
 {
     m_satClauses = unique_ptr<satClausesSet>(new satClausesSet(compareSat));
+    m_isWL = false;
 } // SATSolver(bool)
 
 void SATSolver::reset()
@@ -105,33 +106,38 @@ bool SATSolver::isContradictory()
 
 bool SATSolver::uniquePol(bool p_preprocess /* = false */)
 {
-    //In the pair, first : sum of polarities, second: number of occurencies
-    //We sum the polarities and check if it matches with +- #occurencies
-    map<int,pair<int,int>> countPol;
+    //We always want uniquePol in preprocess
+    if(p_preprocess || !m_isWL)
+    {
+        //In the pair, first : sum of polarities, second: number of occurencies
+        //We sum the polarities and check if it matches with +- #occurencies
+        map<int,pair<int,int>> countPol;
+        for(int iClause : m_unsatClauses)
+            for(auto l : m_clauses[iClause].getLiterals())
+                if(m_valuation[l.first] == -1)
+                {
+                    if(countPol.find(l.first) == countPol.end())
+                        countPol[l.first] = make_pair(0,0);
+                    countPol[l.first].first += (l.second) ? -1 : 1;
+                    countPol[l.first].second++;
+                }
 
-    for(int iClause : m_unsatClauses)
-        for(auto l : m_clauses[iClause].getLiterals())
-            if(m_valuation[l.first] == -1)
+        for(auto it = countPol.begin(); it != countPol.end(); ++it)
+            if(it->second.first == it->second.second || it->second.first == -1*it->second.second)
             {
-                if(countPol.find(l.first) == countPol.end())
-                    countPol[l.first] = make_pair(0,0);
-                countPol[l.first].first += (l.second) ? -1 : 1;
-                countPol[l.first].second++;
+                decision deduction = decision(it->first,(it->second.first > 0),false);
+                OUTDEBUG("\tDeducing (unique pol): " << it->first << " to " << ((it->second.first > 0) ? "True" : "False"));
+                if(!p_preprocess)
+                {
+                    m_deductionQueue.push(deduction);
+                    return true;
+                }
+                else
+                    m_preprocessQueue.push(deduction);
             }
 
-    for(auto it = countPol.begin(); it != countPol.end(); ++it)
-        if(it->second.first == it->second.second || it->second.first == -1*it->second.second)
-        {
-            decision deduction = decision(it->first,(it->second.first > 0),false);
-            OUTDEBUG("\tDeducing (unique pol): " << it->first << " to " << ((it->second.first > 0) ? "True" : "False"));
-            if(!p_preprocess)
-            {
-                m_deductionQueue.push(deduction);
-                return true;
-            }
-            else
-                m_preprocessQueue.push(deduction);
-        }
+        return false;
+    }
 
     return false;
 }
@@ -231,7 +237,7 @@ bool SATSolver::solve()
 
 decision SATSolver::takeABet()
 {
-    decision bet = m_betHeuristic->takeABet(*this);
+    decision bet = m_betHeuristic->takeABet(m_clauses, m_unsatClauses, m_valuation);
     m_currentAssignement.push_back(bet);
     return bet;
 } // decision takeABet()
