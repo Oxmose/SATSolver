@@ -74,11 +74,12 @@ class SATSolver
     protected:
         
         void flushTaut();
-        virtual void afterPreprocess();
         void preprocess();
 
         virtual bool applyLastDecision() = 0;
         void satisfyClause(int p_iClause, int p_satisfier);
+
+        virtual std::map<int,std::set<int>>& getAliveVars() = 0;
 
         bool deduce();
         virtual bool uniquePol(bool p_preprocess = false) = 0;
@@ -106,6 +107,8 @@ class SATSolver
         std::map<int,int> m_valuation;//Current valuation
         std::queue<decision> m_deductionQueue;
         std::queue<decision> m_preprocessQueue;
+
+        std::map<int,std::set<int>> m_aliveVarsIn;
 
         bool m_isContradictory;
 
