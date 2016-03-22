@@ -7,6 +7,7 @@
 // STD INCLUDES
 #include <vector>   // std::vector
 #include <map>      // std::map
+#include <set>
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -24,53 +25,64 @@ MOMSBet::~MOMSBet()
 {
 } // ~MOMSBet()
 
-decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
+decision MOMSBet::takeABet(SATSolver &p_solver)
 {
     OUTDEBUG("MOMS bet");
+    map<int, unsigned int> clausesSizes;
     map<int, unsigned int> unassignedLits;
-    unsigned int max = 0;
+
+    int min = -1;
     int selectedUnassigned = -1;
     bool value = true;
-    int minSize = -1;
+
+    // Retreive data
+    map<int, set<int>> unsatLitsByClauses;
 
     // Gather minimal clauses
     for(int iClause: p_unsatClauses)
     {
-        int clauseSize = p_clauses[iClause].getLiterals().size();
-        if(clauseSize <= minSize || minSize == -1)
-        {
-            if(clauseSize < minSize)
-            {
-                unassignedLits.clear();
-                max = 0;
-            }
+        unsigned int clauseSize = p_clauses[iClause].getLiterals().size();
+       	if(clauseSize < min || min == -1)
+			min = clauseSize;
+		clausesSizes.emplace(iClause, clauseSize);
+    }    
 
-            minSize = clauseSize;           
-            for(auto lit: p_clauses[iClause].getLiterals())
+	for(pair<int, unsigned int> entry : clausesSizes)
+    {
+		if(entry.second == min)
+		{
+			for(auto lit: p_clauses[entry.first].getLiterals())
             {
-	            if(p_valuation[lit.first] == -1)
-	            {
+                if(p_valuation[lit.first] == -1)
+                {
                     int polLit = (lit.second ? -lit.first : lit.first);
-                    
+                    // If we never encountred the literal
                     if(unassignedLits.find(polLit) == unassignedLits.end())
                         unassignedLits.emplace(polLit, 1);
                     else
                         ++unassignedLits[polLit];
-
-                    if(max < unassignedLits[polLit])
-                    {
-                        selectedUnassigned = lit.first;
-                        max = unassignedLits[polLit];
-
-                        if(polLit < 0)
-                            value = false;
-                        else
-                            value = true;
-                    }
-                }                
+                }
             }
-        }
-    }    
+		}
+	}
+
+	unsigned int max = 0;
+	for(pair<int, unsigned int> entry : unassignedLits)
+	{
+		if(max < entry.second)
+		{
+			selectedUnassigned = entry.first;
+			max = entry.second;
+		}	
+	}
+
+	if(selectedUnassigned < 0)
+	{
+		selectedUnassigned = -selectedUnassigned;
+		value = false;
+	}
+	else
+		value = true;
 
     decision bet = decision(selectedUnassigned, value, true);
     
@@ -81,4 +93,4 @@ decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
 
     OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);
     return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+} // decision takeABet(SATSolver&)

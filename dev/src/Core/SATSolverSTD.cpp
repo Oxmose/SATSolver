@@ -72,7 +72,7 @@ bool SATSolverSTD::applyLastDecision()
     OUTDEBUG("Handling " << ((p_dec.bet) ? string("bet") : string("deduction")) << ": "
             << p_dec.index << " to " << ((p_dec.value) ? string("True") : string("False")));
             
-    OUTDEBUG("\t" << currentStateToStr());
+    //OUTDEBUG("\t" << currentStateToStr());
     
 	m_valuation[p_dec.index] = p_dec.value;
 

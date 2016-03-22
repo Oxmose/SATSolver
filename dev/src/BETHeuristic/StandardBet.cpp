@@ -10,6 +10,7 @@
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
 #include "../Core/SATSolver.h"  // decision
+#include <set>      // std::set
 
 // INHERITANCE CLASS
 #include "IBet.h"
@@ -23,10 +24,15 @@ StandardBet::~StandardBet()
 {
 } // ~StandardBet()
 
-decision StandardBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
+decision StandardBet::takeABet(SATSolver &p_solver)
 {
     OUTDEBUG("Standard bet");
     int firstUnassigned = -1;
+
+    // Retreive data
+    vector<Clause> &p_clauses;
+    const set<int> &p_unsatClauses;
+    map<int,int> &p_valuation;
 
     for(int iClause: p_unsatClauses)
     {
@@ -43,16 +49,14 @@ decision StandardBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsa
             break;
     }
 
-    decision bet = decision(firstUnassigned,true,true);
+    decision bet = decision(firstUnassigned, true, true);
 
     if(firstUnassigned == -1)
     {
-        for(auto lit: p_clauses[*p_unsatClauses.begin()].getLiterals())
-            printf("%d\n", p_valuation[lit.first]);
         OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
     }
 
     OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
     return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+} // decision takeABet(SATSolver &p_solver)
 

@@ -8,6 +8,7 @@
 #include <vector>   // std::vector
 #include <ctime>    // std::time
 #include <cstdlib>  // std::rand
+#include <set>      // std::set
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -31,13 +32,18 @@ RandomBet::~RandomBet()
 {
 } // ~RandomBet()
 
-decision RandomBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
+decision RandomBet::takeABet(const SATSolver &p_solver)
 {
     OUTDEBUG("Random bet");
 
     set<int> unassignedLits;
     int selectedUnassigned = -1;
     bool value = true;
+
+    // Retreive data
+    vector<Clause> &p_clauses;
+    const set<int> &p_unsatClauses;
+    map<int,int> &p_valuation;
 
     // Gather non assigned literals
     for(int iClause: p_unsatClauses)
@@ -88,5 +94,5 @@ decision RandomBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatC
 
     OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);
     return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+} // decision takeABet(SATSolver &p_solver)
 

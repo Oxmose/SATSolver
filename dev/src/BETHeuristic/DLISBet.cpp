@@ -8,6 +8,7 @@
 #include <vector>   // vector
 #include <map>      // map
 #include <cmath>    // exp2, abs
+#include <set>      // std::set
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -30,7 +31,7 @@ DLISBet::~DLISBet()
 {
 } // ~DLISBet()
 
-decision DLISBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
+decision DLISBet::takeABet(SATSolver &p_solver)
 {
     OUTDEBUG("DLIS bet");
 
@@ -108,5 +109,5 @@ decision DLISBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
 
     OUTDEBUG("Taking bet: " << firstUnassigned << " to " << value);
     return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+} // decision takeABet(SATSolver &p_solver)
 

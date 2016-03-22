@@ -9,7 +9,7 @@ LIBLEX=-lfl
 YACC=bison
 
 all: Global/*.cpp BETHeuristic/*.cpp RandomSatExpGenerator/*.cpp Parser/*.cpp Core/*.cpp main.cpp Parser/$(NAME).tab.cpp Parser/$(NAME).yy.c Parser/$(NAME).cpp
-	$(CC) -std=c++11 -O3 -Wno-write-strings -Wall -fdiagnostics-color=always -o ../bin/resol $^ $(LIBLEX)
+	$(CC) -std=c++11 -O3 -Wno-write-strings -fdiagnostics-color=always -o ../bin/resol $^ $(LIBLEX)
 
 Parser/$(NAME).yy.c :  Parser/$(NAME).l
 	$(LEX)  -o $@ $^
