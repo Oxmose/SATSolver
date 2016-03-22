@@ -64,7 +64,7 @@ dans DPLL, pour bien le voir lancer en -debug.
 * \_unitprop: dummy deduce clauses unitaires
 * \_unsat: dummy unsat
 
-### Base de test CNF (cf: dev/bin/test_base/cnf)
+### Base de test CNF (cf: dev/bin/test_base/first_set/cnf)
 
 #### simple_v3_c2.cnf
 SATIFIABLE
@@ -139,7 +139,7 @@ Minisat la finit en 1s.
 #Tristan
 Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests, Watched Literals, redesign en statégies, scripts de tests.
 #Alexy
-Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests, heuristiques de paris, redesign en statégies, scripts de tests.
+Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests, heuristiques de paris, redesign en statégies, modificatiosn du parser, scripts de tests.
 
 # Scripts de test
 Deux bateries de tests sont disponibles :
@@ -159,4 +159,15 @@ Les tests sont éfféctués sur les CNF dans le dossier bin/test_base/cnf/serial
 
 Vous pourrez y mettre les CNF que vous voullez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
 
+# Perfomances du rendu 2
+Les performances ont été améliorées (environ 50% en moyennes sur nos bases de test).
+Nous compilons maintenant avec l'option -O3 ce qui nous a permis de gagner quelques secondes sur les temps de résolution.
 
+## Watched literals
+On gagne en moyenne 20% de temps par rapport au moment ou les watched literals ne sont pas activés, cependant il nous arrive de perdre du temps sur certaines formules.
+
+## Heuristiques
+Nous n'avons pas encore déterminé pourquoi la résolurtion formules sont plus rapides en mettant en places les différentes heuristiques et d'autre non.
+
+## Courbes
+Le courbes des tests seront présentes sur le GIT sous deux jours afin de comparer les heuristiques ainsi que l'emploi des watched literals ou non.
