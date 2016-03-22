@@ -140,7 +140,7 @@ int main(int argc, char** argv)
     // Only for loop instances (may be added later)
     // solver->reset();
 
-    return !sat;
+    return 0;
 }// main(int, char**)
 
 int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType, bool &debugFlag, bool &watchedLitMeth, BET_METHOD &betMeth)

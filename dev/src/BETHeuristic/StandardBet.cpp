@@ -6,11 +6,11 @@
 
 // STD INCLUDES
 #include <vector>   // vector
+#include <set>      // std::set
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
 #include "../Core/SATSolver.h"  // decision
-#include <set>      // std::set
 
 // INHERITANCE CLASS
 #include "IBet.h"
