@@ -1,21 +1,27 @@
-#example name
-NAME=expr
+#expr name
+NAME=Parser/expr
 #compiler name
 CC=g++
+#compiler flags
+FLAGS=-std=c++11 -O3 -Wno-write-strings -Wall -o 
 #lex name+path
 LEX=flex
 LIBLEX=-lfl
 #yacc/bison
 YACC=bison
+#bin target
+TARGET=../bin/resol
+#obj folder
+OBJ=../obj
 
-all: Global/*.cpp BETHeuristic/*.cpp RandomSatExpGenerator/*.cpp Parser/*.cpp Core/*.cpp main.cpp Parser/$(NAME).tab.cpp Parser/$(NAME).yy.c Parser/$(NAME).cpp
-	$(CC) -std=c++11 -O3 -Wno-write-strings -fdiagnostics-color=always -o ../bin/resol $^ $(LIBLEX)
+all: Global/*.cpp BETHeuristic/*.cpp RandomSatExpGenerator/*.cpp Parser/*.cpp Core/*.cpp main.cpp $(NAME).tab.cpp $(NAME).yy.c $(NAME).cpp
+	$(CC) $(FLAGS) $(TARGET) $^ $(LIBLEX)
 
-Parser/$(NAME).yy.c :  Parser/$(NAME).l
+$(NAME).yy.c :  $(NAME).l
 	$(LEX)  -o $@ $^
 
-Parser/$(NAME).tab.cpp : Parser/$(NAME).ypp
+$(NAME).tab.cpp : $(NAME).ypp
 	$(YACC) --report=all -o $@ -d $^
 
 clean:
-	rm -f *~ Parser/$(NAME).yy.c Parser/$(NAME).tab.cpp Parser/$(NAME).tab.hpp ../bin/resol
+	rm -f *~ $(NAME).yy.c $(NAME).tab.cpp $(NAME).tab.hpp $(TARGET) $(OBJ)
