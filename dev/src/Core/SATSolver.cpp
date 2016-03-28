@@ -40,12 +40,12 @@ void SATSolver::reset()
     m_maxIndex = 0;
 } // reset()
 
-void SATSolver::setStrategy(IBet* p_betMethod)
+void SATSolver::setStrategy(shared_ptr<IBet> p_betMethod)
 {
-    m_betHeuristic = unique_ptr<IBet>(p_betMethod);
+    m_betHeuristic = p_betMethod;
 } // setStrategy(IBet*)
 
-void SATSolver::setParser(IParser* p_parser)
+void SATSolver::setParser(shared_ptr<IParser> p_parser)
 {
     m_parser = p_parser;
 } // setParser(IParser*)

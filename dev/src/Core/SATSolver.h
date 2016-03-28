@@ -33,6 +33,7 @@ struct decision
     int index;
     bool value;
     bool bet; //bet or deduction
+    int step; //step number or the assignation
 };
 
 /*
@@ -48,9 +49,9 @@ class SATSolver
         virtual ~SATSolver();
 
         // Bet strategy
-        void setStrategy(IBet* p_betMethod);
+        void setStrategy(std::shared_ptr<IBet> p_betMethod);
         // Parser strategy
-        void setParser(IParser* p_parser);
+        void setParser(std::shared_ptr<IParser> p_parser);
 
         void setMaxIndex(int p_maxIndex);
         void setOriginFormula(const std::vector<Clause> &p_clauses);
@@ -89,10 +90,10 @@ class SATSolver
 
         bool evaluate();
         
-    //Parser strategy
-        IParser *m_parser;
+        //Parser strategy
+        std::shared_ptr<IParser> m_parser;
 
-        std::unique_ptr<IBet> m_betHeuristic;
+        std::shared_ptr<IBet> m_betHeuristic;
 
         /*Formula representation*/
         std::vector<Clause> m_clauses;
@@ -106,12 +107,10 @@ class SATSolver
         std::queue<decision> m_preprocessQueue;
 
         bool m_isContradictory;
-
         bool m_isWL;
 
     private:
         /* DPLL intern */
-
         unsigned int    m_maxIndex;
         
 }; // SATSolver

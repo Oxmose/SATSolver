@@ -35,27 +35,21 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    // Define parse type and file to parse
-    PARSE_TYPE parserType = CNF_PARSE;
-    string fileName;
-
-    // Init debug flag
-    debugFlag = false;
-    bool watchedLitMeth;
-    BET_METHOD betMeth;
+    // Init settings
+    Settings_s sets;
 
     // Parse the command line
-    int commandError = parseCommand(argc, argv, fileName, parserType, debugFlag, watchedLitMeth, betMeth);
-
-
+    int commandError = parseCommand(argc, argv, sets);
+    
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-wl] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interact] [-wl] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
         return 0;
-
+    
+    debugFlag = sets.debug_s;
     // Time computation
     clock_t start;
     double duration;
@@ -65,46 +59,49 @@ int main(int argc, char** argv)
 
     // Create the solver
     unique_ptr<SATSolver> solver;
-    if(!watchedLitMeth) solver = unique_ptr<SATSolver>(new SATSolverSTD());
-    else solver = unique_ptr<SATSolver>(new SATSolverWL());
-    //(watchedLitMeth) ?
-
+    if(!sets.wl_s)
+        solver = unique_ptr<SATSolver>(new SATSolverSTD());
+    else 
+        solver = unique_ptr<SATSolver>(new SATSolverWL());
+    
     // Set strategy
-    switch(betMeth)
+    shared_ptr<IBet> betStrat;
+    switch(sets.bet_s)
     {
         case NORM:
-            solver->setStrategy(new StandardBet());
+            betStrat = shared_ptr<IBet>(new StandardBet());
             break;
         case RAND0:
-            solver->setStrategy(new RandomBet(false));
+            betStrat = shared_ptr<IBet>(new RandomBet(false));
             break;
         case RAND1:
-            solver->setStrategy(new RandomBet(true));
+            betStrat = shared_ptr<IBet>(new RandomBet(true));
             break;
         case MOMS:
-            solver->setStrategy(new MOMSBet());
+            betStrat = shared_ptr<IBet>(new MOMSBet());
             break;
         case DLIS:
-            solver->setStrategy(new DLISBet(false));
+            betStrat = shared_ptr<IBet>(new DLISBet(false));
             break;
         case DLIS1:
-            solver->setStrategy(new DLISBet(true));
+            betStrat = shared_ptr<IBet>(new DLISBet(true));
             break;
         default:
-            solver->setStrategy(new StandardBet());
+            betStrat = shared_ptr<IBet>(new StandardBet());
     }
+    solver->setStrategy(betStrat);
 
-    IParser *parser;
-    switch(parserType)
+    shared_ptr<IParser> parser;
+    switch(sets.parser_s)
     {
         case CNF_PARSE:
-            parser = new CNFParser(fileName);
+            parser = shared_ptr<IParser>(new CNFParser(sets.filename_s));
             break;
         case LOG_PARSE:
-            parser = new LOGParser(fileName);
+            parser = shared_ptr<IParser>(new LOGParser(sets.filename_s));
             break;
         default:
-            parser = new CNFParser(fileName);
+            parser = shared_ptr<IParser>(new CNFParser(sets.filename_s));
     }
 
     unsigned int maxIndex;
@@ -118,9 +115,8 @@ int main(int argc, char** argv)
 
     OUTDEBUG("We check SAT of :" << solver->formulaToStr());
 
-    bool sat;
     // Solve SAT formula
-    if((sat=solver->solve()))
+    if(solver->solve())
     {
         cout << "s SATIFIABLE" << endl;
         solver->showSolution();
@@ -143,15 +139,18 @@ int main(int argc, char** argv)
     return 0;
 }// main(int, char**)
 
-int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType, bool &debugFlag, bool &watchedLitMeth, BET_METHOD &betMeth)
+int parseCommand(int argc, char **argv, Settings_s &sets)
 {
+    // Init settings values
+    sets.parser_s = CNF_PARSE;
+    sets.bet_s = NORM;
+    sets.debug_s = false;
+    sets.wl_s = false;
+    sets.cl_s = false;
+    sets.clint_s = false;
     
-    watchedLitMeth = false;
-    betMeth = NORM;
     int commandError = 0;
-    parserType = CNF_PARSE;
-    bool argsValid[4] = {false, false, false, false};
-
+    bool argsValid[5] = {false, false, false, false, false};
     
     if(argc == 1)
     {
@@ -167,48 +166,59 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
             string value = string(argv[i]);
             if(i == argc - 1)
             {
-                fileName = value;
+                sets.filename_s = value;
             }
             else if(value == "-tseitin" && !argsValid[0])
             {
-                parserType = LOG_PARSE;
+                sets.parser_s = LOG_PARSE;
                 argsValid[0] = true;
             }
             else if(value == "-wl" && !argsValid[1])
             {
-                watchedLitMeth = true;
+                sets.wl_s = true;
                 argsValid[1] = true;
             }
             else if(value == "-rand" && !argsValid[2])
             {
-                betMeth = RAND0;
+                sets.bet_s = RAND0;
                 argsValid[2] = true;
             }
             else if(value == "-rand0" && !argsValid[2])
             {
-                betMeth = RAND1;
+                sets.bet_s = RAND1;
                 argsValid[2] = true;
             }
             else if(value == "-moms" && !argsValid[2])
             {
-                betMeth = MOMS;
+                sets.bet_s = MOMS;
                 argsValid[2] = true;
             }
             else if(value == "-dlis" && !argsValid[2])
             {
-                betMeth = DLIS;
+                sets.bet_s = DLIS;
                 argsValid[2] = true;
             }
             else if(value == "-dlis0" && !argsValid[2])
             {
-                betMeth = DLIS1;
+                sets.bet_s = DLIS1;
                 argsValid[2] = true;
             }
             else if(value == "-debug" && !argsValid[3])
             {
-                debugFlag = true;
+                sets.debug_s = true;
                 argsValid[3] = true;
-            }            
+            }  
+            else if(value == "-cl" && !argsValid[4])
+            {
+                sets.cl_s = true;
+                argsValid[4] = true;
+            }
+            else if(value == "-cl-interact" && !argsValid[4])
+            {
+                sets.cl_s = true;
+                sets.clint_s = true;
+                argsValid[4] = true;
+            }
             else
             {
                 commandError = 1;
@@ -216,11 +226,12 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
             }
         }
         int count = 0;
-        for(unsigned int i = 0; i < 4; ++i)
+        for(unsigned int i = 0; i < 5; ++i)
         {
             if(argsValid[i])
                 ++count;
         }
+        
         if(count != argc - 2)
         {
             commandError = 1;
@@ -229,7 +240,7 @@ int parseCommand(int argc, char **argv, string &fileName, PARSE_TYPE &parserType
     }
 
     return commandError;
-}
+}// int parseComment(int, char**, Settings_s&)
 
 void displayMenu(char *softName)
 {
@@ -266,10 +277,11 @@ void displayMenu(char *softName)
 
     cout << "How to use :" << endl;
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-wl] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-wl] [-cl | -cl-interact] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-tseitin] [-wl] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-tseitin] [-wl] [-cl | -cl-interact] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t The argument -wl enable the watched literals method." << endl;
+    cout << "\t The argument -cl enable clauses learning. -cl-interact enable interactive clauses learning." << endl;
     cout << "\t [-rand | -moms | -dlis] define the used heuristic to bet on the next literal :" << endl;
     cout << "\t\t -rand : next bet on a random literal." << endl;
     cout << "\t\t -rand0 : next bet on a random literal (the bet is random here)." << endl;

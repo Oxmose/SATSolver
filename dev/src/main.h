@@ -9,6 +9,8 @@
 
 // SATSolver class
 #include "Core/SATSolver.h"
+#include "Core/SATSolverSTD.h"
+#include "Core/SATSolverWL.h" 
 
 // Parser interface / classes
 #include "Parser/IParser.h"
@@ -35,11 +37,25 @@
 // GLOBAL FLAGS/VARS
 #include "Global/Global.h"
 
+// Settings structure
+typedef struct Settings_s Settings_s;
+struct Settings_s
+{
+    std::string filename_s;
+    PARSE_TYPE parser_s;
+    BET_METHOD bet_s;
+    bool debug_s;
+    bool wl_s;
+    bool cl_s;
+    bool clint_s;
+
+};
+
 bool debugFlag;
 
 int main(int argc, char** argv);
 
-int parseCommand(int argc, char **argv, std::string &fileName, PARSE_TYPE &parserType, bool &debugFlag, bool &watchedLitMeth, BET_METHOD &betMeth);
+int parseCommand(int argc, char **argv, Settings_s &sets);
 void displayMenu(char *softName);
 void menuChoice();
 

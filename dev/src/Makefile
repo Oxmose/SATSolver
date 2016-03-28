@@ -16,7 +16,6 @@ OBJ=../obj
 
 all: Global/*.cpp BETHeuristic/*.cpp RandomSatExpGenerator/*.cpp Parser/*.cpp Core/*.cpp main.cpp $(NAME).tab.cpp $(NAME).yy.c $(NAME).cpp
 	$(CC) $(FLAGS) $(TARGET) $^ $(LIBLEX)
-
 $(NAME).yy.c :  $(NAME).l
 	$(LEX)  -o $@ $^
 
