@@ -49,7 +49,7 @@ Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucu
 
 ## Performances
 ###Optimisation à la compilation  
-Tous les tests présentés ont été fait en -O3.  
+Tous les tests présentés ont été fait en -O3. Cela améliore énormément les performances.
 Un exemple de comparaison sur aim-100-1_6-no-1.cnf sans WL et standard bet:  
 
 
@@ -69,7 +69,7 @@ Avec flag -O3 : 1.977s
 
 Voir doc/courbes/ (sur le github très certainement soumission un peu tardive)
 
-###Gain en performance
+###Gain en performance par raport au rendu 1
 
 Un petit exemple qui compare le rendu1 avec le meilleur résultat du rendu2 sur un exemple : 
 
@@ -82,6 +82,16 @@ Temps d'éxécution : 3m50.931s
 UNSATISFIABLE
 
 Temps d'éxécution : 1m9.022s
+
+
+### Perfomances du rendu 2
+
+## Watched literals
+On gagne en moyenne 20% de temps par rapport au moment ou les watched literals ne sont pas activés, cependant il nous arrive de perdre du temps sur certaines formules.
+
+## Heuristiques
+L'heuristique la plus efficace en moyenne est -moms souvent avec -wl.   
+-rand donne souvent de bonnes surprises.
 
 
 ### La clause de l'horreur
@@ -117,13 +127,3 @@ test_total_time.sh permet de vérifier que les temps de résolution pour les heu
 Les tests sont éfféctués sur les CNF dans le dossier bin/test_base/cnf/serial_test.
 
 Vous pourrez y mettre les CNF que vous voullez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
-
-# Perfomances du rendu 2
-Les performances ont été améliorées (environ 50% en moyennes sur nos bases de test).
-Nous compilons maintenant avec l'option -O3 ce qui nous a permis de gagner quelques secondes sur les temps de résolution.
-
-## Watched literals
-On gagne en moyenne 20% de temps par rapport au moment ou les watched literals ne sont pas activés, cependant il nous arrive de perdre du temps sur certaines formules.
-
-## Heuristiques
-Nous n'avons pas encore déterminé pourquoi la résolurtion formules sont plus rapides en mettant en places les différentes heuristiques et d'autre non.
