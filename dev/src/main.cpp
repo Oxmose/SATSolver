@@ -118,7 +118,7 @@ int main(int argc, char** argv)
     // Solve SAT formula
     if(solver->solve())
     {
-        cout << "s SATIFIABLE" << endl;
+        cout << "s SATISFIABLE" << endl;
         solver->showSolution();
     }
     else
