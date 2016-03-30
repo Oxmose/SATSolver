@@ -149,6 +149,7 @@ void SATSolver::preprocess()
         Dedect unitary clauses in input
     */
     map<int,bool> deductionOn;
+    vector<int> toErase;
     for(int iClause: m_unsatClauses)
         if(m_clauses[iClause].getLiterals().size() == 1)
         {
@@ -158,9 +159,13 @@ void SATSolver::preprocess()
                 bool value = !m_clauses[iClause].getLiterals()[indexUnit];
                 m_preprocessQueue.push(decision(indexUnit,value,false));
                 deductionOn[indexUnit] = true;
+                toErase.push_back(iClause);
                 OUTDEBUG("\tDeducing (unitary clause): " << indexUnit << " to " << ((value) ? "True" : "False"));
             }
         }
+
+    for(auto c: toErase)
+        m_unsatClauses.erase(c);
 
     uniquePol(true);
 
@@ -225,7 +230,7 @@ bool SATSolver::solve()
 
         if(deduce())
             continue;
-        
+
         takeABet();
     }
 
