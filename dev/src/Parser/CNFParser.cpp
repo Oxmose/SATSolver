@@ -71,7 +71,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
             continue;
 
         // We sound not to parse comment line
-        if(line[firstChar] == 'c' && line[firstChar] == ' ')
+        if(line[firstChar] == 'c' || line[firstChar] == ' ')
             continue;
 
 
@@ -165,11 +165,20 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
             }
 
             // Create and save the clause
-            Clause clause(literals, hasTaut, clausesCount);
-            p_clauses.push_back(clause);
-            p_maxIndex = maxIndex;
-            // Add one to counter for verification purposes
-            ++clausesCount;
+            if(literals.size() > 0)
+            {
+                Clause clause(literals, hasTaut, clausesCount);
+                p_clauses.push_back(clause);
+                p_maxIndex = maxIndex;
+                // Add one to counter for verification purposes
+                ++clausesCount;
+            }
+            else
+            {
+                OUTWARNING("Empty clause detected.");
+                cout << "s UNSATISFIABLE" << endl;
+                exit(EXIT_SUCCESS);
+            }
         }
     }
 
