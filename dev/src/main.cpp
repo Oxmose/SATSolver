@@ -108,7 +108,7 @@ int main(int argc, char** argv)
     vector<Clause> clauses;
 
     if(!parser->parse(maxIndex, clauses))
-        OUTWARNING("Errors while parsing the file.");
+        OUTWARNING("Wranings while parsing the file.");
     solver->setMaxIndex(maxIndex);
     solver->setOriginFormula(clauses);
     solver->setParser(parser);

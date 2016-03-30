@@ -191,7 +191,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
     {
         OUTWARNING("The file has " << clausesCount << " clauses but " << givenClausesCount << " were announced.");
         givenClausesCount = clausesCount;
-	noError = false;
+	    noError = false;
     }
 
     // If some variables were not used or too much were
