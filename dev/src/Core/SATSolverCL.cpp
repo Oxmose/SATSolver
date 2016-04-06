@@ -44,9 +44,10 @@ bool SATSolverCL::backtrack(bool& p_unsat)
                 m_currentAssignement.pop_back();
             else
             {
-                //If we are on the last bet we turn it into a decision a change it
+                //If we are on the last bet we turn it into a deduction and change it
                 m_currentAssignement.back().value = !m_currentAssignement.back().value;
-                m_currentAssignement.back().bet = false;    
+                m_currentAssignement.back().bet = false;
+                m_currentAssignement.back().ancien_bet = true; 
             }
         }
 
@@ -68,6 +69,9 @@ bool SATSolverCL::backtrack(bool& p_unsat)
 vector<pair<int,Clause>> SATSolverCL::clauseForConflict(const set<node>& nodes, set<int>& old)
 {
     vector<pair<int,Clause>> toReturn;
+    map<int,int> curr_map;
+    for(auto& n : nodes)
+        curr_map[n.first] = n.second;
     for(auto clause : m_clauses)
     {
         if(old.find(clause.getId()) == old.end())
@@ -77,6 +81,8 @@ vector<pair<int,Clause>> SATSolverCL::clauseForConflict(const set<node>& nodes, 
 
             for(auto l : clause.getLiterals())
             {
+                if(curr_map.find(l.first) == curr_map.end())
+                    curr_map[l.first] = -1;
                 if(nodes.find(make_pair(l.first,l.second)) != nodes.end())
                     nbIn--;
                 else
@@ -85,8 +91,9 @@ vector<pair<int,Clause>> SATSolverCL::clauseForConflict(const set<node>& nodes, 
            
             //printf("%d %s\n", nbIn, clause.toStr().c_str());
             
-            if(nbIn == 1 && m_valuation[theL.first] != -1)
+            if(nbIn == 1 && !clause.evaluate(curr_map))
             {
+                printf("%d %s\n", theL.first, clause.toStr().c_str());
                 old.insert(clause.getId());
                 toReturn.push_back(make_pair(theL.first,clause));
             }
@@ -117,7 +124,7 @@ void SATSolverCL::constructConflictGraph()
     
     int levelMax = -1;
     for(int i = 0 ; i < m_currentAssignement.size() ; i++)
-        if(m_currentAssignement[i].bet)
+        if(m_currentAssignement[i].bet || m_currentAssignement[i].ancien_bet)
             levelMax++;
            
     m_conflictGraph.levelMax = levelMax;
@@ -126,12 +133,13 @@ void SATSolverCL::constructConflictGraph()
     for(int i = 0 ; i < m_currentAssignement.size() ; i++)
     {
         m_levelOfVar[m_currentAssignement[i].index] = level;
-        if(m_currentAssignement[i].bet)
+        if(m_currentAssignement[i].bet || m_currentAssignement[i].ancien_bet)
         {
             level++;
             m_conflictGraph.add_node(make_pair(make_pair(m_currentAssignement[i].index,m_currentAssignement[i].value),level));
         }
     }
+    printf("\n");
 
     set<int> old;
     auto pair_clause_i = clauseForConflict(m_conflictGraph.get_nodes(), old); 

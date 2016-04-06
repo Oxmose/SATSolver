@@ -28,11 +28,12 @@
 
 struct decision
 {
-    decision(int index, bool value, bool bet) : index(index), value(value), bet(bet) {}
+    decision(int index, bool value, bool bet) : index(index), value(value), bet(bet) { ancien_bet = false; }
 
     int index;
     bool value;
     bool bet; //bet or deduction
+    bool ancien_bet;
 };
 
 /*
