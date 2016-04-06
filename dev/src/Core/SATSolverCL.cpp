@@ -93,7 +93,7 @@ vector<pair<int,Clause>> SATSolverCL::clauseForConflict(const set<node>& nodes, 
             
             if(nbIn == 1 && !clause.evaluate(curr_map))
             {
-                printf("%d %s\n", theL.first, clause.toStr().c_str());
+                //printf("%d %s\n", theL.first, clause.toStr().c_str());
                 old.insert(clause.getId());
                 toReturn.push_back(make_pair(theL.first,clause));
             }
@@ -139,7 +139,6 @@ void SATSolverCL::constructConflictGraph()
             m_conflictGraph.add_node(make_pair(make_pair(m_currentAssignement[i].index,m_currentAssignement[i].value),level));
         }
     }
-    printf("\n");
 
     set<int> old;
     auto pair_clause_i = clauseForConflict(m_conflictGraph.get_nodes(), old); 
@@ -156,6 +155,13 @@ void SATSolverCL::constructConflictGraph()
         }
         pair_clause_i = clauseForConflict(m_conflictGraph.get_nodes(), old); 
     }
+
+    /* 
+
+        HERE Alexy
+    */
+
+
 
     m_conflictGraph.output("conflictGraph"+to_string(i)+".dot");
     i++;
