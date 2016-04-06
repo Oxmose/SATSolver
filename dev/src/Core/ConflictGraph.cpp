@@ -44,12 +44,20 @@ void ConflictGraph::output(string file_name)
 	ofstream myfile;
  	myfile.open(file_name);
     myfile << "digraph {\n";
+	map<node,bool> active;
 	for(auto& e: m_voisinDe)
 	{
+		active[e.first] = m_levelOf[e.first] == levelMax;
 		for(auto& v : e.second)
-			myfile << node_to_str(e.first) + "->" + node_to_str(v) << ";\n";
-		if(e.second.empty())
-			myfile << node_to_str(e.first) << ";\n";
+			active[e.first] = active[e.first] || m_levelOf[v] == levelMax;
+		if(active[e.first])
+		{
+			for(auto& v : e.second)
+				if(m_levelOf[v] == levelMax)
+					myfile << node_to_str(e.first) + "->" + node_to_str(v) << ";\n";
+			if(e.second.empty())
+				myfile << node_to_str(e.first) << ";\n";
+		}
 	}
 
 	for(auto& e: m_voisinDe)
