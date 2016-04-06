@@ -2,6 +2,7 @@
 #include "Core/SATSolver.h"
 #include "Core/SATSolverSTD.h"
 #include "Core/SATSolverWL.h"
+#include "Core/SATSolverCL.h"
 
 // Parser interface / classes
 #include "Parser/IParser.h"
@@ -63,6 +64,7 @@ int main(int argc, char** argv)
         solver = unique_ptr<SATSolver>(new SATSolverSTD());
     else 
         solver = unique_ptr<SATSolver>(new SATSolverWL());
+    solver = unique_ptr<SATSolver>(new SATSolverCL());
     
     // Set strategy
     shared_ptr<IBet> betStrat;

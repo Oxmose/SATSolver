@@ -30,6 +30,7 @@ SATSolver::SATSolver()
 {
     m_satClauses = unique_ptr<satClausesSet>(new satClausesSet(compareSat));
     m_isWL = false;
+    m_isCL = false;
 } // SATSolver(bool)
 
 void SATSolver::reset()
@@ -106,8 +107,12 @@ bool SATSolver::isContradictory()
 
 bool SATSolver::uniquePol(bool p_preprocess /* = false */)
 {
+    if(m_isWL)
+        return false;
+    if(m_isCL)
+        return false;
     //We always want uniquePol in preprocess
-    if(p_preprocess || !m_isWL)
+    if(p_preprocess || !m_isWL )
     {
         //In the pair, first : sum of polarities, second: number of occurencies
         //We sum the polarities and check if it matches with +- #occurencies

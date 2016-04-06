@@ -33,7 +33,6 @@ struct decision
     int index;
     bool value;
     bool bet; //bet or deduction
-    int step; //step number or the assignation
 };
 
 /*
@@ -108,6 +107,7 @@ class SATSolver
 
         bool m_isContradictory;
         bool m_isWL;
+        bool m_isCL;
 
     private:
         /* DPLL intern */

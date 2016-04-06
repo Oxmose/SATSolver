@@ -20,6 +20,7 @@
 class Clause
 {
     public:
+        Clause() {}
         Clause(const std::map<int,bool> &p_literals, bool p_isTaut, int p_id);
         ~Clause();
 
