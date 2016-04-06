@@ -156,6 +156,10 @@ void SATSolverCL::constructConflictGraph()
         pair_clause_i = clauseForConflict(m_conflictGraph.get_nodes(), old); 
     }
 
+    node uip = m_conflictGraph.getUIP();
+    map<node, bool> uipCut;
+    m_conflictGraph.getUIPCut(uipCut, uip);
+
     /* 
 
         HERE Alexy
@@ -163,7 +167,7 @@ void SATSolverCL::constructConflictGraph()
 
 
 
-    m_conflictGraph.output("conflictGraph"+to_string(i)+".dot");
+    m_conflictGraph.output("conflictGraph"+to_string(i)+".dot", uip, uipCut);
     i++;
 }
 

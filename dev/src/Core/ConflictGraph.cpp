@@ -39,7 +39,7 @@ string ConflictGraph::node_to_str(const node& a)
 	return '"'+to_string(a.first)+"\n"+to_string(a.second)+"@"+to_string(m_levelOf[a])+'"';
 }
 
-void ConflictGraph::output(string file_name)
+void ConflictGraph::output(string file_name, const node &UIP, const map<node, bool> &inCut)
 {
 	ofstream myfile;
  	myfile.open(file_name);
@@ -62,7 +62,168 @@ void ConflictGraph::output(string file_name)
 
 	for(auto& e: m_voisinDe)
 		if(m_levelOf[e.first] == levelMax)
-			myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=blue];\n";
+        {
+            if(e.first == UIP)
+                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=yellow];\n";
+            else if(inCut.find(e.first) != inCut.end())
+                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=green];\n";
+            else
+			    myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=blue];\n";
+        }
 	myfile << "}";
     myfile.close();
+}
+
+size_t ConflictGraph::size()
+{
+	return m_voisinDe.size();
+}
+
+void ConflictGraph::getAccess(map<node, bool> &access)
+{
+    ConflictGraph inverse;
+
+    for(auto v : m_voisinDe)
+    {
+        if(m_levelOf[v.first] == levelMax)
+        {
+            inverse.add_node(make_pair(v.first, m_levelOf[v.first]));
+            for(auto u : v.second)
+            {
+                inverse.add_node(make_pair(u, m_levelOf[u]));
+                inverse.add_edge(u, v.first);
+            }  
+        }
+    }
+
+    queue<node> neight;
+    neight.push(getConflictNode());
+    map<node, bool> visited;
+    while(!neight.empty())
+    {
+        node toVisit = neight.front();
+        neight.pop();
+        visited.emplace(toVisit, true);
+        for(auto v : inverse.m_voisinDe[toVisit])
+        {
+            if(visited.find(v) == visited.end())
+                neight.push(v);
+        }
+        access.emplace(toVisit, true);
+    }
+}
+
+node ConflictGraph::getUIP()
+{
+    map<node, bool> access;
+    getAccess(access);
+
+    set<node> nexts;
+    queue<node> neight;
+
+    node conflict = getConflictNode();
+    node start = getStartNode();
+
+    neight.push(start);
+    nexts.insert(start);
+    while(!neight.empty())
+    {
+        node toVisit = neight.front();
+        neight.pop();
+        nexts.erase(toVisit);
+        for(auto v : m_voisinDe[toVisit])
+        {
+            if(access[v])
+            {
+                nexts.insert(v);
+                neight.push(v);
+            }
+        }
+        if(nexts.size() == 1)
+        {
+            node toGo = *(nexts.begin());
+            while(m_voisinDe[toGo].size() == 1)
+            {
+                toGo = *(m_voisinDe[toGo].begin());
+            }
+            if(m_levelOf[toGo] == levelMax && toGo != conflict)
+                return toGo;
+        }
+    }
+
+    node ret = make_pair(-1, false);
+    return ret;
+}
+
+node ConflictGraph::getStartNode()
+{
+    map<node, bool> hasFather;
+    for(auto v : m_voisinDe)
+    {
+        if(m_levelOf[v.first] == levelMax)
+        {
+            if(hasFather.find(v.first) == hasFather.end())
+                hasFather.emplace(v.first, false);
+
+            for(auto n : v.second)
+            {
+                if(hasFather.find(n) == hasFather.end())
+                    hasFather.emplace(n, true);
+                else
+                    hasFather[n] = true;
+            }
+        }
+    }
+
+    for(auto val : hasFather)
+        if(!val.second)
+            return val.first;
+
+    node ret = make_pair(-1, false);
+    return ret;
+}
+
+node ConflictGraph::getConflictNode()
+{
+    map<int, bool> valuation;
+    for(auto v : m_voisinDe)
+    {
+        if(m_levelOf[v.first] == levelMax)
+        {
+            if(valuation.find(v.first.first) == valuation.end())
+                valuation.emplace(v.first.first, v.first.second);
+
+            for(auto n : v.second)
+            {
+                if(valuation.find(n.first) == valuation.end())
+                    valuation.emplace(n.first, n.second);
+                else
+                {
+                    if(valuation[n.first] != n.second)
+                    {
+                        node ret = make_pair(n.first, false);
+                        return ret;
+                    }
+                }
+            }
+        }
+    }
+    node ret = make_pair(-1, false);
+    return ret;
+}
+
+void ConflictGraph::getUIPCut(std::map<node, bool> &inCut, node &uip)
+{
+    queue<node> neight;
+    neight.push(uip);
+    while(!neight.empty())
+    {
+        node toVisit = neight.front();
+        neight.pop();
+        for(auto v : m_voisinDe[toVisit])
+        {
+            if(inCut.find(v) == inCut.end())
+                inCut.emplace(v, true);
+        }
+    }
 }

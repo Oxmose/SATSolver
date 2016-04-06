@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 
-#include <iostream>
+#include <queue>
 #include <fstream>
 
 using namespace std;
@@ -26,9 +26,18 @@ class ConflictGraph
 		set<node> get_nodes();
 
 		string node_to_str(const node& a);
-		void output(string file_name);
+
+		void output(string file_name, const node &UIP, const std::map<node, bool> &inCut);
+		size_t size();
 
 		int levelMax;
+
+		node getUIP();
+                void getUIPCut(std::map<node, bool> &inCut, node &uip);
+
+		void getAccess(std::map<node, bool> &access);
+		node getStartNode();
+		node getConflictNode();
 
 
 	private:

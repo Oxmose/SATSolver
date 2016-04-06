@@ -36,7 +36,6 @@ class SATSolverCL : public SATSolver
         void constructConflictGraph();
         virtual bool backtrack(bool& p_unsat);
 
-
         std::map<int,std::vector<int>> m_clausesWithVar;//Direct access to Clauses
         std::map<int,std::set<int>> m_aliveVarsIn;
         std::map<int,int> m_levelOfVar;
