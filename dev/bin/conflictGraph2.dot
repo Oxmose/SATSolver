@@ -36,13 +36,13 @@ digraph {
 "3
 0@18"[shape=circle, style=filled, fillcolor=blue];
 "18
-1@18"[shape=circle, style=filled, fillcolor=blue];
+1@18"[shape=circle, style=filled, fillcolor=yellow];
 "47
-0@18"[shape=circle, style=filled, fillcolor=blue];
+0@18"[shape=circle, style=filled, fillcolor=green];
 "68
-1@18"[shape=circle, style=filled, fillcolor=blue];
+1@18"[shape=circle, style=filled, fillcolor=green];
 "74
-0@18"[shape=circle, style=filled, fillcolor=blue];
+0@18"[shape=circle, style=filled, fillcolor=green];
 "74
-1@18"[shape=circle, style=filled, fillcolor=blue];
+1@18"[shape=circle, style=filled, fillcolor=green];
 }

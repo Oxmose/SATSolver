@@ -54,9 +54,9 @@ digraph {
 "9
 1@5"[shape=circle, style=filled, fillcolor=blue];
 "38
-0@5"[shape=circle, style=filled, fillcolor=blue];
+0@5"[shape=circle, style=filled, fillcolor=green];
 "38
-1@5"[shape=circle, style=filled, fillcolor=blue];
+1@5"[shape=circle, style=filled, fillcolor=green];
 "52
 1@5"[shape=circle, style=filled, fillcolor=yellow];
 "66
@@ -64,7 +64,7 @@ digraph {
 "74
 0@5"[shape=circle, style=filled, fillcolor=green];
 "83
-0@5"[shape=circle, style=filled, fillcolor=blue];
+0@5"[shape=circle, style=filled, fillcolor=green];
 "87
 0@5"[shape=circle, style=filled, fillcolor=green];
 "89

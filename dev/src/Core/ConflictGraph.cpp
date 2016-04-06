@@ -219,11 +219,15 @@ void ConflictGraph::getUIPCut(std::map<node, bool> &inCut, node &uip)
     while(!neight.empty())
     {
         node toVisit = neight.front();
+        cout << "VISITING : " << toVisit.first << endl;
         neight.pop();
         for(auto v : m_voisinDe[toVisit])
         {
             if(inCut.find(v) == inCut.end())
+            {
+                neight.push(v);
                 inCut.emplace(v, true);
+            }
         }
     }
 }
