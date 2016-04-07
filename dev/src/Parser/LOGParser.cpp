@@ -66,6 +66,8 @@ bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
     fclose(yyin);
 
     vector<pair<map<int,bool>, bool>> clauses;
+	
+    
 
     // Browse each clause extracted and create the formula
     map<int,bool> clause;
@@ -73,6 +75,7 @@ bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
+	cout << strForm << endl;
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis

@@ -170,7 +170,9 @@ void SATSolver::preprocess()
         }
 
     for(auto c: toErase)
+    {
         m_unsatClauses.erase(c);
+    }
 
     uniquePol(true);
 

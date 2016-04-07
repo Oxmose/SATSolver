@@ -24,16 +24,17 @@ RANDOMGEN=RandomSatExpGenerator/randomGen.cpp
 MAIN=main.cpp
 CORE=Core/Clause.cpp Core/ConflictGraph.cpp Core/SATSolver.cpp Core/SATSolverCL.cpp Core/SATSolverSTD.cpp Core/SATSolverWL.cpp
 PARSER=Parser/CNFParser.cpp Parser/LOGParser.cpp $(NAME).cpp $(NAME).tab.cpp $(NAME).yy.c
-PRELOG=$(NAME).tab.cpp $(NAME).yy.c
 
+PRELOG=$(NAME).tab.cpp $(NAME).yy.c
 
 SRCS= $(GLOBAL) $(BET) $(RANDOMGEN) $(CORE) $(MAIN) $(PARSER) 
 
 #OBJS
 OBJS=$(SRCS:.cpp=.o)
+OBJDIR=../obj/
 
 all: $(TARGET)
-		@echo Compiling
+		@echo END
 
 $(TARGET): $(PRELOG) $(OBJS)
 		$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LIBLEX)
