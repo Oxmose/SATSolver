@@ -50,7 +50,7 @@ void ConflictGraph::output(string file_name, const node &UIP, const map<node, bo
 		active[e.first] = m_levelOf[e.first] == levelMax;
 		for(auto& v : e.second)
 			active[e.first] = active[e.first] || m_levelOf[v] == levelMax;
-		if(active[e.first])
+		if(true)
 		{
 			for(auto& v : e.second)
 				if(m_levelOf[v] == levelMax)
