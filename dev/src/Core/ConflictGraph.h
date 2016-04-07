@@ -33,9 +33,8 @@ class ConflictGraph
 		int levelMax;
 
 		node getUIP();
-                void getUIPCut(std::map<node, bool> &inCut, node &uip);
+        	void getUIPCut(std::map<node, bool> &inCut, node &uip);
 
-		void getAccess(std::map<node, bool> &access);
 		node getStartNode();
 		node getConflictNode();
 

@@ -79,80 +79,74 @@ size_t ConflictGraph::size()
 	return m_voisinDe.size();
 }
 
-void ConflictGraph::getAccess(map<node, bool> &access)
-{
-    ConflictGraph inverse;
-
-    for(auto v : m_voisinDe)
-    {
-        if(m_levelOf[v.first] == levelMax)
-        {
-            inverse.add_node(make_pair(v.first, m_levelOf[v.first]));
-            for(auto u : v.second)
-            {
-                inverse.add_node(make_pair(u, m_levelOf[u]));
-                inverse.add_edge(u, v.first);
-            }  
-        }
-    }
-
-    queue<node> neight;
-    neight.push(getConflictNode());
-    map<node, bool> visited;
-    while(!neight.empty())
-    {
-        node toVisit = neight.front();
-        neight.pop();
-        visited.emplace(toVisit, true);
-        for(auto v : inverse.m_voisinDe[toVisit])
-        {
-            if(visited.find(v) == visited.end())
-                neight.push(v);
-        }
-        access.emplace(toVisit, true);
-    }
-}
 
 node ConflictGraph::getUIP()
 {
-    map<node, bool> access;
-    getAccess(access);
-
     set<node> nexts;
     queue<node> neight;
 
     node conflict = getConflictNode();
     node start = getStartNode();
 
+    node conflictBar = conflict;
+    conflictBar.second = !conflict.second;
+
+    ConflictGraph inverse;
+
     neight.push(start);
-    nexts.insert(start);
 
-    node ret = make_pair(-1, false);
-
+    map<node, bool> visited;
     while(!neight.empty())
     {
         node toVisit = neight.front();
+	    visited.emplace(toVisit, true);
+        inverse.add_node(make_pair(toVisit, m_levelOf[toVisit]));
         neight.pop();
-        nexts.erase(toVisit);
+
         for(auto v : m_voisinDe[toVisit])
         {
-            if(access[v])
+            if(visited.find(v) == visited.end())
+            {
+                inverse.add_node(make_pair(v, m_levelOf[v]));
+                inverse.add_edge(v, toVisit);
+                neight.push(v);
+            }
+        }
+    }
+
+    visited.clear();
+    
+    neight.push(conflict);
+    nexts.insert(conflict);
+    neight.push(conflictBar);
+    nexts.insert(conflictBar);
+
+    node ret = make_pair(-1, false);
+    while(!neight.empty())
+    {
+        node toVisit = neight.front();
+	    visited.emplace(toVisit, true);
+        neight.pop();
+        nexts.erase(toVisit);
+
+        for(auto v : inverse.m_voisinDe[toVisit])
+        {
+            if(true /*visited.find(v) == visited.end()*/)
             {
                 nexts.insert(v);
                 neight.push(v);
             }
         }
+        for(auto v : nexts)
+        {
+            cout << "Nexts : " << v.first << endl;
+        }
+
+        cout << endl;
         if(nexts.size() == 1)
         {
             node toGo = *(nexts.begin());
-            while(m_voisinDe[toGo].size() == 1)
-            {
-                toGo = *(m_voisinDe[toGo].begin());
-            }
-            if(m_levelOf[toGo] == levelMax && toGo != conflict)
-            {
-                ret = toGo;
-            }
+            return toGo;
         }
     }
     return ret;
