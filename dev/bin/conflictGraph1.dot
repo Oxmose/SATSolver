@@ -56,9 +56,9 @@ digraph {
 "68
 1@17"[shape=circle, style=filled, fillcolor=yellow];
 "74
-0@17"[shape=circle, style=filled, fillcolor=green];
+0@17"[shape=circle, style=filled, fillcolor=purple];
 "74
-1@17"[shape=circle, style=filled, fillcolor=green];
+1@17"[shape=circle, style=filled, fillcolor=purple];
 "77
 0@17"[shape=circle, style=filled, fillcolor=blue];
 "93

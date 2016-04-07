@@ -54,19 +54,19 @@ digraph {
 "9
 1@5"[shape=circle, style=filled, fillcolor=blue];
 "38
-0@5"[shape=circle, style=filled, fillcolor=green];
+0@5"[shape=circle, style=filled, fillcolor=purple];
 "38
-1@5"[shape=circle, style=filled, fillcolor=green];
+1@5"[shape=circle, style=filled, fillcolor=purple];
 "52
-1@5"[shape=circle, style=filled, fillcolor=yellow];
+1@5"[shape=circle, style=filled, fillcolor=blue];
 "66
-0@5"[shape=circle, style=filled, fillcolor=green];
+0@5"[shape=circle, style=filled, fillcolor=blue];
 "74
-0@5"[shape=circle, style=filled, fillcolor=green];
+0@5"[shape=circle, style=filled, fillcolor=blue];
 "83
-0@5"[shape=circle, style=filled, fillcolor=green];
+0@5"[shape=circle, style=filled, fillcolor=yellow];
 "87
-0@5"[shape=circle, style=filled, fillcolor=green];
+0@5"[shape=circle, style=filled, fillcolor=purple];
 "89
-0@5"[shape=circle, style=filled, fillcolor=green];
+0@5"[shape=circle, style=filled, fillcolor=blue];
 }

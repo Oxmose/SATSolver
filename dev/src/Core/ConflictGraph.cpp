@@ -66,7 +66,7 @@ void ConflictGraph::output(string file_name, const node &UIP, const map<node, bo
             if(e.first == UIP)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=yellow];\n";
             else if(inCut.find(e.first) != inCut.end())
-                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=green];\n";
+                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=purple];\n";
             else
 			    myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=blue];\n";
         }
@@ -126,6 +126,9 @@ node ConflictGraph::getUIP()
 
     neight.push(start);
     nexts.insert(start);
+
+    node ret = make_pair(-1, false);
+
     while(!neight.empty())
     {
         node toVisit = neight.front();
@@ -147,11 +150,11 @@ node ConflictGraph::getUIP()
                 toGo = *(m_voisinDe[toGo].begin());
             }
             if(m_levelOf[toGo] == levelMax && toGo != conflict)
-                return toGo;
+            {
+                ret = toGo;
+            }
         }
     }
-
-    node ret = make_pair(-1, false);
     return ret;
 }
 
