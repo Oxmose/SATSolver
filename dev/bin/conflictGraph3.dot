@@ -1,0 +1,12 @@
+digraph {
+"3
+1@18"->"77
+1@18";
+"68
+0@17"->"77
+1@18";
+"3
+1@18"[shape=circle, style=filled, fillcolor=blue];
+"77
+1@18"[shape=circle, style=filled, fillcolor=blue];
+}

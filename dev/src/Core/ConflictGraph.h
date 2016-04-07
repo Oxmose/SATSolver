@@ -27,12 +27,12 @@ class ConflictGraph
 
 		string node_to_str(const node& a);
 
-		void output(string file_name, const node &UIP, const std::map<node, bool> &inCut);
+		void output(string file_name, const node &UIP, const std::map<node, bool> &inCut, int conflictNode);
 		size_t size();
 
 		int levelMax;
 
-		node getUIP();
+		void getUIP(node &ret, int &conflictIndex);
         	void getUIPCut(std::map<node, bool> &inCut, node &uip);
 
 		node getStartNode();

@@ -39,7 +39,7 @@ string ConflictGraph::node_to_str(const node& a)
 	return '"'+to_string(a.first)+"\n"+to_string(a.second)+"@"+to_string(m_levelOf[a])+'"';
 }
 
-void ConflictGraph::output(string file_name, const node &UIP, const map<node, bool> &inCut)
+void ConflictGraph::output(string file_name, const node &UIP, const map<node, bool> &inCut, int conflictNode)
 {
 	ofstream myfile;
  	myfile.open(file_name);
@@ -65,6 +65,8 @@ void ConflictGraph::output(string file_name, const node &UIP, const map<node, bo
         {
             if(e.first == UIP)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=yellow];\n";
+            else if(e.first.first == conflictNode)
+                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=red];\n";
             else if(inCut.find(e.first) != inCut.end())
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=purple];\n";
             else
@@ -80,13 +82,15 @@ size_t ConflictGraph::size()
 }
 
 
-node ConflictGraph::getUIP()
+void ConflictGraph::getUIP(node &ret, int &conflictIndex)
 {
     set<node> nexts;
     queue<node> neight;
 
     node conflict = getConflictNode();
     node start = getStartNode();
+
+    conflictIndex = conflict.first;
 
     node conflictBar = conflict;
     conflictBar.second = !conflict.second;
@@ -121,7 +125,7 @@ node ConflictGraph::getUIP()
     neight.push(conflictBar);
     nexts.insert(conflictBar);
 
-    node ret = make_pair(-1, false);
+    ret = make_pair(-1, false);
     while(!neight.empty())
     {
         node toVisit = neight.front();
@@ -137,19 +141,13 @@ node ConflictGraph::getUIP()
                 neight.push(v);
             }
         }
-        for(auto v : nexts)
-        {
-            cout << "Nexts : " << v.first << endl;
-        }
 
-        cout << endl;
         if(nexts.size() == 1)
         {
-            node toGo = *(nexts.begin());
-            return toGo;
+            ret = *(nexts.begin());
+            return;
         }
     }
-    return ret;
 }
 
 node ConflictGraph::getStartNode()
@@ -216,7 +214,6 @@ void ConflictGraph::getUIPCut(std::map<node, bool> &inCut, node &uip)
     while(!neight.empty())
     {
         node toVisit = neight.front();
-        cout << "VISITING : " << toVisit.first << endl;
         neight.pop();
         for(auto v : m_voisinDe[toVisit])
         {

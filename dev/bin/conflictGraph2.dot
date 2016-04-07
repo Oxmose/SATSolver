@@ -42,7 +42,7 @@ digraph {
 "68
 1@18"[shape=circle, style=filled, fillcolor=yellow];
 "74
-0@18"[shape=circle, style=filled, fillcolor=purple];
+0@18"[shape=circle, style=filled, fillcolor=red];
 "74
-1@18"[shape=circle, style=filled, fillcolor=purple];
+1@18"[shape=circle, style=filled, fillcolor=red];
 }
