@@ -48,8 +48,6 @@ decision StandardBet::takeABet(std::vector<Clause> &p_clauses, const std::set<in
 
     if(firstUnassigned == -1)
     {
-
-        printf("%d\n", p_unsatClauses.size());
         OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
     }
 

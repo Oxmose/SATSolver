@@ -279,7 +279,7 @@ void displayMenu(char *softName)
 
     cout << "How to use :" << endl;
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-wl] [-cl | -cl-interact] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-wl] [-cl | -cl-interact] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
     cout << "\t\t" << softName << " [-tseitin] [-wl] [-cl | -cl-interact] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t The argument -wl enable the watched literals method." << endl;
