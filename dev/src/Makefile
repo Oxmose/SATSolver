@@ -1,5 +1,5 @@
 #expr name
-NAME=Parser/expr
+EXPRNAME=Parser/expr
 
 #compiler name
 CC=g++
@@ -23,9 +23,9 @@ BET=BETHeuristic/DLISBet.cpp BETHeuristic/MOMSBet.cpp BETHeuristic/RandomBet.cpp
 RANDOMGEN=RandomSatExpGenerator/randomGen.cpp
 MAIN=main.cpp
 CORE=Core/Clause.cpp Core/ConflictGraph.cpp Core/SATSolver.cpp Core/SATSolverCL.cpp Core/SATSolverSTD.cpp Core/SATSolverWL.cpp
-PARSER=Parser/CNFParser.cpp Parser/LOGParser.cpp $(NAME).cpp $(NAME).tab.cpp $(NAME).yy.c
+PARSER=Parser/CNFParser.cpp Parser/LOGParser.cpp $(EXPRNAME).cpp $(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
 
-PRELOG=$(NAME).tab.cpp $(NAME).yy.c
+PRELOG=$(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
 
 SRCS= $(GLOBAL) $(BET) $(RANDOMGEN) $(CORE) $(MAIN) $(PARSER) 
 
@@ -42,11 +42,11 @@ $(TARGET): $(PRELOG) $(OBJS)
 .cpp.o:
 		$(CC) $(CFLAGS) -c $<  -o $@
 
-$(NAME).yy.c :  $(NAME).l
+$(EXPRNAME).yy.c :  $(EXPRNAME).l
 		$(LEX)  -o $@ $^
 
-$(NAME).tab.cpp : $(NAME).ypp
+$(EXPRNAME).tab.cpp : $(EXPRNAME).ypp
 		$(YACC) --report=all -o $@ -d $^
 
 clean:
-		rm -f $(NAME).yy.c $(NAME).tab.cpp $(NAME).tab.hpp $(OBJS) $(TARGET)
+		rm -f $(EXPRNAME).yy.c $(EXPRNAME).tab.cpp $(EXPRNAME).tab.hpp $(OBJS) $(TARGET)
