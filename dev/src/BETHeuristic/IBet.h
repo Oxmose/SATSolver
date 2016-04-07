@@ -21,7 +21,9 @@ enum BET_METHOD
     RAND1,
     MOMS,
     DLIS,
-    DLIS1
+    DLIS1,
+    VSIDS,
+    FORGET
 };
 
 typedef struct decision decision;

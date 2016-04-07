@@ -15,6 +15,8 @@
 #include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
 #include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
 #include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
+#include "BETHeuristic/FORGETBet.h"     // FORGET bet heuristic
+#include "BETHeuristic/VSIDSBet.h"      // VSIDS bet heuristic
 
 // STD INCLUDES
 #include <ctime>        //std::clock
@@ -44,7 +46,7 @@ int main(int argc, char** argv)
     
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interact] [-wl] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interact] [-wl] [-vsids | -forget -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
@@ -87,6 +89,12 @@ int main(int argc, char** argv)
             break;
         case DLIS1:
             betStrat = shared_ptr<IBet>(new DLISBet(true));
+            break;
+        case VSIDS:
+            betStrat = shared_ptr<IBet>(new VSIDSBet());
+            break;
+        case FORGET:
+            betStrat = shared_ptr<IBet>(new FORGETBet());
             break;
         default:
             betStrat = shared_ptr<IBet>(new StandardBet());
@@ -205,6 +213,16 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
                 sets.bet_s = DLIS1;
                 argsValid[2] = true;
             }
+            else if(value == "-vsids" && !argsValid[2])
+            {
+                sets.bet_s = VSIDS;
+                argsValid[2] = true;
+            }
+            else if(value == "-forget" && !argsValid[2])
+            {
+                sets.bet_s = FORGET;
+                argsValid[2] = true;
+            }
             else if(value == "-debug" && !argsValid[3])
             {
                 sets.debug_s = true;
@@ -279,18 +297,21 @@ void displayMenu(char *softName)
 
     cout << "How to use :" << endl;
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-wl] [-cl | -cl-interact] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-wl] [-cl | -cl-interact] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-tseitin] [-wl] [-cl | -cl-interact] [-rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-tseitin] [-wl] [-cl | -cl-interact] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t The argument -wl enable the watched literals method." << endl;
     cout << "\t The argument -cl enable clauses learning. -cl-interact enable interactive clauses learning." << endl;
-    cout << "\t [-rand | -moms | -dlis] define the used heuristic to bet on the next literal :" << endl;
+    cout << "\t [-rand | -moms | -dlis ...] define the used heuristic to bet on the next literal :" << endl;
+    cout << "\t\t -vsids : next bet on the most active literal" << endl;
+    cout << "\t\t -forget : next bet on a literal from the most active clause." << endl;
     cout << "\t\t -rand : next bet on a random literal." << endl;
     cout << "\t\t -rand0 : next bet on a random literal (the bet is random here)." << endl;
     cout << "\t\t -moms : next bet on the variable which has the maximum occurences count in clauses of minimum size." << endl;
     cout << "\t\t -dlis : next bet on next variable which can satify the maximum count of clauses." << endl;
     cout << "\t\t -dlis0 : next bet on next variable which can satify the maximum count of clauses with score sum(pow(2, -C)) with C the size of the clauses the variable appears in." << endl;
 
+    cout << endl;
     cout << "\t To generate DIMAC CNF file, press 1 and then [ENTER]" << endl;
     cout << "\t To read the credits, press 2 and then [ENTER]" << endl;
     cout << "\t To quit, press 3 and then [ENTER]" << endl;
