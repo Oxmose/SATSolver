@@ -28,7 +28,7 @@ MOMSBet::~MOMSBet()
 decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
 {
     OUTDEBUG("MOMS bet");
-    map<int, unsigned int> clausesSizes;
+    map<int, int> clausesSizes;
     map<int, unsigned int> unassignedLits;
 
     int min = -1;
@@ -38,7 +38,7 @@ decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
     // Gather minimal clauses
     for(int iClause: p_unsatClauses)
     {
-        unsigned int clauseSize = 0;
+        int clauseSize = 0;
         for(auto lit: p_clauses[iClause].getLiterals())
         {
             // Get the size of the alive lits in clause 
@@ -52,7 +52,7 @@ decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
         clausesSizes.emplace(iClause, clauseSize);
     }    
 
-    for(pair<int, unsigned int> entry : clausesSizes)
+    for(pair<int, int> entry : clausesSizes)
     {
         if(entry.second == min)
         {            

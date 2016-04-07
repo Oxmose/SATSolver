@@ -123,14 +123,14 @@ void SATSolverCL::constructConflictGraph()
     m_conflictGraph.clear();
     
     int levelMax = -1;
-    for(int i = 0 ; i < m_currentAssignement.size() ; i++)
+    for(unsigned int i = 0 ; i < m_currentAssignement.size() ; i++)
         if(m_currentAssignement[i].bet || m_currentAssignement[i].ancien_bet)
             levelMax++;
            
     m_conflictGraph.levelMax = levelMax;
 
     int level = -1;
-    for(int i = 0 ; i < m_currentAssignement.size() ; i++)
+    for(unsigned int i = 0 ; i < m_currentAssignement.size() ; i++)
     {
         m_levelOfVar[m_currentAssignement[i].index] = level;
         if(m_currentAssignement[i].bet || m_currentAssignement[i].ancien_bet)
