@@ -1,0 +1,18 @@
+digraph {
+"-1
+1@0";
+"21
+1@21"->"66
+1@22";
+"32
+0@11";
+"32
+1@11";
+"65
+1@22"->"66
+1@22";
+"65
+1@22"[shape=circle, style=filled, fillcolor=blue];
+"66
+1@22"[shape=circle, style=filled, fillcolor=blue];
+}

@@ -28,8 +28,12 @@ EVar::EVar(int i) : index(i) {}
 
 Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
 {
-    // Since vars are leaves of the trees, returns itselve
-    return this;
+    // Then We create the new variable for this expression
+    ++p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+    Expr* varNeg = new ENeg(var);
+    p_exps.push_back(new ECon(new EDis(varNeg, this), new EDis(var, new ENeg(this))));
+    return var;
 } // Expr* tseitin(int&, vector<Expr*>&)
 
 void EVar::getVars(vector<int> &p_originalVars)
@@ -295,11 +299,13 @@ ENeg::ENeg(Expr * e1) : op1(e1) {}
 
 Expr* ENeg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
 {
-    ++p_maxIndex;
-    Expr* var = new EVar(p_maxIndex);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
 
-    Expr* clauseNeg = new EDis(new ENeg(var), new ENeg(op1));
-    Expr* clausePos = new EDis(var, op1);
+    ++p_maxIndex;
+    Expr *var = new EVar(p_maxIndex);
+
+    Expr* clauseNeg = new EDis(new ENeg(var), new ENeg(op1Tran));
+    Expr* clausePos = new EDis(var, op1Tran);
 
     p_exps.push_back(new ECon(clauseNeg,clausePos));
     return var;
