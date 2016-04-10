@@ -156,7 +156,7 @@ bool SATSolverWL::applyLastDecision()
     return m_unsatClauses.empty();
 }
 
-map<int, int> SATSolverWL::getVarScores()
+double SATSolverWL::getVarScores(int p_var)
 {
-    return map<int, int>();
+    return -1;
 }

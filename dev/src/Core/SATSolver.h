@@ -67,7 +67,7 @@ class SATSolver
         std::string formulaToStr();
         std::string decisionToStr();
 
-        virtual std::map<int, int> getVarScores() = 0;
+        virtual double getVarScores(int p_var) = 0;
 
         static bool compareSat(const std::pair<int,int>& p_a, const std::pair<int,int>& p_b)
         {

@@ -38,12 +38,21 @@ decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCl
 
     int firstUnassigned = -1;
     double max = 0;
+    double score = 0;
     bool value = false;
 
-    // Contains the literals and the number of clauses they appear in (or score if m_scoreMethod is true)
-    map<int, double> unassignedLits;
-
-
+    for(int iClause: p_unsatClauses)
+    {
+        for(auto lit: p_clauses[iClause].getLiterals())
+        {
+            if(p_valuation[lit.first] == -1 && max < (score = m_solver->getVarScores(lit.first)))
+            {
+                max = score;
+                firstUnassigned = lit.first;
+                value = !lit.second;
+            }
+        }
+    }    
 
     decision bet = decision(firstUnassigned, value, true);
     

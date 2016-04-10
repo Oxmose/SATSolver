@@ -224,7 +224,7 @@ bool SATSolverCL::applyLastDecision()
     return m_unsatClauses.empty();
 }
 
-map<int, int> SATSolverCL::getVarScores()
+double SATSolverCL::getVarScores(int p_var)
 {
-    return m_varScores;
+    return m_varScores[p_var];
 }
