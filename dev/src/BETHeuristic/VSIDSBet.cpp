@@ -9,6 +9,7 @@
 #include <map>      // map
 #include <cmath>    // exp2, abs
 #include <set>      // set
+#include <memory>   // shared_ptr
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -21,6 +22,11 @@
 #include "VSIDSBet.h"
 
 using namespace std;
+
+VSIDSBet::VSIDSBet(shared_ptr<SATSolver> p_solver)
+{
+    m_solver = p_solver;
+}
 
 VSIDSBet::~VSIDSBet()
 {

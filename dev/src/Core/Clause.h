@@ -28,15 +28,17 @@ class Clause
         std::map<int,bool>& getLiterals();
 
         int getId() const;
+        int getScore() const;
 
         /* Testing purposes */
         bool evaluate(std::map<int,int>& p_valuation);
         std::string toStr() const;
-
+        
     private:
 
         int m_id;//unique id for the clause
         bool m_isTaut;//is a tautologie ?
+        int m_score;
         std::map<int,bool> m_literals;//key = var index, value = isBar?
 }; // Clause
 

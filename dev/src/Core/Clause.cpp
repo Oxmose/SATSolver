@@ -23,6 +23,7 @@ Clause::Clause(const map<int,bool> &p_literals, bool p_isTaut, int p_id)
     m_literals = p_literals;
     m_isTaut = p_isTaut;
     m_id = p_id;
+    m_score = 0;
     
 } // Clause(const vector<int>&)
 
@@ -66,6 +67,11 @@ string Clause::toStr() const
     toReturn += ")";
     return toReturn;
 } // string toStr() const
+
+int Clause::getScore() const
+{
+    return m_score;
+}
 
 Clause::~Clause()
 {

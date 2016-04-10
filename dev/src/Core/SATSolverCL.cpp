@@ -223,3 +223,8 @@ bool SATSolverCL::applyLastDecision()
 
     return m_unsatClauses.empty();
 }
+
+map<int, int> SATSolverCL::getVarScores()
+{
+    return m_varScores;
+}

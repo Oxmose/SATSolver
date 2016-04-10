@@ -156,21 +156,36 @@ void SATSolver::preprocess()
     map<int,bool> deductionOn;
     vector<int> toErase;
     for(int iClause: m_unsatClauses)
+    {        
         if(m_clauses[iClause].getLiterals().size() == 1)
         {
             int indexUnit = m_clauses[iClause].getLiterals().begin()->first;
-            if(deductionOn.find(indexUnit) == deductionOn.end())
+            if(m_clauses[iClause].getLiterals().begin()->second)
+                indexUnit = -indexUnit;
+    
+
+            if(deductionOn.find(-indexUnit) != deductionOn.end())
             {
-                bool value = !m_clauses[iClause].getLiterals()[indexUnit];
-                m_preprocessQueue.push(decision(indexUnit,value,false));
+                // Contradiction on unitary clause
+                OUTDEBUG("\tContradiction (unitary clause): " << indexUnit << " is already assigned with an other value.");
+                cout << "s UNSATISFIABLE" << endl;
+                exit(0);
+            }
+            else if(deductionOn.find(indexUnit) == deductionOn.end())
+            {
+                bool value = !m_clauses[iClause].getLiterals()[abs(indexUnit)];
+                m_preprocessQueue.push(decision(abs(indexUnit),value,false));
                 deductionOn[indexUnit] = true;
                 toErase.push_back(iClause);
                 OUTDEBUG("\tDeducing (unitary clause): " << indexUnit << " to " << ((value) ? "True" : "False"));
-            }
+            } 
+	        else
+                toErase.push_back(iClause);
         }
-
+    }
     for(auto c: toErase)
     {
+        OUTDEBUG("\tRemoving unitary clause: " << c);
         m_unsatClauses.erase(c);
     }
 

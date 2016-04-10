@@ -139,3 +139,8 @@ bool SATSolverSTD::uniquePol(bool p_preprocess /* = false */)
 
     return false;
 }
+
+map<int, int> SATSolverSTD::getVarScores()
+{
+    return map<int, int>();
+}

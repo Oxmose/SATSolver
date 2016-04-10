@@ -67,6 +67,8 @@ class SATSolver
         std::string formulaToStr();
         std::string decisionToStr();
 
+        virtual std::map<int, int> getVarScores() = 0;
+
         static bool compareSat(const std::pair<int,int>& p_a, const std::pair<int,int>& p_b)
         {
             return p_a.second < p_b.second;//Sort unsat Clauses by id for log(n) find
@@ -85,6 +87,7 @@ class SATSolver
         bool isContradictory();
         void reviveClauseWithSatisfier(int p_satisfier);
         virtual bool backtrack(bool& p_unsat) = 0;
+        
 
         decision takeABet();
 

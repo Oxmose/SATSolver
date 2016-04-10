@@ -24,6 +24,7 @@ class SATSolverWL : public SATSolver
     public:
     	SATSolverWL() { m_isWL = true; }
         virtual ~SATSolverWL();
+        virtual std::map<int, int> getVarScores();
 
     private:
 

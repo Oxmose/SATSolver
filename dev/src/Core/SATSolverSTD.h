@@ -23,6 +23,7 @@ class SATSolverSTD : public SATSolver
 {
     public:
         virtual ~SATSolverSTD();
+        virtual std::map<int, int> getVarScores();
 
     private:
 
