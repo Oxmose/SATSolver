@@ -59,6 +59,12 @@ string ConflictGraph::node_to_str(const node& a)
     return '"'+to_string(a.first)+"\n"+to_string(a.second)+"@"+to_string(m_levelOf[a])+'"';
 }
 
+void ConflictGraph::UIPSearch(node the_bet, node the_conflict)
+{
+    findUIP(the_bet,the_conflict);
+    findUIPCut();
+}
+
 void ConflictGraph::findUIP(node the_bet, node the_conflict)
 {
     node ret;

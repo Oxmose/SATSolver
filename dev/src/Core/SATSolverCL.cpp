@@ -291,8 +291,7 @@ bool SATSolverCL::applyLastDecision()
                                 break;
                             }
 
-                    	m_conflictGraph.findUIP(make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]));
-                    	m_conflictGraph.findUIPCut();
+                    	m_conflictGraph.UIPSearch(make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]));
                         m_conflictGraph.output("conflictGraph"+to_string(iFile)+".dot", the_bet, p_dec.index);
 
                         OUTDEBUG("Output : " << "conflictGraph"+to_string(iFile)+".dot");

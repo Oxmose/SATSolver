@@ -33,6 +33,7 @@ class ConflictGraph
 
 		int levelMax;
 
+		void UIPSearch(node the_bet, node the_conflict);
 		void findUIP(node the_bet, node the_conflict);
 		void findUIPCut();
 
