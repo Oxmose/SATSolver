@@ -59,23 +59,15 @@ string ConflictGraph::node_to_str(const node& a)
     return '"'+to_string(a.first)+"\n"+to_string(a.second)+"@"+to_string(m_levelOf[a])+'"';
 }
 
-node ConflictGraph::findIUP(int the_bet, int the_conflict)
+void ConflictGraph::findUIP(node the_bet, node the_conflict)
 {
     node ret;
 
     set<node> nexts;
     queue<node> neight;
 
-    node conflict;
-    node start;
-    for(auto a : m_voisinDe)
-    {
-        if(a.first.first == the_bet)
-            start = a.first;
-        if(a.first.first == the_conflict)
-            conflict = a.first;
-    }
-
+    node conflict = the_conflict;
+    node start = the_bet;
 
     node conflictBar = conflict;
     conflictBar.second = !conflict.second;
@@ -160,12 +152,47 @@ node ConflictGraph::findIUP(int the_bet, int the_conflict)
                 return v;
             }
 
+<<<<<<< HEAD
             neight.push(v);
         }
     }
 
     cout << "SENT IS : " << start.first << endl;
     return start;
+=======
+        if(nexts.size() == 1)
+        {
+            ret = *(nexts.begin());
+            m_uip = ret;
+            return;
+        }
+    }
+
+    m_uip = ret;
+    return;
+}
+
+void ConflictGraph::findUIPCut()
+{
+    if(m_uip.first == -1)
+        OUTERROR("IUP node should have bin found before searching for the cut");
+
+    queue<node> neight;
+    neight.push(m_uip);
+    while(!neight.empty())
+    {
+        node toVisit = neight.front();
+        neight.pop();
+        for(auto v : m_voisinDe[toVisit])
+        {
+            if(m_inCut.find(v) == m_inCut.end())
+            {
+                neight.push(v);
+                m_inCut.emplace(v, true);
+            }
+        }
+    }
+>>>>>>> 042609b6bf39f2750b1494120a3615d85e1aca8f
 }
 
 void ConflictGraph::output(string file_name, int the_bet, int the_conflict)
@@ -210,16 +237,17 @@ void ConflictGraph::output(string file_name, int the_bet, int the_conflict)
     if(v[0] != the_conflict)
         OUTERROR("Conflictual conflict");
 
-    node iup = findIUP(the_bet,the_conflict);
     for(auto& e: m_voisinDe)
         if(true)
         {
             if(e.first.first == the_bet)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=red];\n";
-            else if(e.first.first == iup.first)
+            else if(e.first.first == m_uip.first)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=yellow];\n";
             else if(e.first.first == v[0])
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=green];\n";
+            else if(m_inCut.find(e.first) != m_inCut.end())
+                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=purple];\n";
             else if(m_levelOf[e.first] == levelMax)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=blue];\n";
         }

@@ -18,7 +18,7 @@ typedef pair<int,bool> node;
 class ConflictGraph
 {
 	public:
-		ConflictGraph(bool verbose=true) { m_verbose = verbose; m_voisinDe = map<node,set<node>>(); m_levelOf = map<node,int>();}
+		ConflictGraph(bool verbose=true) { m_uip = make_pair(-1,0); m_verbose = verbose; m_voisinDe = map<node,set<node>>(); m_levelOf = map<node,int>();}
 
 		void clear();
 		void add_node(pair<node,int> node_level);
@@ -33,13 +33,17 @@ class ConflictGraph
 
 		int levelMax;
 
-		node findIUP(int the_bet, int the_conflict);
+		void findUIP(node the_bet, node the_conflict);
+		void findUIPCut();
 
 	private:
 
 		map<node,set<node>> m_voisinDe;
 		map<node,int> m_levelOf;
 		bool m_verbose;
+
+		node m_uip;
+		std::map<node, bool> m_inCut;
 };
 
 #endif
