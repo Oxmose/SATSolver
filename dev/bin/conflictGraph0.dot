@@ -169,7 +169,7 @@ digraph {
 "5
 1@4"[shape=circle, style=filled, fillcolor=red];
 "11
-0@4"[shape=circle, style=filled, fillcolor=yellow];
+0@4"[shape=circle, style=filled, fillcolor=blue];
 "12
 1@4"[shape=circle, style=filled, fillcolor=blue];
 "17
