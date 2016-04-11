@@ -153,13 +153,14 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
             if(uips.find(v) != uips.end())
             { 
                 m_uip = v;
+                cout << "UIP : " << v.first << endl;
                 return;
             }
             neight.push(v);
         }
     }
 
-    
+    cout << "UIP " << start.first << endl;    
     m_uip = start;
 }
 
