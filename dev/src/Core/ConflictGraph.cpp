@@ -137,8 +137,6 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
     neight.push(conflict);
     neight.push(conflictBar);
 
-    for(auto v : uips)
-        cout << "UIP : " << v.first.first << endl;
     while(!neight.empty())
     {
         node toVisit = neight.front();
@@ -147,29 +145,16 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
         for(auto v : inverse.m_voisinDe[toVisit])
         {
             if(uips.find(v) != uips.end())
-            {
-                cout << "FOUDN " << v.first << endl;
-                return v;
+            { 
+                m_uip = v;
+                return;
             }
-
-<<<<<<< HEAD
             neight.push(v);
         }
     }
 
-    cout << "SENT IS : " << start.first << endl;
-    return start;
-=======
-        if(nexts.size() == 1)
-        {
-            ret = *(nexts.begin());
-            m_uip = ret;
-            return;
-        }
-    }
-
-    m_uip = ret;
-    return;
+    
+    m_uip = start;
 }
 
 void ConflictGraph::findUIPCut()
@@ -192,7 +177,6 @@ void ConflictGraph::findUIPCut()
             }
         }
     }
->>>>>>> 042609b6bf39f2750b1494120a3615d85e1aca8f
 }
 
 void ConflictGraph::output(string file_name, int the_bet, int the_conflict)

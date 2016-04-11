@@ -136,8 +136,12 @@ digraph {
 1@16"[shape=circle, style=filled, fillcolor=blue];
 "28
 0@16"[shape=circle, style=filled, fillcolor=blue];
+"38
+1@5"[shape=circle, style=filled, fillcolor=purple];
 "48
 1@16"[shape=circle, style=filled, fillcolor=red];
+"52
+1@8"[shape=circle, style=filled, fillcolor=purple];
 "68
 1@16"[shape=circle, style=filled, fillcolor=yellow];
 "74
