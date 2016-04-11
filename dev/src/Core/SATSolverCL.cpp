@@ -305,3 +305,8 @@ bool SATSolverCL::applyLastDecision()
 
     return m_unsatClauses.empty();
 }
+
+double SATSolverCL::getVarScores(int p_var)
+{
+    return m_varScores[p_var];
+}

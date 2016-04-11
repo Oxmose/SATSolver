@@ -12,6 +12,7 @@
 #include <map>      // std::map
 #include <cmath>    // std::exp2, std::abs
 #include <set>      // std::set
+#include <memory>   // std::shared_ptr
 
 // PROJECT INCLUDES
 #include "../Core/Clause.h"     // ClauseSet
@@ -23,10 +24,12 @@
 class VSIDSBet : public IBet
 {
     public:
+        VSIDSBet(std::shared_ptr<SATSolver> p_solver);
         virtual ~VSIDSBet();
         virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation);
 
     private:
+        std::shared_ptr<SATSolver> m_solver;
 
 }; // VSIDSBet
 

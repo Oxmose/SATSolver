@@ -23,6 +23,7 @@ class SATSolverSTD : public SATSolver
 {
     public:
         virtual ~SATSolverSTD();
+        virtual double getVarScores(int p_var);
 
     private:
 

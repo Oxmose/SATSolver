@@ -61,12 +61,13 @@ int main(int argc, char** argv)
     OUTDEBUG("DEBUG ENABLED");
 
     // Create the solver
-    unique_ptr<SATSolver> solver;
+    shared_ptr<SATSolver> solver;
     if(!sets.wl_s)
-        solver = unique_ptr<SATSolver>(new SATSolverSTD());
+        solver = shared_ptr<SATSolver>(new SATSolverSTD());
     else 
-        solver = unique_ptr<SATSolver>(new SATSolverWL());
-    solver = unique_ptr<SATSolver>(new SATSolverCL());
+        solver = shared_ptr<SATSolver>(new SATSolverWL());
+    // TODO Apply settings
+    solver = shared_ptr<SATSolver>(new SATSolverCL());
     
     // Set strategy
     shared_ptr<IBet> betStrat;
@@ -91,7 +92,7 @@ int main(int argc, char** argv)
             betStrat = shared_ptr<IBet>(new DLISBet(true));
             break;
         case VSIDS:
-            betStrat = shared_ptr<IBet>(new VSIDSBet());
+            betStrat = shared_ptr<IBet>(new VSIDSBet(solver));
             break;
         case FORGET:
             betStrat = shared_ptr<IBet>(new FORGETBet());
@@ -251,7 +252,11 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
             if(argsValid[i])
                 ++count;
         }
-        
+        if((sets.bet_s == FORGET || sets.bet_s == VSIDS) && !sets.cl_s)
+        {
+            OUTWARNING("Imcompatible bet, you must use -cl to enable this heuristic, set heuristic to standard.");
+            sets.bet_s = NORM;
+        }
         if(count != argc - 2)
         {
             commandError = 1;
