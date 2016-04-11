@@ -393,7 +393,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  10
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   34
+#define YYLAST   36
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  14
@@ -489,9 +489,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -5,    -5,    -5,    -5,    -6,     9,    12,    -6,    -6,    22,
-      -6,    -5,    -5,    -5,    -5,    -5,    -6,    -6,    30,    -6,
-       3,    27,    17
+      -5,    -5,    -5,    -5,    -6,     6,    12,    -6,    -6,    22,
+      -6,    -5,    -5,    -5,    -5,    -5,    -6,    -6,    -6,    29,
+      18,     4,    17
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -521,18 +521,18 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       7,     8,     9,     1,     2,     3,    11,    12,     4,    10,
+       7,     8,     9,     1,     2,     3,    10,    11,     4,    13,
       18,    19,    20,    21,    22,    11,    12,    13,    14,    15,
-      11,    12,    13,    14,    16,    11,    12,    13,    14,    15,
-      11,    12,    13,    17,    12
+      11,    11,    13,    14,    16,    11,    12,    13,    14,    15,
+       0,     0,    11,    17,    13,    14,    15
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-       1,     2,     3,     8,     9,    10,     3,     4,    13,     0,
+       1,     2,     3,     8,     9,    10,     0,     3,    13,     5,
       11,    12,    13,    14,    15,     3,     4,     5,     6,     7,
-       3,     4,     5,     6,    12,     3,     4,     5,     6,     7,
-       3,     4,     5,    11,     4
+       3,     3,     5,     6,    12,     3,     4,     5,     6,     7,
+      -1,    -1,     3,    11,     5,     6,     7
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing

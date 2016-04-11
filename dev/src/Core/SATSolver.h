@@ -86,7 +86,7 @@ class SATSolver
         void reviveClauseWithSatisfier(int p_satisfier);
         virtual bool backtrack(bool& p_unsat) = 0;
 
-        decision takeABet();
+        virtual decision takeABet();
 
         bool evaluate();
         

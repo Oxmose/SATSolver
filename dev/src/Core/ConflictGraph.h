@@ -18,31 +18,28 @@ typedef pair<int,bool> node;
 class ConflictGraph
 {
 	public:
-		ConflictGraph() {}
+		ConflictGraph(bool verbose=true) { m_verbose = verbose; m_voisinDe = map<node,set<node>>(); m_levelOf = map<node,int>();}
 
 		void clear();
 		void add_node(pair<node,int> node_level);
+		void remove_node(node n);
 		void add_edge(node nodeA, node nodeB);
-		set<node> get_nodes();
+		map<node,set<node>> get_graph();
 
 		string node_to_str(const node& a);
 
-		void output(string file_name, const node &UIP, const std::map<node, bool> &inCut, int conflictNode);
+		void output(string file_name, int the_bet, int the_conflict);
 		size_t size();
 
 		int levelMax;
 
-		void getUIP(node &ret, int &conflictIndex);
-        	void getUIPCut(std::map<node, bool> &inCut, node &uip);
-
-		node getStartNode();
-		node getConflictNode();
-
+		node findIUP(int the_bet, int the_conflict);
 
 	private:
 
 		map<node,set<node>> m_voisinDe;
 		map<node,int> m_levelOf;
+		bool m_verbose;
 };
 
 #endif

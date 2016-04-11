@@ -23,22 +23,24 @@
 class SATSolverCL : public SATSolver
 {
     public:
-    	SATSolverCL() { m_isCL = true; }
+    	SATSolverCL() { m_isCL = true; m_currLevel = -1;  m_conflictGraph.clear(); }
         virtual ~SATSolverCL();
 
     private:
 
         virtual void initializeMethod();
 
+        virtual decision takeABet();
         virtual bool applyLastDecision();
 
-        vector<pair<int,Clause>> clauseForConflict(const set<node>& nodes, set<int>& old);
+        pair<vector<pair<int,Clause>>,bool> clauseForConflict(set<int>& old);
         void constructConflictGraph();
         virtual bool backtrack(bool& p_unsat);
 
         std::map<int,std::vector<int>> m_clausesWithVar;//Direct access to Clauses
         std::map<int,std::set<int>> m_aliveVarsIn;
-        std::map<int,int> m_levelOfVar;
+        std::map<int,int> m_parentsOf;
+        int m_currLevel;
 
         ConflictGraph m_conflictGraph;
 
