@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 
+#include "Clause.h"
+
 #include <queue>
 #include <fstream>
 
@@ -33,7 +35,7 @@ class ConflictGraph
 
 		int levelMax;
 
-		void UIPSearch(node the_bet, node the_conflict);
+		pair<Clause,int> resolution(node the_bet, node the_conflict, int id_clause);
 		void findUIP(node the_bet, node the_conflict);
 		void findUIPCut();
 

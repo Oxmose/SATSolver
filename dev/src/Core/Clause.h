@@ -33,6 +33,7 @@ class Clause
         /* Testing purposes */
         bool evaluate(std::map<int,int>& p_valuation);
         std::string toStr() const;
+        std::string toDIMACS() const;
         
     private:
 

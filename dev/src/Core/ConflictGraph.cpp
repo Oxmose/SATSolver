@@ -1,4 +1,5 @@
 #include "ConflictGraph.h"
+#include "Clause.h"
 
 void ConflictGraph::clear()
 {
@@ -26,7 +27,6 @@ void ConflictGraph::add_node(pair<node,int> node_level)
 
 void ConflictGraph::remove_node(node n)
 {
-
     if(m_voisinDe.empty() || m_voisinDe.find(n) == m_voisinDe.end())
     {
         OUTERROR("Cannot remove unexisting node " << node_to_str(n));
@@ -35,8 +35,17 @@ void ConflictGraph::remove_node(node n)
 
     if(m_verbose)
         OUTDEBUG("Remove node " << node_to_str(n));
+
+
+    levelMax = -1;
     m_voisinDe.erase(n);
+    for(auto& e : m_voisinDe)
+    {
+        levelMax = max(levelMax, m_levelOf[e.first]);
+        e.second.erase(n);
+    }
 }
+
 
 void ConflictGraph::add_edge(node nodeA, node nodeB)
 {
@@ -59,10 +68,22 @@ string ConflictGraph::node_to_str(const node& a)
     return '"'+to_string(a.first)+"\n"+to_string(a.second)+"@"+to_string(m_levelOf[a])+'"';
 }
 
-void ConflictGraph::UIPSearch(node the_bet, node the_conflict)
+pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int id_clause)
 {
     findUIP(the_bet,the_conflict);
     findUIPCut();
+
+    std::map<int,bool> lit;
+    int backtrackLevel = m_levelOf[the_conflict];
+    for(auto& e : m_voisinDe)
+        for(auto& v : e.second)
+            if(m_inCut.find(e.first) == m_inCut.end() && m_inCut.find(v) != m_inCut.end())
+            {
+                if(m_levelOf[e.first] != m_levelOf[the_conflict])
+                    backtrackLevel = max(backtrackLevel,m_levelOf[e.first]);
+                lit[e.first.first] = e.first.second;
+            }
+    return make_pair(Clause(lit,false,id_clause),backtrackLevel);
 }
 
 void ConflictGraph::findUIP(node the_bet, node the_conflict)
@@ -159,15 +180,11 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
         }
     }
 
-    
     m_uip = start;
 }
 
 void ConflictGraph::findUIPCut()
 {
-    if(m_uip.first == -1)
-        OUTERROR("IUP node should have bin found before searching for the cut");
-
     queue<node> neight;
     neight.push(m_uip);
     while(!neight.empty())
@@ -222,24 +239,27 @@ void ConflictGraph::output(string file_name, int the_bet, int the_conflict)
     if(m_verbose)
         for(auto a: v)
             OUTDEBUG("Conflict index : "<< a << "\n");
-    if(v.size() != 1)
+    if(v.size() != 1 && the_conflict != -1)
         OUTERROR("Should be one conflict.");
-    if(v[0] != the_conflict)
+    if(the_conflict != -1 && v[0] != the_conflict)
         OUTERROR("Conflictual conflict");
+
 
     for(auto& e: m_voisinDe)
         if(true)
         {
-            if(e.first.first == the_bet)
-                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=red];\n";
-            else if(e.first.first == m_uip.first)
+            if(e.first.first == m_uip.first)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=yellow];\n";
-            else if(e.first.first == v[0])
+            else if(the_bet != -1 && e.first.first == the_bet)
+                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=red];\n";
+            else if(the_conflict != -1 && e.first.first == v[0])
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=green];\n";
             else if(m_inCut.find(e.first) != m_inCut.end())
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=purple];\n";
             else if(m_levelOf[e.first] == levelMax)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=blue];\n";
+            else if(active[e.first])
+                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=pink];\n";
         }
     myfile << "}";
     myfile.close();

@@ -223,7 +223,7 @@ bool SATSolver::deduce()
         if(!m_deductionQueue.empty())
         {
             m_currentAssignement.push_back(m_deductionQueue.front());
-            OUTDEBUG("\tStack deduction: " << m_deductionQueue.front().index << " to " << m_deductionQueue.front().value << " " << m_valuation[m_deductionQueue.front().index]  << endl);
+            //OUTDEBUG("\tStack deduction: " << m_deductionQueue.front().index << " to " << m_deductionQueue.front().value << " " << m_valuation[m_deductionQueue.front().index]  << endl);
             m_deductionQueue.pop();
 
             return true;
@@ -256,7 +256,7 @@ bool SATSolver::solve()
         takeABet();
     }
 
-    OUTDEBUG("evaluate : " << evaluate());
+    //OUTDEBUG("evaluate : " << evaluate());
     return !unsat;
 } // bool solve()
 

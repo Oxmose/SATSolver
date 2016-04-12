@@ -23,7 +23,7 @@
 class SATSolverCL : public SATSolver
 {
     public:
-    	SATSolverCL() { m_isCL = true; m_currLevel = -1;  m_conflictGraph.clear(); }
+    	SATSolverCL() { m_interact = true; m_isCL = true; m_currLevel = -1; m_btLevel=-1;  m_conflictGraph.clear(); }
         virtual ~SATSolverCL();
         virtual double getVarScores(int p_var);
 
@@ -37,13 +37,18 @@ class SATSolverCL : public SATSolver
         pair<vector<pair<int,Clause>>,bool> clauseForConflict(set<int>& old);
         void constructConflictGraph();
         virtual bool backtrack(bool& p_unsat);
+        void addResolutionClause();
 
     
 
         std::map<int,std::vector<int>> m_clausesWithVar;//Direct access to Clauses
         std::map<int,std::set<int>> m_aliveVarsIn;
+
         std::map<int,int> m_parentsOf;
         int m_currLevel;
+        int m_btLevel;
+        Clause m_resolutionClause;
+        bool m_interact;
 
         std::map<int, double> m_varScores;
 

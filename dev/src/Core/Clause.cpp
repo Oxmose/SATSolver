@@ -68,6 +68,19 @@ string Clause::toStr() const
     return toReturn;
 } // string toStr() const
 
+string Clause::toDIMACS() const
+{
+    string toReturn = "";
+    for(auto l : m_literals)
+    {
+        string sign = (l.second) ? "-" : "";
+        string dis =  " ";
+        toReturn += sign + to_string(l.first) + dis;
+    }
+    toReturn += "0";
+    return toReturn;
+} // string toStr() const
+
 int Clause::getScore() const
 {
     return m_score;
