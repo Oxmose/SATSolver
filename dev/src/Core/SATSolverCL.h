@@ -23,7 +23,7 @@
 class SATSolverCL : public SATSolver
 {
     public:
-    	SATSolverCL() { m_interact = true; m_isCL = true; m_currLevel = -1; m_btLevel=-1;  m_conflictGraph.clear(); }
+    	SATSolverCL(const bool &p_forget) { m_interact = true; m_isCL = true; m_currLevel = -1; m_btLevel=-1;  m_conflictGraph.clear(); m_forget = p_forget; }
 
         virtual ~SATSolverCL();
         virtual double getVarScores(int p_var);
