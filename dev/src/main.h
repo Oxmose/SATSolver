@@ -23,7 +23,6 @@
 #include "BETHeuristic/RandomBet.h"     // Random bet heuristic
 #include "BETHeuristic/DLISBet.h"       // DLIS bet heuristic
 #include "BETHeuristic/MOMSBet.h"       // MOMS bet heuristic
-#include "BETHeuristic/FORGETBet.h"     // FORGET bet heuristic
 #include "BETHeuristic/VSIDSBet.h"      // VSIDS bet heuristic
 
 // STD INCLUDES
@@ -50,7 +49,7 @@ struct Settings_s
     bool wl_s;
     bool cl_s;
     bool clint_s;
-
+    bool forget_s;
 };
 
 bool debugFlag;

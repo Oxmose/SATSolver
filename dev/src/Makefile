@@ -19,7 +19,7 @@ TARGET=../bin/resol
 
 #SRC
 GLOBAL=Global/Global.cpp
-BET=BETHeuristic/DLISBet.cpp BETHeuristic/MOMSBet.cpp BETHeuristic/RandomBet.cpp BETHeuristic/StandardBet.cpp BETHeuristic/VSIDSBet.cpp BETHeuristic/FORGETBet.cpp
+BET=BETHeuristic/DLISBet.cpp BETHeuristic/MOMSBet.cpp BETHeuristic/RandomBet.cpp BETHeuristic/StandardBet.cpp BETHeuristic/VSIDSBet.cpp
 RANDOMGEN=RandomSatExpGenerator/randomGen.cpp
 MAIN=main.cpp
 CORE=Core/Clause.cpp Core/ConflictGraph.cpp Core/SATSolver.cpp Core/SATSolverCL.cpp Core/SATSolverSTD.cpp Core/SATSolverWL.cpp

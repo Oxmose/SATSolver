@@ -15,7 +15,6 @@
 #include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
 #include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
 #include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
-#include "BETHeuristic/FORGETBet.h"     // FORGET bet heuristic
 #include "BETHeuristic/VSIDSBet.h"      // VSIDS bet heuristic
 
 // STD INCLUDES
@@ -46,7 +45,7 @@ int main(int argc, char** argv)
     
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interact] [-wl] [-vsids | -forget -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interact] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
@@ -67,7 +66,7 @@ int main(int argc, char** argv)
     else 
         solver = shared_ptr<SATSolver>(new SATSolverWL());
     // TODO Apply settings
-    solver = shared_ptr<SATSolver>(new SATSolverCL());
+    solver = shared_ptr<SATSolver>(new SATSolverCL(sets.forget_s));
     
     // Set strategy
     shared_ptr<IBet> betStrat;
@@ -93,9 +92,6 @@ int main(int argc, char** argv)
             break;
         case VSIDS:
             betStrat = shared_ptr<IBet>(new VSIDSBet(solver));
-            break;
-        case FORGET:
-            betStrat = shared_ptr<IBet>(new FORGETBet());
             break;
         default:
             betStrat = shared_ptr<IBet>(new StandardBet());
@@ -159,9 +155,10 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
     sets.wl_s = false;
     sets.cl_s = false;
     sets.clint_s = false;
+    sets.forget_s = false;
     
     int commandError = 0;
-    bool argsValid[5] = {false, false, false, false, false};
+    bool argsValid[6] = {false, false, false, false, false, false};
     
     if(argc == 1)
     {
@@ -218,12 +215,7 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
             {
                 sets.bet_s = VSIDS;
                 argsValid[2] = true;
-            }
-            else if(value == "-forget" && !argsValid[2])
-            {
-                sets.bet_s = FORGET;
-                argsValid[2] = true;
-            }
+            }            
             else if(value == "-debug" && !argsValid[3])
             {
                 sets.debug_s = true;
@@ -240,6 +232,11 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
                 sets.clint_s = true;
                 argsValid[4] = true;
             }
+            else if(value == "-forget" && !argsValid[5])
+            {
+                sets.forget_s = true;
+                argsValid[5] = true;
+            }
             else
             {
                 commandError = 1;
@@ -247,12 +244,12 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
             }
         }
         int count = 0;
-        for(unsigned int i = 0; i < 5; ++i)
+        for(unsigned int i = 0; i < 6; ++i)
         {
             if(argsValid[i])
                 ++count;
         }
-        if((sets.bet_s == FORGET || sets.bet_s == VSIDS) && !sets.cl_s)
+        if(sets.bet_s == VSIDS && !sets.cl_s)
         {
             OUTWARNING("Imcompatible bet, you must use -cl to enable this heuristic, set heuristic to standard.");
             sets.bet_s = NORM;

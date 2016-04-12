@@ -1,3 +1,9 @@
 dev/bin/resol.dSYM
 dev/bin/resol
 dev/bin/.DS_Store
+dev/src/*.o
+dev/src/Core/*.o
+dev/src/BETHeuristic/*.o
+dev/Global/*.o
+dev/Parser/*.o
+dev/RandomSatExpGenerator/*.o
