@@ -61,13 +61,15 @@ int main(int argc, char** argv)
 
     // Create the solver
     shared_ptr<SATSolver> solver;
-    if(!sets.wl_s)
+    if(!sets.wl_s && !sets.cl_s)
         solver = shared_ptr<SATSolver>(new SATSolverSTD());
-    else 
+    else if(sets.wl_s && !sets.cl_s)
         solver = shared_ptr<SATSolver>(new SATSolverWL());
-    // TODO Apply settings
-    solver = shared_ptr<SATSolver>(new SATSolverCL(sets.forget_s));
-    
+    else if(!sets.wl_s && sets.cl_s)
+        solver = shared_ptr<SATSolver>(new SATSolverCL(sets.clint_s, sets.forget_s));
+    else
+        solver = shared_ptr<SATSolver>(new SATSolverSTD()); // TODO Change to CLWL
+
     // Set strategy
     shared_ptr<IBet> betStrat;
     switch(sets.bet_s)
@@ -137,7 +139,7 @@ int main(int argc, char** argv)
      */
 
     // Display time
-    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+    duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
     OUTDEBUG("Solved in: "<< duration << "s");
 
     // Only for loop instances (may be added later)

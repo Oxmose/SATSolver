@@ -23,7 +23,7 @@
 class SATSolverCL : public SATSolver
 {
     public:
-    	SATSolverCL(const bool &p_forget) { m_interact = true; m_isCL = true; m_currLevel = -1; m_btLevel=-1;  m_conflictGraph.clear(); m_forget = p_forget; }
+    	SATSolverCL(const bool &p_interact, const bool &p_forget) {m_isCL = true; m_currLevel = -1; m_btLevel=-1;  m_conflictGraph.clear(); m_forget = p_forget; m_interact = p_interact; }
 
         virtual ~SATSolverCL();
         virtual double getVarScores(int p_var);
@@ -49,6 +49,7 @@ class SATSolverCL : public SATSolver
         int m_currLevel;
         int m_btLevel;
         Clause m_resolutionClause;
+
         bool m_interact;
 
         std::map<int, double> m_varScores;

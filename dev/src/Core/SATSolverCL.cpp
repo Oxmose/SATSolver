@@ -207,7 +207,9 @@ bool SATSolverCL::applyLastDecision()
 	                        iFile++;
 	                    }
 	                    else if(c == 'c')
-	                    {}
+	                    {
+                            OUTDEBUG("Hoping to the next conflict");
+                        }
 	                	else if(c == 't')
 	                		m_interact = false;
 	                    else
