@@ -129,7 +129,11 @@ int main(int argc, char** argv)
         solver->showSolution();
     }
     else
+    {
+        for(auto a : solver->learnedClauses())
+            cout << a.first << endl;
         cout << "s UNSATISFIABLE" << endl;
+    }
 
     /*
         N.B:There's no "s ???" output as we do not impose any time limit or run

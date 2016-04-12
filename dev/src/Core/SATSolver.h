@@ -59,6 +59,7 @@ class SATSolver
 
         /* DPLL algorithm */
         virtual void initializeMethod() = 0;
+        virtual std::map<std::string,bool> learnedClauses() { return std::map<std::string,bool>();};
         bool solve();
         void showSolution();
 

@@ -96,6 +96,10 @@ decision SATSolverCL::takeABet()
 
 void SATSolverCL::addResolutionClause()
 {
+	for(auto c: m_clauses)
+		if(c.toDIMACS() == m_resolutionClause.toDIMACS())
+			return;
+
 	m_clauses.push_back(m_resolutionClause);
 	m_unsatClauses.insert(m_resolutionClause.getId());
 
@@ -191,9 +195,11 @@ bool SATSolverCL::applyLastDecision()
                     //printf("%d\n", whatINeed.second);
                     m_btLevel = whatINeed.second;
                     m_resolutionClause = whatINeed.first;
+                    m_learnedClauses[whatINeed.first.toDIMACS().c_str()] = true;
 
                     if(m_interact)
                     {
+
 	                    printf("%s\n", whatINeed.first.toDIMACS().c_str());
 	                    printf("%d\n", whatINeed.second);
 	                    
@@ -203,7 +209,8 @@ bool SATSolverCL::applyLastDecision()
 	                    if(c == 'g')
 	                    {
 	                        m_conflictGraph.output("conflictGraph"+to_string(iFile)+".dot", the_bet, p_dec.index);
-	                        OUTDEBUG("Output : " << "conflictGraph"+to_string(iFile)+".dot");
+	                        cout << "Output : " << "conflictGraph"+to_string(iFile)+".dot" << endl;
+	                        //OUTDEBUG("Output : " << "conflictGraph"+to_string(iFile)+".dot");
 	                        iFile++;
 	                    }
 	                    else if(c == 'c')
