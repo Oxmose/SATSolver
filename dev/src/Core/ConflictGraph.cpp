@@ -70,11 +70,8 @@ string ConflictGraph::node_to_str(const node& a)
 
 pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int id_clause)
 {
-    OUTDEBUG(m_voisinDe.size());
     findUIP(the_bet,the_conflict);
-    OUTDEBUG(m_voisinDe.size());
     findUIPCut();
-    OUTDEBUG(m_voisinDe.size());
     std::map<int,bool> lit;
     int backtrackLevel = -1000;
     for(auto& e : m_voisinDe)
@@ -92,7 +89,6 @@ pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int 
 
 void ConflictGraph::findUIP(node the_bet, node the_conflict)
 {
-    OUTDEBUG(m_voisinDe.size());
     node ret;
 
     set<node> nexts;
@@ -107,27 +103,24 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
     ConflictGraph inverse(false);
 
     neight.push(start);
-    OUTDEBUG(m_voisinDe.size());
     map<node, bool> visited;
-    while(!neight.empty())
-    {
-        node toVisit = neight.front();
-        inverse.add_node(make_pair(toVisit, m_levelOf[toVisit]));
-        neight.pop();
 
-        for(auto v : m_voisinDe[toVisit])
+    for(auto u : m_voisinDe)
+    {
+        inverse.add_node(make_pair(u.first, m_levelOf[u.first]));
+        for(auto v : u.second)
         {
             inverse.add_node(make_pair(v, m_levelOf[v]));
-            inverse.add_edge(v, toVisit);
-            neight.push(v);
+            inverse.add_edge(v, u.first);
         }
     }
-    OUTDEBUG(m_voisinDe.size());
+    static int l = 0;
+
     visited.clear();
     
     map<node, bool> uips;
     bool found = false;
-    int k = 0;
+
     for(auto v : m_voisinDe)
     {
         if(m_levelOf[v.first] == levelMax)
@@ -142,7 +135,6 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
             neight.push(conflictBar);
             while(!neight.empty())
             {
-                k++;
                 node toVisit = neight.front();
                 visited.emplace(toVisit, true);
                 neight.pop();
@@ -151,9 +143,13 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
                 for(auto u : inverse.m_voisinDe[toVisit])
                 {
                     if(u == start)
+                    {
                         found = true;
+                        break;
+                    }
                     else if(visited.find(u) == visited.end() && u != v.first)
                     { 
+                        visited.emplace(u, true);
                         neight.push(u);
                     }
                 }
@@ -164,14 +160,16 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
                 uips.emplace(v.first, true);
         }
     }
-    OUTDEBUG("CACA " << k);
+
+
     
     while(!neight.empty())
         neight.pop();
 
     neight.push(conflict);
     neight.push(conflictBar);
-
+    visited.clear();
+    visited[neight.front()] = true;
     while(!neight.empty())
     {
         node toVisit = neight.front();
@@ -179,15 +177,18 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
 
         for(auto v : inverse.m_voisinDe[toVisit])
         {
-            if(uips.find(v) != uips.end())
-            { 
-                m_uip = v;
-                return;
+            if(visited.find(v) == visited.end())
+            {
+                visited[v] = true;
+                if(uips.find(v) != uips.end())
+                { 
+                    m_uip = v;
+                    return;
+                }
+                neight.push(v);
             }
-            neight.push(v);
         }
     }
-
     m_uip = start;
 }
 
@@ -199,9 +200,9 @@ void ConflictGraph::findUIPCut()
     while(!neight.empty())
     {
         node toVisit = neight.front();
-        OUTDEBUG("???" << toVisit.first);
+        /*OUTDEBUG("???" << toVisit.first);
         for(auto a : m_inCut)
-            OUTDEBUG("\t???" << a.first.first);
+            OUTDEBUG("\t???" << a.first.first);*/
         neight.pop();
         for(auto v : m_voisinDe[toVisit])
         {

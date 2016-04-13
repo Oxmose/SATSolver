@@ -181,19 +181,15 @@ bool SATSolverCL::applyLastDecision()
 
 
                     OUTDEBUG("\tContradiction spotted! : " << m_clauses[iClause].toStr());
-                    OUTDEBUG("C");
                     int the_bet = -1;
                     for(int i = m_currentAssignement.size()-1  ; i >= 0 ; i--)
                         if(m_currentAssignement[i].bet)
                         {
-                        	OUTDEBUG("O");
                             the_bet = m_currentAssignement[i].index;
                             break;
                         }
 
-                    OUTDEBUG("A");
                 	pair<Clause,int> whatINeed = m_conflictGraph.resolution(make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]), m_clauses.size());
-                    OUTDEBUG("B");
                     //printf("%s\n", whatINeed.first.toDIMACS().c_str());
                     //printf("%d\n", whatINeed.second);
                     m_btLevel = whatINeed.second;
