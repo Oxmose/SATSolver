@@ -227,5 +227,8 @@ bool SATSolverCL::applyLastDecision()
 
 double SATSolverCL::getVarScores(int p_var)
 {
-    return m_varScores[p_var];
+    if(m_varScores.find(p_var) == m_varScores.end())
+    	return m_varScores[p_var];
+    else 
+        return 0;
 }
