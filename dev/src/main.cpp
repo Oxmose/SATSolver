@@ -1,13 +1,13 @@
 // SATSolver class
-#include "Core/SATSolver.h"
-#include "Core/SATSolverSTD.h"
-#include "Core/SATSolverWL.h"
-#include "Core/SATSolverCL.h"
+#include "Core/SATSolver.h"     //Solver abstract class
+#include "Core/SATSolverSTD.h"  //Standard sovler
+#include "Core/SATSolverWL.h"   //Watched literals Sovler
+#include "Core/SATSolverCL.h"   //Clause learning solver
 
 // Parser interface / classes
-#include "Parser/IParser.h"
-#include "Parser/CNFParser.h"
-#include "Parser/LOGParser.h"
+#include "Parser/IParser.h"     //Parsers Interface
+#include "Parser/CNFParser.h"   //CNFParser
+#include "Parser/LOGParser.h"   //LogParser
 
 // Bet heuristics classes
 #include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
@@ -22,16 +22,17 @@
 #include <string>       //std::string
 #include <iostream>     //std::cout std::cerr
 #include <sys/ioctl.h>  //std::ioctl
+#include <functional>   //std::function
 
 // OTHERS INCLUDES FROM PROJECT
-#include "RandomSatExpGenerator/randomGen.h"
-#include "Core/Clause.h"
+#include "RandomSatExpGenerator/randomGen.h"    //RandomSatExpGen
+#include "Core/Clause.h"    //Clause class
 
 // GLOBAL FLAGS/VARS
-#include "Global/Global.h"
+#include "Global/Global.h"  // Global flags and macros
 
 // HEADER FILE
-#include "main.h"
+#include "main.h"   //Header file
 
 using namespace std;
 
@@ -66,7 +67,7 @@ int main(int argc, char** argv)
     else if(sets.wl_s && !sets.cl_s)
         solver = shared_ptr<SATSolver>(new SATSolverWL());
     else if(!sets.wl_s && sets.cl_s)
-        solver = shared_ptr<SATSolver>(new SATSolverCL(sets.clint_s, sets.forget_s));
+        solver = shared_ptr<SATSolver>(new SATSolverCL(sets.clint_s, sets.forget_s, function<double(double, bool)>(VSIDSScoreFunction)));
     else
         solver = shared_ptr<SATSolver>(new SATSolverSTD()); // TODO Change to CLWL
 
@@ -256,7 +257,7 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
             if(argsValid[i])
                 ++count;
         }
-        if(sets.bet_s == VSIDS && !sets.cl_s)
+        if((sets.bet_s == VSIDS || sets.forget_s) && !sets.cl_s)
         {
             OUTWARNING("Imcompatible bet, you must use -cl to enable this heuristic, set heuristic to standard.");
             sets.bet_s = NORM;

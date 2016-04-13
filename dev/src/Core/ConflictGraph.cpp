@@ -89,9 +89,6 @@ pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int 
 
 void ConflictGraph::findUIP(node the_bet, node the_conflict)
 {
-    node ret;
-
-    set<node> nexts;
     queue<node> neight;
 
     node conflict = the_conflict;
@@ -101,9 +98,6 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
     conflictBar.second = !conflict.second;
 
     ConflictGraph inverse(false);
-
-    neight.push(start);
-    map<node, bool> visited;
 
     for(auto u : m_voisinDe)
     {
@@ -115,9 +109,10 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
         }
     }
 
+    map<node, bool> visited;    
+    map<node, bool> uips;
     visited.clear();
     
-    map<node, bool> uips;
     bool found = false;
 
     for(auto v : inverse.m_voisinDe)
@@ -135,9 +130,7 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
             while(!neight.empty())
             {
                 node toVisit = neight.front();
-                visited.emplace(toVisit, true);
                 neight.pop();
-                nexts.erase(toVisit);
 
                 for(auto u : inverse.m_voisinDe[toVisit])
                 {
@@ -147,7 +140,7 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
                         break;
                     }
                     else if(visited.find(u) == visited.end() && u != v.first)
-                    { 
+                    {
                         visited.emplace(u, true);
                         neight.push(u);
                     }

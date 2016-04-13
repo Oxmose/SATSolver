@@ -21,6 +21,8 @@
 // INHERITANCE CLASS
 #include "IBet.h"
 
+// Score function designed for VSIDS heuristic
+double VSIDSScoreFunction(double oldScore, bool inLearnedClause);
 class VSIDSBet : public IBet
 {
     public:
