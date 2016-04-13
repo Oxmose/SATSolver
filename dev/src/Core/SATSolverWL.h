@@ -22,7 +22,7 @@
 class SATSolverWL : public SATSolver
 {
     public:
-    	SATSolverWL() { m_isWL = true; }
+    	SATSolverWL();
         virtual ~SATSolverWL();
         virtual double getVarScores(int p_var);
 

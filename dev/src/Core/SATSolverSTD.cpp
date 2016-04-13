@@ -3,6 +3,11 @@
 
 using namespace std;
 
+SATSolverSTD::SATSolverSTD()
+{
+    OUTDEBUG("Using standard solver.");
+}
+
 SATSolverSTD::~SATSolverSTD()
 {
 }

@@ -32,6 +32,20 @@ VSIDSBet::~VSIDSBet()
 {
 } // ~VSIDSBet()
 
+double VSIDSScoreFunction(double oldScore, bool inLearnedClause)
+{
+    double incrementConstant = 1;
+    double pondConstant = 2;
+    if(inLearnedClause)
+    {
+        return (oldScore + incrementConstant) / pondConstant;
+    }
+    else
+    {
+        return oldScore / pondConstant;
+    }
+}
+
 decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
 {
     OUTDEBUG("VSIDS bet");

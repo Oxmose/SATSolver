@@ -4,6 +4,20 @@
 
 using namespace std;
 
+SATSolverCL::SATSolverCL(const bool &p_interact, const bool &p_forget, function<double(double, bool)> p_scoreFunction)
+{
+    OUTDEBUG("Using ClauseLearning Solver, " << string((p_interact ? "with interaction, " : "without interact, ")) << string((p_forget ? "with cutoff threshold to forget clauses." : "without cutoff threshold to forget clauses.")));
+    m_isCL = true;
+    m_currLevel = -1;
+    m_btLevel = -1;
+    m_conflictGraph.clear();
+
+    m_interact = p_interact;
+    m_forget = p_forget;
+
+    m_scoreFunction = p_scoreFunction;
+}
+
 SATSolverCL::~SATSolverCL()
 {
 }

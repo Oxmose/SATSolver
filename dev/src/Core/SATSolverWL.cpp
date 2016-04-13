@@ -3,6 +3,12 @@
 
 using namespace std;
 
+SATSolverWL::SATSolverWL()
+{
+    m_isWL = true;
+    OUTDEBUG("Using watched literals solver");
+}
+
 SATSolverWL::~SATSolverWL()
 {
 }
