@@ -81,7 +81,7 @@ decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCl
 
     if(candidates.size() != 0)
     {
-        int iCandidate = rand()%candidates.size();
+        int iCandidate = rand()%candidates.size() - 1;
         firstUnassigned = candidates[iCandidate].first;
         value = candidates[iCandidate].second;
     }

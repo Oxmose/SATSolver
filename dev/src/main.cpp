@@ -71,8 +71,6 @@ int main(int argc, char** argv)
         solver = shared_ptr<SATSolver>(new SATSolverCL(sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
     else if(sets.wl_s && sets.cl_s)
         solver = shared_ptr<SATSolver>(new SATSolverCLWL(sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
-    else
-        solver = shared_ptr<SATSolver>(new SATSolverSTD()); // TODO Change to CLWL
 
     // Set strategy
     shared_ptr<IBet> betStrat;
