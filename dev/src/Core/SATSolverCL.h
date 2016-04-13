@@ -29,7 +29,7 @@ class SATSolverCL : public SATSolver
         virtual ~SATSolverCL();
         virtual double getVarScores(int p_var);
 
-        std::map<std::string,bool> learnedClauses() { return m_learnedClauses; }
+        std::map<std::string,int> learnedClauses() { return m_learnedClauses; }
 
     private:
 
@@ -62,7 +62,7 @@ class SATSolverCL : public SATSolver
 
         ConflictGraph m_conflictGraph;
 
-        std::map<std::string,bool> m_learnedClauses;
+        std::map<std::string,int> m_learnedClauses;
         bool m_forget;
 
 }; // SATSolver

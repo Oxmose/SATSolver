@@ -70,11 +70,13 @@ string ConflictGraph::node_to_str(const node& a)
 
 pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int id_clause)
 {
+    OUTDEBUG(m_voisinDe.size());
     findUIP(the_bet,the_conflict);
+    OUTDEBUG(m_voisinDe.size());
     findUIPCut();
-
+    OUTDEBUG(m_voisinDe.size());
     std::map<int,bool> lit;
-    int backtrackLevel = m_levelOf[the_conflict];
+    int backtrackLevel = -1000;
     for(auto& e : m_voisinDe)
         for(auto& v : e.second)
             if(m_inCut.find(e.first) == m_inCut.end() && m_inCut.find(v) != m_inCut.end())
@@ -83,11 +85,14 @@ pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int 
                     backtrackLevel = max(backtrackLevel,m_levelOf[e.first]);
                 lit[e.first.first] = e.first.second;
             }
+    if(backtrackLevel == -1000)
+        backtrackLevel = m_levelOf[the_conflict];
     return make_pair(Clause(lit,false,id_clause),backtrackLevel);
 }
 
 void ConflictGraph::findUIP(node the_bet, node the_conflict)
 {
+    OUTDEBUG(m_voisinDe.size());
     node ret;
 
     set<node> nexts;
@@ -102,7 +107,7 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
     ConflictGraph inverse(false);
 
     neight.push(start);
-
+    OUTDEBUG(m_voisinDe.size());
     map<node, bool> visited;
     while(!neight.empty())
     {
@@ -117,11 +122,12 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
             neight.push(v);
         }
     }
-
+    OUTDEBUG(m_voisinDe.size());
     visited.clear();
     
     map<node, bool> uips;
     bool found = false;
+    int k = 0;
     for(auto v : m_voisinDe)
     {
         if(m_levelOf[v.first] == levelMax)
@@ -136,6 +142,7 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
             neight.push(conflictBar);
             while(!neight.empty())
             {
+                k++;
                 node toVisit = neight.front();
                 visited.emplace(toVisit, true);
                 neight.pop();
@@ -157,6 +164,7 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
                 uips.emplace(v.first, true);
         }
     }
+    OUTDEBUG("CACA " << k);
     
     while(!neight.empty())
         neight.pop();
@@ -186,10 +194,14 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
 void ConflictGraph::findUIPCut()
 {
     queue<node> neight;
+    m_inCut.clear();
     neight.push(m_uip);
     while(!neight.empty())
     {
         node toVisit = neight.front();
+        OUTDEBUG("???" << toVisit.first);
+        for(auto a : m_inCut)
+            OUTDEBUG("\t???" << a.first.first);
         neight.pop();
         for(auto v : m_voisinDe[toVisit])
         {
@@ -205,7 +217,6 @@ void ConflictGraph::findUIPCut()
 void ConflictGraph::output(string file_name, int the_bet, int the_conflict)
 {
     //set<int> theCut = findIUPCut();
-
     ofstream myfile;
     myfile.open(file_name);
     myfile << "digraph {\n";
@@ -223,9 +234,11 @@ void ConflictGraph::output(string file_name, int the_bet, int the_conflict)
           //  OUTERROR("More than one conflict...");
         vu[e.first.first] = true;
         //printf("Node: %d %d %s\n", e.first.first, e.first.second, node_to_str(e.first).c_str());
-        active[e.first] = m_levelOf[e.first] == levelMax;
+        active[e.first] = (m_inCut.find(e.first) == m_inCut.end());
+        bool b = false;
         for(auto& v : e.second)
-            active[e.first] = active[e.first] || m_levelOf[v] == levelMax;
+            b = b || (m_inCut.find(v) != m_inCut.end());
+        active[e.first] = active[e.first] && b;
         if(true)
         {
             for(auto& v : e.second)
