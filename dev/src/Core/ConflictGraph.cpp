@@ -114,14 +114,13 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
             inverse.add_edge(v, u.first);
         }
     }
-    static int l = 0;
 
     visited.clear();
     
     map<node, bool> uips;
     bool found = false;
 
-    for(auto v : m_voisinDe)
+    for(auto v : inverse.m_voisinDe)
     {
         if(m_levelOf[v.first] == levelMax)
         {
