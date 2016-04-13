@@ -132,8 +132,9 @@ int main(int argc, char** argv)
     }
     else
     {
+        OUTDEBUG("Learned Clauses :");
         for(auto a : solver->learnedClauses())
-            cout << a.first << endl;
+           cout << "\t" << a.first << " " << a.second << endl;
         cout << "s UNSATISFIABLE" << endl;
     }
 
@@ -282,6 +283,7 @@ void displayMenu(char *softName)
         cout << "=";
         ++total;
     }
+    
     cout << " SATSolver V" << VERSION << " ";
     total += 16;
     for(unsigned int i = total; i < w.ws_col; ++i)
