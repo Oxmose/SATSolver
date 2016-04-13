@@ -35,14 +35,14 @@ VSIDSBet::~VSIDSBet()
 double VSIDSScoreFunction(double oldScore, bool inLearnedClause)
 {
     double incrementConstant = 1;
-    double pondConstant =  0.5;//What is in minisat according to http://www.cs.tau.ac.il/research/alexander.nadel/SAT-05_CBH_2.pdf
+    double pondConstant =  0.95;//What is in minisat according to http://www.cs.tau.ac.il/research/alexander.nadel/SAT-05_CBH_2.pdf
     if(inLearnedClause)
     {
         return (oldScore + incrementConstant);
     }
     else
     {
-        return oldScore *pondConstant;
+        return oldScore*pondConstant;
     }
 }
 
