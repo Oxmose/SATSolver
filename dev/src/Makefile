@@ -22,7 +22,7 @@ GLOBAL=Global/Global.cpp
 BET=BETHeuristic/DLISBet.cpp BETHeuristic/MOMSBet.cpp BETHeuristic/RandomBet.cpp BETHeuristic/StandardBet.cpp BETHeuristic/VSIDSBet.cpp
 RANDOMGEN=RandomSatExpGenerator/randomGen.cpp
 MAIN=main.cpp
-CORE=Core/Clause.cpp Core/ConflictGraph.cpp Core/SATSolver.cpp Core/SATSolverCL.cpp Core/SATSolverSTD.cpp Core/SATSolverWL.cpp
+CORE=Core/Clause.cpp Core/ConflictGraph.cpp Core/SATSolver.cpp Core/SATSolverCL.cpp Core/SATSolverCLWL.cpp Core/SATSolverSTD.cpp Core/SATSolverWL.cpp
 PARSER=Parser/CNFParser.cpp Parser/LOGParser.cpp $(EXPRNAME).cpp $(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
 
 PRELOG=$(EXPRNAME).tab.cpp $(EXPRNAME).yy.c

@@ -3,6 +3,7 @@
 #include "Core/SATSolverSTD.h"  //Standard sovler
 #include "Core/SATSolverWL.h"   //Watched literals Sovler
 #include "Core/SATSolverCL.h"   //Clause learning solver
+#include "Core/SATSolverCLWL.h"
 
 // Parser interface / classes
 #include "Parser/IParser.h"     //Parsers Interface
@@ -67,7 +68,9 @@ int main(int argc, char** argv)
     else if(sets.wl_s && !sets.cl_s)
         solver = shared_ptr<SATSolver>(new SATSolverWL());
     else if(!sets.wl_s && sets.cl_s)
-        solver = shared_ptr<SATSolver>(new SATSolverCL(sets.clint_s, sets.forget_s, function<double(double, bool)>(VSIDSScoreFunction)));
+        solver = shared_ptr<SATSolver>(new SATSolverCL(sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
+    else if(sets.wl_s && sets.cl_s)
+        solver = shared_ptr<SATSolver>(new SATSolverCLWL(sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
     else
         solver = shared_ptr<SATSolver>(new SATSolverSTD()); // TODO Change to CLWL
 
@@ -135,7 +138,7 @@ int main(int argc, char** argv)
     {
         OUTDEBUG("Learned Clauses :");
         for(auto a : solver->learnedClauses())
-           cout << "\t" << a.first << " " << a.second << endl;
+           OUTDEBUG( "\t" << a.first << " " << a.second);
         cout << "s UNSATISFIABLE" << endl;
     }
 

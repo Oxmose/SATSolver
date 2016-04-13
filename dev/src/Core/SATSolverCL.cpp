@@ -4,10 +4,11 @@
 
 using namespace std;
 
-SATSolverCL::SATSolverCL(const bool &p_interact, const bool &p_forget, function<double(double, bool)> p_scoreFunction)
+SATSolverCL::SATSolverCL(const bool &p_interact, const bool &p_forget, const bool &p_vsids, function<double(double, bool)> p_scoreFunction)
 {
-    OUTDEBUG("Using ClauseLearning Solver, " << string((p_interact ? "with interaction, " : "without interact, ")) << string((p_forget ? "with cutoff threshold to forget clauses." : "without cutoff threshold to forget clauses.")));
+    OUTDEBUG("Using Clause Learning Solver, " << string((p_interact ? "with interaction, " : "without interact, ")) << string((p_forget ? "with cutoff threshold to forget clauses." : "without cutoff threshold to forget clauses.")));
     m_isCL = true;
+    m_vsids = p_vsids;
     m_currLevel = -1;
     m_btLevel = -1;
     m_conflictGraph.clear();
@@ -30,6 +31,8 @@ void SATSolverCL::initializeMethod()
             m_valuation[lit.first] = -1;
             m_clausesWithVar[lit.first].push_back(iClause);
             m_aliveVarsIn[iClause].insert(lit.first);
+            if(m_vsids)
+            	m_varScores[lit.first] = 0.0;
         }
 }
 
@@ -123,8 +126,18 @@ void SATSolverCL::addResolutionClause()
     {
         m_clausesWithVar[lit.first].push_back(iClause);
         m_aliveVarsIn[iClause].insert(lit.first);
+        //cout << "HERE " << lit.first << " " << m_varScores[lit.first] << " " << m_scoreFunction(m_varScores[lit.first],true) << endl;
+        if(m_vsids)
+        	m_varScores[lit.first] = m_scoreFunction(m_varScores[lit.first],true);
     }
 
+    if(m_vsids)
+    {
+    	for(auto l : m_varScores)
+    		if(m_clauses[iClause].getLiterals().find(l.first) == m_clauses[iClause].getLiterals().end())
+    			m_varScores[l.first] = m_scoreFunction(m_varScores[l.first],false);
+    }
+   
     OUTDEBUG("Resolution clause " << m_resolutionClause.toStr() << " added");
 }
 
@@ -252,7 +265,7 @@ bool SATSolverCL::applyLastDecision()
 
 double SATSolverCL::getVarScores(int p_var)
 {
-    if(m_varScores.find(p_var) == m_varScores.end())
+    if(m_varScores.find(p_var) != m_varScores.end())
     	return m_varScores[p_var];
     else 
         return 0;
