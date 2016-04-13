@@ -257,7 +257,7 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
             if(argsValid[i])
                 ++count;
         }
-        if((sets.bet_s == VSIDS || sets.forget_s) && !sets.cl_s)
+        if((sets.bet_s == VSIDS || sets.forget_s) && !sets.cl_s)
         {
             OUTWARNING("Imcompatible bet, you must use -cl to enable this heuristic, set heuristic to standard.");
             sets.bet_s = NORM;

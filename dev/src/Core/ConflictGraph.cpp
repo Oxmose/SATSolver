@@ -95,7 +95,6 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
     OUTDEBUG(m_voisinDe.size());
     node ret;
 
-    set<node> nexts;
     queue<node> neight;
 
     node conflict = the_conflict;
@@ -106,29 +105,25 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
 
     ConflictGraph inverse(false);
 
-    neight.push(start);
     OUTDEBUG(m_voisinDe.size());
-    map<node, bool> visited;
-    while(!neight.empty())
+    
+    for(auto u : m_voisinDe)
     {
-        node toVisit = neight.front();
-        inverse.add_node(make_pair(toVisit, m_levelOf[toVisit]));
-        neight.pop();
-
-        for(auto v : m_voisinDe[toVisit])
+        inverse.add_node(make_pair(u.first, m_levelOf[u.first]));
+        for(auto v : u.second)
         {
             inverse.add_node(make_pair(v, m_levelOf[v]));
-            inverse.add_edge(v, toVisit);
-            neight.push(v);
+            inverse.add_edge(v, u.first);
         }
     }
-    OUTDEBUG(m_voisinDe.size());
-    visited.clear();
-    
+
+    OUTDEBUG(inverse.m_voisinDe.size());
+
+    map<node, bool> visited;    
     map<node, bool> uips;
     bool found = false;
     int k = 0;
-    for(auto v : m_voisinDe)
+    for(auto v : inverse.m_voisinDe)
     {
         if(m_levelOf[v.first] == levelMax)
         {
@@ -144,16 +139,18 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
             {
                 k++;
                 node toVisit = neight.front();
-                visited.emplace(toVisit, true);
                 neight.pop();
-                nexts.erase(toVisit);
 
                 for(auto u : inverse.m_voisinDe[toVisit])
                 {
                     if(u == start)
+                    {
                         found = true;
+                        break;
+                    }
                     else if(visited.find(u) == visited.end() && u != v.first)
-                    { 
+                    {
+                        visited.emplace(u, true);
                         neight.push(u);
                     }
                 }
