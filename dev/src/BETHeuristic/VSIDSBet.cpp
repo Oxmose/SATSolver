@@ -79,11 +79,13 @@ decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCl
         }
     }    
 
+    cout << "CAND " << candidates.size() << endl;
     if(candidates.size() != 0)
     {
-        int iCandidate = rand()%candidates.size() - 1;
+        int iCandidate = rand()%candidates.size();
         firstUnassigned = candidates[iCandidate].first;
         value = candidates[iCandidate].second;
+        cout << "SELECTED = " << iCandidate << " is " << firstUnassigned << endl;
     }
 
     decision bet = decision(firstUnassigned, value, true);

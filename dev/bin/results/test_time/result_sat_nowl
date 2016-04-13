@@ -5,11 +5,7 @@
             "minisat": "0.00",
             "std": "0.00",
             "moms": "0.00",
-<<<<<<< HEAD
             "dlis": "0.01",
-=======
-            "dlis": "0.00",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
             "dlis0": "0.00",
         },
         {
@@ -17,285 +13,121 @@
             "minisat": "0.00",
             "std": "0.00",
             "moms": "0.00",
-<<<<<<< HEAD
             "dlis": "0.05",
-=======
-            "dlis": "0.00",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
             "dlis0": "0.00",
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-1_6-yes1-3.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.02",
             "dlis0": "0.00",
-=======
-            "std": "0.04",
-            "moms": "0.04",
-            "dlis": "0.04",
-            "dlis0": "0.04",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-1_6-yes1-4.cnf",
             "minisat": "0.00",
             "std": "0.00",
             "moms": "0.00",
-<<<<<<< HEAD
             "dlis": "0.01",
-=======
-            "dlis": "0.00",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
             "dlis0": "0.00",
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-1.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.01",
             "dlis": "0.00",
             "dlis0": "0.00",
-=======
-            "std": "0.01",
-            "moms": "0.01",
-            "dlis": "0.01",
-            "dlis0": "0.01",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-2.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.02",
             "dlis0": "0.00",
-=======
-            "std": "0.01",
-            "moms": "0.01",
-            "dlis": "0.01",
-            "dlis0": "0.01",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-3.cnf",
             "minisat": "0.00",
             "std": "0.00",
-<<<<<<< HEAD
             "moms": "0.03",
             "dlis": "0.04",
             "dlis0": "0.01",
-=======
-            "moms": "0.00",
-            "dlis": "0.00",
-            "dlis0": "0.00",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-4.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.00",
             "dlis0": "0.00",
-=======
-            "std": "0.02",
-            "moms": "0.02",
-            "dlis": "0.02",
-            "dlis0": "0.02",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-3_4-yes1-1.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.01",
             "dlis0": "0.00",
-=======
-            "std": "0.06",
-            "moms": "0.06",
-            "dlis": "0.06",
-            "dlis0": "0.06",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-3_4-yes1-2.cnf",
             "minisat": "0.00",
             "std": "0.02",
-<<<<<<< HEAD
             "moms": "0.00",
             "dlis": "0.00",
             "dlis0": "0.00",
-=======
-            "moms": "0.02",
-            "dlis": "0.02",
-            "dlis0": "0.02",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-3_4-yes1-3.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.01",
             "dlis0": "0.00",
-=======
-            "std": "0.06",
-            "moms": "0.06",
-            "dlis": "0.06",
-            "dlis0": "0.06",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-3_4-yes1-4.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.00",
             "dlis0": "0.00",
-=======
-            "std": "0.01",
-            "moms": "0.02",
-            "dlis": "0.01",
-            "dlis0": "0.01",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-6_0-yes1-1.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.00",
             "dlis0": "0.00",
-=======
-            "std": "0.02",
-            "moms": "0.02",
-            "dlis": "0.02",
-            "dlis0": "0.02",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-6_0-yes1-2.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.00",
             "dlis0": "0.00",
-=======
-            "std": "0.02",
-            "moms": "0.02",
-            "dlis": "0.02",
-            "dlis0": "0.02",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-6_0-yes1-3.cnf",
             "minisat": "0.00",
-<<<<<<< HEAD
             "std": "0.00",
             "moms": "0.00",
             "dlis": "0.00",
             "dlis0": "0.00",
-=======
-            "std": "0.03",
-            "moms": "0.03",
-            "dlis": "0.03",
-            "dlis0": "0.03",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-6_0-yes1-4.cnf",
             "minisat": "0.00",
             "std": "0.00",
             "moms": "0.00",
-<<<<<<< HEAD
             "dlis": "0.00",
             "dlis0": "0.00",
         },
         { "file": "end" }
     ]
 }
-=======
-            "dlis": "0.01",
-            "dlis0": "0.00",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-1_6-yes1-1.cnf",
-            "minisat": "0.00",
-            "std": "0.00",
-            "moms": "0.00",
-            "dlis": "0.00",
-            "dlis0": "0.00",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-1_6-yes1-2.cnf",
-            "minisat": "0.00",
-            "std": "0.02",
-            "moms": "0.02",
-            "dlis": "0.02",
-            "dlis0": "0.02",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-1_6-yes1-3.cnf",
-            "minisat": "0.00",
-            "std": "0.03",
-            "moms": "0.03",
-            "dlis": "0.03",
-            "dlis0": "0.03",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-1_6-yes1-4.cnf",
-            "minisat": "0.00",
-            "std": "0.48",
-            "moms": "0.50",
-            "dlis": "0.51",
-            "dlis0": "0.49",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-2_0-yes1-1.cnf",
-            "minisat": "0.00",
-            "std": "1.06",
-            "moms": "1.07",
-            "dlis": "1.06",
-            "dlis0": "1.08",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-2_0-yes1-2.cnf",
-            "minisat": "0.00",
-            "std": "0.66",
-            "moms": "0.65",
-            "dlis": "0.63",
-            "dlis0": "0.65",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-2_0-yes1-3.cnf",
-            "minisat": "0.00",
-            "std": "0.50",
-            "moms": "0.50",
-            "dlis": "0.52",
-            "dlis0": "0.54",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-2_0-yes1-4.cnf",
-            "minisat": "0.00",
-            "std": "1.87",
-            "moms": "1.87",
-            "dlis": "1.91",
-            "dlis0": "1.88",
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-200-3_4-yes1-1.cnf",
-            "minisat": "0.00",
-            "std": "6.54",
->>>>>>> 68bc59e7d31d156281d0b2f8e22bd2b015ea9689

@@ -4,7 +4,7 @@
             "file": "test_base/cnf/serial_test/unsat/aim/aim-50-1_6-no-1.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.28",
+            "momswl": "0.27",
             "dliswl": "0.06",
             "dlis0wl": "0.02"
         },
@@ -20,9 +20,9 @@
             "file": "test_base/cnf/serial_test/unsat/aim/aim-50-1_6-no-3.cnf",
             "minisat": "0.00",
             "wl": "0.01",
-            "momswl": "0.12",
-            "dliswl": "0.19",
-            "dlis0wl": "0.15"
+            "momswl": "0.11",
+            "dliswl": "0.18",
+            "dlis0wl": "0.14"
         },
         {
             "file": "test_base/cnf/serial_test/unsat/aim/aim-50-1_6-no-4.cnf",
@@ -30,13 +30,13 @@
             "wl": "0.00",
             "momswl": "0.34",
             "dliswl": "0.02",
-            "dlis0wl": "0.02"
+            "dlis0wl": "0.01"
         },
         {
             "file": "test_base/cnf/serial_test/unsat/aim/aim-50-2_0-no-1.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.27",
+            "momswl": "0.25",
             "dliswl": "0.00",
             "dlis0wl": "0.00"
         },
@@ -44,7 +44,7 @@
             "file": "test_base/cnf/serial_test/unsat/aim/aim-50-2_0-no-2.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.15",
+            "momswl": "0.14",
             "dliswl": "0.00",
             "dlis0wl": "0.03"
         },
@@ -52,7 +52,7 @@
             "file": "test_base/cnf/serial_test/unsat/aim/aim-50-2_0-no-3.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.19",
+            "momswl": "0.17",
             "dliswl": "0.00",
             "dlis0wl": "0.01"
         },
@@ -60,9 +60,9 @@
             "file": "test_base/cnf/serial_test/unsat/aim/aim-50-2_0-no-4.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.24",
-            "dliswl": "0.05",
-            "dlis0wl": "0.11"
+            "momswl": "0.23",
+            "dliswl": "0.04",
+            "dlis0wl": "0.10"
         },
         { "file": "end" }
     ]
