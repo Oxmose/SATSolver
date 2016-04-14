@@ -20,7 +20,8 @@ typedef pair<int,bool> node;
 class ConflictGraph
 {
 	public:
-		ConflictGraph(bool verbose=true) { m_uip = make_pair(-1,0); m_verbose = verbose; m_voisinDe = map<node,set<node>>(); m_levelOf = map<node,int>();}
+		ConflictGraph(bool verbose=true) { m_uip = make_pair(-1,0); m_verbose = verbose; m_voisinDe = map<node,set<node>>(); m_levelOf = map<node,int>(); 
+    NIL = make_pair(-1, false);}
 
 		void clear();
 		void add_node(pair<node,int> node_level);
@@ -37,6 +38,7 @@ class ConflictGraph
 
 		pair<Clause,int> resolution(node the_bet, node the_conflict, int id_clause);
 		void findUIP(node the_bet, node the_conflict);
+                void browseAP(ConflictGraph &inverse, node u, std::map<node, bool> &visited, std::map<node, int> &disc, std::map<node, int> &low, std::map<node, node> &parent, std::map<node, bool> &ap);
 		void findUIPCut();
 
 	private:
@@ -47,6 +49,7 @@ class ConflictGraph
 
 		node m_uip;
 		std::map<node, bool> m_inCut;
+                node NIL;
 };
 
 #endif

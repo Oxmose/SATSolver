@@ -38,13 +38,10 @@ On ne renumérote pas les variables comme proposé dans le sujet supposant que l
 ### Améliorations:         
 
 - On pourrait tirer profit des structures de la variante standard pour aller plus vite dans les bets (là on doit toujours parcourir tous les litéraux et vérifier leur affectation).   
-- On pourrait améliorer notre Makefile pour garder des .o et ne pas avoir à tout recompiler à chaque fois ce qui devient long.  
 
 
 ## Générateur de formules CNF
 Afin de générer une formule CNF, il suffit d'éxécuter le programme sans aucuns arguments. Un menu vous sera alors présenté et vous aurez le choix de générer une formule SAT CNF. Pour ce faire suivez les instructions.       
-
-## Structure des fichiers
 
 
 ## Performances
@@ -83,6 +80,11 @@ UNSATISFIABLE
 
 Temps d'éxécution : 1m9.022s
 
+#### dubois22.cnf rendu 2 en CL standard Bet
+//TODO
+
+#### dubois22.cnf rendu 2 en WL etCL standard Bet
+//TODO
 
 ### Perfomances du rendu 2
 
@@ -102,15 +104,17 @@ Pas re-testée depuis le rendu1.
 
 
 ## Qui a fait quoi
-#Tristan
+###Tristan
 * rendu1 : Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.
 * rendu2 : Refonte DPLL, implémentation Watched Literals, redesign en statégies, scripts de tests, optimisation.
 
-#Alexy
+###Alexy
 * rendu1 : Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
-* rendu2 :  heuristiques de paris, redesign en statégies, modifications du parser, scripts de tests, optimisation.
+* rendu2 : Heuristiques de paris, redesign en statégies, modifications du parser, scripts de tests, optimisation.
+* rendu3 : Recherche de l'UIP dans le graph, création de la coupe UIP, heuristiques, interface, scripts de test, corrections de bugs, optimisation.
 
 # Scripts de test
+
 Deux bateries de tests sont disponibles :
 ##Correction
 Dans bin
@@ -127,3 +131,25 @@ test_total_time.sh permet de vérifier que les temps de résolution pour les heu
 Les tests sont éfféctués sur les CNF dans le dossier bin/test_base/cnf/serial_test.
 
 Vous pourrez y mettre les CNF que vous voullez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
+
+# Rendu 3
+## Ce qui a été fait
+* Implémentation des CL (avec et sans WL)
+* Implémentation de l'exploration de conflits interactif
+* Implémentation des heuristiques FORGET et VSIDS
+* Correction de bugs (Tseitin et prétraitement)
+* Nouveaux set de tests (correction et temps)
+* Nouveaux scripts de test (correction et temps)
+* Nouveau makefile, plus pratique à utiliser (ne recompile que les fichiers modifiés), faire un make clean, make à chaque pull du git
+## Qui a fait quoi
+* Se référer au chapitre "Qui a fait quoi" plus haut.
+
+## Performances
+* Les heuristiques RAND et RAND0 se révèlent être dans le meilleur des cas très bonne avec le CL.
+
+## Le retour de la clause de l'horreur
+Lors des premiers tests nous n'étions pas parvenu à résoudre la formule :
+
+dev/bin/test_base/cnf/first_set/bf0432-007.cnf
+
+Or à l'aide de CL et WL avec l'heuristique VSIDS, nous pouvons la résoudre en 0.001s.

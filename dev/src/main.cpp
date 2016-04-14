@@ -54,6 +54,7 @@ int main(int argc, char** argv)
         return 0;
     
     debugFlag = sets.debug_s;
+
     // Time computation
     clock_t start;
     double duration;
@@ -69,7 +70,7 @@ int main(int argc, char** argv)
         solver = shared_ptr<SATSolver>(new SATSolverWL());
     else if(!sets.wl_s && sets.cl_s)
         solver = shared_ptr<SATSolver>(new SATSolverCL(sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
-    else if(sets.wl_s && sets.cl_s)
+    else
         solver = shared_ptr<SATSolver>(new SATSolverCLWL(sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
 
     // Set strategy
@@ -119,7 +120,7 @@ int main(int argc, char** argv)
     vector<Clause> clauses;
 
     if(!parser->parse(maxIndex, clauses))
-        OUTWARNING("Wranings while parsing the file.");
+        OUTWARNING("Warnings while parsing the file.");
     solver->setMaxIndex(maxIndex);
     solver->setOriginFormula(clauses);
     solver->setParser(parser);
