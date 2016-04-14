@@ -36,9 +36,9 @@ class ConflictGraph
 
 		int levelMax;
 
-		pair<Clause,int> resolution(node the_bet, node the_conflict, int id_clause);
-		void findUIP(node the_bet, node the_conflict);
-                void browseAP(ConflictGraph &inverse, node u, std::map<node, bool> &visited, std::map<node, int> &disc, std::map<node, int> &low, std::map<node, node> &parent, std::map<node, bool> &ap);
+		pair<Clause,int> resolution(bool naiveuip, node the_bet, node the_conflict, int id_clause);
+		void findUIP(bool m_naiveuip, node the_bet, node the_conflict);
+        void browseAP(ConflictGraph &inverse, node u, std::map<node, bool> &visited, std::map<node, int> &disc, std::map<node, int> &low, std::map<node, node> &parent, std::map<node, bool> &ap);
 		void findUIPCut();
 
 	private:

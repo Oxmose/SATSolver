@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -128,7 +128,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 21 "Parser/expr.ypp" /* yacc.c:355  */
@@ -138,6 +138,8 @@ union YYSTYPE
 
 #line 140 "Parser/expr.tab.cpp" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -151,7 +153,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 155 "Parser/expr.tab.cpp" /* yacc.c:358  */
+#line 157 "Parser/expr.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1234,65 +1236,65 @@ yyreduce:
         case 2:
 #line 49 "Parser/expr.ypp" /* yacc.c:1646  */
     { res = (yyvsp[-1].exp); }
-#line 1238 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1240 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 53 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EVar((yyvsp[0].ival));}
-#line 1244 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1246 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 54 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = (yyvsp[-1].exp);}
-#line 1250 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1252 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 55 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EEqu((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1256 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1258 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 56 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EImp((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1262 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1264 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 57 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EXor((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1268 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1270 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 58 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EDis((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1274 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1276 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 59 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new ECon((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1280 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1282 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 60 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EAnt((yyvsp[0].exp));}
-#line 1286 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1288 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 61 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new ENeg((yyvsp[0].exp));}
-#line 1292 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1294 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1296 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1298 "Parser/expr.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

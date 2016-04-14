@@ -25,7 +25,7 @@
 class SATSolverCL : public SATSolver
 {
     public:
-        SATSolverCL(const bool &p_interact, const bool &p_forget, const bool &p_vsids, std::function<double(double, bool)> p_scoreFunction);
+        SATSolverCL(const bool &p_naiveuip, const bool &p_interact, const bool &p_forget, const bool &p_vsids, std::function<double(double, bool)> p_scoreFunction);
 
         virtual ~SATSolverCL();
         virtual double getVarScores(int p_var);
@@ -64,6 +64,7 @@ class SATSolverCL : public SATSolver
         std::map<std::string,int> m_learnedClauses;
         bool m_forget;
         bool m_vsids;
+        bool m_naiveuip;
         std::vector<int>  m_bets;
 
 }; // SATSolver

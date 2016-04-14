@@ -3,7 +3,7 @@
 
 using namespace std;
 
-SATSolverCLWL::SATSolverCLWL(const bool &p_interact, const bool &p_forget, const bool &p_vsids, function<double(double, bool)> p_scoreFunction)
+SATSolverCLWL::SATSolverCLWL(const bool &p_naiveuip, const bool &p_interact, const bool &p_forget, const bool &p_vsids, function<double(double, bool)> p_scoreFunction)
 {
     OUTDEBUG("Using Clause Learning + Watched Literals Solver, " << string((p_interact ? "with interaction, " : "without interact, ")) << string((p_forget ? "with cutoff threshold to forget clauses." : "without cutoff threshold to forget clauses.")));
     m_isCL = true;
@@ -14,7 +14,7 @@ SATSolverCLWL::SATSolverCLWL(const bool &p_interact, const bool &p_forget, const
 
     m_interact = p_interact;
     m_forget = p_forget;
-
+    m_naiveuip = p_naiveuip;
     m_vsids = p_vsids;
 
     m_scoreFunction = p_scoreFunction;
@@ -264,7 +264,7 @@ bool SATSolverCLWL::applyLastDecision()
                 OUTDEBUG("\tContradiction spotted! : " << m_clauses[iClause].toStr());
                 int the_bet = m_bets.back();;
 
-                pair<Clause,int> whatINeed = m_conflictGraph.resolution(make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]), m_clauses.size());
+                pair<Clause,int> whatINeed = m_conflictGraph.resolution(m_naiveuip, make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]), m_clauses.size());
                 //printf("%s\n", whatINeed.first.toDIMACS().c_str());
                 //printf("%d\n", whatINeed.second);
                 m_btLevel = whatINeed.second;

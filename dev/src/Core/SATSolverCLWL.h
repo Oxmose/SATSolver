@@ -18,7 +18,7 @@
 class SATSolverCLWL : public SATSolver
 {
     public:
-        SATSolverCLWL(const bool &p_interact, const bool &p_forget, const bool &p_vsids, std::function<double(double, bool)> p_scoreFunction);
+        SATSolverCLWL(const bool &p_naiveuip, const bool &p_interact, const bool &p_forget, const bool &p_vsids, std::function<double(double, bool)> p_scoreFunction);
 
         virtual ~SATSolverCLWL();
         virtual double getVarScores(int p_var);
@@ -55,6 +55,7 @@ class SATSolverCLWL : public SATSolver
         std::map<std::string,int> m_learnedClauses;
         bool m_forget;
         bool m_vsids;
+        bool m_naiveuip;
         std::vector<int> m_bets;
 
 }; // SATSolver
