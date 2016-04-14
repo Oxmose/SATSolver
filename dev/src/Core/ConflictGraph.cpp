@@ -112,8 +112,73 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
     }
 
     map<node, bool> visited;    
-    map<node, bool> uips;
+/*    map<node, bool> access;
+    neight.push(conflict);
+    neight.push(conflictBar);
+
+    while(!neight.empty())
+    {
+        node toVisit = neight.front();
+        neight.pop();
+
+        for(auto u : inverse.m_voisinDe[toVisit])
+        {
+            if(m_levelOf[u] == levelMax && visited.find(u) == visited.end())
+            {
+                visited.emplace(u, true);
+                neight.push(u);
+                access.emplace(u, true);
+            }
+        }
+    }
+
     visited.clear();
+    neight.push(start);
+    while(!neight.empty())
+    {
+        node toVisit = neight.front();
+        neight.pop();
+
+        if(m_voisinDe[toVisit].size() == 1)
+        {
+            if(*(m_voisinDe[toVisit].begin()) == conflict || *(m_voisinDe[toVisit].begin()) == conflictBar)
+            {
+                m_uip = start;
+                return;
+            }
+        }
+        for(auto u : m_voisinDe[toVisit])
+        {            
+            if(access.find(u) != access.end() && visited.find(u) == visited.end())
+            {
+                visited.emplace(u, true);
+                neight.push(u);
+            }
+        }
+        if(neight.size() == 1 && neight.front() != conflict && neight.front() != conflictBar)
+        {
+            node toGo = neight.front();
+            if(m_voisinDe[toGo].size() == 1)
+            {
+                if(*(m_voisinDe[toGo].begin()) != conflict && *(m_voisinDe[toGo].begin()) != conflictBar)
+                {                
+                    while(m_voisinDe[toGo].size() == 1 && *(m_voisinDe[toGo].begin()) != conflict && *(m_voisinDe[toGo].begin()) != conflictBar)
+                    {
+                        toGo = *(m_voisinDe[toGo].begin());
+                    }
+                    m_uip = toGo;
+                    return;
+                }
+            }
+            else
+            {
+                m_uip = toGo;
+                return;
+            }
+        }
+    }
+*/
+    map<node, bool> uips;
     
     bool found = false;
 
@@ -183,6 +248,7 @@ void ConflictGraph::findUIP(node the_bet, node the_conflict)
             }
         }
     }
+
     m_uip = start;
 }
 

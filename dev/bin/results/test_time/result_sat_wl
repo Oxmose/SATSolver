@@ -52,15 +52,15 @@
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-3.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.05",
-            "dliswl": "0.16",
+            "momswl": "0.04",
+            "dliswl": "0.15",
             "dlis0wl": "0.00"
         },
         {
             "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-4.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.01",
+            "momswl": "0.00",
             "dliswl": "0.00",
             "dlis0wl": "0.00"
         },

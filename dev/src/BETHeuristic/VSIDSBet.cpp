@@ -56,8 +56,12 @@ decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCl
     bool value = false;
 
     std::vector<pair<int,bool>> candidates;
+
+    cout << "UNSAT : " << p_unsatClauses.size() << endl;
     for(int iClause: p_unsatClauses)
     {
+        cout << "iClause : " << iClause << endl;
+        cout << "LITS ONE : " << p_clauses[iClause].getLiterals().size() << endl;
         for(auto lit: p_clauses[iClause].getLiterals())
         {
             //if(m_solver->getVarScores(lit.first) != 0)
@@ -70,7 +74,7 @@ decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCl
                 candidates.clear();
                 candidates.push_back(make_pair(firstUnassigned,value));
             }
-            else if(p_valuation[lit.first] == -1 && max == (score = m_solver->getVarScores(lit.first)))
+            else if(p_valuation[lit.first] == -1 && max == m_solver->getVarScores(lit.first))
             {
                 firstUnassigned = lit.first;
                 value = !lit.second;
@@ -79,11 +83,13 @@ decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCl
         }
     }    
 
+    cout << "CAND " << candidates.size() << endl;
     if(candidates.size() != 0)
     {
-        int iCandidate = rand()%candidates.size();
+        int iCandidate = rand() % candidates.size();
         firstUnassigned = candidates[iCandidate].first;
         value = candidates[iCandidate].second;
+        cout << "SELECTED = " << iCandidate << " HAS " << candidates[iCandidate].first << " is " << firstUnassigned << endl;
     }
 
     decision bet = decision(firstUnassigned, value, true);
