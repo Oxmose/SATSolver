@@ -65,7 +65,7 @@ decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCl
         for(auto lit: p_clauses[iClause].getLiterals())
         {
             //if(m_solver->getVarScores(lit.first) != 0)
-            //printf("%d %lf\n", lit.first, m_solver->getVarScores(lit.first));
+            //printf("%d %lf %d\n", lit.first, m_solver->getVarScores(lit.first), p_valuation[lit.first]);
             if(p_valuation[lit.first] == -1 && max < (score = m_solver->getVarScores(lit.first)))
             {
                 max = score;

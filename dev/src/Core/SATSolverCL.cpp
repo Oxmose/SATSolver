@@ -16,6 +16,7 @@ SATSolverCL::SATSolverCL(const bool &p_interact, const bool &p_forget, const boo
     m_interact = p_interact;
     m_forget = p_forget;
 
+
     m_scoreFunction = p_scoreFunction;
 }
 
@@ -62,6 +63,9 @@ bool SATSolverCL::backtrack(bool& p_unsat)
             decision toCancel = m_currentAssignement.back();
             lastBetFound = toCancel.bet && (m_currLevel == m_btLevel);
             if(toCancel.bet)
+            	m_bets.pop_back();
+
+            if(toCancel.bet)
             	m_currLevel--;
 
             reviveClauseWithSatisfier(toCancel.index);
@@ -74,11 +78,14 @@ bool SATSolverCL::backtrack(bool& p_unsat)
                 m_currentAssignement.pop_back();
             else
             {
-                //If we are on the last bet we turn it into a deduction and change it
-                m_currentAssignement.back().value = !m_currentAssignement.back().value;
-                m_currentAssignement.back().bet = false;
-                m_currentAssignement.back().ancien_bet = true; 
-                m_conflictGraph.add_node(make_pair(make_pair(m_currentAssignement.back().index,m_currentAssignement.back().value),m_currLevel));
+                //If we are on a bet we turn it into a deduction and change it
+                //m_currentAssignement.back().value = !m_currentAssignement.back().value;
+                //m_currentAssignement.back().bet = false;
+                //m_currentAssignement.back().ancien_bet = true; 
+                	m_currLevel++;
+                	m_bets.push_back(m_currentAssignement.back().index);
+                	m_conflictGraph.add_node(make_pair(make_pair(m_currentAssignement.back().index,m_currentAssignement.back().value),m_currLevel));
+            
             }
         }
 
@@ -108,6 +115,8 @@ decision SATSolverCL::takeABet()
 
     m_currLevel++;
     m_conflictGraph.add_node(make_pair(make_pair(bet.index,bet.value),m_currLevel));
+
+    m_bets.push_back(bet.index);
     return bet;
 } // decision takeABet()
 
@@ -117,6 +126,17 @@ void SATSolverCL::addResolutionClause()
 		if(c.toDIMACS() == m_resolutionClause.toDIMACS())
 			return;
 
+	if(m_resolutionClause.getLiterals().size() == 1)
+    {
+    	int index = m_resolutionClause.getLiterals().begin()->first;
+    	bool value = !m_resolutionClause.getLiterals().begin()->second;
+    	m_preprocessQueue.push(decision(index,value,false));
+    	m_parentsOf[index] = -1;
+    	OUTDEBUG("Resolution clause " << m_resolutionClause.toStr() << " added in preprocess");
+    	return;
+    }
+   
+
 	m_clauses.push_back(m_resolutionClause);
 	m_unsatClauses.insert(m_resolutionClause.getId());
 
@@ -124,20 +144,22 @@ void SATSolverCL::addResolutionClause()
 
     for(auto lit : m_clauses[iClause].getLiterals())
     {
+
         m_clausesWithVar[lit.first].push_back(iClause);
-        m_aliveVarsIn[iClause].insert(lit.first);
+        if(m_valuation[lit.first] == -1)
+        	m_aliveVarsIn[iClause].insert(lit.first);
         //cout << "HERE " << lit.first << " " << m_varScores[lit.first] << " " << m_scoreFunction(m_varScores[lit.first],true) << endl;
-        if(m_vsids)
+        if(m_vsids && m_resolutionClause.getLiterals().size() != 1)
         	m_varScores[lit.first] = m_scoreFunction(m_varScores[lit.first],true);
     }
 
-    if(m_vsids)
+    if(m_vsids && m_resolutionClause.getLiterals().size() != 1)
     {
     	for(auto l : m_varScores)
     		if(m_clauses[iClause].getLiterals().find(l.first) == m_clauses[iClause].getLiterals().end())
     			m_varScores[l.first] = m_scoreFunction(m_varScores[l.first],false);
     }
-   
+
     OUTDEBUG("Resolution clause " << m_resolutionClause.toStr() << " added");
 }
 
@@ -154,19 +176,25 @@ bool SATSolverCL::applyLastDecision()
     OUTDEBUG("GraphSize " << m_conflictGraph.get_graph().size());
     //OUTDEBUG(m_deductionQueue.size());
     iter++;
+    OUTDEBUG(currentStateToStr());
     OUTDEBUG("Handling " << ((p_dec.bet) ? string("bet") : string("deduction")) << ": "
             << p_dec.index << " to " << ((p_dec.value) ? string("True") : string("False")));
     
-    if(!p_dec.bet && !p_dec.ancien_bet)
+    if(!p_dec.bet)
     {
-    	OUTDEBUG("Coming from " << m_clauses[m_parentsOf[p_dec.index]].toStr() << " " << m_parentsOf[p_dec.index]);
-        m_conflictGraph.add_node(make_pair(make_pair(p_dec.index,p_dec.value),m_currLevel));
-        //printf("Clause for %d %d %s\n",p_dec.index, m_parentsOf[p_dec.index], m_clauses[m_parentsOf[p_dec.index]].toStr().c_str());
-        if(m_parentsOf.find(p_dec.index) != m_parentsOf.end())
-        	for(auto l : m_clauses[m_parentsOf[p_dec.index]].getLiterals())
-            	if(l.first != p_dec.index)
-                	m_conflictGraph.add_edge(make_pair(l.first,m_valuation[l.first]),make_pair(p_dec.index,p_dec.value));
-        m_parentsOf.erase(p_dec.index);
+    	m_conflictGraph.add_node(make_pair(make_pair(p_dec.index,p_dec.value),m_currLevel));
+
+    	if(m_parentsOf[p_dec.index] != -1)
+    	{
+    		OUTDEBUG("Coming from " << m_clauses[m_parentsOf[p_dec.index]].toStr() << " " << m_parentsOf[p_dec.index]);
+        
+        	//printf("Clause for %d %d %s\n",p_dec.index, m_parentsOf[p_dec.index], m_clauses[m_parentsOf[p_dec.index]].toStr().c_str());
+        	if(m_parentsOf.find(p_dec.index) != m_parentsOf.end())
+        		for(auto l : m_clauses[m_parentsOf[p_dec.index]].getLiterals())
+            		if(l.first != p_dec.index)
+                		m_conflictGraph.add_edge(make_pair(l.first,m_valuation[l.first]),make_pair(p_dec.index,p_dec.value));
+        	m_parentsOf.erase(p_dec.index);
+        }
     }
     //OUTDEBUG("\t" << currentStateToStr());
     
@@ -179,6 +207,9 @@ bool SATSolverCL::applyLastDecision()
     {
         if(m_unsatClauses.find(iClause) != m_unsatClauses.end())
         {
+        	/*printf("%s %d\n", m_clauses[iClause].toDIMACS().c_str(), m_aliveVarsIn[iClause].size());
+        	for(auto a : m_aliveVarsIn[iClause])
+        		printf("\t%d\n",a);*/
             if(m_clauses[iClause].getLiterals()[p_dec.index] == !p_dec.value)
                 satisfyClause(iClause,p_dec.index);
             else
@@ -208,13 +239,16 @@ bool SATSolverCL::applyLastDecision()
 
 
                     OUTDEBUG("\tContradiction spotted! : " << m_clauses[iClause].toStr());
-                    int the_bet = -1;
-                    for(int i = m_currentAssignement.size()-1  ; i >= 0 ; i--)
+                    int the_bet = m_bets.back();
+                    /*for(int i = m_currentAssignement.size()-1  ; i >= 0 ; i--)
+                    {
+                    	cout << "\t" << m_currentAssignement[i].index << ((m_currentAssignement[i].bet) ? " b" : "") << endl;
                         if(m_currentAssignement[i].bet)
                         {
                             the_bet = m_currentAssignement[i].index;
                             break;
                         }
+                    }*/
 
                 	pair<Clause,int> whatINeed = m_conflictGraph.resolution(make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]), m_clauses.size());
                     //printf("%s\n", whatINeed.first.toDIMACS().c_str());
@@ -227,6 +261,7 @@ bool SATSolverCL::applyLastDecision()
                     {
                     	m_learnedClauses[whatINeed.first.toDIMACS().c_str()]++;
                     }
+
 
                     if(m_interact)
                     {
@@ -252,6 +287,44 @@ bool SATSolverCL::applyLastDecision()
 	                		m_interact = false;
 	                    else
 	                    	OUTERROR("Option does not exist");
+	                }
+
+	                if(whatINeed.first.getLiterals().size() == 1)
+	                {
+	                	
+	                	for(int i = 0 ; i < m_currentAssignement.size() ; i++)
+	                	{
+	                		if(m_currentAssignement[i].bet)
+	                			break;
+	                	
+	                		if(m_currentAssignement[i].index == whatINeed.first.getLiterals().begin()->first && m_currentAssignement[i].value == whatINeed.first.getLiterals().begin()->second)
+	                		{
+	                			printf("s UNSATISFIABLE\n");
+	                			exit(0);
+	                		}
+	                	}
+	                	m_conflictGraph.remove_node(make_pair(m_currentAssignement.back().index,!m_currentAssignement.back().value));
+
+	                	while(m_currLevel != -1)
+	                	{
+	                		if(m_currentAssignement.back().bet)
+	                			m_currLevel--;
+	                		auto toCancel = m_currentAssignement.back();
+	                		reviveClauseWithSatisfier(m_currentAssignement.back().index);
+            				m_conflictGraph.remove_node(make_pair(toCancel.index,toCancel.value));
+
+            				for(int iClause : m_clausesWithVar[m_currentAssignement.back().index])
+                				m_aliveVarsIn[iClause].insert(m_currentAssignement.back().index);
+	                		m_valuation[m_currentAssignement.back().index] = -1;
+	                		m_currentAssignement.pop_back();
+	                	}
+	                	
+	                	while(!m_deductionQueue.empty())
+	                		m_deductionQueue.pop();
+	                	m_parentsOf.clear();
+	                	
+	                	addResolutionClause();
+	                	m_isContradictory = false;
 	                }
 
                     return false;

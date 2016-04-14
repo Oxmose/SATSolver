@@ -16,6 +16,7 @@
 #include <iostream>     // std::cout std::cerr std::endl
 #include <fstream>      // std::ifstream
 #include <functional>   // std::function
+#include <queue>
 
 // PROJECT INCLUDES
 #include "ConflictGraph.h"  // ConflictGraph
@@ -63,6 +64,7 @@ class SATSolverCL : public SATSolver
         std::map<std::string,int> m_learnedClauses;
         bool m_forget;
         bool m_vsids;
+        std::vector<int>  m_bets;
 
 }; // SATSolver
 
