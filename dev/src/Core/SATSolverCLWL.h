@@ -55,6 +55,7 @@ class SATSolverCLWL : public SATSolver
         std::map<std::string,int> m_learnedClauses;
         bool m_forget;
         bool m_vsids;
+        std::vector<int> m_bets;
 
 }; // SATSolver
 

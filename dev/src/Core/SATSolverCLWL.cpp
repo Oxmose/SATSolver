@@ -18,6 +18,7 @@ SATSolverCLWL::SATSolverCLWL(const bool &p_interact, const bool &p_forget, const
     m_vsids = p_vsids;
 
     m_scoreFunction = p_scoreFunction;
+
 }
 
 SATSolverCLWL::~SATSolverCLWL()
@@ -73,6 +74,8 @@ bool SATSolverCLWL::backtrack(bool& p_unsat)
         while(!m_currentAssignement.empty() && !lastBetFound)
         {
             decision toCancel = m_currentAssignement.back();
+            if(toCancel.bet)
+                m_bets.pop_back();
             lastBetFound = toCancel.bet && (m_currLevel == m_btLevel);
             if(toCancel.bet)
                 m_currLevel--;
@@ -118,6 +121,9 @@ decision SATSolverCLWL::takeABet()
 
     m_currLevel++;
     m_conflictGraph.add_node(make_pair(make_pair(bet.index,bet.value),m_currLevel));
+
+    m_bets.push_back(bet.index);
+
     return bet;
 } // decision takeABet()
 
@@ -256,13 +262,7 @@ bool SATSolverCLWL::applyLastDecision()
 
 
                 OUTDEBUG("\tContradiction spotted! : " << m_clauses[iClause].toStr());
-                int the_bet = -1;
-                for(int i = m_currentAssignement.size()-1  ; i >= 0 ; i--)
-                    if(m_currentAssignement[i].bet)
-                    {
-                        the_bet = m_currentAssignement[i].index;
-                        break;
-                    }
+                int the_bet = m_bets.back();;
 
                 pair<Clause,int> whatINeed = m_conflictGraph.resolution(make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]), m_clauses.size());
                 //printf("%s\n", whatINeed.first.toDIMACS().c_str());
