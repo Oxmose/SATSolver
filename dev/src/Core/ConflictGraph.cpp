@@ -300,10 +300,10 @@ void ConflictGraph::output(string file_name, int the_bet, int the_conflict)
         for(auto& v : e.second)
             b = b || (m_inCut.find(v) != m_inCut.end());
         active[e.first] = active[e.first] && b;
-        if(true)
+        if(m_inCut.find(e.first) != m_inCut.end() || active[e.first])
         {
             for(auto& v : e.second)
-                if(true)
+                if(m_inCut.find(v) != m_inCut.end())
                     myfile << node_to_str(e.first) + "->" + node_to_str(v) << ";\n";
             if(e.second.empty())
                 myfile << node_to_str(e.first) << ";\n";
@@ -320,7 +320,7 @@ void ConflictGraph::output(string file_name, int the_bet, int the_conflict)
 
 
     for(auto& e: m_voisinDe)
-        if(true)
+        if(m_inCut.find(e.first) != m_inCut.end() || active[e.first])
         {
             if(e.first.first == m_uip.first)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=yellow];\n";

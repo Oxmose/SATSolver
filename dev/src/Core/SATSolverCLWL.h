@@ -31,8 +31,9 @@ class SATSolverCLWL : public SATSolver
 
         virtual decision takeABet();
         virtual bool applyLastDecision();
+        void standardBT();
         virtual bool backtrack(bool& p_unsat);
-        void addResolutionClause();
+        bool addResolutionClause();
 
     
 

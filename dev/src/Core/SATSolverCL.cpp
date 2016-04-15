@@ -71,10 +71,8 @@ bool SATSolverCL::backtrack(bool& p_unsat)
             	m_currLevel--;
             }
             else
-            {
-            	OUTDEBUG("Here : " << toCancel.index);
             	m_parentsOf.erase(toCancel.index);
-            }
+            
             	
 
             reviveClauseWithSatisfier(toCancel.index);
@@ -130,10 +128,6 @@ decision SATSolverCL::takeABet()
 
 bool SATSolverCL::addResolutionClause()
 {
-	for(auto c: m_clauses)
-		if(c.toDIMACS() == m_resolutionClause.toDIMACS())
-			return true;
-
 	if(m_resolutionClause.getLiterals().size() == 1)
     {
     	int index = m_resolutionClause.getLiterals().begin()->first;
