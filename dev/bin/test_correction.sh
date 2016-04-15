@@ -18,7 +18,7 @@ do
         echo "STD OK"
     fi
     #WL
-    S2=$((/usr/bin/time -f "%e r" ./resol -wl $f) |& grep s)
+    S2=$((/usr/bin/time -f "%e r" ./resol -cl $f) |& grep s)
     if [ "$S2" != "$SOK" ];
     then
         echo "ERROR"
@@ -27,7 +27,7 @@ do
         echo "WL OK"
     fi
     #CL
-    S3=$((/usr/bin/time -f "%e r" ./resol -cl -vsids $f) |& grep s)
+    S3=$((/usr/bin/time -f "%e r" ./resol -cl  $f) |& grep s)
     echo "S3 : $S3"
     if [ "$S3" != "$SOK" ];
     then
@@ -56,7 +56,7 @@ do
 
     
     #CL
-    S3=$((/usr/bin/time -f "%e r" ./resol -cl -wl $f) |& grep s)
+    S3=$((/usr/bin/time -f "%e r" ./resol -cl -wl -vsids $f) |& grep s)
     if [ "$S3" != "$SOK2" ];
     then
         echo "ERROR"
