@@ -321,7 +321,7 @@ bool SATSolver::evaluate()
 
 string SATSolver::currentStateToStr()
 {
-    return decisionToStr() + "# " + formulaToStr();
+    return decisionToStr() /*+ "# " + formulaToStr()*/;
 } // string currentStateToStr()
 
 string SATSolver::formulaToStr()

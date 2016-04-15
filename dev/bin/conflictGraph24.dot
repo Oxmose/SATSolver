@@ -1,0 +1,36 @@
+digraph {
+"16
+1@0"->"30
+1@0";
+"30
+1@0"->"78
+0@0";
+"30
+1@0"->"78
+1@0";
+"35
+0@-1"->"78
+1@0";
+"78
+0@0";
+"78
+1@0";
+"95
+0@-1"->"30
+1@0";
+"95
+0@-1"->"78
+0@0";
+"16
+1@0"[shape=circle, style=filled, fillcolor=red];
+"30
+1@0"[shape=circle, style=filled, fillcolor=yellow];
+"35
+0@-1"[shape=circle, style=filled, fillcolor=pink];
+"78
+0@0"[shape=circle, style=filled, fillcolor=green];
+"78
+1@0"[shape=circle, style=filled, fillcolor=green];
+"95
+0@-1"[shape=circle, style=filled, fillcolor=pink];
+}

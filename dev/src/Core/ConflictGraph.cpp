@@ -78,7 +78,7 @@ pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int 
         for(auto& v : e.second)
             if(m_inCut.find(e.first) == m_inCut.end() && m_inCut.find(v) != m_inCut.end())
             {
-                if(m_levelOf[e.first] != m_levelOf[the_conflict] && m_levelOf[e.first] != -1)
+                if(m_levelOf[e.first] != m_levelOf[the_conflict])
                     backtrackLevel = max(backtrackLevel,m_levelOf[e.first]);
                 lit[e.first.first] = e.first.second;
             }

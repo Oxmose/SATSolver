@@ -51,22 +51,31 @@ bool SATSolverCL::backtrack(bool& p_unsat)
         while(!m_deductionQueue.empty())
         {
         	auto dec = m_deductionQueue.front();
-        	m_parentsOf.clear();
         	OUTDEBUG("Free " << dec.index);
+        	m_parentsOf.erase(dec.index);
         	m_deductionQueue.pop();
         }
 
         m_conflictGraph.remove_node(make_pair(m_currentAssignement.back().index,!m_currentAssignement.back().value));
-
+        bool hasFoundBet = false;
         while(!m_currentAssignement.empty() && !lastBetFound)
         {
             decision toCancel = m_currentAssignement.back();
             lastBetFound = toCancel.bet && (m_currLevel == m_btLevel);
+            if(m_currLevel == -1 && hasFoundBet)
+            	break;
             if(toCancel.bet)
+            {
+            	hasFoundBet = true;
             	m_bets.pop_back();
-
-            if(toCancel.bet)
             	m_currLevel--;
+            }
+            else
+            {
+            	OUTDEBUG("Here : " << toCancel.index);
+            	m_parentsOf.erase(toCancel.index);
+            }
+            	
 
             reviveClauseWithSatisfier(toCancel.index);
             m_conflictGraph.remove_node(make_pair(toCancel.index,toCancel.value));
@@ -99,10 +108,9 @@ bool SATSolverCL::backtrack(bool& p_unsat)
         for(auto a : g)
         	printf("%d %d\n", a.first.first, a.first.second);*/
 
-        addResolutionClause();
         OUTDEBUG(currentStateToStr());
-
-        return true;
+    	return addResolutionClause();
+    	
     }
     return false;
 } // bool backtrack(bool&)
@@ -120,20 +128,20 @@ decision SATSolverCL::takeABet()
     return bet;
 } // decision takeABet()
 
-void SATSolverCL::addResolutionClause()
+bool SATSolverCL::addResolutionClause()
 {
 	for(auto c: m_clauses)
 		if(c.toDIMACS() == m_resolutionClause.toDIMACS())
-			return;
+			return true;
 
 	if(m_resolutionClause.getLiterals().size() == 1)
     {
     	int index = m_resolutionClause.getLiterals().begin()->first;
     	bool value = !m_resolutionClause.getLiterals().begin()->second;
-    	m_preprocessQueue.push(decision(index,value,false));
+		m_preprocessQueue.push(decision(index,value,false));
     	m_parentsOf[index] = -1;
     	OUTDEBUG("Resolution clause " << m_resolutionClause.toStr() << " added in preprocess");
-    	return;
+    	return true;
     }
    
 
@@ -160,7 +168,17 @@ void SATSolverCL::addResolutionClause()
     			m_varScores[l.first] = m_scoreFunction(m_varScores[l.first],false);
     }
 
+    if(m_currLevel == -1)
+    {
+    	for(auto a : m_currentAssignement)
+    	{
+    		m_preprocessQueue.push(a);
+    		m_valuation[a.index] = -1;
+    	}
+    	m_currentAssignement.clear();
+    }
     OUTDEBUG("Resolution clause " << m_resolutionClause.toStr() << " added");
+    return !(m_currLevel == -1);
 }
 
 bool SATSolverCL::applyLastDecision()
@@ -193,7 +211,7 @@ bool SATSolverCL::applyLastDecision()
         		for(auto l : m_clauses[m_parentsOf[p_dec.index]].getLiterals())
             		if(l.first != p_dec.index)
                 		m_conflictGraph.add_edge(make_pair(l.first,m_valuation[l.first]),make_pair(p_dec.index,p_dec.value));
-        	m_parentsOf.erase(p_dec.index);
+        	//m_parentsOf.erase(p_dec.index);
         }
     }
     //OUTDEBUG("\t" << currentStateToStr());
@@ -309,6 +327,9 @@ bool SATSolverCL::applyLastDecision()
 	                	{
 	                		if(m_currentAssignement.back().bet)
 	                			m_currLevel--;
+	                		else
+	                			m_parentsOf.erase(m_currentAssignement.back().index);
+	                		
 	                		auto toCancel = m_currentAssignement.back();
 	                		reviveClauseWithSatisfier(m_currentAssignement.back().index);
             				m_conflictGraph.remove_node(make_pair(toCancel.index,toCancel.value));
@@ -320,8 +341,11 @@ bool SATSolverCL::applyLastDecision()
 	                	}
 	                	
 	                	while(!m_deductionQueue.empty())
+	                	{
+	                		m_parentsOf.erase(m_deductionQueue.front().index);
 	                		m_deductionQueue.pop();
-	                	m_parentsOf.clear();
+	                	}
+	                	
 	                	
 	                	addResolutionClause();
 	                	m_isContradictory = false;

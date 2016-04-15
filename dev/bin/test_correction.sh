@@ -36,15 +36,6 @@ do
     else
         echo "CL OK"
     fi
-    #CLWL
-    S4=$((/usr/bin/time -f "%e r" ./resol -wl -cl $f) |& grep s)
-    if [ "$S4" != "$SOK" ];
-    then
-        echo "ERROR"
-        ERROR=1
-    else
-        echo "CLWL OK"
-    fi
 done
 
 if [ $ERROR != 0 ];
@@ -63,30 +54,10 @@ do
     echo "File: $f" | sed s/test_base\\/cnf\\/corr_test\\/unsat\\///
     SOK2='s UNSATISFIABLE'
 
-    #STD
-    S1=$((/usr/bin/time -f "%e r" ./resol $f) |& grep s)
-    if [ "$S1" != "$SOK2" ];
-    then
-        echo "ERROR"
-        ERROR=1
-    fi
-    #WL
-    S2=$((/usr/bin/time -f "%e r" ./resol -wl $f) |& grep s)
-    if [ "$S2" != "$SOK2" ];
-    then
-        echo "ERROR"
-        ERROR=1
-    fi 
+    
     #CL
     S3=$((/usr/bin/time -f "%e r" ./resol -cl $f) |& grep s)
     if [ "$S3" != "$SOK2" ];
-    then
-        echo "ERROR"
-        ERROR=1
-    fi 
-    #CLWL
-    S4=$((/usr/bin/time -f "%e r" ./resol -wl -cl $f) |& grep s)
-    if [ "$S4" != "$SOK2" ];
     then
         echo "ERROR"
         ERROR=1

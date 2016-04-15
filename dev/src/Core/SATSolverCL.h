@@ -40,7 +40,7 @@ class SATSolverCL : public SATSolver
         virtual bool applyLastDecision();
 
         virtual bool backtrack(bool& p_unsat);
-        void addResolutionClause();
+        bool addResolutionClause();
 
     
 

@@ -1,0 +1,75 @@
+digraph {
+"9
+0@-1"->"35
+1@2";
+"9
+0@-1"->"45
+0@2";
+"9
+0@-1"->"85
+0@2";
+"23
+0@2";
+"23
+1@2";
+"35
+1@2"->"57
+0@2";
+"35
+1@2"->"62
+0@2";
+"39
+1@0"->"48
+0@0";
+"45
+0@2"->"23
+0@2";
+"48
+0@0";
+"49
+1@2"->"35
+1@2";
+"49
+1@2"->"62
+0@2";
+"57
+0@2"->"23
+0@2";
+"57
+0@2"->"23
+1@2";
+"59
+1@1";
+"62
+0@2"->"23
+1@2";
+"62
+0@2"->"45
+0@2";
+"62
+0@2"->"57
+0@2";
+"62
+0@2"->"85
+0@2";
+"85
+0@2";
+"9
+0@-1"[shape=circle, style=filled, fillcolor=pink];
+"23
+0@2"[shape=circle, style=filled, fillcolor=green];
+"23
+1@2"[shape=circle, style=filled, fillcolor=green];
+"35
+1@2"[shape=circle, style=filled, fillcolor=purple];
+"45
+0@2"[shape=circle, style=filled, fillcolor=purple];
+"49
+1@2"[shape=circle, style=filled, fillcolor=yellow];
+"57
+0@2"[shape=circle, style=filled, fillcolor=purple];
+"62
+0@2"[shape=circle, style=filled, fillcolor=purple];
+"85
+0@2"[shape=circle, style=filled, fillcolor=purple];
+}

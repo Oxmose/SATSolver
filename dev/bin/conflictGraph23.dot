@@ -1,0 +1,53 @@
+digraph {
+"8
+0@1";
+"16
+1@0";
+"30
+1@1"->"78
+1@1";
+"30
+1@1"->"85
+1@1";
+"30
+1@1"->"95
+1@1";
+"35
+0@-1"->"55
+0@1";
+"35
+0@-1"->"78
+1@1";
+"55
+0@1";
+"55
+1@1";
+"78
+1@1"->"85
+1@1";
+"78
+1@1"->"95
+1@1";
+"85
+1@1";
+"95
+1@1"->"8
+0@1";
+"95
+1@1"->"55
+1@1";
+"8
+0@1"[shape=circle, style=filled, fillcolor=purple];
+"30
+1@1"[shape=circle, style=filled, fillcolor=red];
+"55
+0@1"[shape=circle, style=filled, fillcolor=green];
+"55
+1@1"[shape=circle, style=filled, fillcolor=green];
+"78
+1@1"[shape=circle, style=filled, fillcolor=blue];
+"85
+1@1"[shape=circle, style=filled, fillcolor=blue];
+"95
+1@1"[shape=circle, style=filled, fillcolor=yellow];
+}
