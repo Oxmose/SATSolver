@@ -50,6 +50,7 @@ struct Settings_s
     bool cl_s;
     bool clint_s;
     bool forget_s;
+    bool naiveuip_s;
 };
 
 bool debugFlag;

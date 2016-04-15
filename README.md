@@ -33,23 +33,15 @@ On obtient des "s UNSATISFIABLE" bien plus rapidement qu'avant avec -cl -vsids. 
 
 #Alexy
 * rendu1 : Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
-* rendu2 :  heuristiques de paris, redesign en statégies, modifications du parser, scripts de tests, optimisation.     
-* rendu3 : implémentation VSIDS + algo linéaire 1-UIP.
+* rendu2 : Heuristiques de paris, redesign en statégies, modifications du parser, scripts de tests, optimisation.
+* rendu3 : Recherche de l'UIP dans le graph (quadratique et linéaire), VSIDS, interface, scripts de test, corrections de bugs, optimisation.
 
-# Scripts de test
-Deux bateries de tests sont disponibles :
-##Correction
-Dans bin
-
-test_correction.sh permet de vérifier que le resultat renvoyé par le solveur est correcte. Pour ce faire, lancer le, les tests sont éfféctués sur les CNF dans le dossier bin/test_base/cnf/corr_test.
-
-Vous pourrez y mettre les CNF que vous voulez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
-
-##Temps
-Dans bin
-
-test_total_time.sh permet de vérifier que les temps de résolution pour les heuristique ou non, watched literals activé ou non sur les CNF.
-
-Les tests sont éfféctués sur les CNF dans le dossier bin/test_base/cnf/serial_test.
-
-Vous pourrez y mettre les CNF que vous voullez en prenant bien soins de mettre les SAT dans le dossier sat et les UNSAT dans le dossier unsat.
+## Retour sur les algorithmes de détection de UIP
+### Naif
+Le premier algorithme implémenté pour la détection du premier UIP se déroule en temps quadratique. Pour chaque noeuds dans le graph, on retire le noeud. On parcour ensuite le graph du noeud de conflit. Si l'on atteind la racine alors ce noeud n'est pas un UIP. Une fois tous les UIP détectés, on choisi le premier en faisant un BFS à partir du conflit et pour chaque noeuds rencontrés, on vérifie s'il est dans la liste des UIP. Au premier UIP rencontré on le retourne.
+### Linéraire
+Le second algorithme se déroule en temps linéaire en le nombre de noeuds et d'arrêtes du graphe.
+* Dans un premier temps, on produit le graphe inverse (G-1).
+* Puis parcours BFS à partir du dernier BET, on recréé alors un graph de ce BET vers le noeud de conflit en syétrisant les arrêtes.
+* On applique un algorithme de détéction de points d'articulations dans ce nouveau graph.
+* On parcours le graph G-1 à partir du noeuds de conflict, le premier noeud rencontré étant un noeud d'articulation dans le graph symétrisé est le First UIP.

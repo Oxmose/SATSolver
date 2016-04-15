@@ -68,9 +68,9 @@ string ConflictGraph::node_to_str(const node& a)
     return '"'+to_string(a.first)+"\n"+to_string(a.second)+"@"+to_string(m_levelOf[a])+'"';
 }
 
-pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int id_clause)
+pair<Clause,int> ConflictGraph::resolution(bool naiveuip, node the_bet, node the_conflict, int id_clause)
 {
-    findUIP(the_bet,the_conflict);
+    findUIP(naiveuip, the_bet,the_conflict);
     findUIPCut();
     std::map<int,bool> lit;
     int backtrackLevel = -1000;
@@ -89,162 +89,253 @@ pair<Clause,int> ConflictGraph::resolution(node the_bet, node the_conflict, int 
     return make_pair(Clause(lit,false,id_clause),backtrackLevel);
 }
 
-void ConflictGraph::findUIP(node the_bet, node the_conflict)
-{
-    queue<node> neight;
 
+void ConflictGraph::browseAP(ConflictGraph &inverse, node u, map<node, bool> &visited, map<node, int> &disc, map<node, int> &low, map<node, node> &parent, map<node, bool> &ap)
+{
+    static int cpt = 0;
+    int level = 0;
+    visited[u] = true;
+    disc[u] = low[u] = ++cpt;
+
+    for (auto v : inverse.m_voisinDe[u])
+    {
+        if (!visited[v])
+        {
+            level++;
+            parent[v] = u;
+            browseAP(inverse, v, visited, disc, low, parent, ap);
+            low[u]  = min(low[u], low[v]);
+            if (parent[u] == NIL && level > 1)
+               ap[u] = true;
+            if (parent[u] != NIL && low[v] >= disc[u])
+               ap[u] = true;
+        }
+        else if (v != parent[u])
+            low[u]  = min(low[u], disc[v]);
+    }
+}
+
+void ConflictGraph::findUIP(bool naiveuip, node the_bet, node the_conflict)
+{
     node conflict = the_conflict;
     node start = the_bet;
 
     node conflictBar = conflict;
     conflictBar.second = !conflict.second;
-
-    ConflictGraph inverse(false);
-
-    for(auto u : m_voisinDe)
+    
+    if(!naiveuip)
     {
-        inverse.add_node(make_pair(u.first, m_levelOf[u.first]));
-        for(auto v : u.second)
+        OUTDEBUG("Using linear UIP detection");
+        ConflictGraph inverse(false);
+        ConflictGraph undirec(false);
+        bool con = false;
+        for(auto u : m_voisinDe)
         {
-            inverse.add_node(make_pair(v, m_levelOf[v]));
-            inverse.add_edge(v, u.first);
-        }
-    }
-
-    map<node, bool> visited;    
-/*    map<node, bool> access;
-    neight.push(conflict);
-    neight.push(conflictBar);
-
-    while(!neight.empty())
-    {
-        node toVisit = neight.front();
-        neight.pop();
-
-        for(auto u : inverse.m_voisinDe[toVisit])
-        {
-            if(m_levelOf[u] == levelMax && visited.find(u) == visited.end())
+            if(u.first == conflict || u.first == conflictBar)
             {
-                visited.emplace(u, true);
-                neight.push(u);
-                access.emplace(u, true);
-            }
-        }
-    }
-
-    visited.clear();
-    neight.push(start);
-    while(!neight.empty())
-    {
-        node toVisit = neight.front();
-        neight.pop();
-
-        if(m_voisinDe[toVisit].size() == 1)
-        {
-            if(*(m_voisinDe[toVisit].begin()) == conflict || *(m_voisinDe[toVisit].begin()) == conflictBar)
-            {
-                m_uip = start;
-                return;
-            }
-        }
-        for(auto u : m_voisinDe[toVisit])
-        {            
-            if(access.find(u) != access.end() && visited.find(u) == visited.end())
-            {
-                visited.emplace(u, true);
-                neight.push(u);
-            }
-        }
-        if(neight.size() == 1 && neight.front() != conflict && neight.front() != conflictBar)
-        {
-            node toGo = neight.front();
-            if(m_voisinDe[toGo].size() == 1)
-            {
-                if(*(m_voisinDe[toGo].begin()) != conflict && *(m_voisinDe[toGo].begin()) != conflictBar)
-                {                
-                    while(m_voisinDe[toGo].size() == 1 && *(m_voisinDe[toGo].begin()) != conflict && *(m_voisinDe[toGo].begin()) != conflictBar)
-                    {
-                        toGo = *(m_voisinDe[toGo].begin());
-                    }
-                    m_uip = toGo;
-                    return;
-                }
+                con = true;
+                inverse.add_node(make_pair(conflict, m_levelOf[u.first]));
             }
             else
             {
-                m_uip = toGo;
-                return;
+                con = false;
+                inverse.add_node(make_pair(u.first, m_levelOf[u.first]));
+            }
+
+            for(auto v : u.second)
+            {
+                if(con)
+                {
+                    if(v == conflict || v == conflictBar)
+                    {
+                        inverse.add_node(make_pair(conflict, m_levelOf[v]));
+                        inverse.add_edge(conflict, conflict);
+                    }
+                    else
+                    {
+                        inverse.add_node(make_pair(v, m_levelOf[v]));
+                        inverse.add_edge(v, conflict);
+                    }
+                }
+                else
+                {
+                    if(v == conflict || v == conflictBar)
+                    {
+                        inverse.add_node(make_pair(conflict, m_levelOf[v]));
+                        inverse.add_edge(conflict, u.first);
+                    }
+                    else
+                    {
+                        inverse.add_node(make_pair(v, m_levelOf[v]));
+                        inverse.add_edge(v, u.first);
+                    }
+                }
             }
         }
-    }
-*/
-    map<node, bool> uips;
-    
-    bool found = false;
 
-    for(auto v : inverse.m_voisinDe)
-    {
-        if(m_levelOf[v.first] == levelMax)
+        map<node, bool> visited;
+        queue<node> neight;
+        neight.push(start);
+        
+        undirec.add_node(make_pair(start, m_levelOf[start]));
+
+        while(!neight.empty())
         {
-            visited.clear();
-            
-            while(!neight.empty())
-                neight.pop();
+            node toVisit = neight.front();
+            neight.pop(); 
 
-            found = false;
-            neight.push(conflict);
-            neight.push(conflictBar);
-            while(!neight.empty())
+            for(auto u : m_voisinDe[toVisit])
             {
-                node toVisit = neight.front();
-                neight.pop();
-
-                for(auto u : inverse.m_voisinDe[toVisit])
+                if(m_levelOf[u] == levelMax)
                 {
-                    if(u == start)
+                    if(u == conflict || u == conflictBar)
                     {
-                        found = true;
-                        break;
+                        undirec.add_node(make_pair(conflict, m_levelOf[u]));
+                        undirec.add_edge(toVisit, conflict);
+                        undirec.add_edge(conflict, toVisit);
                     }
-                    else if(visited.find(u) == visited.end() && u != v.first)
+                    else
+                    {
+                        undirec.add_node(make_pair(u, m_levelOf[u]));
+                        undirec.add_edge(toVisit, u);
+                        undirec.add_edge(u, toVisit);
+                    }               
+                    if(visited.find(u) == visited.end())
                     {
                         visited.emplace(u, true);
                         neight.push(u);
                     }
                 }
-                if(found)
-                    break;
             }
-            if(!found)
-                uips.emplace(v.first, true);
+        }
+        
+
+        visited.clear();
+        map<node, int> disc;
+        map<node, int> low;
+        map<node, node> parent;
+        map<node, bool> ap;
+     
+        for (auto i : m_voisinDe)
+        {
+            parent[i.first] = NIL;
+            visited[i.first] = false;
+            ap[i.first] = false;
+        }
+     
+        browseAP(undirec, start, visited, disc, low, parent, ap); 
+        
+        neight.push(conflict);
+        visited.clear();
+        visited[conflict] = true;
+        while(!neight.empty())
+        {
+            node toVisit = neight.front();
+            neight.pop();
+
+            for(auto u : inverse.m_voisinDe[toVisit])
+            {
+                if(visited.find(u) == visited.end())
+                {
+                    if(ap[u])
+                    {
+                        m_uip = u;
+                        return;
+                    }
+                    visited[u] = true;
+                    neight.push(u);
+                    
+                }
+            }
         }
     }
-
-
-    
-    while(!neight.empty())
-        neight.pop();
-
-    neight.push(conflict);
-    neight.push(conflictBar);
-    visited.clear();
-    visited[neight.front()] = true;
-    while(!neight.empty())
+    else
     {
-        node toVisit = neight.front();
-        neight.pop();
-
-        for(auto v : inverse.m_voisinDe[toVisit])
+        OUTDEBUG("Using naive (quadratic) UIP detection.");
+        map<node, bool> uips;
+        map<node, bool> visited;
+        queue<node> neight;
+        
+        ConflictGraph inverse(false);
+        for(auto u : m_voisinDe)
         {
-            if(visited.find(v) == visited.end())
+            inverse.add_node(make_pair(u.first, m_levelOf[u.first]));
+            
+            for(auto v : u.second)
+            {            
+                inverse.add_node(make_pair(v, m_levelOf[v]));
+                inverse.add_edge(v, u.first);             
+            }
+        }
+        
+        bool found = false;
+
+        for(auto v : inverse.m_voisinDe)
+        {
+            if(m_levelOf[v.first] == levelMax)
             {
-                visited[v] = true;
-                if(uips.find(v) != uips.end())
-                { 
-                    m_uip = v;
-                    return;
+                visited.clear();
+                
+                while(!neight.empty())
+                    neight.pop();
+
+                found = false;
+
+                neight.push(conflict);
+                neight.push(conflictBar);
+
+                while(!neight.empty())
+                {
+                    node toVisit = neight.front();
+                    neight.pop();
+
+                    for(auto u : inverse.m_voisinDe[toVisit])
+                    {
+                        if(u == start)
+                        {
+                            found = true;
+                            break;
+                        }
+                        else if(visited.find(u) == visited.end() && u != v.first)
+                        {
+                            visited.emplace(u, true);
+                            neight.push(u);
+                        }
+                    }
+                    if(found)
+                        break;
                 }
-                neight.push(v);
+                if(!found)
+                    uips.emplace(v.first, true);
+            }
+        }
+
+
+        
+        while(!neight.empty())
+            neight.pop();
+
+        neight.push(conflict);
+        neight.push(conflictBar);
+        visited.clear();
+        visited[neight.front()] = true;
+        while(!neight.empty())
+        {
+            node toVisit = neight.front();
+            neight.pop();
+
+            for(auto v : inverse.m_voisinDe[toVisit])
+            {
+                if(visited.find(v) == visited.end())
+                {
+                    visited[v] = true;
+                    if(uips.find(v) != uips.end())
+                    { 
+                        m_uip = v;
+                        return;
+                    }
+                    neight.push(v);
+                }
             }
         }
     }
@@ -325,9 +416,9 @@ void ConflictGraph::output(string file_name, int the_bet, int the_conflict)
             if(e.first.first == m_uip.first)
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=yellow];\n";
             else if(the_bet != -1 && e.first.first == the_bet)
-                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=red];\n";
-            else if(the_conflict != -1 && e.first.first == v[0])
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=green];\n";
+            else if(the_conflict != -1 && e.first.first == v[0])
+                myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=red];\n";
             else if(m_inCut.find(e.first) != m_inCut.end())
                 myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=purple];\n";
             else if(m_levelOf[e.first] == levelMax)

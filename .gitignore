@@ -4,6 +4,6 @@ dev/bin/.DS_Store
 dev/src/*.o
 dev/src/Core/*.o
 dev/src/BETHeuristic/*.o
-dev/Global/*.o
-dev/Parser/*.o
-dev/RandomSatExpGenerator/*.o
+dev/src/Global/*.o
+dev/src/Parser/*.o
+dev/src/RandomSatExpGenerator/*.o

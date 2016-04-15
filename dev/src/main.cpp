@@ -47,13 +47,14 @@ int main(int argc, char** argv)
     
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interact] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interact] [-naiveuip] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
         return 0;
     
     debugFlag = sets.debug_s;
+
     // Time computation
     clock_t start;
     double duration;
@@ -68,9 +69,9 @@ int main(int argc, char** argv)
     else if(sets.wl_s && !sets.cl_s)
         solver = shared_ptr<SATSolver>(new SATSolverWL());
     else if(!sets.wl_s && sets.cl_s)
-        solver = shared_ptr<SATSolver>(new SATSolverCL(sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
-    else if(sets.wl_s && sets.cl_s)
-        solver = shared_ptr<SATSolver>(new SATSolverCLWL(sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
+        solver = shared_ptr<SATSolver>(new SATSolverCL(sets.naiveuip_s, sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
+    else
+        solver = shared_ptr<SATSolver>(new SATSolverCLWL(sets.naiveuip_s, sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
 
     // Set strategy
     shared_ptr<IBet> betStrat;
@@ -119,7 +120,7 @@ int main(int argc, char** argv)
     vector<Clause> clauses;
 
     if(!parser->parse(maxIndex, clauses))
-        OUTWARNING("Wranings while parsing the file.");
+        OUTWARNING("Warnings while parsing the file.");
     solver->setMaxIndex(maxIndex);
     solver->setOriginFormula(clauses);
     solver->setParser(parser);
@@ -165,9 +166,10 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
     sets.cl_s = false;
     sets.clint_s = false;
     sets.forget_s = false;
-    
+    sets.naiveuip_s = false;
+
     int commandError = 0;
-    bool argsValid[6] = {false, false, false, false, false, false};
+    bool argsValid[7] = {false, false, false, false, false, false, false};
     
     if(argc == 1)
     {
@@ -246,6 +248,11 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
                 sets.forget_s = true;
                 argsValid[5] = true;
             }
+            else if(value == "-naiveuip" && !argsValid[6])
+            {
+                sets.naiveuip_s = true;
+                argsValid[6] = true;
+            }
             else
             {
                 commandError = 1;
@@ -253,14 +260,14 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
             }
         }
         int count = 0;
-        for(unsigned int i = 0; i < 6; ++i)
+        for(unsigned int i = 0; i < 7; ++i)
         {
             if(argsValid[i])
                 ++count;
         }
-        if((sets.bet_s == VSIDS || sets.forget_s) && !sets.cl_s)
+        if((sets.naiveuip_s || sets.bet_s == VSIDS || sets.forget_s) && !sets.cl_s)
         {
-            OUTWARNING("Imcompatible bet, you must use -cl to enable this heuristic, set heuristic to standard.");
+            OUTWARNING("Imcompatible heuristic, you must use -cl to enable this heuristic, set heuristic to standard.");
             sets.bet_s = NORM;
         }
         if(count != argc - 2)
@@ -311,12 +318,13 @@ void displayMenu(char *softName)
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
     cout << "\t\t" << softName << " [-wl] [-cl | -cl-interact] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-tseitin] [-wl] [-cl | -cl-interact] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-tseitin] [-wl] [-cl | -cl-interact] [-naiveuip] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t The argument -wl enable the watched literals method." << endl;
     cout << "\t The argument -cl enable clauses learning. -cl-interact enable interactive clauses learning." << endl;
+    cout << "\t The argument -naiveuip enable naive uip detection algorithm." << endl;
     cout << "\t [-rand | -moms | -dlis ...] define the used heuristic to bet on the next literal :" << endl;
     cout << "\t\t -vsids : next bet on the most active literal" << endl;
-    cout << "\t\t -forget : next bet on a literal from the most active clause." << endl;
+    cout << "\t\t -forget : get track on clause activity." << endl;
     cout << "\t\t -rand : next bet on a random literal." << endl;
     cout << "\t\t -rand0 : next bet on a random literal (the bet is random here)." << endl;
     cout << "\t\t -moms : next bet on the variable which has the maximum occurences count in clauses of minimum size." << endl;

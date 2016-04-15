@@ -4,7 +4,7 @@
 
 using namespace std;
 
-SATSolverCL::SATSolverCL(const bool &p_interact, const bool &p_forget, const bool &p_vsids, function<double(double, bool)> p_scoreFunction)
+SATSolverCL::SATSolverCL(const bool &p_naiveuip, const bool &p_interact, const bool &p_forget, const bool &p_vsids, function<double(double, bool)> p_scoreFunction)
 {
     OUTDEBUG("Using Clause Learning Solver, " << string((p_interact ? "with interaction, " : "without interact, ")) << string((p_forget ? "with cutoff threshold to forget clauses." : "without cutoff threshold to forget clauses.")));
     m_isCL = true;
@@ -15,7 +15,7 @@ SATSolverCL::SATSolverCL(const bool &p_interact, const bool &p_forget, const boo
 
     m_interact = p_interact;
     m_forget = p_forget;
-
+    m_naiveuip = p_naiveuip;
 
     m_scoreFunction = p_scoreFunction;
 }
@@ -36,7 +36,6 @@ void SATSolverCL::initializeMethod()
             	m_varScores[lit.first] = 0.0;
         }
 }
-
 
 bool SATSolverCL::backtrack(bool& p_unsat)
 {
@@ -89,9 +88,9 @@ bool SATSolverCL::backtrack(bool& p_unsat)
                 //m_currentAssignement.back().value = !m_currentAssignement.back().value;
                 //m_currentAssignement.back().bet = false;
                 //m_currentAssignement.back().ancien_bet = true; 
-                	m_currLevel++;
-                	m_bets.push_back(m_currentAssignement.back().index);
-                	m_conflictGraph.add_node(make_pair(make_pair(m_currentAssignement.back().index,m_currentAssignement.back().value),m_currLevel));
+        	m_currLevel++;
+        	m_bets.push_back(m_currentAssignement.back().index);
+        	m_conflictGraph.add_node(make_pair(make_pair(m_currentAssignement.back().index,m_currentAssignement.back().value),m_currLevel));
             
             }
         }
@@ -262,7 +261,7 @@ bool SATSolverCL::applyLastDecision()
                         }
                     }*/
 
-                	pair<Clause,int> whatINeed = m_conflictGraph.resolution(make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]), m_clauses.size());
+                	pair<Clause,int> whatINeed = m_conflictGraph.resolution(m_naiveuip, make_pair(the_bet,m_valuation[the_bet]),make_pair(p_dec.index, m_valuation[p_dec.index]), m_clauses.size());
                     //printf("%s\n", whatINeed.first.toDIMACS().c_str());
                     //printf("%d\n", whatINeed.second);
                     m_btLevel = whatINeed.second;
