@@ -1,0 +1,149 @@
+digraph {
+"1
+0@1";
+"1
+1@1";
+"2
+1@1"->"59
+0@1";
+"2
+1@1"->"69
+1@1";
+"2
+1@1"->"71
+0@1";
+"4
+0@1"->"7
+0@1";
+"7
+0@1"->"14
+1@1";
+"7
+0@1"->"58
+1@1";
+"14
+1@1"->"2
+1@1";
+"14
+1@1"->"58
+1@1";
+"14
+1@1"->"69
+1@1";
+"17
+0@1"->"4
+0@1";
+"17
+0@1"->"14
+1@1";
+"17
+0@1"->"62
+1@1";
+"27
+1@0"->"42
+0@0";
+"27
+1@0"->"45
+0@0";
+"36
+1@1"->"56
+1@1";
+"42
+0@0"->"45
+0@0";
+"42
+0@0"->"84
+0@1";
+"42
+0@0"->"86
+1@1";
+"44
+1@1"->"36
+1@1";
+"44
+1@1"->"86
+1@1";
+"45
+0@0";
+"56
+1@1"->"1
+0@1";
+"56
+1@1"->"1
+1@1";
+"58
+1@1"->"2
+1@1";
+"59
+0@1"->"36
+1@1";
+"59
+0@1"->"56
+1@1";
+"62
+1@1"->"4
+0@1";
+"62
+1@1"->"7
+0@1";
+"69
+1@1"->"59
+0@1";
+"69
+1@1"->"71
+0@1";
+"71
+0@1"->"1
+0@1";
+"71
+0@1"->"1
+1@1";
+"84
+0@1"->"17
+0@1";
+"84
+0@1"->"62
+1@1";
+"86
+1@1"->"17
+0@1";
+"86
+1@1"->"84
+0@1";
+"1
+0@1"[shape=circle, style=filled, fillcolor=red];
+"1
+1@1"[shape=circle, style=filled, fillcolor=red];
+"2
+1@1"[shape=circle, style=filled, fillcolor=purple];
+"4
+0@1"[shape=circle, style=filled, fillcolor=purple];
+"7
+0@1"[shape=circle, style=filled, fillcolor=purple];
+"14
+1@1"[shape=circle, style=filled, fillcolor=purple];
+"17
+0@1"[shape=circle, style=filled, fillcolor=purple];
+"36
+1@1"[shape=circle, style=filled, fillcolor=purple];
+"42
+0@0"[shape=circle, style=filled, fillcolor=pink];
+"44
+1@1"[shape=circle, style=filled, fillcolor=yellow];
+"56
+1@1"[shape=circle, style=filled, fillcolor=purple];
+"58
+1@1"[shape=circle, style=filled, fillcolor=purple];
+"59
+0@1"[shape=circle, style=filled, fillcolor=purple];
+"62
+1@1"[shape=circle, style=filled, fillcolor=purple];
+"69
+1@1"[shape=circle, style=filled, fillcolor=purple];
+"71
+0@1"[shape=circle, style=filled, fillcolor=purple];
+"84
+0@1"[shape=circle, style=filled, fillcolor=purple];
+"86
+1@1"[shape=circle, style=filled, fillcolor=purple];
+}

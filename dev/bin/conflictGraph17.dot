@@ -1,0 +1,50 @@
+digraph {
+"27
+0@-1"->"45
+1@0";
+"42
+1@0"->"45
+1@0";
+"42
+1@0"->"48
+1@0";
+"45
+1@0"->"48
+1@0";
+"45
+1@0"->"53
+0@0";
+"45
+1@0"->"53
+1@0";
+"45
+1@0"->"55
+0@0";
+"48
+1@0"->"55
+0@0";
+"53
+0@0";
+"53
+1@0";
+"55
+0@0"->"53
+0@0";
+"55
+0@0"->"53
+1@0";
+"27
+0@-1"[shape=circle, style=filled, fillcolor=pink];
+"42
+1@0"[shape=circle, style=filled, fillcolor=yellow];
+"45
+1@0"[shape=circle, style=filled, fillcolor=purple];
+"48
+1@0"[shape=circle, style=filled, fillcolor=purple];
+"53
+0@0"[shape=circle, style=filled, fillcolor=red];
+"53
+1@0"[shape=circle, style=filled, fillcolor=red];
+"55
+0@0"[shape=circle, style=filled, fillcolor=purple];
+}
