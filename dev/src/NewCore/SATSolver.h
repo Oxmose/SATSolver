@@ -48,6 +48,8 @@ class SATSolver
 
 		vector<clause>                                        formula;
 		map<unsigned int, int>                              valuation;
+
+		void reset_valuation();
 		bool solve();
 
 		void print_current_state();

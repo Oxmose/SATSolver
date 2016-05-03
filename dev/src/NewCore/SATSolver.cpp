@@ -12,7 +12,8 @@ bool SATSolver::add_clause(clause c, bool input)
 
 	if(input)
 		for(auto l : c.literal)
-        	valuation[abs(l)] = -1;
+			if(valuation.find(abs(l)) == valuation.end())
+        		valuation[abs(l)] = -1;
 
 	if(c.literal.size() == 1)
 	{
@@ -23,10 +24,14 @@ bool SATSolver::add_clause(clause c, bool input)
 			exit(0);
 		}
 
+		if(input)
+			valuation[abs(c.literal[0])] = c.literal[0] > 0;//detect dummy unsat
+
 		deduction_queue.push(make_pair(c.literal[0],-1));
 		OUTDEBUG(fprintf(stderr, "\tIs unitary, becomes a deduction.\n"));
 		return true;
 	}
+
 
 
 	//On s'assure l'exclusivité
@@ -103,15 +108,17 @@ bool SATSolver::add_pending_deduction()
 */
 int SATSolver::apply_last_decision()
 {
+	assert(!decision_stack.empty());
+	int last_decision = decision_stack.back().first;
+	OUTDEBUG(fprintf(stderr, "\nHandling last decision %d%s.\n", last_decision, (decision_stack.back().second) ? "b" : "d"));
+	print_current_state();
+	OUTDEBUG(fprintf(stderr, "\n"));
 	return (settings_s.wl_s) ? apply_last_decisionWL() : apply_last_decisionSTD();
 }
 
 int SATSolver::apply_last_decisionWL()
 {
 	int last_decision = decision_stack.back().first;
-	OUTDEBUG(fprintf(stderr, "\nHandling last decision %d%s.\n", last_decision, (decision_stack.back().second) ? "b" : "d"));
-	print_current_state();
-	OUTDEBUG(fprintf(stderr, "\n"));
 	valuation[abs(last_decision)] = last_decision > 0;
 
 	int conflict_clause = -1;
@@ -219,8 +226,51 @@ int SATSolver::apply_last_decisionWL()
 
 int SATSolver::apply_last_decisionSTD()
 {
-	assert(false);
-	return 0;
+	int last_decision = decision_stack.back().first;
+	valuation[abs(last_decision)] = last_decision > 0;
+
+	int conflict_clause = -1;
+	for(auto iClause : clauses_with_var[abs(last_decision)])
+	{
+		if(unsat_clauses.find(iClause) != unsat_clauses.end())
+		{
+			OUTDEBUG(fprintf(stderr, "Decision affects clause %d: %s.\n", iClause, formula[iClause].to_str().c_str()));
+			if(formula[iClause].has(last_decision))
+			{
+				OUTDEBUG(fprintf(stderr, "\tClause is now sat.\n", formula[iClause].to_str().c_str()));
+
+				unsat_clauses.erase(iClause);
+				clauses_sat_by[last_decision].push_back(iClause);
+			}
+			else
+			{
+				assert(formula[iClause].has(-last_decision));
+				if(formula[iClause].alive_lit.erase(-last_decision))
+				{
+					if(formula[iClause].alive_lit.size() == 1)
+					{
+						OUTDEBUG(fprintf(stderr, "\tUnit prop %d spotted.\n", *formula[iClause].alive_lit.begin()));
+						deduction_queue.push(make_pair(*formula[iClause].alive_lit.begin(),iClause));
+						continue;
+					}
+					
+					if(formula[iClause].alive_lit.size() == 0)
+					{
+						OUTDEBUG(fprintf(stderr, "\tContradiction %d spotted.\n", -last_decision));
+						conflict_clause = iClause;
+						break;
+					}
+				}
+				else
+					assert(false);
+			}
+
+			OUTDEBUG(fprintf(stderr, "\n"));
+		}
+	}
+
+	OUTDEBUG(fprintf(stderr, "\n"));
+	return conflict_clause;
 }
 
 /*
@@ -337,8 +387,6 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
 */
 pair<int,bool> SATSolver::backtrack(int bt_to, bool full_bt)
 {
-	assert(settings_s.wl_s);
-
 	assert(!decision_stack.empty());
 
 	OUTDEBUG(fprintf((stderr), "Backtracking until %d inclusively.\n", bt_to));
@@ -361,6 +409,17 @@ pair<int,bool> SATSolver::backtrack(int bt_to, bool full_bt)
 
 		OUTDEBUG(fprintf(stderr, "Cancelling %d%s.\n", toCancel, (bet) ? "b" : "d"));
 		valuation[abs(toCancel)] = -1;
+
+		if(!settings_s.wl_s)
+		{
+			OUTDEBUG(fprintf(stderr, "\tReviving var in appropriate clauses.\n"));
+
+			for(auto iClause : clauses_with_var[abs(toCancel)])
+			{
+				int lit_in_clause = (formula[iClause].has(toCancel)) ? toCancel : -toCancel;
+				formula[iClause].alive_lit.insert(lit_in_clause);
+			}
+		}
 
 		if(bet)
 		{
@@ -409,15 +468,23 @@ void SATSolver::take_a_bet()
 	assert(false);
 }
 
+void SATSolver::reset_valuation()
+{
+	for(auto& a : valuation)
+		a.second = -1;
+}
+
 bool SATSolver::solve()
 {
+	reset_valuation();//No unitary clash found in input
+
 	bool is_unsat = false;
 	bool jump = false;
+
 	while(!unsat_clauses.empty() && !is_unsat)
 	{
 		OUTDEBUG(fprintf(stderr, "\nIteration %d.\n", iter));
 		print_current_state();
-
 		iter++;
 
 		/*
