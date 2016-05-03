@@ -26,6 +26,11 @@ struct clause
 	const int id;
 	vector<int> literal;
 	unordered_map<int,bool> assoc_lit;
+
+	/* STD */
+	set<int> alive_lit;
+
+	/* WL */
 	set<int> triggers;
 };
 

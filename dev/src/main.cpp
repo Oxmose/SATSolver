@@ -4,7 +4,7 @@ int main(int argc, char const *argv[])
 {
     settings_s.debug_s = argc > 2;
     settings_s.wl_s = true;
-    settings_s.cl_s = false;
+    settings_s.cl_s = true;
 
     SATSolver solver;
 
@@ -16,11 +16,10 @@ int main(int argc, char const *argv[])
         return 0;
     }
 
-    
+
+    printf("s SATISFIABLE\n");    
     for(auto v : solver.valuation)
     {
-        printf("s SATISFIABLE\n");
-        return 0;
         int index = v.first;
         bool value = (v.second == -1) ? true : v.second;
         string modifier = "";
@@ -33,6 +32,12 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
+/*
+    Only requirement for parser:
+        When tautologie is found, should ignore it BUT
+        has to set its var's valuation to -1 to notify
+        solver their existence.
+*/
 void read_input(string file, SATSolver& solver)
 {
     ifstream infile(file);
@@ -79,11 +84,6 @@ void read_input(string file, SATSolver& solver)
             }
         }
 
-        if(taut)
-        {
-            OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
-            continue;
-        }
         if(cleaned)
         {
             string ancient = the_clause.to_str();
@@ -93,9 +93,15 @@ void read_input(string file, SATSolver& solver)
             OUTDEBUG(fprintf(stderr,"%s cleaned to %s.\n", ancient.c_str(), the_clause.to_str().c_str()));
         }
 
-        for(auto l : the_clause.literal)
-            solver.valuation[abs(l)] = -1;
-        solver.add_clause(the_clause);
+        if(taut)
+        {
+            for(auto l : the_clause.literal)
+                solver.valuation[abs(l)] = -1;
+            OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
+            continue;
+        }
+
+        solver.add_clause(the_clause, true);
     }
     OUTDEBUG(fprintf(stderr,"Input read successfuly.\n"));
     OUTDEBUG(fprintf(stderr, "\n"));

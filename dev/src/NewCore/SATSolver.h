@@ -34,7 +34,7 @@ class SATSolver
 	public:
 		SATSolver() : iter(0), curr_level(-1), conflict_graph(this) {};
 
-		bool add_clause(clause c);
+		bool add_clause(clause c, bool input=false);
 
 		void            take_a_bet();
 		bool add_pending_deduction();
@@ -46,8 +46,8 @@ class SATSolver
 		pair<clause,int> diagnose_conflict(int conflict_clause);
 		pair<int,bool> backtrack(int bt_to, bool full_bt);
 
-		vector<clause>                    formula;
-		map<unsigned int, int>          valuation;
+		vector<clause>                                        formula;
+		map<unsigned int, int>                              valuation;
 		bool solve();
 
 		void print_current_state();
@@ -56,14 +56,16 @@ class SATSolver
 
 		
 		/* DPLL interns */
-		set<int>                    unsat_clauses;
-		queue<pair<int,int>>      deduction_queue;//First: deduction, Second: clause coming from
-		vector<pair<int,bool>>     decision_stack;//First: decision, Second: is a bet ?
-		unordered_map<int,set<int>>      clauses_watched_by;
-		unordered_map<int,vector<int>>   	   clauses_sat_by;
+		set<int>                                        unsat_clauses;
+		queue<pair<int,int>>                          deduction_queue;//First: deduction, Second: clause coming from
+		vector<pair<int,bool>>                         decision_stack;//First: decision, Second: is a bet ?
+		unordered_map<int,vector<int>>   	           clauses_sat_by;
+
+		unordered_map<unsigned int,set<int>>       clauses_watched_by;//WL
+		unordered_map<unsigned int,set<int>>         clauses_with_var;//STD
 		
-		int                            curr_level;
-		int                                  iter;
+		int                                                curr_level;
+		int                                                      iter;
 
 		struct conflict_graph conflict_graph;
 };

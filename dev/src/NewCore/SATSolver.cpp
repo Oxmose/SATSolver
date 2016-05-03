@@ -4,11 +4,15 @@
 /*
 	Returns true if clause was unitary.
 */
-bool SATSolver::add_clause(clause c)
+bool SATSolver::add_clause(clause c, bool input)
 {
 	assert(c.literal.size() != 0);
 
 	OUTDEBUG(fprintf(stderr, "Adding %s.\n", c.to_str().c_str()));
+
+	if(input)
+		for(auto l : c.literal)
+        	valuation[abs(l)] = -1;
 
 	if(c.literal.size() == 1)
 	{
@@ -24,10 +28,14 @@ bool SATSolver::add_clause(clause c)
 		return true;
 	}
 
-	if(c.assoc_lit.size() == 0)
-		for(auto l : c.literal)
-			c.assoc_lit[l] = true;
 
+	//On s'assure l'exclusivité
+	c.assoc_lit.clear();
+	c.alive_lit.clear();
+	c.triggers.clear();
+
+	for(auto l : c.literal)
+		c.assoc_lit[l] = true;
 
 	if(settings_s.wl_s)
 	{
@@ -43,7 +51,18 @@ bool SATSolver::add_clause(clause c)
 	}
 	else
 	{
-		assert(false);
+		/*
+			Subtil : lorsqu'on lit l'entrée on met tout le monde dans alive_lit
+			pour que les deductions unitaires de l'entrées soient traitées.
+			Alors que quand on apprend une clause il faut mettre que celles vraiment en vie.
+		*/
+		for(auto l : c.literal)
+			if(input || valuation[abs(l)] == -1)
+				c.alive_lit.insert(l);
+
+		for(auto l : c.literal)
+			clauses_with_var[abs(l)].insert(c.id);
+
 	}
 
 	OUTDEBUG(fprintf(stderr, "Clause added with id %d.\n", c.id));
