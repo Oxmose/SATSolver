@@ -1,49 +1,16 @@
-// SATSolver class
-#include "Core/SATSolver.h"     //Solver abstract class
-#include "Core/SATSolverSTD.h"  //Standard sovler
-#include "Core/SATSolverWL.h"   //Watched literals Sovler
-#include "Core/SATSolverCL.h"   //Clause learning solver
-#include "Core/SATSolverCLWL.h"
-
-// Parser interface / classes
-#include "Parser/IParser.h"     //Parsers Interface
-#include "Parser/CNFParser.h"   //CNFParser
-#include "Parser/LOGParser.h"   //LogParser
-
-// Bet heuristics classes
-#include "BETHeuristic/IBet.h"          // Bet Heuristic Interface
-#include "BETHeuristic/StandardBet.h"   // Standard bet heuristic
-#include "BETHeuristic/RandomBet.h"    	// Random bet heuristic
-#include "BETHeuristic/DLISBet.h"    	// DLIS bet heuristic
-#include "BETHeuristic/MOMSBet.h"    	// MOMS bet heuristic
-#include "BETHeuristic/VSIDSBet.h"      // VSIDS bet heuristic
-
-// STD INCLUDES
-#include <ctime>        //std::clock
-#include <string>       //std::string
-#include <iostream>     //std::cout std::cerr
-#include <sys/ioctl.h>  //std::ioctl
-#include <functional>   //std::function
-
-// OTHERS INCLUDES FROM PROJECT
-#include "RandomSatExpGenerator/randomGen.h"    //RandomSatExpGen
-#include "Core/Clause.h"    //Clause class
-
-// GLOBAL FLAGS/VARS
-#include "Global/Global.h"  // Global flags and macros
-
-// HEADER FILE
-#include "main.h"   //Header file
+#include "main.h"
 
 using namespace std;
 
-int main(int argc, char** argv)
+int main(int argc, char const *argv[])
 {
-    // Init settings
-    Settings_s sets;
+    settings_s.debug_s = argc > 2;
+    settings_s.wl_s = false;
+    settings_s.cl_s = true;
 
-    // Parse the command line
-    int commandError = parseCommand(argc, argv, sets);
+    SATSolver solver;
+
+    int commandError = parseCommand(argc, argv);
     
     if(commandError == 1)
     {
@@ -52,121 +19,117 @@ int main(int argc, char** argv)
     }
     else if(commandError == -1)
         return 0;
-    
-    debugFlag = sets.debug_s;
 
-    // Time computation
-    clock_t start;
-    double duration;
-    start = clock();
+    read_input(settings_s.filename_s, solver);
 
-    OUTDEBUG("DEBUG ENABLED");
-
-    // Create the solver
-    shared_ptr<SATSolver> solver;
-    if(!sets.wl_s && !sets.cl_s)
-        solver = shared_ptr<SATSolver>(new SATSolverSTD());
-    else if(sets.wl_s && !sets.cl_s)
-        solver = shared_ptr<SATSolver>(new SATSolverWL());
-    else if(!sets.wl_s && sets.cl_s)
-        solver = shared_ptr<SATSolver>(new SATSolverCL(sets.naiveuip_s, sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
-    else
-        solver = shared_ptr<SATSolver>(new SATSolverCLWL(sets.naiveuip_s, sets.clint_s, sets.forget_s, (sets.bet_s == VSIDS), function<double(double, bool)>(VSIDSScoreFunction)));
-
-    // Set strategy
-    shared_ptr<IBet> betStrat;
-    switch(sets.bet_s)
+    if(solver.solve())
     {
-        case NORM:
-            betStrat = shared_ptr<IBet>(new StandardBet());
-            break;
-        case RAND0:
-            betStrat = shared_ptr<IBet>(new RandomBet(false));
-            break;
-        case RAND1:
-            betStrat = shared_ptr<IBet>(new RandomBet(true));
-            break;
-        case MOMS:
-            betStrat = shared_ptr<IBet>(new MOMSBet());
-            break;
-        case DLIS:
-            betStrat = shared_ptr<IBet>(new DLISBet(false));
-            break;
-        case DLIS1:
-            betStrat = shared_ptr<IBet>(new DLISBet(true));
-            break;
-        case VSIDS:
-            betStrat = shared_ptr<IBet>(new VSIDSBet(solver));
-            break;
-        default:
-            betStrat = shared_ptr<IBet>(new StandardBet());
-    }
-    solver->setStrategy(betStrat);
-
-    shared_ptr<IParser> parser;
-    switch(sets.parser_s)
-    {
-        case CNF_PARSE:
-            parser = shared_ptr<IParser>(new CNFParser(sets.filename_s));
-            break;
-        case LOG_PARSE:
-            parser = shared_ptr<IParser>(new LOGParser(sets.filename_s));
-            break;
-        default:
-            parser = shared_ptr<IParser>(new CNFParser(sets.filename_s));
+        printf("s UNSATISFIABLE\n");
+        return 0;
     }
 
-    unsigned int maxIndex;
-    vector<Clause> clauses;
 
-    if(!parser->parse(maxIndex, clauses))
-        OUTWARNING("Warnings while parsing the file.");
-    solver->setMaxIndex(maxIndex);
-    solver->setOriginFormula(clauses);
-    solver->setParser(parser);
-
-    OUTDEBUG("We check SAT of :" << solver->formulaToStr());
-
-    // Solve SAT formula
-    if(solver->solve())
+    printf("s SATISFIABLE\n");    
+    for(auto v : solver.valuation)
     {
-        cout << "s SATISFIABLE" << endl;
-        solver->showSolution();
+        int index = v.first;
+        bool value = (v.second == -1) ? true : v.second;
+        string modifier = "";
+        if(!value)
+            modifier = "-";
+        printf("%s%d ", modifier.c_str(), index);
     }
-    else
-    {
-        OUTDEBUG("Learned Clauses :");
-        for(auto a : solver->learnedClauses())
-           OUTDEBUG( "\t" << a.first << " " << a.second);
-        cout << "s UNSATISFIABLE" << endl;
-    }
-
-    /*
-        N.B:There's no "s ???" output as we do not impose any time limit or run
-        any bizarre heuristic.
-     */
-
-    // Display time
-    duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-    OUTDEBUG("Solved in: "<< duration << "s");
-
-    // Only for loop instances (may be added later)
-    // solver->reset();
+    printf("\n");
 
     return 0;
-}// main(int, char**)
+}
 
-int parseCommand(int argc, char **argv, Settings_s &sets)
+/*
+    Only requirement for parser:
+        When tautologie is found, should ignore it BUT
+        has to set its var's valuation to -1 to notify
+        solver their existence.
+*/
+void read_input(string file, SATSolver& solver)
+{
+    ifstream infile(file);
+    
+    OUTDEBUG(fprintf(stderr,"Reading %s\n", file.c_str()));
+
+    string line;
+    while (std::getline(infile, line))
+    {
+        bool should_continue = false;
+        for(auto c : line)
+            if(c == 'c' || c == 'p')
+            {
+                should_continue = true;
+                break;
+            }
+        if(should_continue)
+            continue;
+
+        istringstream iss(line);
+        
+        clause the_clause(solver.formula.size());
+        map<int,int> vu;
+        bool cleaned = false;
+        bool taut = false;
+
+        int l;
+        while(iss >> l)
+        {
+            if(l != 0)
+            {
+                if(vu.find(abs(l)) != vu.end())
+                {
+                    if(vu[abs(l)] == -l)
+                        taut = true;
+                    else if(vu[abs(l)] == l)
+                        cleaned = true;
+                    else
+                        assert(false);
+                }
+                if(vu.find(abs(l)) == vu.end())
+                    vu[abs(l)] = l;
+                the_clause.literal.push_back(l);
+            }
+        }
+
+        if(cleaned)
+        {
+            string ancient = the_clause.to_str();
+            the_clause.literal.clear();
+            for(auto l : vu)
+                the_clause.literal.push_back(l.second);
+            OUTDEBUG(fprintf(stderr,"%s cleaned to %s.\n", ancient.c_str(), the_clause.to_str().c_str()));
+        }
+
+        if(taut)
+        {
+            for(auto l : the_clause.literal)
+                solver.valuation[abs(l)] = -1;
+            OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
+            continue;
+        }
+
+        solver.add_clause(the_clause, true);
+    }
+    OUTDEBUG(fprintf(stderr,"Input read successfuly.\n"));
+    OUTDEBUG(fprintf(stderr, "\n"));
+}
+
+int parseCommand(int argc, const char **argv)
 {
     // Init settings values
-    sets.parser_s = CNF_PARSE;
-    sets.bet_s = NORM;
-    sets.debug_s = false;
-    sets.wl_s = false;
-    sets.cl_s = false;
-    sets.clint_s = false;
-    sets.forget_s = false;
-    sets.naiveuip_s = false;
+    //settings_s.parser_s = CNF_PARSE;
+    //settings_s.bet_s = NORM;
+    settings_s.debug_s = false;
+    settings_s.wl_s = false;
+    settings_s.cl_s = false;
+    settings_s.clinterac_s = false;
+    settings_s.forget_s = false;
+    //settings_s.naiveuip_s = false;
 
     int commandError = 0;
     bool argsValid[7] = {false, false, false, false, false, false, false};
@@ -185,74 +148,76 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
             string value = string(argv[i]);
             if(i == argc - 1)
             {
-                sets.filename_s = value;
+                settings_s.filename_s = value;
             }
             else if(value == "-tseitin" && !argsValid[0])
             {
-                sets.parser_s = LOG_PARSE;
+                assert(false);
+                //settings_s.parser_s = LOG_PARSE;
                 argsValid[0] = true;
             }
             else if(value == "-wl" && !argsValid[1])
             {
-                sets.wl_s = true;
+                settings_s.wl_s = true;
                 argsValid[1] = true;
             }
+            /*
             else if(value == "-rand" && !argsValid[2])
             {
-                sets.bet_s = RAND0;
+                settings_s.bet_s = RAND0;
                 argsValid[2] = true;
             }
             else if(value == "-rand0" && !argsValid[2])
             {
-                sets.bet_s = RAND1;
+                settings_s.bet_s = RAND1;
                 argsValid[2] = true;
             }
             else if(value == "-moms" && !argsValid[2])
             {
-                sets.bet_s = MOMS;
+                settings_s.bet_s = MOMS;
                 argsValid[2] = true;
             }
             else if(value == "-dlis" && !argsValid[2])
             {
-                sets.bet_s = DLIS;
+                settings_s.bet_s = DLIS;
                 argsValid[2] = true;
             }
             else if(value == "-dlis0" && !argsValid[2])
             {
-                sets.bet_s = DLIS1;
+                settings_s.bet_s = DLIS1;
                 argsValid[2] = true;
             }
             else if(value == "-vsids" && !argsValid[2])
             {
-                sets.bet_s = VSIDS;
+                settings_s.bet_s = VSIDS;
                 argsValid[2] = true;
-            }            
+            }*/        
             else if(value == "-debug" && !argsValid[3])
             {
-                sets.debug_s = true;
+                settings_s.debug_s = true;
                 argsValid[3] = true;
             }  
             else if(value == "-cl" && !argsValid[4])
             {
-                sets.cl_s = true;
+                settings_s.cl_s = true;
                 argsValid[4] = true;
             }
             else if(value == "-cl-interac" && !argsValid[4])
             {
-                sets.cl_s = true;
-                sets.clint_s = true;
+                settings_s.cl_s = true;
+                settings_s.clinterac_s = true;
                 argsValid[4] = true;
             }
             else if(value == "-forget" && !argsValid[5])
             {
-                sets.forget_s = true;
+                settings_s.forget_s = true;
                 argsValid[5] = true;
             }
-            else if(value == "-naiveuip" && !argsValid[6])
+            /*else if(value == "-naiveuip" && !argsValid[6])
             {
-                sets.naiveuip_s = true;
+                settings_s.naiveuip_s = true;
                 argsValid[6] = true;
-            }
+            }*/
             else
             {
                 commandError = 1;
@@ -264,12 +229,12 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
         {
             if(argsValid[i])
                 ++count;
-        }
-        if((sets.naiveuip_s || sets.bet_s == VSIDS || sets.forget_s) && !sets.cl_s)
+        }/*
+        if((settings_s.naiveuip_s || settings_s.bet_s == VSIDS || settings_s.forget_s) && !settings_s.cl_s)
         {
             OUTWARNING("Imcompatible heuristic, you must use -cl to enable this heuristic, set heuristic to standard.");
-            sets.bet_s = NORM;
-        }
+            settings_s.bet_s = NORM;
+        }*/
         if(count != argc - 2)
         {
             commandError = 1;
@@ -280,7 +245,7 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
     return commandError;
 }// int parseComment(int, char**, Settings_s&)
 
-void displayMenu(char *softName)
+void displayMenu(const char *softName)
 {
     struct winsize w;
     ioctl(0, TIOCGWINSZ, &w);
@@ -349,10 +314,11 @@ void menuChoice()
         cin >> choice;
         if(choice == 1)
         {
+            assert(false);
             string fileName;
             cout << "Please enter a file name to save the formula: ";
             cin >> fileName;
-            randomGenerator(fileName);
+            //randomGenerator(fileName);
             ok = true;
         }
         else if(choice == 2)
