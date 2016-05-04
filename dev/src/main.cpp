@@ -47,7 +47,7 @@ int main(int argc, char** argv)
     
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interact] [-naiveuip] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-cl | -cl-interac] [-naiveuip] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
@@ -237,7 +237,7 @@ int parseCommand(int argc, char **argv, Settings_s &sets)
                 sets.cl_s = true;
                 argsValid[4] = true;
             }
-            else if(value == "-cl-interact" && !argsValid[4])
+            else if(value == "-cl-interac" && !argsValid[4])
             {
                 sets.cl_s = true;
                 sets.clint_s = true;
@@ -316,11 +316,11 @@ void displayMenu(char *softName)
 
     cout << "How to use :" << endl;
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-wl] [-cl | -cl-interact] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-wl] [-cl | -cl-interac] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-tseitin] [-wl] [-cl | -cl-interact] [-naiveuip] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-tseitin] [-wl] [-cl | -cl-interac] [-naiveuip] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t The argument -wl enable the watched literals method." << endl;
-    cout << "\t The argument -cl enable clauses learning. -cl-interact enable interactive clauses learning." << endl;
+    cout << "\t The argument -cl enable clauses learning. -cl-interac enable interactive clauses learning." << endl;
     cout << "\t The argument -naiveuip enable naive uip detection algorithm." << endl;
     cout << "\t [-rand | -moms | -dlis ...] define the used heuristic to bet on the next literal :" << endl;
     cout << "\t\t -vsids : next bet on the most active literal" << endl;

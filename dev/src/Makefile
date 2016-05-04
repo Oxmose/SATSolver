@@ -24,10 +24,11 @@ RANDOMGEN=RandomSatExpGenerator/randomGen.cpp
 MAIN=main.cpp
 CORE=Core/Clause.cpp Core/ConflictGraph.cpp Core/SATSolver.cpp Core/SATSolverCL.cpp Core/SATSolverCLWL.cpp Core/SATSolverSTD.cpp Core/SATSolverWL.cpp
 PARSER=Parser/CNFParser.cpp Parser/LOGParser.cpp $(EXPRNAME).cpp $(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
+TOOLS=Tools/Node.cpp #Tools/UnionFind.cpp
 
 PRELOG=$(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
 
-SRCS= $(GLOBAL) $(BET) $(RANDOMGEN) $(CORE) $(MAIN) $(PARSER) 
+SRCS= $(GLOBAL) $(BET) $(RANDOMGEN) $(CORE) $(MAIN) $(PARSER)  $(TOOLS)
 
 #OBJS
 OBJS=$(SRCS:.cpp=.o)
