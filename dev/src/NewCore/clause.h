@@ -23,7 +23,7 @@ struct clause
 
 	string to_str();
 	
-	const int id;
+	int id;
 	vector<int> literal;
 	unordered_map<int,bool> assoc_lit;
 
@@ -34,4 +34,4 @@ struct clause
 	set<int> triggers;
 };
 
-#endif
+#endif // DEF_CLAUSE_H

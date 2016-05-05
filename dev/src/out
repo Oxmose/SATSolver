@@ -1,8 +1,0 @@
-main.cpp: In function ‘int main(int, const char**)’:
-main.cpp:3:38: error: conflicting declaration of C function ‘int main(int, const char**)’
- int main(int argc, char const *argv[])
-                                      ^
-In file included from main.cpp:1:0:
-main.h:13:5: note: previous declaration ‘int main(int, char**)’
- int main(int argc, char** argv);
-     ^

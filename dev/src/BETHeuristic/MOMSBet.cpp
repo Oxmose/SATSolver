@@ -5,13 +5,11 @@
 */
 
 // STD INCLUDES
-#include <vector>   // std::vector
 #include <map>      // std::map
-#include <set>      // std::set
+#include <iterator> // std::distance
 
 // PROJECT INCLUDES
-#include "../Core/Clause.h"     // ClauseSet
-#include "../Core/SATSolver.h"  // decision
+#include "../NewCore/SATSolver.h"  // Sovler
 
 // INHERITANCE CLASS
 #include "IBet.h"
@@ -23,11 +21,15 @@ using namespace std;
 
 MOMSBet::~MOMSBet()
 {
-} // ~MOMSBet()
+}
 
-decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
+void MOMSBet::takeABet(SATSolver *p_solver)
 {
-    OUTDEBUG("MOMS bet");
+    OUTDEBUG(fprintf(stderr, "MOMS bet"));
+    assert(!p_solver->unsat_clauses.empty());
+    p_solver->curr_level++;
+    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
+
     map<int, int> clausesSizes;
     map<int, unsigned int> unassignedLits;
 
@@ -36,36 +38,35 @@ decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
     bool value = true;
 
     // Gather minimal clauses
-    for(int iClause: p_unsatClauses)
+    for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
     {
         int clauseSize = 0;
-        for(auto lit: p_clauses[iClause].getLiterals())
+        for(auto l : p_solver->formula[it].literal)
         {
-            // Get the size of the alive lits in clause 
-            if(p_valuation[lit.first] == -1)
+	        if(p_solver->valuation[abs(l)] == -1)
             {
                 ++clauseSize;
             }
         }
         if(clauseSize < min || min == -1)
             min = clauseSize;
-        clausesSizes.emplace(iClause, clauseSize);
-    }    
+        
+        clausesSizes.emplace(it, clauseSize);
+    }
 
     for(pair<int, int> entry : clausesSizes)
     {
         if(entry.second == min)
         {            
-            for(auto iVar: p_clauses[entry.first].getLiterals())
-            {
-                if(p_valuation[iVar.first] == -1)
+            for(auto l : p_solver->formula[entry.first].literal)
+            {       
+                if(p_solver->valuation[abs(l)] == -1)
                 {
-                    int polLit = iVar.second ? -iVar.first : iVar.first;
                     // If we never encountred the literal
-                    if(unassignedLits.find(polLit) == unassignedLits.end())
-                        unassignedLits.emplace(polLit, 1);
+                    if(unassignedLits.find(l) == unassignedLits.end())
+                        unassignedLits.emplace(l, 1);
                     else
-                        ++unassignedLits[polLit];
+                        ++unassignedLits[l];
                 }
            
             }
@@ -90,13 +91,9 @@ decision MOMSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
     else
         value = true;
 
-    decision bet = decision(selectedUnassigned, value, true);
-    
-    if(selectedUnassigned == -1)
-    {
-        OUTERROR("Critical issue in MOMSBet, a bet should exist .");
-    }
-
-    OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);
-    return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", selectedUnassigned));
+    p_solver->decision_stack.push_back(make_pair(selectedUnassigned, value));
+    if(settings_s.cl_s)
+	    p_solver->conflict_graph.add_node(selectedUnassigned, make_pair(p_solver->curr_level, value));
+    return;
+} // void takeABet(SATSolver *p_solver)

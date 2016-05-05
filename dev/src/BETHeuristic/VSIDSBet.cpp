@@ -6,14 +6,10 @@
 
 // STD INCLUDES
 #include <vector>   // vector
-#include <map>      // map
-#include <cmath>    // exp2, abs
-#include <set>      // set
-#include <memory>   // shared_ptr
+#include <cmath>    // abs
 
 // PROJECT INCLUDES
-#include "../Core/Clause.h"     // ClauseSet
-#include "../Core/SATSolver.h"  // decision
+#include "../NewCore/SATSolver.h"  // Solver
 
 // INHERITANCE CLASS
 #include "IBet.h"
@@ -23,83 +19,59 @@
 
 using namespace std;
 
-VSIDSBet::VSIDSBet(shared_ptr<SATSolver> p_solver)
-{
-    m_solver = p_solver;
-}
-
 VSIDSBet::~VSIDSBet()
 {
-} // ~VSIDSBet()
-
-double VSIDSScoreFunction(double oldScore, bool inLearnedClause)
-{
-    double incrementConstant = 1;
-    double pondConstant =  0.95;//What is in minisat according to http://www.cs.tau.ac.il/research/alexander.nadel/SAT-05_CBH_2.pdf
-    if(inLearnedClause)
-    {
-        return (oldScore + incrementConstant);
-    }
-    else
-    {
-        return oldScore*pondConstant;
-    }
 }
 
-decision VSIDSBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
+void VSIDSBet::takeABet(SATSolver *p_solver)
 {
-    OUTDEBUG("VSIDS bet");
+    OUTDEBUG(fprintf(stderr, "VSIDS bet"));
+    assert(!p_solver->unsat_clauses.empty());
+    p_solver->curr_level++;
+    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
     int firstUnassigned = -1;
     double max = -1;
     double score = 0;
     bool value = false;
 
-    std::vector<pair<int,bool>> candidates;
+    vector<pair<int,bool>> candidates;
 
-    //cout << "UNSAT : " << p_unsatClauses.size() << endl;
-    for(int iClause: p_unsatClauses)
+    for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
     {
-        //cout << "iClause : " << iClause << endl;
-        //cout << "LITS ONE : " << p_clauses[iClause].getLiterals().size() << endl;
-        for(auto lit: p_clauses[iClause].getLiterals())
+        for(auto l : p_solver->formula[it].literal)
         {
-            //if(m_solver->getVarScores(lit.first) != 0)
-            //printf("%d %lf %d\n", lit.first, m_solver->getVarScores(lit.first), p_valuation[lit.first]);
-            if(p_valuation[lit.first] == -1 && max < (score = m_solver->getVarScores(lit.first)))
+	    if(p_solver->valuation[abs(l)] == -1 && max < (score = p_solver->getVarScores(abs(l))))
             {
+            
                 max = score;
-                firstUnassigned = lit.first;
-                value = !lit.second;
+                firstUnassigned = abs(l);
+                value = (l < 0 ? false : true);
                 candidates.clear();
-                candidates.push_back(make_pair(firstUnassigned,value));
+                candidates.push_back(make_pair(firstUnassigned, value));
             }
-            else if(p_valuation[lit.first] == -1 && max == m_solver->getVarScores(lit.first))
+            else if(p_solver->valuation[abs(l)] == -1 && max == p_solver->getVarScores(abs(l)))
             {
-                firstUnassigned = lit.first;
-                value = !lit.second;
-                candidates.push_back(make_pair(firstUnassigned,value));
+                firstUnassigned = abs(l);
+                value = (l < 0 ? false : true);
+                candidates.push_back(make_pair(firstUnassigned, value));
             }
         }
     }    
 
-    //cout << "CAND " << candidates.size() << endl;
     if(candidates.size() != 0)
     {
         int iCandidate = rand() % candidates.size();
         firstUnassigned = candidates[iCandidate].first;
         value = candidates[iCandidate].second;
-        //cout << "SELECTED = " << iCandidate << " HAS " << candidates[iCandidate].first << " is " << firstUnassigned << endl;
     }
+    else
+        assert(false);
 
-    decision bet = decision(firstUnassigned, value, true);
-    
-    if(firstUnassigned == -1)
-    {
-        OUTERROR("Critical issue in VSIDSBet, a bet should exist.");
-    }
-
-    OUTDEBUG("Taking bet: " << firstUnassigned << " (" << m_solver->getVarScores(bet.index) << ")" << " to " << value);
-    return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", abs(firstUnassigned)));
+    p_solver->decision_stack.push_back(make_pair(abs(firstUnassigned),value));
+    if(settings_s.cl_s)
+	    p_solver->conflict_graph.add_node(abs(firstUnassigned), make_pair(p_solver->curr_level, value));
+    return;
+} // void takeABet(SATSolver *p_solver)
 

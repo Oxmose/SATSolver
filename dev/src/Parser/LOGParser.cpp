@@ -10,13 +10,12 @@
 #include <string>   // std::string
 #include <map>      // std::map
 #include <sstream>  // std::stringstream
-#include <iostream> // std::cerr std::endl
-
-// CLASS HEADER INCLUDE
-#include "LOGParser.h"
+#include <iostream> // std::cout std::cerr std::endl
+#include <atomic>   // std::atomic
 
 // OTHER INCLUDES FROM PROJECT
-#include "../Core/Clause.h" // Clause class
+#include "../NewCore/SATSolver.h" // SATSolver class
+#include "../NewCore/clause.h" // Clause class
 
 // PARSER INCLUDES
 #include "expr.hpp"
@@ -27,6 +26,9 @@
 
 // INHERITANCE INCLUDE
 #include "IParser.h"
+
+// CLASS HEADER INCLUDE
+#include "LOGParser.h"
 
 using namespace std;
 
@@ -39,14 +41,15 @@ LOGParser::~LOGParser()
 {
 } // ~LOGParser()
 
-bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
+bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
 {
-    OUTDEBUG("LOG PARSE BEGIN");
+    OUTDEBUG(fprintf(stderr, "LOG PARSE BEGIN\n"));
     // Open file
     yyin = fopen(m_fileName.c_str(), "r");
     if(yyin == NULL)
     {
-        OUTERROR("Can't open file.");
+        cout << "Can't open file." << endl;
+        assert(false);
     }
 
     bool noParseError = true;
@@ -64,18 +67,18 @@ bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
     } while (!feof(yyin));   
 
     fclose(yyin);
-
-    vector<pair<map<int,bool>, bool>> clauses;
-	
-    
+    vector<pair<map<int,bool>, bool>> clauses;   
 
     // Browse each clause extracted and create the formula
     map<int,bool> clause;
-    bool hasTot = false;
+
+    struct clause the_clause(p_solver.formula.size());
+
+    bool hasTaut = false;
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
-	cout << strForm << endl;
+	    //cout << "STR " << strForm << endl;
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
@@ -100,23 +103,39 @@ bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
                     if((lit.second && -(lit.first) == varInt) || (!lit.second && lit.first == varInt))
                         found = true;           
                     else if((!lit.second && -(lit.first) == varInt) || (lit.second && lit.first == varInt))
-                        hasTot = true;
+                    {
+                        p_solver.valuation[abs(varInt)] = -1;
+                        hasTaut = true;
+                    }
                 }
 
                 // Add the variable
                 if(!found)
+                {
+                    the_clause.literal.push_back(varInt);
                     clause[abs(varInt)] = varInt < 0;
+                }
 
                 continue;
             }
-
+		
             // If we are at the end of a clause
             if(i < strForm.size() -1 && strForm[i] == '/' && strForm[i + 1] == '\\')
             {
+
                 // Create and add the new clause
-                clauses.push_back(make_pair(clause, hasTot));
-                hasTot = false;
+                if(!hasTaut)
+                {
+                    p_solver.add_clause(the_clause, true);
+                    
+                }
+                else
+                    OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
+
+                the_clause.id = p_solver.formula.size();
+	            the_clause.literal.clear();
                 clause.clear();
+                hasTaut = false;
                 continue;
             }
 
@@ -126,8 +145,10 @@ bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
                 var += strForm[i];
                 ++i;
             }
+
             if(var.size() > 0)
             {
+		
                 int varInt = stoi(var);
                 // Avoid mutiple same literals in the same clause
                 // Also check for tautology
@@ -137,29 +158,37 @@ bool LOGParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
                     if((lit.second && -(lit.first) == varInt) || (!lit.second && lit.first == varInt))
                         found = true;           
                     else if((!lit.second && -(lit.first) == varInt) || (lit.second && lit.first == varInt))
-                        hasTot = true;
+                    {
+                        p_solver.valuation[abs(varInt)] = -1;
+                        hasTaut = true;
+                    }
                 }
+		
 
                 if(!found)
-                    clause[abs(varInt)] = varInt < 0;
+                {
+                    the_clause.literal.push_back(varInt);
+                    clause[abs(varInt)] = (varInt < 0);
+                }
+			
             }
         }
-
         // Create and add the last clause
-        clauses.push_back(make_pair(clause, hasTot));
-        hasTot = false;
+        if(!hasTaut)
+        {
+            p_solver.add_clause(the_clause, true);
+        }
+        else
+            OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
+
+        the_clause.id = p_solver.formula.size();
+	    the_clause.literal.clear();
+        hasTaut = false;
         clause.clear();
     }
 
-    unsigned int clausesCount = 0;
-    
-    for(auto clause : clauses)
-    {
-        p_clauses.push_back(Clause(clause.first, clause.second, clausesCount));
-	   ++clausesCount;
-    }
 
-    OUTDEBUG("LOG PARSE END WITH STATUS" << noParseError);
+    OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
 
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
@@ -184,13 +213,13 @@ vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex)
     return exps;
 } // bool tseitinTransform(Expr*, unsigned int&, std::vector<Clause>&)
 
-bool LOGParser::tseitinResolution(map<int,int> &p_valuation, unsigned int &p_maxIndex)
+bool LOGParser::tseitinResolution(map<unsigned int, int> &p_valuation, unsigned int &p_maxIndex)
 {
     // For each vars that appeared in the original formula
     // Just keep them and forget about the others
-    map<int, int> newValuation;
-    int maxIndex = 0;
-    for(int var : m_originalVars)
+    map<unsigned int, int> newValuation;
+    unsigned int maxIndex = 0;
+    for(unsigned int var : m_originalVars)
     {
         if(var > maxIndex)
             maxIndex = var;
@@ -204,5 +233,6 @@ bool LOGParser::tseitinResolution(map<int,int> &p_valuation, unsigned int &p_max
 
 void yyerror(const char *s)
 {
-    OUTERROR("Parse error!  Message: " << s);
+    cout << "Parse error!  Message: " << s << endl;
+    assert(false);
 } // yyerror(const char*)

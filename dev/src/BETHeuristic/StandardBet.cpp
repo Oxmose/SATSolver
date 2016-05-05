@@ -4,13 +4,10 @@
  *
 */
 
-// STD INCLUDES
-#include <vector>   // vector
-#include <set>      // std::set
-
 // PROJECT INCLUDES
-#include "../Core/Clause.h"     // ClauseSet
-#include "../Core/SATSolver.h"  // decision
+#include "../NewCore/SATSolver.h"  // Solver
+
+#include "../Global/Global.h"
 
 // INHERITANCE CLASS
 #include "IBet.h"
@@ -22,35 +19,30 @@ using namespace std;
 
 StandardBet::~StandardBet()
 {
-} // ~StandardBet()
+}
 
-decision StandardBet::takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation)
+StandardBet::StandardBet()
 {
-    OUTDEBUG("Standard bet");
-    int firstUnassigned = -1;
+}
 
-    for(int iClause: p_unsatClauses)
+void StandardBet::takeABet(SATSolver *p_solver)
+{
+    OUTDEBUG(fprintf(stderr, "Standard bet"));
+    assert(!p_solver->unsat_clauses.empty());
+    p_solver->curr_level++;
+    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
+
+    for(auto l : p_solver->formula[*p_solver->unsat_clauses.begin()].literal)
     {
-        for(auto lit: p_clauses[iClause].getLiterals())
-            if(p_valuation[lit.first] == -1)
-            {
-                OUTDEBUG(iClause);
-                //first = key, second = value
-                //first = index, second = polarization
-                firstUnassigned = lit.first;
-                break;
-            }
-        if(firstUnassigned != -1)
-            break;
+	    if(p_solver->valuation[abs(l)] == -1)
+	    {
+		    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", abs(l)));
+		    p_solver->decision_stack.push_back(make_pair(abs(l),true));
+		    if(settings_s.cl_s)
+			    p_solver->conflict_graph.add_node(abs(l), make_pair(p_solver->curr_level, true));
+		    return;
+	    }
     }
-
-    decision bet = decision(firstUnassigned,true,true);
-
-    if(firstUnassigned == -1)
-    {
-        OUTERROR("Critical issue in StdBet, a bet should exist " << *p_unsatClauses.begin() << " " << p_clauses[*p_unsatClauses.begin()].toStr());
-    }
-
-    OUTDEBUG("Taking bet: " << firstUnassigned << " to True");
-    return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+    
+    assert(false);
+} // void takeABet(SATSolver *p_solver)
