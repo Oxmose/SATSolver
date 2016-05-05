@@ -205,6 +205,7 @@ string conflict_graph::node_to_str(int l)
 void conflict_graph::output(bool extra_info/* = false */)
 {
 	assert(settings_s.cl_s);
+	
 	if(!settings_s.debug_s)
 		return;
 

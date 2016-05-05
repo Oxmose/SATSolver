@@ -55,8 +55,6 @@ class SATSolver
 		void print_current_state();
 
 	private:
-
-		
 		/* DPLL interns */
 		set<int>                                        unsat_clauses;
 		queue<pair<int,int>>                          deduction_queue;//First: deduction, Second: clause coming from

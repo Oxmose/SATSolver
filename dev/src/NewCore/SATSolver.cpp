@@ -300,7 +300,6 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
 	clause to_learn(formula.size());
 	vector<int> level;
 
-	conflict_graph.output();
 	conflict_graph.find_uip_cut();
 
 	OUTDEBUG(fprintf(stderr, "\tUIP found to be %d.\n", conflict_graph.uip));
@@ -324,6 +323,14 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
 	}
 
 	OUTDEBUG(fprintf(stderr, "\tWill learn clause %s.\n", to_learn.to_str().c_str()));
+
+
+	/* CL- INTERAC 
+		Ici on a : uip
+				   clause
+
+	*/
+	conflict_graph.output(true);
 	
 	assert(to_learn.assoc_lit.find(-conflict_graph.uip) != to_learn.assoc_lit.end());
 
