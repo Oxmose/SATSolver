@@ -17,7 +17,8 @@
 #include <atomic>   // std::atomic
 
 // OTHER INCLUDES FROM PROJECT
-#include "../Core/Clause.h" // Clause class
+#include "../NewCore/SATSolver.h" // SATSolver class
+#include "../NewCore/clause.h" // Clause class
 
 // PARSER INCLUDES
 #include "expr.hpp"
@@ -45,8 +46,8 @@ class LOGParser : public IParser
         ~LOGParser();
 
         // Parser methods
-        bool parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses);
-        bool tseitinResolution(std::map<int,int> &p_valuation, unsigned int &p_maxIndex);
+        bool parse(SATSolver &p_solver, unsigned int &p_maxIndex);
+        bool tseitinResolution(std::map<unsigned int,int> &p_valuation, unsigned int &p_maxIndex);
 
     private:
 	    std::vector<Expr*> tseitinTransform(Expr *exp, unsigned int &p_maxIndex);

@@ -11,8 +11,7 @@
 #include <set>      // std::set
 
 // PROJECT INCLUDES
-#include "../Core/Clause.h"     // ClauseSet
-#include "../Core/SATSolver.h"  // decision
+#include "../NewCore/SATSolver.h"  // Solver
 
 // INHERITANCE CLASS
 #include "IBet.h"
@@ -30,28 +29,22 @@ RandomBet::RandomBet(bool p_randomBet)
 
 RandomBet::~RandomBet()
 {
-} // ~RandomBet()
+}
 
-decision RandomBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
+void RandomBet::takeABet(SATSolver *p_solver)
 {
-    OUTDEBUG("Random bet");
-
+    OUTDEBUG(fprintf(stderr, "Random bet"));
     set<int> unassignedLits;
-    int selectedUnassigned = -1;
-    bool value = true;
 
-    // Gather non assigned literals
-    for(int iClause: p_unsatClauses)
-    {
-        for(auto lit: p_clauses[iClause].getLiterals())
-        {   
-            if(p_valuation[lit.first] == -1)
-            {
-                int polLit = lit.second ? -lit.first : lit.first;
-                unassignedLits.emplace(polLit); 
-            }      
-        }
-    }
+    assert(!p_solver->unsat_clauses.empty());
+    p_solver->curr_level++;
+    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
+
+    for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
+        for(auto l : p_solver->formula[it].literal)
+	        if(p_solver->valuation[abs(l)] == -1)
+                	unassignedLits.emplace(l);
+    
 
     if(unassignedLits.size() != 0)
     {
@@ -62,12 +55,11 @@ decision RandomBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatC
         for(unsigned int i = 0; i < index; ++i)
             ++it;
 
-        selectedUnassigned = abs(*it);
+        bool value = true;
+        int selectedUnassigned = abs(*it);
         if(!m_randomBet)
         {
-            if(*it > 0)
-                value = true;
-            else
+            if(*it < 0)
                 value = false;
         }
         else
@@ -78,16 +70,13 @@ decision RandomBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatC
             if(bet > 4)
                 value = false;
         }
+        OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", *it));
+        p_solver->decision_stack.push_back(make_pair(selectedUnassigned, value));
+        if(settings_s.cl_s)
+	        p_solver->conflict_graph.add_node(selectedUnassigned, make_pair(p_solver->curr_level, value));
+        return; 
     }
-
-    decision bet = decision(selectedUnassigned, value, true);
-    
-    if(selectedUnassigned == -1)
-    {
-        OUTERROR("Critical issue in RandBet, a bet should exist.");
-    }
-
-    OUTDEBUG("Taking bet: " << selectedUnassigned << " to " << value);
-    return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+    else
+        assert(false);
+} // void takeABet(SATSolver *p_solver)
 

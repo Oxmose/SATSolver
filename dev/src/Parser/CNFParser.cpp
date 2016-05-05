@@ -16,7 +16,8 @@
 #include "CNFParser.h"
 
 // OTHER INCLUDES FROM PROJECT
-#include "../Core/Clause.h" // Clause class
+#include "../NewCore/SATSolver.h" // SATSolver class
+#include "../NewCore/clause.h" // Clause class
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"
@@ -35,14 +36,16 @@ CNFParser::~CNFParser()
 {
 } // ~CNFParser()
 
-bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
+bool CNFParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
 {
-    OUTDEBUG("CNF PARSE BEGIN");
+    OUTDEBUG(fprintf(stderr, "CNF PARSE BEGIN\n"));
+
     // Open file
     ifstream file(m_fileName);
     if(!file.is_open())
     {
-        OUTERROR("Can't open file.");
+        cout << "[Error] Can't open file." << endl;
+        assert(false);
     }
 
     bool noError = true;
@@ -58,6 +61,7 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
     unsigned int clausesCount = 0;
     unsigned int maxIndex = 0;
     unsigned int givenClausesCount = 0;
+    int defMaxIndex = 0;
 
     // Read line by line
     while(getline(file, line))
@@ -73,7 +77,6 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
         // We sound not to parse comment line
         if(line[firstChar] == 'c' || line[firstChar] == ' ')
             continue;
-
 
         // Parse header if not already parsed
         if(!parsedHeader)
@@ -94,20 +97,22 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
             splitter >> validator;
             if(validator != "cnf")
             {
-                OUTERROR("Not a CNF formula or header is corrupted.");
+                cout << "[Error] Not a CNF formula or header is corrupted." << endl;
+                assert(false);
             }
 
             // Retrive formula metadata into members
-            splitter >> p_maxIndex;
-            maxIndex = p_maxIndex;
+            splitter >> defMaxIndex;
+            maxIndex = defMaxIndex;
             splitter >> givenClausesCount;
         }
         else
         {
-            // Parse clauses
 
             //Create new clause
             stringstream splitter(line);
+
+            clause the_clause(p_solver.formula.size());
 
             map<int,bool> literals;
             int readLiteral;
@@ -129,12 +134,15 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
                     else if((!lit.second && -(lit.first) == readLiteral) || (lit.second && lit.first == readLiteral))
                     {
                         hasTaut = true;
+                        p_solver.valuation[abs(readLiteral)] = -1;
                     }
                 }
 
-
                 if(!found)
-                    literals[abs(readLiteral)] = (readLiteral < 0);
+                {
+                    the_clause.literal.push_back(readLiteral);
+                    literals[readLiteral] = (readLiteral > 0);
+                }
 
                 // Vars count verification
                 if(readLiteral < 0)
@@ -156,9 +164,9 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
                 {
                     readLiteral = -readLiteral;
                 }
-                if(readLiteral > (int)p_maxIndex)
+                if(readLiteral > (int)defMaxIndex)
                 {
-                    OUTWARNING("The file has " << readLiteral << " for index variable but " << p_maxIndex << " was announced as maximum index.");
+                    OUTWARNING("The file has " << readLiteral << " for index variable but " << defMaxIndex << " was announced as maximum index.");
                     if(readLiteral > (int)maxIndex)
                         maxIndex = readLiteral;
                 }
@@ -167,11 +175,15 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
             // Create and save the clause
             if(literals.size() > 0)
             {
-                Clause clause(literals, hasTaut, clausesCount);
-                p_clauses.push_back(clause);
-                p_maxIndex = maxIndex;
-                // Add one to counter for verification purposes
-                ++clausesCount;
+                if(!hasTaut)
+                {
+                    p_solver.add_clause(the_clause, true);
+                    // Add one to counter for verification purposes
+                    ++clausesCount;                    
+                }
+                else
+                    OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
+                defMaxIndex = maxIndex;
             }
             else
             {
@@ -183,7 +195,10 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
     }
 
     if(!parsedHeader)
-        OUTERROR("Not a CNF file/formula.");
+    {
+        cout << "[ERROR] Not a CNF file/formula." << endl;
+        assert(false);        
+    }
     /*
      * Error management
     */
@@ -217,12 +232,12 @@ bool CNFParser::parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses)
 
     file.close();
 
-    OUTDEBUG("CNF PARSE END WITH STATUS " << noError);
+    OUTDEBUG(fprintf(stderr, "CNF PARSE END WITH STATUS \n"));
 
     return noError;
 } // bool parse(unsigned int &, ClauseSet&)
 
-bool CNFParser::tseitinResolution(map<int,int> &p_valuation, unsigned int &p_maxIndex)
+bool CNFParser::tseitinResolution(map<unsigned int,int> &p_valuation, unsigned int &defMaxIndex)
 {
     return true;
 } // bool tseitinResolution(map<int,int>&, unsigned int&);

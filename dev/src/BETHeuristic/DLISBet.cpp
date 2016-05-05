@@ -1,4 +1,4 @@
-/*
+/*    
  *
  *  CLASS DLISBet
  *
@@ -8,11 +8,9 @@
 #include <vector>   // vector
 #include <map>      // map
 #include <cmath>    // exp2, abs
-#include <set>      // set
 
 // PROJECT INCLUDES
-#include "../Core/Clause.h"     // ClauseSet
-#include "../Core/SATSolver.h"  // decision
+#include "../NewCore/SATSolver.h"  // Solver
 
 // INHERITANCE CLASS
 #include "IBet.h"
@@ -29,11 +27,14 @@ DLISBet::DLISBet(bool p_scoreMethod)
 
 DLISBet::~DLISBet()
 {
-} // ~DLISBet()
+}
 
-decision DLISBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatClauses, map<int,int> &p_valuation)
+void DLISBet::takeABet(SATSolver *p_solver)
 {
-    OUTDEBUG("DLIS bet");
+    OUTDEBUG(fprintf(stderr, "DLIS bet"));
+    assert(!p_solver->unsat_clauses.empty());
+    p_solver->curr_level++;
+    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
     int firstUnassigned = -1;
     double max = 0;
@@ -45,33 +46,29 @@ decision DLISBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
 
     if(m_scoreMethod)
     {
-        for(int iClause: p_unsatClauses)
-        {
-            double clauseSize = 0;
-            for(auto lit: p_clauses[iClause].getLiterals())
-            {
-                // Get the size of the alive lits in clause 
-                if(p_valuation[lit.first] == -1)
-                {
+        double clauseSize = 0;
+        for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
+            for(auto l : p_solver->formula[it].literal)
+                if(p_solver->valuation[abs(l)] == -1)
                     ++clauseSize;
-                }
-            }
-            for(auto lit: p_clauses[iClause].getLiterals())
+            
+        for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
+        {
+            for(auto l : p_solver->formula[it].literal)
             {
-                if(p_valuation[lit.first] == -1)
+                if(p_solver->valuation[abs(l)] == -1)
                 {
-                    int polLit = (lit.second) ? -lit.first : lit.first;
                     // If we never encountred the literal
-                    if(unassignedLits.find(polLit) == unassignedLits.end())
-                        unassignedLits.emplace(polLit, exp2(-clauseSize));
+                    if(unassignedLits.find(l) == unassignedLits.end())
+                        unassignedLits.emplace(l, exp2(-clauseSize));
                     else
-                        unassignedLits[polLit] += exp2(-clauseSize);
+                        unassignedLits[l] += exp2(-clauseSize);
 
-                    if(unassignedLits[polLit] > max)
+                    if(unassignedLits[l] > max)
                     {
-                        max = unassignedLits[polLit];
-                        firstUnassigned = abs(polLit);
-                        if(polLit < 0)
+                        max = unassignedLits[l];
+                        firstUnassigned = abs(l);
+                        if(l < 0)
                             value = false;
                         else
                             value = true;
@@ -82,24 +79,24 @@ decision DLISBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
     }
     else
     {
-        for(int iClause: p_unsatClauses)
+        for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
         {
-            for(auto lit: p_clauses[iClause].getLiterals())
+            for(auto l : p_solver->formula[it].literal)
             {
-                if(p_valuation[lit.first] == -1)
-                {
-                    int polLit = (lit.second) ? -lit.first : lit.first;
+                if(p_solver->valuation[abs(l)] == -1)
+                {                  
                     // If we never encountred the literal
-                    if(unassignedLits.find(polLit) == unassignedLits.end())
-                        unassignedLits.emplace(polLit, 1);
+                    if(unassignedLits.find(l) == unassignedLits.end())
+                        unassignedLits.emplace(l, 1);
                     else
-                        ++unassignedLits[polLit];
+                        ++unassignedLits[l];
 
-                    if(unassignedLits[polLit] > max)
+                    if(unassignedLits[l] > max)
                     {
-                        max = unassignedLits[polLit];
-                        firstUnassigned = abs(polLit);
-                        if(polLit < 0)
+                        max = unassignedLits[l];
+                        firstUnassigned = abs(l);
+
+                        if(l < 0)
                             value = false;
                         else
                             value = true;
@@ -109,14 +106,10 @@ decision DLISBet::takeABet(vector<Clause> &p_clauses, const set<int> &p_unsatCla
         }
     }
 
-    decision bet = decision(firstUnassigned, value, true);
-    
-    if(firstUnassigned == -1)
-    {
-        OUTERROR("Critical issue in DLISBet, a bet should exist.");
-    }
-
-    OUTDEBUG("Taking bet: " << firstUnassigned << " to " << value);
-    return bet;
-} // decision takeABet(vector<Clause>&, const set<int>&, map<int,int>&)
+    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", firstUnassigned));
+    p_solver->decision_stack.push_back(make_pair(firstUnassigned, value));
+    if(settings_s.cl_s)
+        p_solver->conflict_graph.add_node(firstUnassigned, make_pair(p_solver->curr_level, value));
+    return;
+} // void takeABet(SATSolver *p_solver)
 

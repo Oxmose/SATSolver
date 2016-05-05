@@ -299,13 +299,13 @@ ENeg::ENeg(Expr * e1) : op1(e1) {}
 
 Expr* ENeg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
+    //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
 
     ++p_maxIndex;
     Expr *var = new EVar(p_maxIndex);
 
-    Expr* clauseNeg = new EDis(new ENeg(var), new ENeg(op1Tran));
-    Expr* clausePos = new EDis(var, op1Tran);
+    Expr* clauseNeg = new EDis(new ENeg(var), new ENeg(op1));
+    Expr* clausePos = new EDis(var, op1);
 
     p_exps.push_back(new ECon(clauseNeg,clausePos));
     return var;

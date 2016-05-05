@@ -16,7 +16,8 @@
 #include <iostream> // std::cout std::cerr std::endl
 
 // OTHER INCLUDES FROM PROJECT
-#include "../Core/Clause.h" // Clause class
+#include "../NewCore/SATSolver.h" // SATSolver class
+#include "../NewCore/clause.h" // Clause class
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"
@@ -32,8 +33,8 @@ class CNFParser : public IParser
         ~CNFParser();
         
         // Parse
-        bool parse(unsigned int &p_maxIndex, std::vector<Clause>& p_clauses);
-        bool tseitinResolution(std::map<int,int> &p_valuation, unsigned int &p_maxIndex);
+        bool parse(SATSolver &p_solver, unsigned int &p_maxIndex);
+        bool tseitinResolution(std::map<unsigned int,int> &p_valuation, unsigned int &p_maxIndex);
 
     private:
         // Name of the file to parse

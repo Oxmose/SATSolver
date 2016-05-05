@@ -9,29 +9,24 @@
 
 // STD INCLUDES
 #include <vector>   // std::vector
-#include <map>      // std::map
 #include <cmath>    // std::exp2, std::abs
-#include <set>      // std::set
-#include <memory>   // std::shared_ptr
 
 // PROJECT INCLUDES
-#include "../Core/Clause.h"     // ClauseSet
-#include "../Core/SATSolver.h"  // decision
+#include "../NewCore/SATSolver.h"  // Solver
 
 // INHERITANCE CLASS
 #include "IBet.h"
 
 // Score function designed for VSIDS heuristic
 double VSIDSScoreFunction(double oldScore, bool inLearnedClause);
+
 class VSIDSBet : public IBet
 {
     public:
-        VSIDSBet(std::shared_ptr<SATSolver> p_solver);
         virtual ~VSIDSBet();
-        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation);
+        virtual void takeABet(SATSolver *p_solver);
 
     private:
-        std::shared_ptr<SATSolver> m_solver;
 
 }; // VSIDSBet
 

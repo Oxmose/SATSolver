@@ -11,8 +11,7 @@
 #include <vector>   // std::vector
 
 // PROJECT INCLUDES
-#include "../Core/Clause.h"     // ClauseSet
-#include "../Core/SATSolver.h"  // decision
+#include "../NewCore/SATSolver.h"  // Solver
 
 enum BET_METHOD
 {
@@ -25,12 +24,14 @@ enum BET_METHOD
     VSIDS
 };
 
+class SATSolver;
+
 typedef struct decision decision;
 class IBet
 {
     public:
         virtual ~IBet(){}
-        virtual decision takeABet(std::vector<Clause> &p_clauses, const std::set<int> &p_unsatClauses, std::map<int,int> &p_valuation) = 0;
+        virtual void takeABet(SATSolver *p_solver) = 0;
 
     private:
 }; // IBet

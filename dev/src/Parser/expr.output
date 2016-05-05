@@ -344,13 +344,15 @@ expression (16)
     5           | expression . TK_IMP expression
     6           | expression . TK_XOR expression
     7           | expression . TK_DIS expression
-    7           | expression TK_DIS expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+    7           | expression TK_DIS expression .  [TK_DIS, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
     8           | expression . TK_CON expression
+
+    TK_CON  décalage et aller à l'état 12
 
     $défaut  réduction par utilisation de la règle 7 (expression)
 
     Conflit entre la règle 7 et le jeton TK_DIS résolu par réduction (%left TK_DIS).
-    Conflit entre la règle 7 et le jeton TK_CON résolu par réduction (TK_CON < TK_DIS).
+    Conflit entre la règle 7 et le jeton TK_CON résolu par décalage (TK_DIS < TK_CON).
     Conflit entre la règle 7 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_DIS).
     Conflit entre la règle 7 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_DIS).
     Conflit entre la règle 7 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_DIS).
@@ -363,20 +365,15 @@ expression (16)
     6           | expression . TK_XOR expression
     7           | expression . TK_DIS expression
     8           | expression . TK_CON expression
-    8           | expression TK_CON expression .  [TK_CON, TK_RPAREN, TK_ZERO]
-
-    TK_DIS  décalage et aller à l'état 11
-    TK_XOR  décalage et aller à l'état 13
-    TK_IMP  décalage et aller à l'état 14
-    TK_EQU  décalage et aller à l'état 15
+    8           | expression TK_CON expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
 
     $défaut  réduction par utilisation de la règle 8 (expression)
 
-    Conflit entre la règle 8 et le jeton TK_DIS résolu par décalage (TK_CON < TK_DIS).
+    Conflit entre la règle 8 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_CON).
     Conflit entre la règle 8 et le jeton TK_CON résolu par réduction (%left TK_CON).
-    Conflit entre la règle 8 et le jeton TK_XOR résolu par décalage (TK_CON < TK_XOR).
-    Conflit entre la règle 8 et le jeton TK_IMP résolu par décalage (TK_CON < TK_IMP).
-    Conflit entre la règle 8 et le jeton TK_EQU résolu par décalage (TK_CON < TK_EQU).
+    Conflit entre la règle 8 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_CON).
+    Conflit entre la règle 8 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_CON).
+    Conflit entre la règle 8 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_CON).
 
 
 État 20
@@ -384,16 +381,17 @@ expression (16)
     4 expression: expression . TK_EQU expression
     5           | expression . TK_IMP expression
     6           | expression . TK_XOR expression
-    6           | expression TK_XOR expression .  [TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+    6           | expression TK_XOR expression .  [TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
     7           | expression . TK_DIS expression
     8           | expression . TK_CON expression
 
     TK_DIS  décalage et aller à l'état 11
+    TK_CON  décalage et aller à l'état 12
 
     $défaut  réduction par utilisation de la règle 6 (expression)
 
     Conflit entre la règle 6 et le jeton TK_DIS résolu par décalage (TK_XOR < TK_DIS).
-    Conflit entre la règle 6 et le jeton TK_CON résolu par réduction (TK_CON < TK_XOR).
+    Conflit entre la règle 6 et le jeton TK_CON résolu par décalage (TK_XOR < TK_CON).
     Conflit entre la règle 6 et le jeton TK_XOR résolu par réduction (%left TK_XOR).
     Conflit entre la règle 6 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_XOR).
     Conflit entre la règle 6 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_XOR).
@@ -403,18 +401,19 @@ expression (16)
 
     4 expression: expression . TK_EQU expression
     5           | expression . TK_IMP expression
-    5           | expression TK_IMP expression .  [TK_CON, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+    5           | expression TK_IMP expression .  [TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
     6           | expression . TK_XOR expression
     7           | expression . TK_DIS expression
     8           | expression . TK_CON expression
 
     TK_DIS  décalage et aller à l'état 11
+    TK_CON  décalage et aller à l'état 12
     TK_XOR  décalage et aller à l'état 13
 
     $défaut  réduction par utilisation de la règle 5 (expression)
 
     Conflit entre la règle 5 et le jeton TK_DIS résolu par décalage (TK_IMP < TK_DIS).
-    Conflit entre la règle 5 et le jeton TK_CON résolu par réduction (TK_CON < TK_IMP).
+    Conflit entre la règle 5 et le jeton TK_CON résolu par décalage (TK_IMP < TK_CON).
     Conflit entre la règle 5 et le jeton TK_XOR résolu par décalage (TK_IMP < TK_XOR).
     Conflit entre la règle 5 et le jeton TK_IMP résolu par réduction (%left TK_IMP).
     Conflit entre la règle 5 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_IMP).
@@ -423,20 +422,21 @@ expression (16)
 État 22
 
     4 expression: expression . TK_EQU expression
-    4           | expression TK_EQU expression .  [TK_CON, TK_EQU, TK_RPAREN, TK_ZERO]
+    4           | expression TK_EQU expression .  [TK_EQU, TK_RPAREN, TK_ZERO]
     5           | expression . TK_IMP expression
     6           | expression . TK_XOR expression
     7           | expression . TK_DIS expression
     8           | expression . TK_CON expression
 
     TK_DIS  décalage et aller à l'état 11
+    TK_CON  décalage et aller à l'état 12
     TK_XOR  décalage et aller à l'état 13
     TK_IMP  décalage et aller à l'état 14
 
     $défaut  réduction par utilisation de la règle 4 (expression)
 
     Conflit entre la règle 4 et le jeton TK_DIS résolu par décalage (TK_EQU < TK_DIS).
-    Conflit entre la règle 4 et le jeton TK_CON résolu par réduction (TK_CON < TK_EQU).
+    Conflit entre la règle 4 et le jeton TK_CON résolu par décalage (TK_EQU < TK_CON).
     Conflit entre la règle 4 et le jeton TK_XOR résolu par décalage (TK_EQU < TK_XOR).
     Conflit entre la règle 4 et le jeton TK_IMP résolu par décalage (TK_EQU < TK_IMP).
     Conflit entre la règle 4 et le jeton TK_EQU résolu par réduction (%left TK_EQU).
