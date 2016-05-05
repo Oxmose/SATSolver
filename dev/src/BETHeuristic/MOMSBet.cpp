@@ -27,7 +27,6 @@ void MOMSBet::takeABet(SATSolver *p_solver)
 {
     OUTDEBUG(fprintf(stderr, "MOMS bet"));
     assert(!p_solver->unsat_clauses.empty());
-    p_solver->curr_level++;
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
     map<int, int> clausesSizes;

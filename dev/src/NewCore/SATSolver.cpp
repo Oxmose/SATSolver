@@ -315,7 +315,7 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         }
     }
 
-
+    assert(settings_s.cl_s);
     OUTDEBUG(fprintf(stderr, "Diagnosising conflict.\n"));
 
     conflict_graph.add_deduction_node(conflict_clause, true);
@@ -509,6 +509,7 @@ pair<int,bool> SATSolver::backtrack(int bt_to, bool full_bt)
 
 void SATSolver::take_a_bet()
 {
+    ++curr_level;
     m_bet->takeABet(this);
 }
 

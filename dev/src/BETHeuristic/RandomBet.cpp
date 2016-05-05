@@ -37,7 +37,6 @@ void RandomBet::takeABet(SATSolver *p_solver)
     set<int> unassignedLits;
 
     assert(!p_solver->unsat_clauses.empty());
-    p_solver->curr_level++;
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
     for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
@@ -70,7 +69,7 @@ void RandomBet::takeABet(SATSolver *p_solver)
             if(bet > 4)
                 value = false;
         }
-        OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", *it));
+        OUTDEBUG(fprintf(stderr,"Taking bet %d to %d.\n", *it, value));
         p_solver->decision_stack.push_back(make_pair(selectedUnassigned, value));
         if(settings_s.cl_s)
 	        p_solver->conflict_graph.add_node(selectedUnassigned, make_pair(p_solver->curr_level, value));

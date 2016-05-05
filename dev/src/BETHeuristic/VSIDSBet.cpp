@@ -27,7 +27,6 @@ void VSIDSBet::takeABet(SATSolver *p_solver)
 {
     OUTDEBUG(fprintf(stderr, "VSIDS bet"));
     assert(!p_solver->unsat_clauses.empty());
-    p_solver->curr_level++;
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
     int firstUnassigned = -1;
