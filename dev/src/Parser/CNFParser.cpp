@@ -129,9 +129,11 @@ bool CNFParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                 for(auto lit : literals)
                 {
                     //lit.first = index, lit.second = isBar?
-                    if((lit.second && -(lit.first) == readLiteral) || (!lit.second && lit.first == readLiteral))
+                    if(lit.first == readLiteral)
+		    {
                         found = true;
-                    else if((!lit.second && -(lit.first) == readLiteral) || (lit.second && lit.first == readLiteral))
+                    }
+                    else if(lit.first == -readLiteral)
                     {
                         hasTaut = true;
                         p_solver.valuation[abs(readLiteral)] = -1;
@@ -178,12 +180,12 @@ bool CNFParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                 if(!hasTaut)
                 {
                     p_solver.add_clause(the_clause, true);
-                    // Add one to counter for verification purposes
-                    ++clausesCount;                    
+                    // Add one to counter for verification purposes                                    
                 }
                 else
                     OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
                 defMaxIndex = maxIndex;
+		++clausesCount;    
             }
             else
             {
@@ -231,9 +233,7 @@ bool CNFParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     }
 
     file.close();
-
     OUTDEBUG(fprintf(stderr, "CNF PARSE END WITH STATUS \n"));
-
     return noError;
 } // bool parse(unsigned int &, ClauseSet&)
 

@@ -29,7 +29,7 @@ void VSIDSBet::takeABet(SATSolver *p_solver)
     assert(!p_solver->unsat_clauses.empty());
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
-    int firstUnassigned = -1;
+    int firstUnassigned = 0;
     double max = -1;
     double score = 0;
 
@@ -62,6 +62,8 @@ void VSIDSBet::takeABet(SATSolver *p_solver)
     }
     else
         assert(false);
+
+    assert(firstUnassigned != 0);
 
     OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", abs(firstUnassigned)));
     p_solver->decision_stack.push_back(make_pair(abs(firstUnassigned), true));
