@@ -54,25 +54,10 @@ void RandomBet::takeABet(SATSolver *p_solver)
         for(unsigned int i = 0; i < index; ++i)
             ++it;
 
-        bool value = true;
-        int selectedUnassigned = abs(*it);
-        if(!m_randomBet)
-        {
-            if(*it < 0)
-                value = false;
-        }
-        else
-        {
-            int bet = rand() % 9;
-            
-            // Randomize bet    
-            if(bet > 4)
-                value = false;
-        }
-        OUTDEBUG(fprintf(stderr,"Taking bet %d to %d.\n", *it, value));
-        p_solver->decision_stack.push_back(make_pair(selectedUnassigned, value));
+        OUTDEBUG(fprintf(stderr,"Taking bet %d\n", *it));
+        p_solver->decision_stack.push_back(make_pair(abs(*it), true));
         if(settings_s.cl_s)
-	        p_solver->conflict_graph.add_node(selectedUnassigned, make_pair(p_solver->curr_level, value));
+	        p_solver->conflict_graph.add_node(abs(*it), make_pair(p_solver->curr_level, true));
         return; 
     }
     else

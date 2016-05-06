@@ -34,7 +34,6 @@ void MOMSBet::takeABet(SATSolver *p_solver)
 
     int min = -1;
     int selectedUnassigned = -1;
-    bool value = true;
 
     // Gather minimal clauses
     for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
@@ -42,23 +41,24 @@ void MOMSBet::takeABet(SATSolver *p_solver)
         int clauseSize = 0;
         for(auto l : p_solver->formula[it].literal)
         {
-	        if(p_solver->valuation[abs(l)] == -1)
+	    if(p_solver->valuation[abs(l)] == -1)
             {
                 ++clauseSize;
             }
         }
-        if(clauseSize < min || min == -1)
+        if(clauseSize != 0 && (clauseSize < min || min == -1))
             min = clauseSize;
-        
+
         clausesSizes.emplace(it, clauseSize);
     }
+    assert(min != -1);
 
     for(pair<int, int> entry : clausesSizes)
     {
         if(entry.second == min)
-        {            
+        {           
             for(auto l : p_solver->formula[entry.first].literal)
-            {       
+            {
                 if(p_solver->valuation[abs(l)] == -1)
                 {
                     // If we never encountred the literal
@@ -71,7 +71,6 @@ void MOMSBet::takeABet(SATSolver *p_solver)
             }
         }
     }
-
     unsigned int max = 0;
     for(pair<int, unsigned int> entry : unassignedLits)
     {
@@ -82,17 +81,9 @@ void MOMSBet::takeABet(SATSolver *p_solver)
         }    
     }
 
-    if(selectedUnassigned < 0)
-    {
-        selectedUnassigned = -selectedUnassigned;
-        value = false;
-    }
-    else
-        value = true;
-
-    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", selectedUnassigned));
-    p_solver->decision_stack.push_back(make_pair(selectedUnassigned, value));
+    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", abs(selectedUnassigned)));
+    p_solver->decision_stack.push_back(make_pair(abs(selectedUnassigned), true));
     if(settings_s.cl_s)
-	    p_solver->conflict_graph.add_node(selectedUnassigned, make_pair(p_solver->curr_level, value));
+	    p_solver->conflict_graph.add_node(abs(selectedUnassigned), make_pair(p_solver->curr_level, true));
     return;
 } // void takeABet(SATSolver *p_solver)
