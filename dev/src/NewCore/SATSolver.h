@@ -79,6 +79,7 @@ class SATSolver
         queue<pair<int,int>>                          deduction_queue;//First: deduction, Second: clause coming from
         vector<pair<int,bool>>                         decision_stack;//First: decision, Second: is a bet ?
         unordered_map<int,vector<int>>                  clauses_sat_by;
+
         unordered_map<unsigned int,set<int>>       clauses_watched_by;//WL
         unordered_map<unsigned int,set<int>>         clauses_with_var;//STD
         

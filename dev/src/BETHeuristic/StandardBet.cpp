@@ -29,7 +29,6 @@ void StandardBet::takeABet(SATSolver *p_solver)
 {
     OUTDEBUG(fprintf(stderr, "Standard bet"));
     assert(!p_solver->unsat_clauses.empty());
-    p_solver->curr_level++;
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
     for(auto l : p_solver->formula[*p_solver->unsat_clauses.begin()].literal)

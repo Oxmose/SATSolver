@@ -33,12 +33,10 @@ void DLISBet::takeABet(SATSolver *p_solver)
 {
     OUTDEBUG(fprintf(stderr, "DLIS bet"));
     assert(!p_solver->unsat_clauses.empty());
-    p_solver->curr_level++;
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
     int firstUnassigned = -1;
     double max = 0;
-    bool value = false;
 
     // Contains the literals and the number of clauses they appear in (or score if m_scoreMethod is true)
     map<int, double> unassignedLits;
@@ -68,10 +66,6 @@ void DLISBet::takeABet(SATSolver *p_solver)
                     {
                         max = unassignedLits[l];
                         firstUnassigned = abs(l);
-                        if(l < 0)
-                            value = false;
-                        else
-                            value = true;
                     }
                 }
             }
@@ -95,11 +89,6 @@ void DLISBet::takeABet(SATSolver *p_solver)
                     {
                         max = unassignedLits[l];
                         firstUnassigned = abs(l);
-
-                        if(l < 0)
-                            value = false;
-                        else
-                            value = true;
                     }
                 }
             }
@@ -107,9 +96,9 @@ void DLISBet::takeABet(SATSolver *p_solver)
     }
 
     OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", firstUnassigned));
-    p_solver->decision_stack.push_back(make_pair(firstUnassigned, value));
+    p_solver->decision_stack.push_back(make_pair(firstUnassigned, true));
     if(settings_s.cl_s)
-        p_solver->conflict_graph.add_node(firstUnassigned, make_pair(p_solver->curr_level, value));
+        p_solver->conflict_graph.add_node(firstUnassigned, make_pair(p_solver->curr_level, true));
     return;
 } // void takeABet(SATSolver *p_solver)
 
