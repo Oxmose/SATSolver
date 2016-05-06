@@ -315,6 +315,7 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         }
     }
 
+    printf("%d\n", curr_level);
     assert(settings_s.cl_s);
 
     OUTDEBUG(fprintf(stderr, "Diagnosising conflict.\n"));
