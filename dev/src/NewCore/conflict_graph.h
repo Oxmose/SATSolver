@@ -12,6 +12,7 @@
 #include <queue>
 #include <set>
 #include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
@@ -42,8 +43,8 @@ struct conflict_graph
      
      unordered_map<int, pair<int,bool>> infos_on;//decision level and if is a bet
 
-     unordered_map<int,set<int>> sons_of;
-     unordered_map<int,set<int>> parents_of;
+     unordered_map<int,unordered_set<int>> sons_of;
+     unordered_map<int,unordered_set<int>> parents_of;
 
      string node_to_str(int l);
      void output(bool extra_info=false);

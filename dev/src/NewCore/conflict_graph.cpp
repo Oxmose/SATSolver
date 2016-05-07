@@ -25,10 +25,10 @@ void conflict_graph::remove_node(int l, bool total /*=true*/)
 
     if(total)
     {
-        for(auto& n: sons_of)
-            n.second.erase(l);
-        for(auto& n: parents_of)
-            n.second.erase(l);
+        for(auto n: parents_of[l])
+            sons_of[n].erase(l);
+        for(auto n: sons_of[l])
+            parents_of[n].erase(l);
         sons_of.erase(l);
         parents_of.erase(l);
         infos_on.erase(l);
@@ -44,8 +44,8 @@ void conflict_graph::add_node(int l, pair<int,bool> level_bet)
     OUTDEBUG(fprintf(stderr, "Adding node (lit: %d, level: %d, bet: %d).\n", l, level_bet.first, level_bet.second));
     assert(infos_on.find(l) == infos_on.end());
     infos_on[l] = level_bet;
-    sons_of[l] = set<int>();
-    parents_of[l] = set<int>();
+    sons_of[l] = unordered_set<int>();
+    parents_of[l] = unordered_set<int>();
 }
 
 void conflict_graph::add_edge(int l_a, int l_b)
@@ -231,7 +231,7 @@ void conflict_graph::output(bool extra_info/* = false */)
     if(settings_s.clinterac_s)
         cout << "Outputing graph on conflictGraph" << to_string(i).c_str() << ".dot" << endl;
     i++;
-    
+
     myfile << "digraph {\n";
 
     for(auto& e: sons_of)
