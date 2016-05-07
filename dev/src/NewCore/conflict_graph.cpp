@@ -222,12 +222,16 @@ void conflict_graph::output(bool extra_info/* = false */)
     assert(settings_s.cl_s);
 
     static int i = 0;
-    i++;
     //if(i > 2)
     //    exit(0);
     ofstream myfile;
-    myfile.open("d"+to_string(i)+".dot");
+    myfile.open("conflictGraph"+to_string(i)+".dot");
+
     OUTDEBUG(fprintf(stderr, "Outputing graph on d%s.dot.\n", to_string(i).c_str()));
+    if(settings_s.clinterac_s)
+        cout << "Outputing graph on conflictGraph" << to_string(i).c_str() << ".dot" << endl;
+    i++;
+    
     myfile << "digraph {\n";
 
     for(auto& e: sons_of)

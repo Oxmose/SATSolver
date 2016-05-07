@@ -1,2215 +1,2888 @@
 CNF PARSE BEGIN
-Adding 16 17 30 0.
+Adding 42 0.
+	Is unitary, becomes a deduction.
+Adding -62 0.
+	Is unitary, becomes a deduction.
+Adding -33 0.
+	Is unitary, becomes a deduction.
+Adding -29 0.
+	Is unitary, becomes a deduction.
+Adding -67 0.
+	Is unitary, becomes a deduction.
+Adding 34 0.
+	Is unitary, becomes a deduction.
+Adding -23 0.
+	Is unitary, becomes a deduction.
+Adding 38 0.
+	Is unitary, becomes a deduction.
+Adding 20 0.
+	Is unitary, becomes a deduction.
+Adding -57 0.
+	Is unitary, becomes a deduction.
+Adding 21 0.
+	Is unitary, becomes a deduction.
+Adding 98 0.
+	Is unitary, becomes a deduction.
+Adding -45 0.
+	Is unitary, becomes a deduction.
+Adding -2 0.
+	Is unitary, becomes a deduction.
+Adding -80 0.
+	Is unitary, becomes a deduction.
+Adding 16 0.
+	Is unitary, becomes a deduction.
+Adding 31 0.
+	Is unitary, becomes a deduction.
+Adding -62 67 78 0.
 Clause added with id 0.
-Adding -17 22 30 0.
+Adding 33 -62 -78 0.
 Clause added with id 1.
-Adding -17 -22 30 0.
+Adding -33 67 -78 0.
 Clause added with id 2.
-Adding 16 -30 47 0.
+Adding 29 42 93 0.
 Clause added with id 3.
-Adding 16 -30 -47 0.
+Adding 29 -67 -93 0.
 Clause added with id 4.
-Adding -16 -21 31 0.
+Adding -29 42 97 0.
 Clause added with id 5.
-Adding -16 -21 -31 0.
+Adding -29 -67 -97 0.
 Clause added with id 6.
-Adding -16 21 -28 0.
+Adding 34 -42 66 0.
 Clause added with id 7.
-Adding -13 21 28 0.
+Adding 34 -42 88 0.
 Clause added with id 8.
-Adding 13 -16 18 0.
+Adding 34 -66 -88 0.
 Clause added with id 9.
-Adding 13 -18 -38 0.
+Adding -23 -34 -42 0.
 Clause added with id 10.
-Adding 13 -18 -31 0.
+Adding 23 -34 38 0.
 Clause added with id 11.
-Adding 31 38 44 0.
+Adding 20 -34 -38 0.
 Clause added with id 12.
-Adding -8 31 -44 0.
+Adding -20 -38 -57 0.
 Clause added with id 13.
-Adding 8 -12 -44 0.
+Adding -20 21 -38 0.
 Clause added with id 14.
-Adding 8 12 -27 0.
+Adding -20 -21 98 0.
 Clause added with id 15.
-Adding 12 27 40 0.
+Adding -21 -45 -98 0.
 Clause added with id 16.
-Adding -4 27 -40 0.
+Adding 2 23 -80 0.
 Clause added with id 17.
-Adding 12 23 -40 0.
+Adding 2 -23 -80 0.
 Clause added with id 18.
-Adding -3 4 -23 0.
+Adding -2 -80 -98 0.
 Clause added with id 19.
-Adding 3 -23 -49 0.
+Adding 16 31 80 0.
 Clause added with id 20.
-Adding 3 -13 -49 0.
+Adding 4 -31 80 0.
 Clause added with id 21.
-Adding -23 -26 49 0.
+Adding -4 -31 -67 0.
 Clause added with id 22.
-Adding 12 -34 49 0.
+Adding -4 -26 -31 0.
 Clause added with id 23.
-Adding -12 26 -34 0.
+Adding 26 59 60 0.
 Clause added with id 24.
-Adding 19 34 36 0.
+Adding -4 26 -59 0.
 Clause added with id 25.
-Adding -19 26 36 0.
+Adding 8 26 43 0.
 Clause added with id 26.
-Adding -30 34 -36 0.
+Adding -8 43 -60 0.
 Clause added with id 27.
-Adding 24 34 -36 0.
+Adding -43 -60 -91 0.
 Clause added with id 28.
-Adding -24 -36 43 0.
+Adding -43 46 51 0.
 Clause added with id 29.
-Adding 6 42 -43 0.
+Adding -46 51 -60 0.
 Clause added with id 30.
-Adding -24 42 -43 0.
+Adding -43 -51 -93 0.
 Clause added with id 31.
-Adding -5 -24 -42 0.
+Adding -51 71 93 0.
 Clause added with id 32.
-Adding 5 20 -42 0.
+Adding -51 66 -71 0.
 Clause added with id 33.
-Adding 5 -7 -20 0.
+Adding 57 63 -66 0.
 Clause added with id 34.
-Adding 4 7 10 0.
+Adding -57 63 -71 0.
 Clause added with id 35.
-Adding -4 10 -20 0.
+Adding 11 -63 -71 0.
 Clause added with id 36.
-Adding 7 -10 -41 0.
+Adding -63 -66 -97 0.
 Clause added with id 37.
-Adding -10 41 46 0.
+Adding -11 -69 80 0.
 Clause added with id 38.
-Adding -33 41 -46 0.
+Adding -11 -63 -69 0.
 Clause added with id 39.
-Adding 33 -37 -46 0.
+Adding 13 -27 97 0.
 Clause added with id 40.
-Adding 32 33 37 0.
+Adding -11 -13 -27 0.
 Clause added with id 41.
-Adding 6 -32 37 0.
+Adding 69 77 97 0.
 Clause added with id 42.
-Adding -6 25 -32 0.
+Adding -14 66 69 0.
 Clause added with id 43.
-Adding -6 -25 -48 0.
+Adding -14 27 -77 0.
 Clause added with id 44.
-Adding -9 28 48 0.
+Adding -27 69 -77 0.
 Clause added with id 45.
-Adding -9 -25 -28 0.
+Adding 27 91 100 0.
 Clause added with id 46.
-Adding 19 -25 48 0.
+Adding -69 91 100 0.
 Clause added with id 47.
-Adding 2 9 -19 0.
+Adding 27 -91 100 0.
 Clause added with id 48.
-Adding -2 -19 35 0.
+Adding -5 -77 -100 0.
 Clause added with id 49.
-Adding -2 22 -35 0.
+Adding 12 14 -100 0.
 Clause added with id 50.
-Adding -22 -35 50 0.
+Adding 12 14 -97 0.
 Clause added with id 51.
-Adding -17 -35 -50 0.
+Adding -10 -12 -100 0.
 Clause added with id 52.
-Adding -29 -35 -50 0.
+Adding 10 -12 -70 0.
 Clause added with id 53.
-Adding -1 29 -50 0.
+Adding -12 49 70 0.
 Clause added with id 54.
-Adding 1 11 29 0.
+Adding -49 -64 70 0.
 Clause added with id 55.
-Adding -11 17 -45 0.
+Adding -16 -49 70 0.
 Clause added with id 56.
-Adding -11 39 45 0.
+Adding -39 -49 64 0.
 Clause added with id 57.
-Adding -26 39 45 0.
+Adding 39 64 99 0.
 Clause added with id 58.
-Adding -3 -26 45 0.
+Adding 39 -62 -99 0.
 Clause added with id 59.
-Adding -11 15 -39 0.
+Adding 50 73 -99 0.
 Clause added with id 60.
-Adding 14 -15 -39 0.
+Adding 39 50 -73 0.
 Clause added with id 61.
-Adding 14 -15 -45 0.
+Adding -13 -50 -99 0.
 Clause added with id 62.
-Adding 14 -15 -27 0.
+Adding 13 -50 68 0.
 Clause added with id 63.
-Adding -14 -15 47 0.
+Adding -50 -55 -68 0.
 Clause added with id 64.
-17 17 40 0 is tautological, not added.
-Adding 1 -29 -31 0.
+Adding 13 -37 -68 0.
 Clause added with id 65.
-Adding -7 32 38 0.
+Adding -17 55 -68 0.
 Clause added with id 66.
-Adding -14 -33 -47 0.
+Adding -36 51 55 0.
 Clause added with id 67.
-Adding -1 2 -8 0.
+Adding 17 -36 55 0.
 Clause added with id 68.
-Adding 35 43 44 0.
+Adding 17 36 -84 0.
 Clause added with id 69.
-21 21 24 0 is tautological, not added.
-Adding 20 29 -48 0.
+Adding 16 17 -22 0.
 Clause added with id 70.
-Adding 23 35 -37 0.
+Adding -16 -22 36 0.
 Clause added with id 71.
-Adding 2 18 -33 0.
+Adding -9 22 36 0.
 Clause added with id 72.
-Adding 15 25 -45 0.
+Adding 9 22 65 0.
 Clause added with id 73.
-Adding 9 14 -38 0.
+Adding 9 19 28 0.
 Clause added with id 74.
-Adding -5 11 50 0.
+Adding 19 28 -65 0.
 Clause added with id 75.
-Adding -3 -13 46 0.
+Adding 9 19 -28 0.
 Clause added with id 76.
-Adding -13 -41 43 0.
+Adding -3 -19 -65 0.
 Clause added with id 77.
-[WARNING] The file has 78 clauses but 80 were announced.
+Adding -19 -65 -76 0.
+Clause added with id 78.
+Adding -19 46 76 0.
+Clause added with id 79.
+Adding -1 22 -46 0.
+Clause added with id 80.
+Adding -1 -22 76 0.
+Clause added with id 81.
+Adding 1 10 47 0.
+Clause added with id 82.
+Adding 1 47 -91 0.
+Clause added with id 83.
+Adding 1 -10 47 0.
+Clause added with id 84.
+Adding 6 35 -47 0.
+Clause added with id 85.
+Adding -6 35 -46 0.
+Clause added with id 86.
+Adding -35 -47 -79 0.
+Clause added with id 87.
+Adding 50 -54 84 0.
+Clause added with id 88.
+Adding -35 53 84 0.
+Clause added with id 89.
+Adding 53 -54 -84 0.
+Clause added with id 90.
+Adding -47 -53 -54 0.
+Clause added with id 91.
+Adding -35 54 -95 0.
+Clause added with id 92.
+Adding 54 -78 95 0.
+Clause added with id 93.
+Adding 15 78 95 0.
+Clause added with id 94.
+Adding 14 -15 96 0.
+Clause added with id 95.
+Adding -14 78 96 0.
+Clause added with id 96.
+Adding -15 41 57 0.
+Clause added with id 97.
+Adding -15 40 41 0.
+Clause added with id 98.
+Adding 8 -40 41 0.
+Clause added with id 99.
+Adding -8 -40 -57 0.
+Clause added with id 100.
+Adding -40 -41 -96 0.
+Clause added with id 101.
+Adding -41 74 -96 0.
+Clause added with id 102.
+Adding -41 -74 -87 0.
+Clause added with id 103.
+Adding -52 -74 87 0.
+Clause added with id 104.
+Adding -74 87 94 0.
+Clause added with id 105.
+Adding -44 87 -94 0.
+Clause added with id 106.
+Adding 82 93 -94 0.
+Clause added with id 107.
+Adding 44 82 84 0.
+Clause added with id 108.
+Adding 82 -84 -93 0.
+Clause added with id 109.
+Adding -2 -94 96 0.
+Clause added with id 110.
+Adding -2 -82 -96 0.
+Clause added with id 111.
+Adding 32 -82 95 0.
+Clause added with id 112.
+Adding 37 60 99 0.
+Clause added with id 113.
+Adding 37 60 -95 0.
+Clause added with id 114.
+Adding 32 37 44 0.
+Clause added with id 115.
+Adding 32 -37 56 0.
+Clause added with id 116.
+Adding -37 -56 -95 0.
+Clause added with id 117.
+Adding -32 -82 86 0.
+Clause added with id 118.
+Adding 25 -32 -86 0.
+Clause added with id 119.
+Adding 25 -76 -86 0.
+Clause added with id 120.
+Adding -25 -32 -89 0.
+Clause added with id 121.
+Adding -25 81 -86 0.
+Clause added with id 122.
+Adding -25 -29 -81 0.
+Clause added with id 123.
+Adding 6 89 92 0.
+Clause added with id 124.
+Adding 83 89 92 0.
+Clause added with id 125.
+Adding -6 -81 92 0.
+Clause added with id 126.
+Adding 10 48 -81 0.
+Clause added with id 127.
+Adding -10 48 -92 0.
+Clause added with id 128.
+Adding -8 -48 -92 0.
+Clause added with id 129.
+Adding 7 -48 -92 0.
+Clause added with id 130.
+Adding -7 -48 61 0.
+Clause added with id 131.
+Adding -7 -61 73 0.
+Clause added with id 132.
+Adding -61 76 83 0.
+Clause added with id 133.
+Adding 3 -76 83 0.
+Clause added with id 134.
+Adding -3 -7 -61 0.
+Clause added with id 135.
+Adding -73 -83 88 0.
+Clause added with id 136.
+Adding -56 -73 88 0.
+Clause added with id 137.
+Adding -83 -88 90 0.
+Clause added with id 138.
+Adding 24 -88 -90 0.
+Clause added with id 139.
+Adding -24 -33 -90 0.
+Clause added with id 140.
+Adding -24 75 -90 0.
+Clause added with id 141.
+Adding -24 30 -75 0.
+Clause added with id 142.
+Adding -30 -56 -75 0.
+Clause added with id 143.
+Adding -30 -59 -75 0.
+Clause added with id 144.
+Adding 23 44 85 0.
+Clause added with id 145.
+Adding -23 59 85 0.
+Clause added with id 146.
+Adding -44 85 89 0.
+Clause added with id 147.
+Adding 33 -44 -89 0.
+Clause added with id 148.
+Adding -30 -33 -89 0.
+Clause added with id 149.
+Adding 53 59 -85 0.
+Clause added with id 150.
+Adding 64 72 -85 0.
+Clause added with id 151.
+Adding -53 -64 72 0.
+Clause added with id 152.
+Adding 21 -70 72 0.
+Clause added with id 153.
+Adding -21 -64 -70 0.
+Clause added with id 154.
+Adding -18 -72 -85 0.
+Clause added with id 155.
+Adding -53 -58 -72 0.
+Clause added with id 156.
+Adding 6 18 -72 0.
+Clause added with id 157.
+Adding -6 18 28 0.
+Clause added with id 158.
+Adding -5 58 0.
+Clause added with id 159.
+Adding -13 -17 94 0.
+Clause added with id 160.
+Adding -45 46 58 0.
+Clause added with id 161.
+Adding 12 -17 29 0.
+Clause added with id 162.
+Adding -28 65 -79 0.
+Clause added with id 163.
+Adding 3 40 0.
+Clause added with id 164.
+Adding 25 56 -87 0.
+Clause added with id 165.
+Adding -1 -5 40 0.
+Clause added with id 166.
+Adding -26 54 75 0.
+Clause added with id 167.
+Adding -28 31 98 0.
+Clause added with id 168.
+Adding -26 30 52 0.
+Clause added with id 169.
+Adding 8 11 90 0.
+Clause added with id 170.
+Adding 52 79 99 0.
+Clause added with id 171.
+Adding -52 -55 75 0.
+Clause added with id 172.
+Adding 45 52 94 0.
+Clause added with id 173.
+Adding 2 -9 43 0.
+Clause added with id 174.
+Adding 45 71 98 0.
+Clause added with id 175.
+Adding 61 71 74 0.
+Clause added with id 176.
+Adding -18 57 65 0.
+Clause added with id 177.
+Adding -18 48 49 0.
+Clause added with id 178.
+Adding 4 18 68 0.
+Clause added with id 179.
+Adding 4 73 -87 0.
+Clause added with id 180.
+Adding 38 61 63 0.
+Clause added with id 181.
+Adding 15 56 77 0.
+Clause added with id 182.
+Adding 62 68 90 0.
+Clause added with id 183.
+Adding 33 49 74 0.
+Clause added with id 184.
+Adding -39 -55 81 0.
+Clause added with id 185.
+Adding 5 21 77 0.
+Clause added with id 186.
+Adding 24 -59 -83 0.
+Clause added with id 187.
+Adding 20 79 0.
+Clause added with id 188.
+Adding 7 -52 79 0.
+Clause added with id 189.
+Adding 15 45 81 0.
+Clause added with id 190.
+Adding 16 -39 -45 0.
+Clause added with id 191.
+Adding 3 35 -79 0.
+Clause added with id 192.
+Adding 7 11 38 0.
+Clause added with id 193.
+Adding -36 62 86 0.
+Clause added with id 194.
+Adding 5 30 91 0.
+Clause added with id 195.
+Adding -9 24 58 0.
+Clause added with id 196.
+Adding 5 -58 86 0.
+Clause added with id 197.
+[WARNING] The file has 215 clauses but 200 were announced.
 CNF PARSE END WITH STATUS 
 
 Iteration 0.
 Current state: 
-Standard betCurrent level is now 0.
-Taking bet 16.
+Add pending deduction 42 to decision stack.
 
-Handling last decision 16b.
-Current state: 16b 
+Handling last decision 42d.
+Current state: 42d 
 
-Decision affects clause 0: 16 17 30 0.
+Decision affects clause 3: 29 42 93 0.
 	Clause is now sat.
 
-Decision affects clause 3: 16 -30 47 0.
+Decision affects clause 5: -29 42 97 0.
 	Clause is now sat.
 
-Decision affects clause 4: 16 -30 -47 0.
-	Clause is now sat.
+Decision affects clause 7: 34 -42 66 0.
 
-Decision affects clause 5: -16 -21 31 0.
+Decision affects clause 8: 34 -42 88 0.
 
-Decision affects clause 6: -16 -21 -31 0.
-
-Decision affects clause 7: -16 21 -28 0.
-
-Decision affects clause 9: 13 -16 18 0.
+Decision affects clause 10: -23 -34 -42 0.
 
 
 
 Iteration 1.
-Current state: 16b 
-Standard betCurrent level is now 1.
-Taking bet 17.
+Current state: 42d 
+Add pending deduction -62 to decision stack.
 
-Handling last decision 17b.
-Current state: 16b 17b 
+Handling last decision -62d.
+Current state: 42d -62d 
 
-Decision affects clause 1: -17 22 30 0.
-
-Decision affects clause 2: -17 -22 30 0.
-
-Decision affects clause 52: -17 -35 -50 0.
-
-Decision affects clause 56: -11 17 -45 0.
+Decision affects clause 0: -62 67 78 0.
 	Clause is now sat.
+
+Decision affects clause 1: 33 -62 -78 0.
+	Clause is now sat.
+
+Decision affects clause 59: 39 -62 -99 0.
+	Clause is now sat.
+
+Decision affects clause 183: 62 68 90 0.
+
+Decision affects clause 194: -36 62 86 0.
 
 
 
 Iteration 2.
-Current state: 16b 17b 
-Standard betCurrent level is now 2.
-Taking bet 22.
+Current state: 42d -62d 
+Add pending deduction -33 to decision stack.
 
-Handling last decision 22b.
-Current state: 16b 17b 22b 
+Handling last decision -33d.
+Current state: 42d -62d -33d 
 
-Decision affects clause 1: -17 22 30 0.
+Decision affects clause 2: -33 67 -78 0.
 	Clause is now sat.
 
-Decision affects clause 2: -17 -22 30 0.
-	Unit prop 30 spotted.
-Decision affects clause 50: -2 22 -35 0.
+Decision affects clause 140: -24 -33 -90 0.
 	Clause is now sat.
 
-Decision affects clause 51: -22 -35 50 0.
+Decision affects clause 148: 33 -44 -89 0.
+
+Decision affects clause 149: -30 -33 -89 0.
+	Clause is now sat.
+
+Decision affects clause 184: 33 49 74 0.
 
 
 
 Iteration 3.
-Current state: 16b 17b 22b 
-Add pending deduction 30 to decision stack.
+Current state: 42d -62d -33d 
+Add pending deduction -29 to decision stack.
 
-Handling last decision 30d.
-Current state: 16b 17b 22b 30d 
+Handling last decision -29d.
+Current state: 42d -62d -33d -29d 
 
-Decision affects clause 2: -17 -22 30 0.
+Decision affects clause 4: 29 -67 -93 0.
+
+Decision affects clause 6: -29 -67 -97 0.
 	Clause is now sat.
 
-Decision affects clause 27: -30 34 -36 0.
+Decision affects clause 123: -25 -29 -81 0.
+	Clause is now sat.
+
+Decision affects clause 162: 12 -17 29 0.
 
 
 
 Iteration 4.
-Current state: 16b 17b 22b 30d 
-Standard betCurrent level is now 3.
-Taking bet 21.
+Current state: 42d -62d -33d -29d 
+Add pending deduction -67 to decision stack.
 
-Handling last decision 21b.
-Current state: 16b 17b 22b 30d 21b 
+Handling last decision -67d.
+Current state: 42d -62d -33d -29d -67d 
 
-Decision affects clause 5: -16 -21 31 0.
-	Unit prop 31 spotted.
-Decision affects clause 6: -16 -21 -31 0.
-	Unit prop -31 spotted.
-Decision affects clause 7: -16 21 -28 0.
+Decision affects clause 4: 29 -67 -93 0.
 	Clause is now sat.
 
-Decision affects clause 8: -13 21 28 0.
+Decision affects clause 22: -4 -31 -67 0.
 	Clause is now sat.
 
 
 
 Iteration 5.
-Current state: 16b 17b 22b 30d 21b 
-Add pending deduction 31 to decision stack.
+Current state: 42d -62d -33d -29d -67d 
+Add pending deduction 34 to decision stack.
 
-Handling last decision 31d.
-Current state: 16b 17b 22b 30d 21b 31d 
+Handling last decision 34d.
+Current state: 42d -62d -33d -29d -67d 34d 
 
-Decision affects clause 5: -16 -21 31 0.
+Decision affects clause 7: 34 -42 66 0.
 	Clause is now sat.
 
-Decision affects clause 6: -16 -21 -31 0.
-	Contradiction -31 spotted.
+Decision affects clause 8: 34 -42 88 0.
+	Clause is now sat.
 
-	Should backtrack until 21 (last bet) inclusively.
-Backtracking until 21 inclusively.
-Current state: 16b 17b 22b 30d 21b 31d 
-	Clearing pending deductions.
-	Cancelling 31d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 31.
-		-16 -21 31 0 revived.
-	Cancelling 21b.
-	Reviving var in appropriate clauses.
-	Current level is now 2.
-	Reviving clauses satisfied by 21.
-		-16 21 -28 0 revived.
-		-13 21 28 0 revived.
-Current state: 16b 17b 22b 30d 
+Decision affects clause 9: 34 -66 -88 0.
+	Clause is now sat.
+
+Decision affects clause 10: -23 -34 -42 0.
+	Unit prop -23 spotted.
+Decision affects clause 11: 23 -34 38 0.
+
+Decision affects clause 12: 20 -34 -38 0.
+
+
 
 Iteration 6.
-Current state: 16b 17b 22b 30d -21d 
+Current state: 42d -62d -33d -29d -67d 34d 
+Add pending deduction -23 to decision stack.
 
-Handling last decision -21d.
-Current state: 16b 17b 22b 30d -21d 
+Handling last decision -23d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 
 
-Decision affects clause 5: -16 -21 31 0.
+Decision affects clause 10: -23 -34 -42 0.
 	Clause is now sat.
 
-Decision affects clause 6: -16 -21 -31 0.
+Decision affects clause 11: 23 -34 38 0.
+	Unit prop 38 spotted.
+Decision affects clause 17: 2 23 -80 0.
+
+Decision affects clause 18: 2 -23 -80 0.
 	Clause is now sat.
 
-Decision affects clause 7: -16 21 -28 0.
-	Unit prop -28 spotted.
-Decision affects clause 8: -13 21 28 0.
+Decision affects clause 145: 23 44 85 0.
+
+Decision affects clause 146: -23 59 85 0.
+	Clause is now sat.
 
 
 
 Iteration 7.
-Current state: 16b 17b 22b 30d -21d 
-Add pending deduction -28 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 
+Add pending deduction 38 to decision stack.
 
-Handling last decision -28d.
-Current state: 16b 17b 22b 30d -21d -28d 
+Handling last decision 38d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 
 
-Decision affects clause 7: -16 21 -28 0.
+Decision affects clause 11: 23 -34 38 0.
 	Clause is now sat.
 
-Decision affects clause 8: -13 21 28 0.
-	Unit prop -13 spotted.
-Decision affects clause 45: -9 28 48 0.
+Decision affects clause 12: 20 -34 -38 0.
+	Unit prop 20 spotted.
+Decision affects clause 13: -20 -38 -57 0.
 
-Decision affects clause 46: -9 -25 -28 0.
+Decision affects clause 14: -20 21 -38 0.
+
+Decision affects clause 181: 38 61 63 0.
+	Clause is now sat.
+
+Decision affects clause 193: 7 11 38 0.
 	Clause is now sat.
 
 
 
 Iteration 8.
-Current state: 16b 17b 22b 30d -21d -28d 
-Add pending deduction -13 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 
+Add pending deduction 20 to decision stack.
 
-Handling last decision -13d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 
+Handling last decision 20d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d 
 
-Decision affects clause 8: -13 21 28 0.
+Decision affects clause 12: 20 -34 -38 0.
 	Clause is now sat.
 
-Decision affects clause 9: 13 -16 18 0.
-	Unit prop 18 spotted.
-Decision affects clause 10: 13 -18 -38 0.
+Decision affects clause 13: -20 -38 -57 0.
+	Unit prop -57 spotted.
+Decision affects clause 14: -20 21 -38 0.
+	Unit prop 21 spotted.
+Decision affects clause 15: -20 -21 98 0.
 
-Decision affects clause 11: 13 -18 -31 0.
-
-Decision affects clause 21: 3 -13 -49 0.
-	Clause is now sat.
-
-Decision affects clause 76: -3 -13 46 0.
-	Clause is now sat.
-
-Decision affects clause 77: -13 -41 43 0.
+Decision affects clause 188: 20 79 0.
 	Clause is now sat.
 
 
 
 Iteration 9.
-Current state: 16b 17b 22b 30d -21d -28d -13d 
-Add pending deduction 18 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d 
+Add pending deduction -57 to decision stack.
 
-Handling last decision 18d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d 
+Handling last decision -57d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 
 
-Decision affects clause 9: 13 -16 18 0.
+Decision affects clause 13: -20 -38 -57 0.
 	Clause is now sat.
 
-Decision affects clause 10: 13 -18 -38 0.
-	Unit prop -38 spotted.
-Decision affects clause 11: 13 -18 -31 0.
-	Unit prop -31 spotted.
-Decision affects clause 72: 2 18 -33 0.
+Decision affects clause 34: 57 63 -66 0.
+
+Decision affects clause 35: -57 63 -71 0.
 	Clause is now sat.
+
+Decision affects clause 97: -15 41 57 0.
+
+Decision affects clause 100: -8 -40 -57 0.
+	Clause is now sat.
+
+Decision affects clause 177: -18 57 65 0.
 
 
 
 Iteration 10.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d 
-Add pending deduction -38 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 
+Add pending deduction 21 to decision stack.
 
-Handling last decision -38d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d 
+Handling last decision 21d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 
 
-Decision affects clause 10: 13 -18 -38 0.
+Decision affects clause 14: -20 21 -38 0.
 	Clause is now sat.
 
-Decision affects clause 12: 31 38 44 0.
+Decision affects clause 15: -20 -21 98 0.
+	Unit prop 98 spotted.
+Decision affects clause 16: -21 -45 -98 0.
 
-Decision affects clause 66: -7 32 38 0.
+Decision affects clause 153: 21 -70 72 0.
+	Clause is now sat.
 
-Decision affects clause 74: 9 14 -38 0.
+Decision affects clause 154: -21 -64 -70 0.
+
+Decision affects clause 186: 5 21 77 0.
 	Clause is now sat.
 
 
 
 Iteration 11.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d 
-Add pending deduction -31 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 
+Add pending deduction 98 to decision stack.
 
-Handling last decision -31d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 
+Handling last decision 98d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d 
 
-Decision affects clause 11: 13 -18 -31 0.
+Decision affects clause 15: -20 -21 98 0.
 	Clause is now sat.
 
-Decision affects clause 12: 31 38 44 0.
-	Unit prop 44 spotted.
-Decision affects clause 13: -8 31 -44 0.
+Decision affects clause 16: -21 -45 -98 0.
+	Unit prop -45 spotted.
+Decision affects clause 19: -2 -80 -98 0.
 
-Decision affects clause 65: 1 -29 -31 0.
+Decision affects clause 168: -28 31 98 0.
+	Clause is now sat.
+
+Decision affects clause 175: 45 71 98 0.
 	Clause is now sat.
 
 
 
 Iteration 12.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 
-Add pending deduction 44 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d 
+Add pending deduction -45 to decision stack.
 
-Handling last decision 44d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d 
+Handling last decision -45d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d 
 
-Decision affects clause 12: 31 38 44 0.
+Decision affects clause 16: -21 -45 -98 0.
 	Clause is now sat.
 
-Decision affects clause 13: -8 31 -44 0.
-	Unit prop -8 spotted.
-Decision affects clause 14: 8 -12 -44 0.
+Decision affects clause 161: -45 46 58 0.
+	Clause is now sat.
 
-Decision affects clause 69: 35 43 44 0.
+Decision affects clause 173: 45 52 94 0.
+
+Decision affects clause 190: 15 45 81 0.
+
+Decision affects clause 191: 16 -39 -45 0.
 	Clause is now sat.
 
 
 
 Iteration 13.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d 
-Add pending deduction -8 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d 
+Add pending deduction -2 to decision stack.
 
-Handling last decision -8d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d 
+Handling last decision -2d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d 
 
-Decision affects clause 13: -8 31 -44 0.
+Decision affects clause 17: 2 23 -80 0.
+	Unit prop -80 spotted.
+Decision affects clause 19: -2 -80 -98 0.
 	Clause is now sat.
 
-Decision affects clause 14: 8 -12 -44 0.
-	Unit prop -12 spotted.
-Decision affects clause 15: 8 12 -27 0.
-
-Decision affects clause 68: -1 2 -8 0.
+Decision affects clause 110: -2 -94 96 0.
 	Clause is now sat.
+
+Decision affects clause 111: -2 -82 -96 0.
+	Clause is now sat.
+
+Decision affects clause 174: 2 -9 43 0.
 
 
 
 Iteration 14.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d 
-Add pending deduction -12 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d 
+Add pending deduction -80 to decision stack.
 
-Handling last decision -12d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d 
+Handling last decision -80d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 
 
-Decision affects clause 14: 8 -12 -44 0.
+Decision affects clause 17: 2 23 -80 0.
 	Clause is now sat.
 
-Decision affects clause 15: 8 12 -27 0.
-	Unit prop -27 spotted.
-Decision affects clause 16: 12 27 40 0.
+Decision affects clause 20: 16 31 80 0.
 
-Decision affects clause 18: 12 23 -40 0.
+Decision affects clause 21: 4 -31 80 0.
 
-Decision affects clause 23: 12 -34 49 0.
-
-Decision affects clause 24: -12 26 -34 0.
-	Clause is now sat.
+Decision affects clause 38: -11 -69 80 0.
 
 
 
 Iteration 15.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d 
-Add pending deduction -27 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 
+Add pending deduction 16 to decision stack.
 
-Handling last decision -27d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 
+Handling last decision 16d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 
 
-Decision affects clause 15: 8 12 -27 0.
+Decision affects clause 20: 16 31 80 0.
 	Clause is now sat.
 
-Decision affects clause 16: 12 27 40 0.
-	Unit prop 40 spotted.
-Decision affects clause 17: -4 27 -40 0.
+Decision affects clause 56: -16 -49 70 0.
 
-Decision affects clause 63: 14 -15 -27 0.
+Decision affects clause 70: 16 17 -22 0.
 	Clause is now sat.
+
+Decision affects clause 71: -16 -22 36 0.
 
 
 
 Iteration 16.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 
-Add pending deduction 40 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 
+Add pending deduction 31 to decision stack.
 
-Handling last decision 40d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d 
+Handling last decision 31d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
 
-Decision affects clause 16: 12 27 40 0.
-	Clause is now sat.
+Decision affects clause 21: 4 -31 80 0.
+	Unit prop 4 spotted.
+Decision affects clause 23: -4 -26 -31 0.
 
-Decision affects clause 17: -4 27 -40 0.
-	Unit prop -4 spotted.
-Decision affects clause 18: 12 23 -40 0.
-	Unit prop 23 spotted.
 
 
 Iteration 17.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d 
-Add pending deduction -4 to decision stack.
-
-Handling last decision -4d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 
-
-Decision affects clause 17: -4 27 -40 0.
-	Clause is now sat.
-
-Decision affects clause 19: -3 4 -23 0.
-
-Decision affects clause 35: 4 7 10 0.
-
-Decision affects clause 36: -4 10 -20 0.
-	Clause is now sat.
-
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Deduction -23 already done.
 Iteration 18.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 
-Add pending deduction 23 to decision stack.
-
-Handling last decision 23d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d 
-
-Decision affects clause 18: 12 23 -40 0.
-	Clause is now sat.
-
-Decision affects clause 19: -3 4 -23 0.
-	Unit prop -3 spotted.
-Decision affects clause 20: 3 -23 -49 0.
-
-Decision affects clause 22: -23 -26 49 0.
-
-Decision affects clause 71: 23 35 -37 0.
-	Clause is now sat.
-
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Deduction 38 already done.
 Iteration 19.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d 
-Add pending deduction -3 to decision stack.
-
-Handling last decision -3d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d 
-
-Decision affects clause 19: -3 4 -23 0.
-	Clause is now sat.
-
-Decision affects clause 20: 3 -23 -49 0.
-	Unit prop -49 spotted.
-Decision affects clause 59: -3 -26 45 0.
-	Clause is now sat.
-
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Deduction 20 already done.
 Iteration 20.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d 
-Add pending deduction -49 to decision stack.
-
-Handling last decision -49d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d 
-
-Decision affects clause 20: 3 -23 -49 0.
-	Clause is now sat.
-
-Decision affects clause 22: -23 -26 49 0.
-	Unit prop -26 spotted.
-Decision affects clause 23: 12 -34 49 0.
-	Unit prop -34 spotted.
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Deduction -57 already done.
 Iteration 21.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d 
-Add pending deduction -26 to decision stack.
-
-Handling last decision -26d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d 
-
-Decision affects clause 22: -23 -26 49 0.
-	Clause is now sat.
-
-Decision affects clause 26: -19 26 36 0.
-
-Decision affects clause 58: -26 39 45 0.
-	Clause is now sat.
-
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Deduction 21 already done.
 Iteration 22.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d 
-Add pending deduction -34 to decision stack.
-
-Handling last decision -34d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 
-
-Decision affects clause 23: 12 -34 49 0.
-	Clause is now sat.
-
-Decision affects clause 25: 19 34 36 0.
-
-Decision affects clause 27: -30 34 -36 0.
-	Unit prop -36 spotted.
-Decision affects clause 28: 24 34 -36 0.
-
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Deduction 98 already done.
 Iteration 23.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 
-Add pending deduction -36 to decision stack.
-
-Handling last decision -36d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d -36d 
-
-Decision affects clause 25: 19 34 36 0.
-	Unit prop 19 spotted.
-Decision affects clause 26: -19 26 36 0.
-	Unit prop -19 spotted.
-Decision affects clause 27: -30 34 -36 0.
-	Clause is now sat.
-
-Decision affects clause 28: 24 34 -36 0.
-	Clause is now sat.
-
-Decision affects clause 29: -24 -36 43 0.
-	Clause is now sat.
-
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Deduction -45 already done.
 Iteration 24.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d -36d 
-Add pending deduction 19 to decision stack.
-
-Handling last decision 19d.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d -36d 19d 
-
-Decision affects clause 25: 19 34 36 0.
-	Clause is now sat.
-
-Decision affects clause 26: -19 26 36 0.
-	Contradiction -19 spotted.
-
-	Should backtrack until 22 (last bet) inclusively.
-Backtracking until 22 inclusively.
-Current state: 16b 17b 22b 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d -36d 19d 
-	Clearing pending deductions.
-	Cancelling 19d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 19.
-		19 34 36 0 revived.
-	Cancelling -36d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -36.
-		-30 34 -36 0 revived.
-		24 34 -36 0 revived.
-		-24 -36 43 0 revived.
-	Cancelling -34d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -34.
-		12 -34 49 0 revived.
-	Cancelling -26d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -26.
-		-23 -26 49 0 revived.
-		-26 39 45 0 revived.
-	Cancelling -49d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -49.
-		3 -23 -49 0 revived.
-	Cancelling -3d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -3.
-		-3 4 -23 0 revived.
-		-3 -26 45 0 revived.
-	Cancelling 23d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 23.
-		12 23 -40 0 revived.
-		23 35 -37 0 revived.
-	Cancelling -4d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -4.
-		-4 27 -40 0 revived.
-		-4 10 -20 0 revived.
-	Cancelling 40d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 40.
-		12 27 40 0 revived.
-	Cancelling -27d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -27.
-		8 12 -27 0 revived.
-		14 -15 -27 0 revived.
-	Cancelling -12d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -12.
-		8 -12 -44 0 revived.
-		-12 26 -34 0 revived.
-	Cancelling -8d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -8.
-		-8 31 -44 0 revived.
-		-1 2 -8 0 revived.
-	Cancelling 44d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 44.
-		31 38 44 0 revived.
-		35 43 44 0 revived.
-	Cancelling -31d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -31.
-		13 -18 -31 0 revived.
-		1 -29 -31 0 revived.
-	Cancelling -38d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -38.
-		13 -18 -38 0 revived.
-		9 14 -38 0 revived.
-	Cancelling 18d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 18.
-		13 -16 18 0 revived.
-		2 18 -33 0 revived.
-	Cancelling -13d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -13.
-		-13 21 28 0 revived.
-		3 -13 -49 0 revived.
-		-3 -13 46 0 revived.
-		-13 -41 43 0 revived.
-	Cancelling -28d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -28.
-		-16 21 -28 0 revived.
-		-9 -25 -28 0 revived.
-	Cancelling -21d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -21.
-		-16 -21 31 0 revived.
-		-16 -21 -31 0 revived.
-	Cancelling 30d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 30.
-		-17 -22 30 0 revived.
-	Cancelling 22b.
-	Reviving var in appropriate clauses.
-	Current level is now 1.
-	Reviving clauses satisfied by 22.
-		-17 22 30 0 revived.
-		-2 22 -35 0 revived.
-Current state: 16b 17b 
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Deduction -80 already done.
 Iteration 25.
-Current state: 16b 17b -22d 
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 
+Add pending deduction 4 to decision stack.
 
-Handling last decision -22d.
-Current state: 16b 17b -22d 
+Handling last decision 4d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d 
 
-Decision affects clause 1: -17 22 30 0.
-	Unit prop 30 spotted.
-Decision affects clause 2: -17 -22 30 0.
+Decision affects clause 21: 4 -31 80 0.
 	Clause is now sat.
 
-Decision affects clause 50: -2 22 -35 0.
+Decision affects clause 23: -4 -26 -31 0.
+	Unit prop -26 spotted.
+Decision affects clause 25: -4 26 -59 0.
 
-Decision affects clause 51: -22 -35 50 0.
+Decision affects clause 179: 4 18 68 0.
+	Clause is now sat.
+
+Decision affects clause 180: 4 73 -87 0.
 	Clause is now sat.
 
 
 
 Iteration 26.
-Current state: 16b 17b -22d 
-Add pending deduction 30 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d 
+Add pending deduction -26 to decision stack.
 
-Handling last decision 30d.
-Current state: 16b 17b -22d 30d 
+Handling last decision -26d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d 
 
-Decision affects clause 1: -17 22 30 0.
+Decision affects clause 23: -4 -26 -31 0.
 	Clause is now sat.
 
-Decision affects clause 27: -30 34 -36 0.
+Decision affects clause 24: 26 59 60 0.
+
+Decision affects clause 25: -4 26 -59 0.
+	Unit prop -59 spotted.
+Decision affects clause 26: 8 26 43 0.
+
+Decision affects clause 167: -26 54 75 0.
+	Clause is now sat.
+
+Decision affects clause 169: -26 30 52 0.
+	Clause is now sat.
 
 
 
 Iteration 27.
-Current state: 16b 17b -22d 30d 
-Standard betCurrent level is now 2.
-Taking bet 21.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d 
+Add pending deduction -59 to decision stack.
 
-Handling last decision 21b.
-Current state: 16b 17b -22d 30d 21b 
+Handling last decision -59d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 
 
-Decision affects clause 5: -16 -21 31 0.
-	Unit prop 31 spotted.
-Decision affects clause 6: -16 -21 -31 0.
-	Unit prop -31 spotted.
-Decision affects clause 7: -16 21 -28 0.
+Decision affects clause 24: 26 59 60 0.
+	Unit prop 60 spotted.
+Decision affects clause 25: -4 26 -59 0.
 	Clause is now sat.
 
-Decision affects clause 8: -13 21 28 0.
+Decision affects clause 144: -30 -59 -75 0.
+	Clause is now sat.
+
+Decision affects clause 150: 53 59 -85 0.
+
+Decision affects clause 187: 24 -59 -83 0.
 	Clause is now sat.
 
 
 
 Iteration 28.
-Current state: 16b 17b -22d 30d 21b 
-Add pending deduction 31 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 
+Add pending deduction 60 to decision stack.
 
-Handling last decision 31d.
-Current state: 16b 17b -22d 30d 21b 31d 
+Handling last decision 60d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 
 
-Decision affects clause 5: -16 -21 31 0.
+Decision affects clause 24: 26 59 60 0.
 	Clause is now sat.
 
-Decision affects clause 6: -16 -21 -31 0.
-	Contradiction -31 spotted.
+Decision affects clause 27: -8 43 -60 0.
 
-	Should backtrack until 21 (last bet) inclusively.
-Backtracking until 21 inclusively.
-Current state: 16b 17b -22d 30d 21b 31d 
-	Clearing pending deductions.
-	Cancelling 31d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 31.
-		-16 -21 31 0 revived.
-	Cancelling 21b.
-	Reviving var in appropriate clauses.
-	Current level is now 1.
-	Reviving clauses satisfied by 21.
-		-16 21 -28 0 revived.
-		-13 21 28 0 revived.
-Current state: 16b 17b -22d 30d 
+Decision affects clause 28: -43 -60 -91 0.
+
+Decision affects clause 30: -46 51 -60 0.
+
+Decision affects clause 113: 37 60 99 0.
+	Clause is now sat.
+
+Decision affects clause 114: 37 60 -95 0.
+	Clause is now sat.
+
+
 
 Iteration 29.
-Current state: 16b 17b -22d 30d -21d 
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 
+Standard betCurrent level is now 0.
+Taking bet 8.
 
-Handling last decision -21d.
-Current state: 16b 17b -22d 30d -21d 
+Handling last decision 8b.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 
 
-Decision affects clause 5: -16 -21 31 0.
+Decision affects clause 26: 8 26 43 0.
 	Clause is now sat.
 
-Decision affects clause 6: -16 -21 -31 0.
+Decision affects clause 27: -8 43 -60 0.
+	Unit prop 43 spotted.
+Decision affects clause 99: 8 -40 41 0.
 	Clause is now sat.
 
-Decision affects clause 7: -16 21 -28 0.
-	Unit prop -28 spotted.
-Decision affects clause 8: -13 21 28 0.
+Decision affects clause 129: -8 -48 -92 0.
+
+Decision affects clause 170: 8 11 90 0.
+	Clause is now sat.
 
 
 
 Iteration 30.
-Current state: 16b 17b -22d 30d -21d 
-Add pending deduction -28 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 
+Add pending deduction 43 to decision stack.
 
-Handling last decision -28d.
-Current state: 16b 17b -22d 30d -21d -28d 
+Handling last decision 43d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d 
 
-Decision affects clause 7: -16 21 -28 0.
+Decision affects clause 27: -8 43 -60 0.
 	Clause is now sat.
 
-Decision affects clause 8: -13 21 28 0.
-	Unit prop -13 spotted.
-Decision affects clause 45: -9 28 48 0.
+Decision affects clause 28: -43 -60 -91 0.
+	Unit prop -91 spotted.
+Decision affects clause 29: -43 46 51 0.
 
-Decision affects clause 46: -9 -25 -28 0.
+Decision affects clause 31: -43 -51 -93 0.
+
+Decision affects clause 174: 2 -9 43 0.
 	Clause is now sat.
 
 
 
 Iteration 31.
-Current state: 16b 17b -22d 30d -21d -28d 
-Add pending deduction -13 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d 
+Add pending deduction -91 to decision stack.
 
-Handling last decision -13d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 
+Handling last decision -91d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 
 
-Decision affects clause 8: -13 21 28 0.
+Decision affects clause 28: -43 -60 -91 0.
 	Clause is now sat.
 
-Decision affects clause 9: 13 -16 18 0.
-	Unit prop 18 spotted.
-Decision affects clause 10: 13 -18 -38 0.
+Decision affects clause 46: 27 91 100 0.
 
-Decision affects clause 11: 13 -18 -31 0.
+Decision affects clause 47: -69 91 100 0.
 
-Decision affects clause 21: 3 -13 -49 0.
+Decision affects clause 48: 27 -91 100 0.
 	Clause is now sat.
 
-Decision affects clause 76: -3 -13 46 0.
+Decision affects clause 83: 1 47 -91 0.
 	Clause is now sat.
 
-Decision affects clause 77: -13 -41 43 0.
-	Clause is now sat.
+Decision affects clause 195: 5 30 91 0.
 
 
 
 Iteration 32.
-Current state: 16b 17b -22d 30d -21d -28d -13d 
-Add pending deduction 18 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 
+Standard betCurrent level is now 1.
+Taking bet 46.
 
-Handling last decision 18d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d 
+Handling last decision 46b.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 
 
-Decision affects clause 9: 13 -16 18 0.
+Decision affects clause 29: -43 46 51 0.
 	Clause is now sat.
 
-Decision affects clause 10: 13 -18 -38 0.
-	Unit prop -38 spotted.
-Decision affects clause 11: 13 -18 -31 0.
-	Unit prop -31 spotted.
-Decision affects clause 72: 2 18 -33 0.
+Decision affects clause 30: -46 51 -60 0.
+	Unit prop 51 spotted.
+Decision affects clause 79: -19 46 76 0.
 	Clause is now sat.
+
+Decision affects clause 80: -1 22 -46 0.
+
+Decision affects clause 86: -6 35 -46 0.
 
 
 
 Iteration 33.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d 
-Add pending deduction -38 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 
+Add pending deduction 51 to decision stack.
 
-Handling last decision -38d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d 
+Handling last decision 51d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d 
 
-Decision affects clause 10: 13 -18 -38 0.
+Decision affects clause 30: -46 51 -60 0.
 	Clause is now sat.
 
-Decision affects clause 12: 31 38 44 0.
+Decision affects clause 31: -43 -51 -93 0.
+	Unit prop -93 spotted.
+Decision affects clause 32: -51 71 93 0.
 
-Decision affects clause 66: -7 32 38 0.
+Decision affects clause 33: -51 66 -71 0.
 
-Decision affects clause 74: 9 14 -38 0.
+Decision affects clause 67: -36 51 55 0.
 	Clause is now sat.
 
 
 
 Iteration 34.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d 
-Add pending deduction -31 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d 
+Add pending deduction -93 to decision stack.
 
-Handling last decision -31d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 
+Handling last decision -93d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 
 
-Decision affects clause 11: 13 -18 -31 0.
+Decision affects clause 31: -43 -51 -93 0.
 	Clause is now sat.
 
-Decision affects clause 12: 31 38 44 0.
-	Unit prop 44 spotted.
-Decision affects clause 13: -8 31 -44 0.
+Decision affects clause 32: -51 71 93 0.
+	Unit prop 71 spotted.
+Decision affects clause 107: 82 93 -94 0.
 
-Decision affects clause 65: 1 -29 -31 0.
+Decision affects clause 109: 82 -84 -93 0.
 	Clause is now sat.
 
 
 
 Iteration 35.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 
-Add pending deduction 44 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 
+Add pending deduction 71 to decision stack.
 
-Handling last decision 44d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d 
+Handling last decision 71d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 
 
-Decision affects clause 12: 31 38 44 0.
+Decision affects clause 32: -51 71 93 0.
 	Clause is now sat.
 
-Decision affects clause 13: -8 31 -44 0.
-	Unit prop -8 spotted.
-Decision affects clause 14: 8 -12 -44 0.
+Decision affects clause 33: -51 66 -71 0.
+	Unit prop 66 spotted.
+Decision affects clause 36: 11 -63 -71 0.
 
-Decision affects clause 69: 35 43 44 0.
+Decision affects clause 176: 61 71 74 0.
 	Clause is now sat.
 
 
 
 Iteration 36.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d 
-Add pending deduction -8 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 
+Add pending deduction 66 to decision stack.
 
-Handling last decision -8d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d 
+Handling last decision 66d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 
 
-Decision affects clause 13: -8 31 -44 0.
+Decision affects clause 33: -51 66 -71 0.
 	Clause is now sat.
 
-Decision affects clause 14: 8 -12 -44 0.
-	Unit prop -12 spotted.
-Decision affects clause 15: 8 12 -27 0.
+Decision affects clause 34: 57 63 -66 0.
+	Unit prop 63 spotted.
+Decision affects clause 37: -63 -66 -97 0.
 
-Decision affects clause 68: -1 2 -8 0.
+Decision affects clause 43: -14 66 69 0.
 	Clause is now sat.
 
 
 
 Iteration 37.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d 
-Add pending deduction -12 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 
+Add pending deduction 63 to decision stack.
 
-Handling last decision -12d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d 
+Handling last decision 63d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 
 
-Decision affects clause 14: 8 -12 -44 0.
+Decision affects clause 34: 57 63 -66 0.
 	Clause is now sat.
 
-Decision affects clause 15: 8 12 -27 0.
-	Unit prop -27 spotted.
-Decision affects clause 16: 12 27 40 0.
-
-Decision affects clause 18: 12 23 -40 0.
-
-Decision affects clause 23: 12 -34 49 0.
-
-Decision affects clause 24: -12 26 -34 0.
-	Clause is now sat.
+Decision affects clause 36: 11 -63 -71 0.
+	Unit prop 11 spotted.
+Decision affects clause 37: -63 -66 -97 0.
+	Unit prop -97 spotted.
+Decision affects clause 39: -11 -63 -69 0.
 
 
 
 Iteration 38.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d 
-Add pending deduction -27 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 
+Add pending deduction 11 to decision stack.
 
-Handling last decision -27d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 
+Handling last decision 11d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d 
 
-Decision affects clause 15: 8 12 -27 0.
+Decision affects clause 36: 11 -63 -71 0.
 	Clause is now sat.
 
-Decision affects clause 16: 12 27 40 0.
-	Unit prop 40 spotted.
-Decision affects clause 17: -4 27 -40 0.
-
-Decision affects clause 63: 14 -15 -27 0.
-	Clause is now sat.
+Decision affects clause 38: -11 -69 80 0.
+	Unit prop -69 spotted.
+Decision affects clause 39: -11 -63 -69 0.
+	Unit prop -69 spotted.
+Decision affects clause 41: -11 -13 -27 0.
 
 
 
 Iteration 39.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 
-Add pending deduction 40 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d 
+Add pending deduction -97 to decision stack.
 
-Handling last decision 40d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d 
+Handling last decision -97d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d 
 
-Decision affects clause 16: 12 27 40 0.
+Decision affects clause 37: -63 -66 -97 0.
 	Clause is now sat.
 
-Decision affects clause 17: -4 27 -40 0.
-	Unit prop -4 spotted.
-Decision affects clause 18: 12 23 -40 0.
-	Unit prop 23 spotted.
+Decision affects clause 40: 13 -27 97 0.
+
+Decision affects clause 42: 69 77 97 0.
+
+Decision affects clause 51: 12 14 -97 0.
+	Clause is now sat.
+
 
 
 Iteration 40.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d 
-Add pending deduction -4 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d 
+Add pending deduction -69 to decision stack.
 
-Handling last decision -4d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 
+Handling last decision -69d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 
 
-Decision affects clause 17: -4 27 -40 0.
+Decision affects clause 38: -11 -69 80 0.
 	Clause is now sat.
 
-Decision affects clause 19: -3 4 -23 0.
+Decision affects clause 39: -11 -63 -69 0.
+	Clause is now sat.
 
-Decision affects clause 35: 4 7 10 0.
+Decision affects clause 42: 69 77 97 0.
+	Unit prop 77 spotted.
+Decision affects clause 45: -27 69 -77 0.
 
-Decision affects clause 36: -4 10 -20 0.
+Decision affects clause 47: -69 91 100 0.
 	Clause is now sat.
 
 
 
 Iteration 41.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 
-Add pending deduction 23 to decision stack.
-
-Handling last decision 23d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d 
-
-Decision affects clause 18: 12 23 -40 0.
-	Clause is now sat.
-
-Decision affects clause 19: -3 4 -23 0.
-	Unit prop -3 spotted.
-Decision affects clause 20: 3 -23 -49 0.
-
-Decision affects clause 22: -23 -26 49 0.
-
-Decision affects clause 71: 23 35 -37 0.
-	Clause is now sat.
-
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 
+Deduction -69 already done.
 Iteration 42.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d 
-Add pending deduction -3 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 
+Add pending deduction 77 to decision stack.
 
-Handling last decision -3d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d 
+Handling last decision 77d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d 
 
-Decision affects clause 19: -3 4 -23 0.
+Decision affects clause 42: 69 77 97 0.
 	Clause is now sat.
 
-Decision affects clause 20: 3 -23 -49 0.
-	Unit prop -49 spotted.
-Decision affects clause 59: -3 -26 45 0.
+Decision affects clause 44: -14 27 -77 0.
+
+Decision affects clause 45: -27 69 -77 0.
+	Unit prop -27 spotted.
+Decision affects clause 49: -5 -77 -100 0.
+
+Decision affects clause 182: 15 56 77 0.
 	Clause is now sat.
 
 
 
 Iteration 43.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d 
-Add pending deduction -49 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d 
+Add pending deduction -27 to decision stack.
 
-Handling last decision -49d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d 
+Handling last decision -27d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d 
 
-Decision affects clause 20: 3 -23 -49 0.
+Decision affects clause 40: 13 -27 97 0.
 	Clause is now sat.
 
-Decision affects clause 22: -23 -26 49 0.
-	Unit prop -26 spotted.
-Decision affects clause 23: 12 -34 49 0.
-	Unit prop -34 spotted.
+Decision affects clause 41: -11 -13 -27 0.
+	Clause is now sat.
+
+Decision affects clause 44: -14 27 -77 0.
+	Unit prop -14 spotted.
+Decision affects clause 45: -27 69 -77 0.
+	Clause is now sat.
+
+Decision affects clause 46: 27 91 100 0.
+	Unit prop 100 spotted.
 
 
 Iteration 44.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d 
-Add pending deduction -26 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d 
+Add pending deduction -14 to decision stack.
 
-Handling last decision -26d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d 
+Handling last decision -14d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 
 
-Decision affects clause 22: -23 -26 49 0.
+Decision affects clause 44: -14 27 -77 0.
 	Clause is now sat.
 
-Decision affects clause 26: -19 26 36 0.
+Decision affects clause 50: 12 14 -100 0.
 
-Decision affects clause 58: -26 39 45 0.
+Decision affects clause 95: 14 -15 96 0.
+
+Decision affects clause 96: -14 78 96 0.
 	Clause is now sat.
 
 
 
 Iteration 45.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d 
-Add pending deduction -34 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 
+Add pending deduction 100 to decision stack.
 
-Handling last decision -34d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 
+Handling last decision 100d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d 
 
-Decision affects clause 23: 12 -34 49 0.
+Decision affects clause 46: 27 91 100 0.
 	Clause is now sat.
 
-Decision affects clause 25: 19 34 36 0.
-
-Decision affects clause 27: -30 34 -36 0.
-	Unit prop -36 spotted.
-Decision affects clause 28: 24 34 -36 0.
+Decision affects clause 49: -5 -77 -100 0.
+	Unit prop -5 spotted.
+Decision affects clause 50: 12 14 -100 0.
+	Unit prop 12 spotted.
+Decision affects clause 52: -10 -12 -100 0.
 
 
 
 Iteration 46.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 
-Add pending deduction -36 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d 
+Add pending deduction -5 to decision stack.
 
-Handling last decision -36d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d -36d 
+Handling last decision -5d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 
 
-Decision affects clause 25: 19 34 36 0.
-	Unit prop 19 spotted.
-Decision affects clause 26: -19 26 36 0.
-	Unit prop -19 spotted.
-Decision affects clause 27: -30 34 -36 0.
+Decision affects clause 49: -5 -77 -100 0.
 	Clause is now sat.
 
-Decision affects clause 28: 24 34 -36 0.
+Decision affects clause 159: -5 58 0.
 	Clause is now sat.
 
-Decision affects clause 29: -24 -36 43 0.
+Decision affects clause 166: -1 -5 40 0.
 	Clause is now sat.
+
+Decision affects clause 195: 5 30 91 0.
+	Unit prop 30 spotted.
+Decision affects clause 197: 5 -58 86 0.
 
 
 
 Iteration 47.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d -36d 
-Add pending deduction 19 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 
+Add pending deduction 12 to decision stack.
 
-Handling last decision 19d.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d -36d 19d 
+Handling last decision 12d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 
 
-Decision affects clause 25: 19 34 36 0.
+Decision affects clause 50: 12 14 -100 0.
 	Clause is now sat.
 
-Decision affects clause 26: -19 26 36 0.
-	Contradiction -19 spotted.
+Decision affects clause 52: -10 -12 -100 0.
+	Unit prop -10 spotted.
+Decision affects clause 53: 10 -12 -70 0.
 
-	Should backtrack until 17 (last bet) inclusively.
-Backtracking until 17 inclusively.
-Current state: 16b 17b -22d 30d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d -36d 19d 
-	Clearing pending deductions.
-	Cancelling 19d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 19.
-		19 34 36 0 revived.
-	Cancelling -36d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -36.
-		-30 34 -36 0 revived.
-		24 34 -36 0 revived.
-		-24 -36 43 0 revived.
-	Cancelling -34d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -34.
-		12 -34 49 0 revived.
-	Cancelling -26d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -26.
-		-23 -26 49 0 revived.
-		-26 39 45 0 revived.
-	Cancelling -49d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -49.
-		3 -23 -49 0 revived.
-	Cancelling -3d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -3.
-		-3 4 -23 0 revived.
-		-3 -26 45 0 revived.
-	Cancelling 23d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 23.
-		12 23 -40 0 revived.
-		23 35 -37 0 revived.
-	Cancelling -4d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -4.
-		-4 27 -40 0 revived.
-		-4 10 -20 0 revived.
-	Cancelling 40d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 40.
-		12 27 40 0 revived.
-	Cancelling -27d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -27.
-		8 12 -27 0 revived.
-		14 -15 -27 0 revived.
-	Cancelling -12d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -12.
-		8 -12 -44 0 revived.
-		-12 26 -34 0 revived.
-	Cancelling -8d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -8.
-		-8 31 -44 0 revived.
-		-1 2 -8 0 revived.
-	Cancelling 44d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 44.
-		31 38 44 0 revived.
-		35 43 44 0 revived.
-	Cancelling -31d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -31.
-		13 -18 -31 0 revived.
-		1 -29 -31 0 revived.
-	Cancelling -38d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -38.
-		13 -18 -38 0 revived.
-		9 14 -38 0 revived.
-	Cancelling 18d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 18.
-		13 -16 18 0 revived.
-		2 18 -33 0 revived.
-	Cancelling -13d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -13.
-		-13 21 28 0 revived.
-		3 -13 -49 0 revived.
-		-3 -13 46 0 revived.
-		-13 -41 43 0 revived.
-	Cancelling -28d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -28.
-		-16 21 -28 0 revived.
-		-9 -25 -28 0 revived.
-	Cancelling -21d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -21.
-		-16 -21 31 0 revived.
-		-16 -21 -31 0 revived.
-	Cancelling 30d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 30.
-		-17 22 30 0 revived.
-	Cancelling -22d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by -22.
-		-17 -22 30 0 revived.
-		-22 -35 50 0 revived.
-	Cancelling 17b.
-	Reviving var in appropriate clauses.
-	Current level is now 0.
-	Reviving clauses satisfied by 17.
-		-11 17 -45 0 revived.
-Current state: 16b 
+Decision affects clause 54: -12 49 70 0.
+
+Decision affects clause 162: 12 -17 29 0.
+	Clause is now sat.
+
+
 
 Iteration 48.
-Current state: 16b -17d 
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 
+Add pending deduction 30 to decision stack.
 
-Handling last decision -17d.
-Current state: 16b -17d 
+Handling last decision 30d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d 
 
-Decision affects clause 1: -17 22 30 0.
+Decision affects clause 142: -24 30 -75 0.
 	Clause is now sat.
 
-Decision affects clause 2: -17 -22 30 0.
-	Clause is now sat.
+Decision affects clause 143: -30 -56 -75 0.
 
-Decision affects clause 52: -17 -35 -50 0.
+Decision affects clause 195: 5 30 91 0.
 	Clause is now sat.
-
-Decision affects clause 56: -11 17 -45 0.
 
 
 
 Iteration 49.
-Current state: 16b -17d 
-Standard betCurrent level is now 1.
-Taking bet 21.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d 
+Add pending deduction -10 to decision stack.
 
-Handling last decision 21b.
-Current state: 16b -17d 21b 
+Handling last decision -10d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d 
 
-Decision affects clause 5: -16 -21 31 0.
-	Unit prop 31 spotted.
-Decision affects clause 6: -16 -21 -31 0.
-	Unit prop -31 spotted.
-Decision affects clause 7: -16 21 -28 0.
+Decision affects clause 52: -10 -12 -100 0.
 	Clause is now sat.
 
-Decision affects clause 8: -13 21 28 0.
+Decision affects clause 53: 10 -12 -70 0.
+	Unit prop -70 spotted.
+Decision affects clause 82: 1 10 47 0.
+
+Decision affects clause 84: 1 -10 47 0.
+	Clause is now sat.
+
+Decision affects clause 127: 10 48 -81 0.
+
+Decision affects clause 128: -10 48 -92 0.
 	Clause is now sat.
 
 
 
 Iteration 50.
-Current state: 16b -17d 21b 
-Add pending deduction 31 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d 
+Add pending deduction -70 to decision stack.
 
-Handling last decision 31d.
-Current state: 16b -17d 21b 31d 
+Handling last decision -70d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 
 
-Decision affects clause 5: -16 -21 31 0.
+Decision affects clause 53: 10 -12 -70 0.
 	Clause is now sat.
 
-Decision affects clause 6: -16 -21 -31 0.
-	Contradiction -31 spotted.
+Decision affects clause 54: -12 49 70 0.
+	Unit prop 49 spotted.
+Decision affects clause 55: -49 -64 70 0.
 
-	Should backtrack until 21 (last bet) inclusively.
-Backtracking until 21 inclusively.
-Current state: 16b -17d 21b 31d 
-	Clearing pending deductions.
-	Cancelling 31d.
-	Reviving var in appropriate clauses.
-	Reviving clauses satisfied by 31.
-		-16 -21 31 0 revived.
-	Cancelling 21b.
-	Reviving var in appropriate clauses.
-	Current level is now 0.
-	Reviving clauses satisfied by 21.
-		-16 21 -28 0 revived.
-		-13 21 28 0 revived.
-Current state: 16b -17d 
+Decision affects clause 56: -16 -49 70 0.
+	Unit prop -49 spotted.
+Decision affects clause 154: -21 -64 -70 0.
+	Clause is now sat.
+
+
 
 Iteration 51.
-Current state: 16b -17d -21d 
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 
+Add pending deduction 49 to decision stack.
 
-Handling last decision -21d.
-Current state: 16b -17d -21d 
+Handling last decision 49d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 49d 
 
-Decision affects clause 5: -16 -21 31 0.
+Decision affects clause 54: -12 49 70 0.
 	Clause is now sat.
 
-Decision affects clause 6: -16 -21 -31 0.
-	Clause is now sat.
+Decision affects clause 55: -49 -64 70 0.
+	Unit prop -64 spotted.
+Decision affects clause 56: -16 -49 70 0.
+	Contradiction -49 spotted.
 
-Decision affects clause 7: -16 21 -28 0.
-	Unit prop -28 spotted.
-Decision affects clause 8: -13 21 28 0.
-
-
+	Should backtrack until 46 (last bet) inclusively.
+Backtracking until 46 inclusively.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 49d 
+	Clearing pending deductions.
+	Cancelling 49d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 49.
+		-12 49 70 0 revived.
+	Cancelling -70d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -70.
+		10 -12 -70 0 revived.
+		-21 -64 -70 0 revived.
+	Cancelling -10d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -10.
+		-10 -12 -100 0 revived.
+		1 -10 47 0 revived.
+		-10 48 -92 0 revived.
+	Cancelling 30d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 30.
+		-24 30 -75 0 revived.
+		5 30 91 0 revived.
+	Cancelling 12d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 12.
+		12 14 -100 0 revived.
+		12 -17 29 0 revived.
+	Cancelling -5d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -5.
+		-5 -77 -100 0 revived.
+		-5 58 0 revived.
+		-1 -5 40 0 revived.
+	Cancelling 100d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 100.
+		27 91 100 0 revived.
+	Cancelling -14d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -14.
+		-14 27 -77 0 revived.
+		-14 78 96 0 revived.
+	Cancelling -27d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -27.
+		13 -27 97 0 revived.
+		-11 -13 -27 0 revived.
+		-27 69 -77 0 revived.
+	Cancelling 77d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 77.
+		69 77 97 0 revived.
+		15 56 77 0 revived.
+	Cancelling -69d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -69.
+		-11 -69 80 0 revived.
+		-11 -63 -69 0 revived.
+		-69 91 100 0 revived.
+	Cancelling -97d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -97.
+		-63 -66 -97 0 revived.
+		12 14 -97 0 revived.
+	Cancelling 11d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 11.
+		11 -63 -71 0 revived.
+	Cancelling 63d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 63.
+		57 63 -66 0 revived.
+	Cancelling 66d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 66.
+		-51 66 -71 0 revived.
+		-14 66 69 0 revived.
+	Cancelling 71d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 71.
+		-51 71 93 0 revived.
+		61 71 74 0 revived.
+	Cancelling -93d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -93.
+		-43 -51 -93 0 revived.
+		82 -84 -93 0 revived.
+	Cancelling 51d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 51.
+		-46 51 -60 0 revived.
+		-36 51 55 0 revived.
+	Cancelling 46b.
+	Reviving var in appropriate clauses.
+	Current level is now 0.
+	Reviving clauses satisfied by 46.
+		-43 46 51 0 revived.
+		-19 46 76 0 revived.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d 
 
 Iteration 52.
-Current state: 16b -17d -21d 
-Add pending deduction -28 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 
 
-Handling last decision -28d.
-Current state: 16b -17d -21d -28d 
+Handling last decision -46d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 
 
-Decision affects clause 7: -16 21 -28 0.
+Decision affects clause 29: -43 46 51 0.
+	Unit prop 51 spotted.
+Decision affects clause 30: -46 51 -60 0.
 	Clause is now sat.
 
-Decision affects clause 8: -13 21 28 0.
-	Unit prop -13 spotted.
-Decision affects clause 45: -9 28 48 0.
+Decision affects clause 79: -19 46 76 0.
 
-Decision affects clause 46: -9 -25 -28 0.
+Decision affects clause 80: -1 22 -46 0.
+	Clause is now sat.
+
+Decision affects clause 86: -6 35 -46 0.
 	Clause is now sat.
 
 
 
 Iteration 53.
-Current state: 16b -17d -21d -28d 
-Add pending deduction -13 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 
+Add pending deduction 51 to decision stack.
 
-Handling last decision -13d.
-Current state: 16b -17d -21d -28d -13d 
+Handling last decision 51d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d 
 
-Decision affects clause 8: -13 21 28 0.
+Decision affects clause 29: -43 46 51 0.
 	Clause is now sat.
 
-Decision affects clause 9: 13 -16 18 0.
-	Unit prop 18 spotted.
-Decision affects clause 10: 13 -18 -38 0.
+Decision affects clause 31: -43 -51 -93 0.
+	Unit prop -93 spotted.
+Decision affects clause 32: -51 71 93 0.
 
-Decision affects clause 11: 13 -18 -31 0.
+Decision affects clause 33: -51 66 -71 0.
 
-Decision affects clause 21: 3 -13 -49 0.
-	Clause is now sat.
-
-Decision affects clause 76: -3 -13 46 0.
-	Clause is now sat.
-
-Decision affects clause 77: -13 -41 43 0.
+Decision affects clause 67: -36 51 55 0.
 	Clause is now sat.
 
 
 
 Iteration 54.
-Current state: 16b -17d -21d -28d -13d 
-Add pending deduction 18 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d 
+Add pending deduction -93 to decision stack.
 
-Handling last decision 18d.
-Current state: 16b -17d -21d -28d -13d 18d 
+Handling last decision -93d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 
 
-Decision affects clause 9: 13 -16 18 0.
+Decision affects clause 31: -43 -51 -93 0.
 	Clause is now sat.
 
-Decision affects clause 10: 13 -18 -38 0.
-	Unit prop -38 spotted.
-Decision affects clause 11: 13 -18 -31 0.
-	Unit prop -31 spotted.
-Decision affects clause 72: 2 18 -33 0.
+Decision affects clause 32: -51 71 93 0.
+	Unit prop 71 spotted.
+Decision affects clause 107: 82 93 -94 0.
+
+Decision affects clause 109: 82 -84 -93 0.
 	Clause is now sat.
 
 
 
 Iteration 55.
-Current state: 16b -17d -21d -28d -13d 18d 
-Add pending deduction -38 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 
+Add pending deduction 71 to decision stack.
 
-Handling last decision -38d.
-Current state: 16b -17d -21d -28d -13d 18d -38d 
+Handling last decision 71d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 
 
-Decision affects clause 10: 13 -18 -38 0.
+Decision affects clause 32: -51 71 93 0.
 	Clause is now sat.
 
-Decision affects clause 12: 31 38 44 0.
+Decision affects clause 33: -51 66 -71 0.
+	Unit prop 66 spotted.
+Decision affects clause 36: 11 -63 -71 0.
 
-Decision affects clause 66: -7 32 38 0.
-
-Decision affects clause 74: 9 14 -38 0.
+Decision affects clause 176: 61 71 74 0.
 	Clause is now sat.
 
 
 
 Iteration 56.
-Current state: 16b -17d -21d -28d -13d 18d -38d 
-Add pending deduction -31 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 
+Add pending deduction 66 to decision stack.
 
-Handling last decision -31d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 
+Handling last decision 66d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 
 
-Decision affects clause 11: 13 -18 -31 0.
+Decision affects clause 33: -51 66 -71 0.
 	Clause is now sat.
 
-Decision affects clause 12: 31 38 44 0.
-	Unit prop 44 spotted.
-Decision affects clause 13: -8 31 -44 0.
+Decision affects clause 34: 57 63 -66 0.
+	Unit prop 63 spotted.
+Decision affects clause 37: -63 -66 -97 0.
 
-Decision affects clause 65: 1 -29 -31 0.
+Decision affects clause 43: -14 66 69 0.
 	Clause is now sat.
 
 
 
 Iteration 57.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 
-Add pending deduction 44 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 
+Add pending deduction 63 to decision stack.
 
-Handling last decision 44d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d 
+Handling last decision 63d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 
 
-Decision affects clause 12: 31 38 44 0.
+Decision affects clause 34: 57 63 -66 0.
 	Clause is now sat.
 
-Decision affects clause 13: -8 31 -44 0.
-	Unit prop -8 spotted.
-Decision affects clause 14: 8 -12 -44 0.
-
-Decision affects clause 69: 35 43 44 0.
-	Clause is now sat.
+Decision affects clause 36: 11 -63 -71 0.
+	Unit prop 11 spotted.
+Decision affects clause 37: -63 -66 -97 0.
+	Unit prop -97 spotted.
+Decision affects clause 39: -11 -63 -69 0.
 
 
 
 Iteration 58.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d 
-Add pending deduction -8 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 
+Add pending deduction 11 to decision stack.
 
-Handling last decision -8d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d 
+Handling last decision 11d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d 
 
-Decision affects clause 13: -8 31 -44 0.
+Decision affects clause 36: 11 -63 -71 0.
 	Clause is now sat.
 
-Decision affects clause 14: 8 -12 -44 0.
-	Unit prop -12 spotted.
-Decision affects clause 15: 8 12 -27 0.
-
-Decision affects clause 68: -1 2 -8 0.
-	Clause is now sat.
+Decision affects clause 38: -11 -69 80 0.
+	Unit prop -69 spotted.
+Decision affects clause 39: -11 -63 -69 0.
+	Unit prop -69 spotted.
+Decision affects clause 41: -11 -13 -27 0.
 
 
 
 Iteration 59.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d 
-Add pending deduction -12 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d 
+Add pending deduction -97 to decision stack.
 
-Handling last decision -12d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d 
+Handling last decision -97d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d 
 
-Decision affects clause 14: 8 -12 -44 0.
+Decision affects clause 37: -63 -66 -97 0.
 	Clause is now sat.
 
-Decision affects clause 15: 8 12 -27 0.
-	Unit prop -27 spotted.
-Decision affects clause 16: 12 27 40 0.
+Decision affects clause 40: 13 -27 97 0.
 
-Decision affects clause 18: 12 23 -40 0.
+Decision affects clause 42: 69 77 97 0.
 
-Decision affects clause 23: 12 -34 49 0.
-
-Decision affects clause 24: -12 26 -34 0.
+Decision affects clause 51: 12 14 -97 0.
 	Clause is now sat.
 
 
 
 Iteration 60.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d 
-Add pending deduction -27 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d 
+Add pending deduction -69 to decision stack.
 
-Handling last decision -27d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 
+Handling last decision -69d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 
 
-Decision affects clause 15: 8 12 -27 0.
+Decision affects clause 38: -11 -69 80 0.
 	Clause is now sat.
 
-Decision affects clause 16: 12 27 40 0.
-	Unit prop 40 spotted.
-Decision affects clause 17: -4 27 -40 0.
+Decision affects clause 39: -11 -63 -69 0.
+	Clause is now sat.
 
-Decision affects clause 63: 14 -15 -27 0.
+Decision affects clause 42: 69 77 97 0.
+	Unit prop 77 spotted.
+Decision affects clause 45: -27 69 -77 0.
+
+Decision affects clause 47: -69 91 100 0.
 	Clause is now sat.
 
 
 
 Iteration 61.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 
-Add pending deduction 40 to decision stack.
-
-Handling last decision 40d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d 
-
-Decision affects clause 16: 12 27 40 0.
-	Clause is now sat.
-
-Decision affects clause 17: -4 27 -40 0.
-	Unit prop -4 spotted.
-Decision affects clause 18: 12 23 -40 0.
-	Unit prop 23 spotted.
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 
+Deduction -69 already done.
 Iteration 62.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d 
-Add pending deduction -4 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 
+Add pending deduction 77 to decision stack.
 
-Handling last decision -4d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 
+Handling last decision 77d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d 
 
-Decision affects clause 17: -4 27 -40 0.
+Decision affects clause 42: 69 77 97 0.
 	Clause is now sat.
 
-Decision affects clause 19: -3 4 -23 0.
+Decision affects clause 44: -14 27 -77 0.
 
-Decision affects clause 35: 4 7 10 0.
+Decision affects clause 45: -27 69 -77 0.
+	Unit prop -27 spotted.
+Decision affects clause 49: -5 -77 -100 0.
 
-Decision affects clause 36: -4 10 -20 0.
+Decision affects clause 182: 15 56 77 0.
 	Clause is now sat.
 
 
 
 Iteration 63.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 
-Add pending deduction 23 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d 
+Add pending deduction -27 to decision stack.
 
-Handling last decision 23d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d 
+Handling last decision -27d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d 
 
-Decision affects clause 18: 12 23 -40 0.
+Decision affects clause 40: 13 -27 97 0.
 	Clause is now sat.
 
-Decision affects clause 19: -3 4 -23 0.
-	Unit prop -3 spotted.
-Decision affects clause 20: 3 -23 -49 0.
-
-Decision affects clause 22: -23 -26 49 0.
-
-Decision affects clause 71: 23 35 -37 0.
+Decision affects clause 41: -11 -13 -27 0.
 	Clause is now sat.
 
+Decision affects clause 44: -14 27 -77 0.
+	Unit prop -14 spotted.
+Decision affects clause 45: -27 69 -77 0.
+	Clause is now sat.
+
+Decision affects clause 46: 27 91 100 0.
+	Unit prop 100 spotted.
 
 
 Iteration 64.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d 
-Add pending deduction -3 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d 
+Add pending deduction -14 to decision stack.
 
-Handling last decision -3d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d 
+Handling last decision -14d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 
 
-Decision affects clause 19: -3 4 -23 0.
+Decision affects clause 44: -14 27 -77 0.
 	Clause is now sat.
 
-Decision affects clause 20: 3 -23 -49 0.
-	Unit prop -49 spotted.
-Decision affects clause 59: -3 -26 45 0.
+Decision affects clause 50: 12 14 -100 0.
+
+Decision affects clause 95: 14 -15 96 0.
+
+Decision affects clause 96: -14 78 96 0.
 	Clause is now sat.
 
 
 
 Iteration 65.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d 
-Add pending deduction -49 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 
+Add pending deduction 100 to decision stack.
 
-Handling last decision -49d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d 
+Handling last decision 100d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d 
 
-Decision affects clause 20: 3 -23 -49 0.
+Decision affects clause 46: 27 91 100 0.
 	Clause is now sat.
 
-Decision affects clause 22: -23 -26 49 0.
-	Unit prop -26 spotted.
-Decision affects clause 23: 12 -34 49 0.
-	Unit prop -34 spotted.
+Decision affects clause 49: -5 -77 -100 0.
+	Unit prop -5 spotted.
+Decision affects clause 50: 12 14 -100 0.
+	Unit prop 12 spotted.
+Decision affects clause 52: -10 -12 -100 0.
+
 
 
 Iteration 66.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d 
-Add pending deduction -26 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d 
+Add pending deduction -5 to decision stack.
 
-Handling last decision -26d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d 
+Handling last decision -5d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 
 
-Decision affects clause 22: -23 -26 49 0.
+Decision affects clause 49: -5 -77 -100 0.
 	Clause is now sat.
 
-Decision affects clause 26: -19 26 36 0.
-
-Decision affects clause 58: -26 39 45 0.
+Decision affects clause 159: -5 58 0.
 	Clause is now sat.
+
+Decision affects clause 166: -1 -5 40 0.
+	Clause is now sat.
+
+Decision affects clause 195: 5 30 91 0.
+	Unit prop 30 spotted.
+Decision affects clause 197: 5 -58 86 0.
 
 
 
 Iteration 67.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d 
-Add pending deduction -34 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 
+Add pending deduction 12 to decision stack.
 
-Handling last decision -34d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 
+Handling last decision 12d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 
 
-Decision affects clause 23: 12 -34 49 0.
+Decision affects clause 50: 12 14 -100 0.
 	Clause is now sat.
 
-Decision affects clause 25: 19 34 36 0.
+Decision affects clause 52: -10 -12 -100 0.
+	Unit prop -10 spotted.
+Decision affects clause 53: 10 -12 -70 0.
 
-Decision affects clause 27: -30 34 -36 0.
+Decision affects clause 54: -12 49 70 0.
 
-Decision affects clause 28: 24 34 -36 0.
+Decision affects clause 162: 12 -17 29 0.
+	Clause is now sat.
 
 
 
 Iteration 68.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 
-Standard betCurrent level is now 1.
-Taking bet 19.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 
+Add pending deduction 30 to decision stack.
 
-Handling last decision 19b.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 
+Handling last decision 30d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d 
 
-Decision affects clause 25: 19 34 36 0.
+Decision affects clause 142: -24 30 -75 0.
 	Clause is now sat.
 
-Decision affects clause 26: -19 26 36 0.
-	Unit prop 36 spotted.
-Decision affects clause 47: 19 -25 48 0.
+Decision affects clause 143: -30 -56 -75 0.
+
+Decision affects clause 195: 5 30 91 0.
 	Clause is now sat.
-
-Decision affects clause 48: 2 9 -19 0.
-
-Decision affects clause 49: -2 -19 35 0.
 
 
 
 Iteration 69.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 
-Add pending deduction 36 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d 
+Add pending deduction -10 to decision stack.
 
-Handling last decision 36d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d 
+Handling last decision -10d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d 
 
-Decision affects clause 26: -19 26 36 0.
+Decision affects clause 52: -10 -12 -100 0.
 	Clause is now sat.
 
-Decision affects clause 27: -30 34 -36 0.
-	Unit prop -30 spotted.
-Decision affects clause 28: 24 34 -36 0.
-	Unit prop 24 spotted.
-Decision affects clause 29: -24 -36 43 0.
+Decision affects clause 53: 10 -12 -70 0.
+	Unit prop -70 spotted.
+Decision affects clause 82: 1 10 47 0.
+
+Decision affects clause 84: 1 -10 47 0.
+	Clause is now sat.
+
+Decision affects clause 127: 10 48 -81 0.
+
+Decision affects clause 128: -10 48 -92 0.
+	Clause is now sat.
 
 
 
 Iteration 70.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d 
-Add pending deduction -30 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d 
+Add pending deduction -70 to decision stack.
 
-Handling last decision -30d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 
+Handling last decision -70d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 
 
-Decision affects clause 27: -30 34 -36 0.
+Decision affects clause 53: 10 -12 -70 0.
+	Clause is now sat.
+
+Decision affects clause 54: -12 49 70 0.
+	Unit prop 49 spotted.
+Decision affects clause 55: -49 -64 70 0.
+
+Decision affects clause 56: -16 -49 70 0.
+	Unit prop -49 spotted.
+Decision affects clause 154: -21 -64 -70 0.
 	Clause is now sat.
 
 
 
 Iteration 71.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 
-Add pending deduction 24 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 
+Add pending deduction 49 to decision stack.
 
-Handling last decision 24d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 
+Handling last decision 49d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 49d 
 
-Decision affects clause 28: 24 34 -36 0.
+Decision affects clause 54: -12 49 70 0.
 	Clause is now sat.
 
-Decision affects clause 29: -24 -36 43 0.
-	Unit prop 43 spotted.
-Decision affects clause 31: -24 42 -43 0.
+Decision affects clause 55: -49 -64 70 0.
+	Unit prop -64 spotted.
+Decision affects clause 56: -16 -49 70 0.
+	Contradiction -49 spotted.
 
-Decision affects clause 32: -5 -24 -42 0.
-
-
+	Should backtrack until 8 (last bet) inclusively.
+Backtracking until 8 inclusively.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 8b 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 49d 
+	Clearing pending deductions.
+	Cancelling 49d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 49.
+		-12 49 70 0 revived.
+	Cancelling -70d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -70.
+		10 -12 -70 0 revived.
+		-21 -64 -70 0 revived.
+	Cancelling -10d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -10.
+		-10 -12 -100 0 revived.
+		1 -10 47 0 revived.
+		-10 48 -92 0 revived.
+	Cancelling 30d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 30.
+		-24 30 -75 0 revived.
+		5 30 91 0 revived.
+	Cancelling 12d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 12.
+		12 14 -100 0 revived.
+		12 -17 29 0 revived.
+	Cancelling -5d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -5.
+		-5 -77 -100 0 revived.
+		-5 58 0 revived.
+		-1 -5 40 0 revived.
+	Cancelling 100d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 100.
+		27 91 100 0 revived.
+	Cancelling -14d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -14.
+		-14 27 -77 0 revived.
+		-14 78 96 0 revived.
+	Cancelling -27d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -27.
+		13 -27 97 0 revived.
+		-11 -13 -27 0 revived.
+		-27 69 -77 0 revived.
+	Cancelling 77d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 77.
+		69 77 97 0 revived.
+		15 56 77 0 revived.
+	Cancelling -69d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -69.
+		-11 -69 80 0 revived.
+		-11 -63 -69 0 revived.
+		-69 91 100 0 revived.
+	Cancelling -97d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -97.
+		-63 -66 -97 0 revived.
+		12 14 -97 0 revived.
+	Cancelling 11d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 11.
+		11 -63 -71 0 revived.
+	Cancelling 63d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 63.
+		57 63 -66 0 revived.
+	Cancelling 66d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 66.
+		-51 66 -71 0 revived.
+		-14 66 69 0 revived.
+	Cancelling 71d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 71.
+		-51 71 93 0 revived.
+		61 71 74 0 revived.
+	Cancelling -93d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -93.
+		-43 -51 -93 0 revived.
+		82 -84 -93 0 revived.
+	Cancelling 51d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 51.
+		-43 46 51 0 revived.
+		-36 51 55 0 revived.
+	Cancelling -46d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -46.
+		-46 51 -60 0 revived.
+		-1 22 -46 0 revived.
+		-6 35 -46 0 revived.
+	Cancelling -91d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -91.
+		-43 -60 -91 0 revived.
+		27 -91 100 0 revived.
+		1 47 -91 0 revived.
+	Cancelling 43d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 43.
+		-8 43 -60 0 revived.
+		2 -9 43 0 revived.
+	Cancelling 8b.
+	Reviving var in appropriate clauses.
+	Current level is now -1.
+	Reviving clauses satisfied by 8.
+		8 26 43 0 revived.
+		8 -40 41 0 revived.
+		8 11 90 0 revived.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d 
 
 Iteration 72.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 
-Add pending deduction 43 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 
 
-Handling last decision 43d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 
+Handling last decision -8d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 
 
-Decision affects clause 29: -24 -36 43 0.
+Decision affects clause 26: 8 26 43 0.
+	Unit prop 43 spotted.
+Decision affects clause 27: -8 43 -60 0.
 	Clause is now sat.
 
-Decision affects clause 30: 6 42 -43 0.
+Decision affects clause 99: 8 -40 41 0.
 
-Decision affects clause 31: -24 42 -43 0.
-	Unit prop 42 spotted.
+Decision affects clause 129: -8 -48 -92 0.
+	Clause is now sat.
+
+Decision affects clause 170: 8 11 90 0.
+
 
 
 Iteration 73.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 
-Add pending deduction 42 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 
+Add pending deduction 43 to decision stack.
 
-Handling last decision 42d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d 
+Handling last decision 43d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d 
 
-Decision affects clause 30: 6 42 -43 0.
+Decision affects clause 26: 8 26 43 0.
 	Clause is now sat.
 
-Decision affects clause 31: -24 42 -43 0.
-	Clause is now sat.
+Decision affects clause 28: -43 -60 -91 0.
+	Unit prop -91 spotted.
+Decision affects clause 29: -43 46 51 0.
 
-Decision affects clause 32: -5 -24 -42 0.
-	Unit prop -5 spotted.
-Decision affects clause 33: 5 20 -42 0.
+Decision affects clause 31: -43 -51 -93 0.
+
+Decision affects clause 174: 2 -9 43 0.
+	Clause is now sat.
 
 
 
 Iteration 74.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d 
-Add pending deduction -5 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d 
+Add pending deduction -91 to decision stack.
 
-Handling last decision -5d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 
+Handling last decision -91d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 
 
-Decision affects clause 32: -5 -24 -42 0.
+Decision affects clause 28: -43 -60 -91 0.
 	Clause is now sat.
 
-Decision affects clause 33: 5 20 -42 0.
-	Unit prop 20 spotted.
-Decision affects clause 34: 5 -7 -20 0.
+Decision affects clause 46: 27 91 100 0.
 
-Decision affects clause 75: -5 11 50 0.
+Decision affects clause 47: -69 91 100 0.
+
+Decision affects clause 48: 27 -91 100 0.
 	Clause is now sat.
+
+Decision affects clause 83: 1 47 -91 0.
+	Clause is now sat.
+
+Decision affects clause 195: 5 30 91 0.
 
 
 
 Iteration 75.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 
-Add pending deduction 20 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 
+Standard betCurrent level is now 0.
+Taking bet 46.
 
-Handling last decision 20d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d 
+Handling last decision 46b.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 
 
-Decision affects clause 33: 5 20 -42 0.
+Decision affects clause 29: -43 46 51 0.
 	Clause is now sat.
 
-Decision affects clause 34: 5 -7 -20 0.
-	Unit prop -7 spotted.
-Decision affects clause 70: 20 29 -48 0.
+Decision affects clause 30: -46 51 -60 0.
+	Unit prop 51 spotted.
+Decision affects clause 79: -19 46 76 0.
 	Clause is now sat.
+
+Decision affects clause 80: -1 22 -46 0.
+
+Decision affects clause 86: -6 35 -46 0.
 
 
 
 Iteration 76.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d 
-Add pending deduction -7 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 
+Add pending deduction 51 to decision stack.
 
-Handling last decision -7d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 
+Handling last decision 51d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d 
 
-Decision affects clause 34: 5 -7 -20 0.
+Decision affects clause 30: -46 51 -60 0.
 	Clause is now sat.
 
-Decision affects clause 35: 4 7 10 0.
-	Unit prop 10 spotted.
-Decision affects clause 37: 7 -10 -41 0.
+Decision affects clause 31: -43 -51 -93 0.
+	Unit prop -93 spotted.
+Decision affects clause 32: -51 71 93 0.
 
-Decision affects clause 66: -7 32 38 0.
+Decision affects clause 33: -51 66 -71 0.
+
+Decision affects clause 67: -36 51 55 0.
 	Clause is now sat.
 
 
 
 Iteration 77.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 
-Add pending deduction 10 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d 
+Add pending deduction -93 to decision stack.
 
-Handling last decision 10d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d 
+Handling last decision -93d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 
 
-Decision affects clause 35: 4 7 10 0.
+Decision affects clause 31: -43 -51 -93 0.
 	Clause is now sat.
 
-Decision affects clause 37: 7 -10 -41 0.
-	Unit prop -41 spotted.
-Decision affects clause 38: -10 41 46 0.
+Decision affects clause 32: -51 71 93 0.
+	Unit prop 71 spotted.
+Decision affects clause 107: 82 93 -94 0.
+
+Decision affects clause 109: 82 -84 -93 0.
+	Clause is now sat.
 
 
 
 Iteration 78.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d 
-Add pending deduction -41 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 
+Add pending deduction 71 to decision stack.
 
-Handling last decision -41d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 
+Handling last decision 71d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 
 
-Decision affects clause 37: 7 -10 -41 0.
+Decision affects clause 32: -51 71 93 0.
 	Clause is now sat.
 
-Decision affects clause 38: -10 41 46 0.
-	Unit prop 46 spotted.
-Decision affects clause 39: -33 41 -46 0.
+Decision affects clause 33: -51 66 -71 0.
+	Unit prop 66 spotted.
+Decision affects clause 36: 11 -63 -71 0.
+
+Decision affects clause 176: 61 71 74 0.
+	Clause is now sat.
 
 
 
 Iteration 79.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 
-Add pending deduction 46 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 
+Add pending deduction 66 to decision stack.
 
-Handling last decision 46d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d 
+Handling last decision 66d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 
 
-Decision affects clause 38: -10 41 46 0.
+Decision affects clause 33: -51 66 -71 0.
 	Clause is now sat.
 
-Decision affects clause 39: -33 41 -46 0.
-	Unit prop -33 spotted.
-Decision affects clause 40: 33 -37 -46 0.
+Decision affects clause 34: 57 63 -66 0.
+	Unit prop 63 spotted.
+Decision affects clause 37: -63 -66 -97 0.
+
+Decision affects clause 43: -14 66 69 0.
+	Clause is now sat.
 
 
 
 Iteration 80.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d 
-Add pending deduction -33 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 
+Add pending deduction 63 to decision stack.
 
-Handling last decision -33d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d 
+Handling last decision 63d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 
 
-Decision affects clause 39: -33 41 -46 0.
+Decision affects clause 34: 57 63 -66 0.
 	Clause is now sat.
 
-Decision affects clause 40: 33 -37 -46 0.
-	Unit prop -37 spotted.
-Decision affects clause 41: 32 33 37 0.
-
-Decision affects clause 67: -14 -33 -47 0.
-	Clause is now sat.
+Decision affects clause 36: 11 -63 -71 0.
+	Unit prop 11 spotted.
+Decision affects clause 37: -63 -66 -97 0.
+	Unit prop -97 spotted.
+Decision affects clause 39: -11 -63 -69 0.
 
 
 
 Iteration 81.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d 
-Add pending deduction -37 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 
+Add pending deduction 11 to decision stack.
 
-Handling last decision -37d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 
+Handling last decision 11d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d 
 
-Decision affects clause 40: 33 -37 -46 0.
+Decision affects clause 36: 11 -63 -71 0.
 	Clause is now sat.
 
-Decision affects clause 41: 32 33 37 0.
-	Unit prop 32 spotted.
-Decision affects clause 42: 6 -32 37 0.
+Decision affects clause 38: -11 -69 80 0.
+	Unit prop -69 spotted.
+Decision affects clause 39: -11 -63 -69 0.
+	Unit prop -69 spotted.
+Decision affects clause 41: -11 -13 -27 0.
+
+Decision affects clause 170: 8 11 90 0.
+	Clause is now sat.
 
 
 
 Iteration 82.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 
-Add pending deduction 32 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d 
+Add pending deduction -97 to decision stack.
 
-Handling last decision 32d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 
+Handling last decision -97d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d 
 
-Decision affects clause 41: 32 33 37 0.
+Decision affects clause 37: -63 -66 -97 0.
 	Clause is now sat.
 
-Decision affects clause 42: 6 -32 37 0.
-	Unit prop 6 spotted.
-Decision affects clause 43: -6 25 -32 0.
+Decision affects clause 40: 13 -27 97 0.
+
+Decision affects clause 42: 69 77 97 0.
+
+Decision affects clause 51: 12 14 -97 0.
+	Clause is now sat.
 
 
 
 Iteration 83.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 
-Add pending deduction 6 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d 
+Add pending deduction -69 to decision stack.
 
-Handling last decision 6d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 
+Handling last decision -69d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 
 
-Decision affects clause 42: 6 -32 37 0.
+Decision affects clause 38: -11 -69 80 0.
 	Clause is now sat.
 
-Decision affects clause 43: -6 25 -32 0.
-	Unit prop 25 spotted.
-Decision affects clause 44: -6 -25 -48 0.
+Decision affects clause 39: -11 -63 -69 0.
+	Clause is now sat.
+
+Decision affects clause 42: 69 77 97 0.
+	Unit prop 77 spotted.
+Decision affects clause 45: -27 69 -77 0.
+
+Decision affects clause 47: -69 91 100 0.
+	Clause is now sat.
 
 
 
 Iteration 84.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 
-Add pending deduction 25 to decision stack.
-
-Handling last decision 25d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d 
-
-Decision affects clause 43: -6 25 -32 0.
-	Clause is now sat.
-
-Decision affects clause 44: -6 -25 -48 0.
-	Unit prop -48 spotted.
-Decision affects clause 73: 15 25 -45 0.
-	Clause is now sat.
-
-
-
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 
+Deduction -69 already done.
 Iteration 85.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d 
-Add pending deduction -48 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 
+Add pending deduction 77 to decision stack.
 
-Handling last decision -48d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d 
+Handling last decision 77d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d 
 
-Decision affects clause 44: -6 -25 -48 0.
+Decision affects clause 42: 69 77 97 0.
 	Clause is now sat.
 
-Decision affects clause 45: -9 28 48 0.
-	Unit prop -9 spotted.
+Decision affects clause 44: -14 27 -77 0.
+
+Decision affects clause 45: -27 69 -77 0.
+	Unit prop -27 spotted.
+Decision affects clause 49: -5 -77 -100 0.
+
+Decision affects clause 182: 15 56 77 0.
+	Clause is now sat.
+
 
 
 Iteration 86.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d 
-Add pending deduction -9 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d 
+Add pending deduction -27 to decision stack.
 
-Handling last decision -9d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 
+Handling last decision -27d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d 
 
-Decision affects clause 45: -9 28 48 0.
+Decision affects clause 40: 13 -27 97 0.
 	Clause is now sat.
 
-Decision affects clause 48: 2 9 -19 0.
-	Unit prop 2 spotted.
+Decision affects clause 41: -11 -13 -27 0.
+	Clause is now sat.
+
+Decision affects clause 44: -14 27 -77 0.
+	Unit prop -14 spotted.
+Decision affects clause 45: -27 69 -77 0.
+	Clause is now sat.
+
+Decision affects clause 46: 27 91 100 0.
+	Unit prop 100 spotted.
 
 
 Iteration 87.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 
-Add pending deduction 2 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d 
+Add pending deduction -14 to decision stack.
 
-Handling last decision 2d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 
+Handling last decision -14d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 
 
-Decision affects clause 48: 2 9 -19 0.
+Decision affects clause 44: -14 27 -77 0.
 	Clause is now sat.
 
-Decision affects clause 49: -2 -19 35 0.
-	Unit prop 35 spotted.
-Decision affects clause 50: -2 22 -35 0.
+Decision affects clause 50: 12 14 -100 0.
+
+Decision affects clause 95: 14 -15 96 0.
+
+Decision affects clause 96: -14 78 96 0.
+	Clause is now sat.
 
 
 
 Iteration 88.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 
-Add pending deduction 35 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 
+Add pending deduction 100 to decision stack.
 
-Handling last decision 35d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 
+Handling last decision 100d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d 
 
-Decision affects clause 49: -2 -19 35 0.
+Decision affects clause 46: 27 91 100 0.
 	Clause is now sat.
 
-Decision affects clause 50: -2 22 -35 0.
-	Unit prop 22 spotted.
-Decision affects clause 51: -22 -35 50 0.
-
-Decision affects clause 53: -29 -35 -50 0.
+Decision affects clause 49: -5 -77 -100 0.
+	Unit prop -5 spotted.
+Decision affects clause 50: 12 14 -100 0.
+	Unit prop 12 spotted.
+Decision affects clause 52: -10 -12 -100 0.
 
 
 
 Iteration 89.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 
-Add pending deduction 22 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d 
+Add pending deduction -5 to decision stack.
 
-Handling last decision 22d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 
+Handling last decision -5d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 
 
-Decision affects clause 50: -2 22 -35 0.
+Decision affects clause 49: -5 -77 -100 0.
 	Clause is now sat.
 
-Decision affects clause 51: -22 -35 50 0.
-	Unit prop 50 spotted.
+Decision affects clause 159: -5 58 0.
+	Clause is now sat.
+
+Decision affects clause 166: -1 -5 40 0.
+	Clause is now sat.
+
+Decision affects clause 195: 5 30 91 0.
+	Unit prop 30 spotted.
+Decision affects clause 197: 5 -58 86 0.
+
 
 
 Iteration 90.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 
-Add pending deduction 50 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 
+Add pending deduction 12 to decision stack.
 
-Handling last decision 50d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d 
+Handling last decision 12d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 
 
-Decision affects clause 51: -22 -35 50 0.
+Decision affects clause 50: 12 14 -100 0.
 	Clause is now sat.
 
-Decision affects clause 53: -29 -35 -50 0.
-	Unit prop -29 spotted.
-Decision affects clause 54: -1 29 -50 0.
+Decision affects clause 52: -10 -12 -100 0.
+	Unit prop -10 spotted.
+Decision affects clause 53: 10 -12 -70 0.
+
+Decision affects clause 54: -12 49 70 0.
+
+Decision affects clause 162: 12 -17 29 0.
+	Clause is now sat.
 
 
 
 Iteration 91.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d 
-Add pending deduction -29 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 
+Add pending deduction 30 to decision stack.
 
-Handling last decision -29d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d 
+Handling last decision 30d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d 
 
-Decision affects clause 53: -29 -35 -50 0.
+Decision affects clause 142: -24 30 -75 0.
 	Clause is now sat.
 
-Decision affects clause 54: -1 29 -50 0.
-	Unit prop -1 spotted.
-Decision affects clause 55: 1 11 29 0.
+Decision affects clause 143: -30 -56 -75 0.
+
+Decision affects clause 195: 5 30 91 0.
+	Clause is now sat.
 
 
 
 Iteration 92.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d 
-Add pending deduction -1 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d 
+Add pending deduction -10 to decision stack.
 
-Handling last decision -1d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 
+Handling last decision -10d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d 
 
-Decision affects clause 54: -1 29 -50 0.
+Decision affects clause 52: -10 -12 -100 0.
 	Clause is now sat.
 
-Decision affects clause 55: 1 11 29 0.
-	Unit prop 11 spotted.
+Decision affects clause 53: 10 -12 -70 0.
+	Unit prop -70 spotted.
+Decision affects clause 82: 1 10 47 0.
+
+Decision affects clause 84: 1 -10 47 0.
+	Clause is now sat.
+
+Decision affects clause 127: 10 48 -81 0.
+
+Decision affects clause 128: -10 48 -92 0.
+	Clause is now sat.
+
 
 
 Iteration 93.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 
-Add pending deduction 11 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d 
+Add pending deduction -70 to decision stack.
 
-Handling last decision 11d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d 
+Handling last decision -70d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 
 
-Decision affects clause 55: 1 11 29 0.
+Decision affects clause 53: 10 -12 -70 0.
 	Clause is now sat.
 
-Decision affects clause 56: -11 17 -45 0.
-	Unit prop -45 spotted.
-Decision affects clause 57: -11 39 45 0.
+Decision affects clause 54: -12 49 70 0.
+	Unit prop 49 spotted.
+Decision affects clause 55: -49 -64 70 0.
 
-Decision affects clause 60: -11 15 -39 0.
+Decision affects clause 56: -16 -49 70 0.
+	Unit prop -49 spotted.
+Decision affects clause 154: -21 -64 -70 0.
+	Clause is now sat.
 
 
 
 Iteration 94.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d 
-Add pending deduction -45 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 
+Add pending deduction 49 to decision stack.
 
-Handling last decision -45d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 
+Handling last decision 49d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 49d 
 
-Decision affects clause 56: -11 17 -45 0.
+Decision affects clause 54: -12 49 70 0.
 	Clause is now sat.
 
-Decision affects clause 57: -11 39 45 0.
-	Unit prop 39 spotted.
-Decision affects clause 62: 14 -15 -45 0.
-	Clause is now sat.
+Decision affects clause 55: -49 -64 70 0.
+	Unit prop -64 spotted.
+Decision affects clause 56: -16 -49 70 0.
+	Contradiction -49 spotted.
 
-
+	Should backtrack until 46 (last bet) inclusively.
+Backtracking until 46 inclusively.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 46b 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 49d 
+	Clearing pending deductions.
+	Cancelling 49d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 49.
+		-12 49 70 0 revived.
+	Cancelling -70d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -70.
+		10 -12 -70 0 revived.
+		-21 -64 -70 0 revived.
+	Cancelling -10d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -10.
+		-10 -12 -100 0 revived.
+		1 -10 47 0 revived.
+		-10 48 -92 0 revived.
+	Cancelling 30d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 30.
+		-24 30 -75 0 revived.
+		5 30 91 0 revived.
+	Cancelling 12d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 12.
+		12 14 -100 0 revived.
+		12 -17 29 0 revived.
+	Cancelling -5d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -5.
+		-5 -77 -100 0 revived.
+		-5 58 0 revived.
+		-1 -5 40 0 revived.
+	Cancelling 100d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 100.
+		27 91 100 0 revived.
+	Cancelling -14d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -14.
+		-14 27 -77 0 revived.
+		-14 78 96 0 revived.
+	Cancelling -27d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -27.
+		13 -27 97 0 revived.
+		-11 -13 -27 0 revived.
+		-27 69 -77 0 revived.
+	Cancelling 77d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 77.
+		69 77 97 0 revived.
+		15 56 77 0 revived.
+	Cancelling -69d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -69.
+		-11 -69 80 0 revived.
+		-11 -63 -69 0 revived.
+		-69 91 100 0 revived.
+	Cancelling -97d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -97.
+		-63 -66 -97 0 revived.
+		12 14 -97 0 revived.
+	Cancelling 11d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 11.
+		11 -63 -71 0 revived.
+		8 11 90 0 revived.
+	Cancelling 63d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 63.
+		57 63 -66 0 revived.
+	Cancelling 66d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 66.
+		-51 66 -71 0 revived.
+		-14 66 69 0 revived.
+	Cancelling 71d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 71.
+		-51 71 93 0 revived.
+		61 71 74 0 revived.
+	Cancelling -93d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by -93.
+		-43 -51 -93 0 revived.
+		82 -84 -93 0 revived.
+	Cancelling 51d.
+	Reviving var in appropriate clauses.
+	Reviving clauses satisfied by 51.
+		-46 51 -60 0 revived.
+		-36 51 55 0 revived.
+	Cancelling 46b.
+	Reviving var in appropriate clauses.
+	Current level is now -1.
+	Reviving clauses satisfied by 46.
+		-43 46 51 0 revived.
+		-19 46 76 0 revived.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d 
 
 Iteration 95.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 
-Add pending deduction 39 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 
 
-Handling last decision 39d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 39d 
+Handling last decision -46d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 
 
-Decision affects clause 57: -11 39 45 0.
+Decision affects clause 29: -43 46 51 0.
+	Unit prop 51 spotted.
+Decision affects clause 30: -46 51 -60 0.
 	Clause is now sat.
 
-Decision affects clause 60: -11 15 -39 0.
-	Unit prop 15 spotted.
-Decision affects clause 61: 14 -15 -39 0.
+Decision affects clause 79: -19 46 76 0.
+
+Decision affects clause 80: -1 22 -46 0.
+	Clause is now sat.
+
+Decision affects clause 86: -6 35 -46 0.
+	Clause is now sat.
 
 
 
 Iteration 96.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 39d 
-Add pending deduction 15 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 
+Add pending deduction 51 to decision stack.
 
-Handling last decision 15d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 39d 15d 
+Handling last decision 51d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d 
 
-Decision affects clause 60: -11 15 -39 0.
+Decision affects clause 29: -43 46 51 0.
 	Clause is now sat.
 
-Decision affects clause 61: 14 -15 -39 0.
-	Unit prop 14 spotted.
-Decision affects clause 64: -14 -15 47 0.
+Decision affects clause 31: -43 -51 -93 0.
+	Unit prop -93 spotted.
+Decision affects clause 32: -51 71 93 0.
+
+Decision affects clause 33: -51 66 -71 0.
+
+Decision affects clause 67: -36 51 55 0.
+	Clause is now sat.
 
 
 
 Iteration 97.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 39d 15d 
-Add pending deduction 14 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d 
+Add pending deduction -93 to decision stack.
 
-Handling last decision 14d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 39d 15d 14d 
+Handling last decision -93d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 
 
-Decision affects clause 61: 14 -15 -39 0.
+Decision affects clause 31: -43 -51 -93 0.
 	Clause is now sat.
 
-Decision affects clause 64: -14 -15 47 0.
-	Unit prop 47 spotted.
+Decision affects clause 32: -51 71 93 0.
+	Unit prop 71 spotted.
+Decision affects clause 107: 82 93 -94 0.
+
+Decision affects clause 109: 82 -84 -93 0.
+	Clause is now sat.
+
 
 
 Iteration 98.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 39d 15d 14d 
-Add pending deduction 47 to decision stack.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 
+Add pending deduction 71 to decision stack.
 
-Handling last decision 47d.
-Current state: 16b -17d -21d -28d -13d 18d -38d -31d 44d -8d -12d -27d 40d -4d 23d -3d -49d -26d -34d 19b 36d -30d 24d 43d 42d -5d 20d -7d 10d -41d 46d -33d -37d 32d 6d 25d -48d -9d 2d 35d 22d 50d -29d -1d 11d -45d 39d 15d 14d 47d 
+Handling last decision 71d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 
 
-Decision affects clause 64: -14 -15 47 0.
+Decision affects clause 32: -51 71 93 0.
 	Clause is now sat.
 
+Decision affects clause 33: -51 66 -71 0.
+	Unit prop 66 spotted.
+Decision affects clause 36: 11 -63 -71 0.
+
+Decision affects clause 176: 61 71 74 0.
+	Clause is now sat.
+
+
+
+Iteration 99.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 
+Add pending deduction 66 to decision stack.
+
+Handling last decision 66d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 
+
+Decision affects clause 33: -51 66 -71 0.
+	Clause is now sat.
+
+Decision affects clause 34: 57 63 -66 0.
+	Unit prop 63 spotted.
+Decision affects clause 37: -63 -66 -97 0.
+
+Decision affects clause 43: -14 66 69 0.
+	Clause is now sat.
+
+
+
+Iteration 100.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 
+Add pending deduction 63 to decision stack.
+
+Handling last decision 63d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 
+
+Decision affects clause 34: 57 63 -66 0.
+	Clause is now sat.
+
+Decision affects clause 36: 11 -63 -71 0.
+	Unit prop 11 spotted.
+Decision affects clause 37: -63 -66 -97 0.
+	Unit prop -97 spotted.
+Decision affects clause 39: -11 -63 -69 0.
+
+
+
+Iteration 101.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 
+Add pending deduction 11 to decision stack.
+
+Handling last decision 11d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d 
+
+Decision affects clause 36: 11 -63 -71 0.
+	Clause is now sat.
+
+Decision affects clause 38: -11 -69 80 0.
+	Unit prop -69 spotted.
+Decision affects clause 39: -11 -63 -69 0.
+	Unit prop -69 spotted.
+Decision affects clause 41: -11 -13 -27 0.
+
+Decision affects clause 170: 8 11 90 0.
+	Clause is now sat.
+
+
+
+Iteration 102.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d 
+Add pending deduction -97 to decision stack.
+
+Handling last decision -97d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d 
+
+Decision affects clause 37: -63 -66 -97 0.
+	Clause is now sat.
+
+Decision affects clause 40: 13 -27 97 0.
+
+Decision affects clause 42: 69 77 97 0.
+
+Decision affects clause 51: 12 14 -97 0.
+	Clause is now sat.
+
+
+
+Iteration 103.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d 
+Add pending deduction -69 to decision stack.
+
+Handling last decision -69d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 
+
+Decision affects clause 38: -11 -69 80 0.
+	Clause is now sat.
+
+Decision affects clause 39: -11 -63 -69 0.
+	Clause is now sat.
+
+Decision affects clause 42: 69 77 97 0.
+	Unit prop 77 spotted.
+Decision affects clause 45: -27 69 -77 0.
+
+Decision affects clause 47: -69 91 100 0.
+	Clause is now sat.
+
+
+
+Iteration 104.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 
+Deduction -69 already done.
+Iteration 105.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 
+Add pending deduction 77 to decision stack.
+
+Handling last decision 77d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d 
+
+Decision affects clause 42: 69 77 97 0.
+	Clause is now sat.
+
+Decision affects clause 44: -14 27 -77 0.
+
+Decision affects clause 45: -27 69 -77 0.
+	Unit prop -27 spotted.
+Decision affects clause 49: -5 -77 -100 0.
+
+Decision affects clause 182: 15 56 77 0.
+	Clause is now sat.
+
+
+
+Iteration 106.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d 
+Add pending deduction -27 to decision stack.
+
+Handling last decision -27d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d 
+
+Decision affects clause 40: 13 -27 97 0.
+	Clause is now sat.
+
+Decision affects clause 41: -11 -13 -27 0.
+	Clause is now sat.
+
+Decision affects clause 44: -14 27 -77 0.
+	Unit prop -14 spotted.
+Decision affects clause 45: -27 69 -77 0.
+	Clause is now sat.
+
+Decision affects clause 46: 27 91 100 0.
+	Unit prop 100 spotted.
+
+
+Iteration 107.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d 
+Add pending deduction -14 to decision stack.
+
+Handling last decision -14d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 
+
+Decision affects clause 44: -14 27 -77 0.
+	Clause is now sat.
+
+Decision affects clause 50: 12 14 -100 0.
+
+Decision affects clause 95: 14 -15 96 0.
+
+Decision affects clause 96: -14 78 96 0.
+	Clause is now sat.
+
+
+
+Iteration 108.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 
+Add pending deduction 100 to decision stack.
+
+Handling last decision 100d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d 
+
+Decision affects clause 46: 27 91 100 0.
+	Clause is now sat.
+
+Decision affects clause 49: -5 -77 -100 0.
+	Unit prop -5 spotted.
+Decision affects clause 50: 12 14 -100 0.
+	Unit prop 12 spotted.
+Decision affects clause 52: -10 -12 -100 0.
+
+
+
+Iteration 109.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d 
+Add pending deduction -5 to decision stack.
+
+Handling last decision -5d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 
+
+Decision affects clause 49: -5 -77 -100 0.
+	Clause is now sat.
+
+Decision affects clause 159: -5 58 0.
+	Clause is now sat.
+
+Decision affects clause 166: -1 -5 40 0.
+	Clause is now sat.
+
+Decision affects clause 195: 5 30 91 0.
+	Unit prop 30 spotted.
+Decision affects clause 197: 5 -58 86 0.
+
+
+
+Iteration 110.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 
+Add pending deduction 12 to decision stack.
+
+Handling last decision 12d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 
+
+Decision affects clause 50: 12 14 -100 0.
+	Clause is now sat.
+
+Decision affects clause 52: -10 -12 -100 0.
+	Unit prop -10 spotted.
+Decision affects clause 53: 10 -12 -70 0.
+
+Decision affects clause 54: -12 49 70 0.
+
+Decision affects clause 162: 12 -17 29 0.
+	Clause is now sat.
+
+
+
+Iteration 111.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 
+Add pending deduction 30 to decision stack.
+
+Handling last decision 30d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d 
+
+Decision affects clause 142: -24 30 -75 0.
+	Clause is now sat.
+
+Decision affects clause 143: -30 -56 -75 0.
+
+Decision affects clause 195: 5 30 91 0.
+	Clause is now sat.
+
+
+
+Iteration 112.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d 
+Add pending deduction -10 to decision stack.
+
+Handling last decision -10d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d 
+
+Decision affects clause 52: -10 -12 -100 0.
+	Clause is now sat.
+
+Decision affects clause 53: 10 -12 -70 0.
+	Unit prop -70 spotted.
+Decision affects clause 82: 1 10 47 0.
+
+Decision affects clause 84: 1 -10 47 0.
+	Clause is now sat.
+
+Decision affects clause 127: 10 48 -81 0.
+
+Decision affects clause 128: -10 48 -92 0.
+	Clause is now sat.
+
+
+
+Iteration 113.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d 
+Add pending deduction -70 to decision stack.
+
+Handling last decision -70d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 
+
+Decision affects clause 53: 10 -12 -70 0.
+	Clause is now sat.
+
+Decision affects clause 54: -12 49 70 0.
+	Unit prop 49 spotted.
+Decision affects clause 55: -49 -64 70 0.
+
+Decision affects clause 56: -16 -49 70 0.
+	Unit prop -49 spotted.
+Decision affects clause 154: -21 -64 -70 0.
+	Clause is now sat.
+
+
+
+Iteration 114.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 
+Add pending deduction 49 to decision stack.
+
+Handling last decision 49d.
+Current state: 42d -62d -33d -29d -67d 34d -23d 38d 20d -57d 21d 98d -45d -2d -80d 16d 31d 4d -26d -59d 60d -8d 43d -91d -46d 51d -93d 71d 66d 63d 11d -97d -69d 77d -27d -14d 100d -5d 12d 30d -10d -70d 49d 
+
+Decision affects clause 54: -12 49 70 0.
+	Clause is now sat.
+
+Decision affects clause 55: -49 -64 70 0.
+	Unit prop -64 spotted.
+Decision affects clause 56: -16 -49 70 0.
+	Contradiction -49 spotted.
 

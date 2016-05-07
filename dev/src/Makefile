@@ -5,7 +5,7 @@ EXPRNAME=Parser/expr
 CC=g++
 
 #compiler flags
-CFLAGS=-std=c++11 -O3 -Wno-write-strings -Wall
+CFLAGS=-std=c++11 -O3 -Wno-write-strings -Wall -fdiagnostics-color=always
 
 #lex name+path
 LEX=flex

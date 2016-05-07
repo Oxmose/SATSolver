@@ -314,7 +314,6 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         }
     }
 
-    printf("%d\n", curr_level);
     assert(settings_s.cl_s);
     OUTDEBUG(fprintf(stderr, "Diagnosising conflict.\n"));
 
@@ -347,40 +346,6 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
     }
 
     OUTDEBUG(fprintf(stderr, "\tWill learn clause %s.\n", to_learn.to_str().c_str()));
-    
-    if(settings_s.clinterac_s)
-    {
-        bool ok = false;
-        while(!ok)
-        {
-            cout << "Conflict spotted!" << endl << "g: output conflict graph" << endl << "c: continue to next conflict" << endl << "t: disable interaction" << endl;
-            char choice;
-            cin >> choice;
-
-            if(choice == 'g')
-            {
-                cout << "Outputing graph" << endl;
-                conflict_graph.output(true);
-                ok = true;
-            }
-            else if(choice == 't')
-            {
-                cout << "Interaction disables" << endl;
-                settings_s.clinterac_s = false;
-                ok = true;
-            }
-            else
-            {
-                if(choice != 'c')
-                    cout << "Wrong input, pleace select again" << endl;
-                else
-                {
-                    cout << "Jump to next conflict" << endl;
-                    ok = true;
-                }
-            }
-        }
-    }
 
     assert(to_learn.assoc_lit.find(-conflict_graph.uip) != to_learn.assoc_lit.end());
 
@@ -421,6 +386,45 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
     assert(bt_to != 0);
 
     OUTDEBUG(fprintf(stderr, "\tShould backtrack until %d inclusively.\n", bt_to));
+
+    if(settings_s.clinterac_s)
+    {
+        bool ok = false;
+        while(!ok)
+        {
+            cout << endl << "Conflict spotted!" << endl;
+            cout << "Will learn clause: " << to_learn.to_str().c_str() << endl;
+            cout << "Backtrack to level: " << conflict_graph.infos_on[bt_to].first << endl;
+            cout << endl;
+            cout << "g: output conflict graph" << endl << "c: continue to next conflict" << endl << "t: disable interaction" << endl;
+            char choice;
+            cin >> choice;
+
+            if(choice == 'g')
+            {
+                //cout << "Outputing graph" << endl; done by output
+                conflict_graph.output(true);
+                ok = true;
+            }
+            else if(choice == 't')
+            {
+                cout << "Interaction disables" << endl;
+                settings_s.clinterac_s = false;
+                ok = true;
+            }
+            else
+            {
+                if(choice != 'c')
+                    cout << "Wrong input, pleace select again" << endl;
+                else
+                {
+                    cout << "Jump to next conflict" << endl;
+                    ok = true;
+                }
+            }
+        }
+    }
+
 
     if(settings_s.wl_s && to_learn.literal.size() != 1)
     {
@@ -511,6 +515,9 @@ void SATSolver::take_a_bet()
 {
     ++curr_level;
     m_bet->takeABet(this);
+    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", curr_level));
+    if(settings_s.cl_s)
+        conflict_graph.add_node(decision_stack[decision_stack.size()-1].first, make_pair(curr_level, true));
 }
 
 void SATSolver::reset_valuation()

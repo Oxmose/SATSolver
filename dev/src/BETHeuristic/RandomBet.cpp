@@ -34,33 +34,33 @@ RandomBet::~RandomBet()
 void RandomBet::takeABet(SATSolver *p_solver)
 {
     OUTDEBUG(fprintf(stderr, "Random bet"));
-    set<int> unassignedLits;
+    assert(p_solver->unsat_clauses.size() != 0);
 
-    assert(!p_solver->unsat_clauses.empty());
-    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
+    map<unsigned int,bool> alive_vars;
+    for(auto iClause : p_solver->unsat_clauses)
+        for(auto l : p_solver->formula[iClause].literal)
+            if(p_solver->valuation[abs(l)] == -1)
+                alive_vars[abs(l)] = true;
 
-    for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
-        for(auto l : p_solver->formula[it].literal)
-	        if(p_solver->valuation[abs(l)] == -1)
-                	unassignedLits.emplace(l);
-    
+    assert(alive_vars.size() != 0);
 
-    if(unassignedLits.size() != 0)
+    unsigned int rand_index = rand()%(alive_vars.size());
+    int var = -1;
+    int i = 0;
+    for(auto v : alive_vars)
     {
-        // Select a random literal
-        unsigned int index = rand() % (unassignedLits.size() - 1);
-        set<int>::iterator it = unassignedLits.begin();
-
-        for(unsigned int i = 0; i < index; ++i)
-            ++it;
-
-        OUTDEBUG(fprintf(stderr,"Taking bet %d\n", *it));
-        p_solver->decision_stack.push_back(make_pair(abs(*it), true));
-        if(settings_s.cl_s)
-	        p_solver->conflict_graph.add_node(abs(*it), make_pair(p_solver->curr_level, true));
-        return; 
+        if(i == rand_index)
+        {
+            var = v.first;
+            break;
+        }
+        i++;
     }
-    else
-        assert(false);
+    
+    assert(var != -1);
+    int mod = 1;
+    if(m_randomBet)
+        mod = (rand()%2) ? 1 : -1;
+    p_solver->decision_stack.push_back(make_pair(var*mod,true));
 } // void takeABet(SATSolver *p_solver)
 
