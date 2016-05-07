@@ -25,65 +25,44 @@ MOMSBet::~MOMSBet()
 
 void MOMSBet::takeABet(SATSolver *p_solver)
 {
-    OUTDEBUG(fprintf(stderr, "MOMS bet"));
+    OUTDEBUG(fprintf(stderr, "MOMS bet\n"));
     assert(!p_solver->unsat_clauses.empty());
-    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
-    map<int, int> clausesSizes;
-    map<int, unsigned int> unassignedLits;
-
-    int min = -1;
-    int selectedUnassigned = 0;
-
-    // Gather minimal clauses
-    for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
+    vector<int> interesting_clauses;
+    unsigned int min_size = p_solver->formula[*p_solver->unsat_clauses.begin()].literal.size();
+    for(auto iClause : p_solver->unsat_clauses)
     {
-        int clauseSize = 0;
-        for(auto l : p_solver->formula[it].literal)
+        if(min_size < p_solver->formula[iClause].literal.size())
         {
-	    if(p_solver->valuation[abs(l)] == -1)
-            {
-                ++clauseSize;
-            }
+            interesting_clauses.clear();
+            min_size = p_solver->formula[iClause].literal.size();
         }
-        if(clauseSize != 0 && (clauseSize < min || min == -1))
-            min = clauseSize;
 
-        clausesSizes.emplace(it, clauseSize);
+        if(min_size == p_solver->formula[iClause].literal.size())
+            interesting_clauses.push_back(iClause);
     }
-    assert(min != -1);
 
-    for(pair<int, int> entry : clausesSizes)
-    {
-        if(entry.second == min)
-        {           
-            for(auto l : p_solver->formula[entry.first].literal)
+    map<int,int> occ;
+    for(auto iClause : interesting_clauses)
+        for(auto l : p_solver->formula[iClause].literal)
+            if(p_solver->valuation[abs(l)] == -1)
             {
-                if(p_solver->valuation[abs(l)] == -1)
-                {
-                    // If we never encountred the literal
-                    if(unassignedLits.find(l) == unassignedLits.end())
-                        unassignedLits.emplace(l, 1);
-                    else
-                        ++unassignedLits[l];
-                }
-           
+                if(occ.find(l) == occ.end())
+                    occ[l] = 0;
+                else
+                    occ[l]++;
             }
-        }
-    }
-    unsigned int max = 0;
-    for(pair<int, unsigned int> entry : unassignedLits)
-    {
-        if(max < entry.second)
+
+    int max_occ = -1;
+    int the_lit = 0;
+    for(auto o : occ)
+        if(max_occ < o.second)
         {
-            selectedUnassigned = entry.first;
-            max = entry.second;
-        }    
-    }
-    assert(selectedUnassigned != 0);
-    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", abs(selectedUnassigned)));
-    p_solver->decision_stack.push_back(make_pair(abs(selectedUnassigned), true));
-    if(settings_s.cl_s)
-	    p_solver->conflict_graph.add_node(abs(selectedUnassigned), make_pair(p_solver->curr_level, true));
-    return;
+            max_occ = o.second;
+            the_lit = o.first;
+        }
+
+    assert(the_lit != 0);
+    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", the_lit));
+    p_solver->decision_stack.push_back(make_pair(the_lit,true));
 } // void takeABet(SATSolver *p_solver)

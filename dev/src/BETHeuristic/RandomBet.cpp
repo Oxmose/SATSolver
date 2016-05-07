@@ -33,7 +33,7 @@ RandomBet::~RandomBet()
 
 void RandomBet::takeABet(SATSolver *p_solver)
 {
-    OUTDEBUG(fprintf(stderr, "Random bet"));
+    OUTDEBUG(fprintf(stderr, "Random bet\n"));
     assert(p_solver->unsat_clauses.size() != 0);
 
     map<unsigned int,bool> alive_vars;
@@ -61,6 +61,7 @@ void RandomBet::takeABet(SATSolver *p_solver)
     int mod = 1;
     if(m_randomBet)
         mod = (rand()%2) ? 1 : -1;
+    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", var*mod));
     p_solver->decision_stack.push_back(make_pair(var*mod,true));
 } // void takeABet(SATSolver *p_solver)
 

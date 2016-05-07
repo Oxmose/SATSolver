@@ -27,7 +27,7 @@ StandardBet::StandardBet()
 
 void StandardBet::takeABet(SATSolver *p_solver)
 {
-    OUTDEBUG(fprintf(stderr, "Standard bet"));
+    OUTDEBUG(fprintf(stderr, "Standard bet\n"));
     assert(!p_solver->unsat_clauses.empty());
 
     for(auto l : p_solver->formula[*p_solver->unsat_clauses.begin()].literal)
