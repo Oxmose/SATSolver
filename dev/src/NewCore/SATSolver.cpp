@@ -61,7 +61,7 @@ bool SATSolver::add_clause(clause c, bool input)
     for(auto l : c.literal)
     {
         c.assoc_lit[l] = true;
-        m_varScores[abs(l)] = 0.0;
+        //m_varScores[abs(l)] = 0.0; SURTOUT PAS, annule la MAJ et pas un soucis au debut
         clauses_with_var[abs(l)].insert(c.id);
     }
 
@@ -383,6 +383,28 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
     assert(bt_to != 0);
 
     OUTDEBUG(fprintf(stderr, "\tShould backtrack until %d inclusively.\n", bt_to));
+
+    if(settings_s.bet_s == VSIDS)
+    {
+        set<int> toAvoid;
+        for(auto l : to_learn.literal)
+        {
+            m_varScores[abs(l)] = VSIDSScoreFunction(getVarScores(abs(l)),true);
+            toAvoid.insert(abs(l));
+        }
+        for(int iClause = 0 ; iClause < formula.size() ; iClause++)
+            for(auto l :  formula[iClause].literal)
+                if(toAvoid.find(abs(l)) == toAvoid.end())
+                {
+                    toAvoid.insert(abs(l));
+                    m_varScores[abs(l)] = VSIDSScoreFunction(getVarScores(abs(l)),false);
+                }
+        OUTDEBUG(fprintf(stderr,"VSIDS scores updated.\n"));
+        for(auto v : m_varScores)
+            if(v.second != 0.0)
+                OUTDEBUG(fprintf(stderr, "\tVar %d: %lf\n", v.first, v.second));
+    }
+
 
     if(settings_s.clinterac_s)
     {
