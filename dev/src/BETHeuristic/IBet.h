@@ -31,7 +31,7 @@ class IBet
 {
     public:
         virtual ~IBet(){}
-        virtual void takeABet(SATSolver *p_solver) = 0;
+        virtual int takeABet(SATSolver *p_solver) = 0;
 
     private:
 }; // IBet

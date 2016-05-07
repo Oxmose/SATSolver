@@ -22,7 +22,7 @@ class DLISBet : public IBet
     public:
         DLISBet(bool p_scoreMethod);
         virtual ~DLISBet();
-        virtual void takeABet(SATSolver *p_solver);
+        virtual int takeABet(SATSolver *p_solver);
 
     private:
         bool m_scoreMethod;

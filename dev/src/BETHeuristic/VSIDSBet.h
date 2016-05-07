@@ -24,7 +24,7 @@ class VSIDSBet : public IBet
 {
     public:
         virtual ~VSIDSBet();
-        virtual void takeABet(SATSolver *p_solver);
+        virtual int takeABet(SATSolver *p_solver);
 
     private:
 

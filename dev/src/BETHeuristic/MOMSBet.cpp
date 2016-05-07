@@ -23,7 +23,7 @@ MOMSBet::~MOMSBet()
 {
 }
 
-void MOMSBet::takeABet(SATSolver *p_solver)
+int MOMSBet::takeABet(SATSolver *p_solver)
 {
     OUTDEBUG(fprintf(stderr, "MOMS bet\n"));
     assert(!p_solver->unsat_clauses.empty());
@@ -63,6 +63,5 @@ void MOMSBet::takeABet(SATSolver *p_solver)
         }
 
     assert(the_lit != 0);
-    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", the_lit));
-    p_solver->decision_stack.push_back(make_pair(the_lit,true));
+    return the_lit;
 } // void takeABet(SATSolver *p_solver)

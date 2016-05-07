@@ -18,7 +18,7 @@ class StandardBet : public IBet
     public:
         StandardBet();
         virtual ~StandardBet();
-        virtual void takeABet(SATSolver *p_solver);
+        virtual int takeABet(SATSolver *p_solver);
 
     private:
 }; // StandardBet

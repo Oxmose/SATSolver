@@ -23,12 +23,12 @@ VSIDSBet::~VSIDSBet()
 {
 }
 
-void VSIDSBet::takeABet(SATSolver *p_solver)
+int VSIDSBet::takeABet(SATSolver *p_solver)
 {
     OUTDEBUG(fprintf(stderr, "VSIDS bet"));
     assert(!p_solver->unsat_clauses.empty());
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
-
+/*
     int firstUnassigned = 0;
     double max = -1;
     double score = 0;
@@ -69,6 +69,7 @@ void VSIDSBet::takeABet(SATSolver *p_solver)
     p_solver->decision_stack.push_back(make_pair(abs(firstUnassigned), true));
     if(settings_s.cl_s)
 	    p_solver->conflict_graph.add_node(abs(firstUnassigned), make_pair(p_solver->curr_level, true));
-    return;
+    return;*/
+    return 0;
 } // void takeABet(SATSolver *p_solver)
 

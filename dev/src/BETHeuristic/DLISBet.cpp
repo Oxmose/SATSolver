@@ -29,76 +29,31 @@ DLISBet::~DLISBet()
 {
 }
 
-void DLISBet::takeABet(SATSolver *p_solver)
+int DLISBet::takeABet(SATSolver *p_solver)
 {
-    OUTDEBUG(fprintf(stderr, "DLIS bet"));
+    OUTDEBUG(fprintf(stderr, "DLIS bet\n"));
     assert(!p_solver->unsat_clauses.empty());
-    OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
-    int firstUnassigned = 0;
-    double max = 0;
-
-    // Contains the literals and the number of clauses they appear in (or score if m_scoreMethod is true)
-    map<int, double> unassignedLits;
-
-
-    if(m_scoreMethod)
-    {
-        double clauseSize = 0;
-        for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
-            for(auto l : p_solver->formula[it].literal)
-                if(p_solver->valuation[abs(l)] == -1)
-                    ++clauseSize;
-            
-        for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
-        {
-            for(auto l : p_solver->formula[it].literal)
+    map<int,double> scoreOf;
+    for(auto iClause : p_solver->unsat_clauses)
+        for(auto l : p_solver->formula[iClause].literal)
+            if(p_solver->valuation[abs(l)] == -1)
             {
-                if(p_solver->valuation[abs(l)] == -1)
-                {
-                    // If we never encountred the literal
-                    if(unassignedLits.find(l) == unassignedLits.end())
-                        unassignedLits.emplace(l, exp2(-clauseSize));
-                    else
-                        unassignedLits[l] += exp2(-clauseSize);
-
-                    if(unassignedLits[l] > max)
-                    {
-                        max = unassignedLits[l];
-                        firstUnassigned = abs(l);
-                    }
-                }
+                if(scoreOf.find(l) == scoreOf.end())
+                    scoreOf[l] = 0;
+                else
+                    scoreOf[l] += (m_scoreMethod) ? exp2((double)-p_solver->formula[iClause].literal.size()) : 1;
             }
-        }
-    }
-    else
-    {
-        for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
+
+    int maxScore = 0;
+    int the_lit = 0;
+    for(auto s : scoreOf)
+        if(s.second > maxScore)
         {
-            for(auto l : p_solver->formula[it].literal)
-            {
-                if(p_solver->valuation[abs(l)] == -1)
-                {                  
-                    // If we never encountred the literal
-                    if(unassignedLits.find(l) == unassignedLits.end())
-                        unassignedLits.emplace(l, 1);
-                    else
-                        ++unassignedLits[l];
-
-                    if(unassignedLits[l] > max)
-                    {
-                        max = unassignedLits[l];
-                        firstUnassigned = abs(l);
-                    }
-                }
-            }
+            maxScore = s.second;
+            the_lit = s.first;
         }
-    }
 
-    assert(firstUnassigned != 0);
-    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", firstUnassigned));
-    p_solver->decision_stack.push_back(make_pair(firstUnassigned, true));
-    if(settings_s.cl_s)
-        p_solver->conflict_graph.add_node(firstUnassigned, make_pair(p_solver->curr_level, true));
-    return;
+    assert(the_lit != 0);
+    return the_lit;
 } // void takeABet(SATSolver *p_solver)

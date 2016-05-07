@@ -62,6 +62,7 @@ bool SATSolver::add_clause(clause c, bool input)
     {
         c.assoc_lit[l] = true;
         m_varScores[abs(l)] = 0.0;
+        clauses_with_var[abs(l)].insert(c.id);
     }
 
     if(settings_s.wl_s)
@@ -86,10 +87,6 @@ bool SATSolver::add_clause(clause c, bool input)
         for(auto l : c.literal)
             if(input || valuation[abs(l)] == -1)
                 c.alive_lit.insert(l);
-
-        for(auto l : c.literal)
-            clauses_with_var[abs(l)].insert(c.id);
-
     }
 
     OUTDEBUG(fprintf(stderr, "Clause added with id %d.\n", c.id));
@@ -513,11 +510,13 @@ pair<int,bool> SATSolver::backtrack(int bt_to, bool full_bt)
 
 void SATSolver::take_a_bet()
 {
+    int the_bet = m_bet->takeABet(this);
     ++curr_level;
-    m_bet->takeABet(this);
+    decision_stack.push_back(make_pair(the_bet,true));
+    OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", the_bet));
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", curr_level));
     if(settings_s.cl_s)
-        conflict_graph.add_node(decision_stack[decision_stack.size()-1].first, make_pair(curr_level, true));
+        conflict_graph.add_node(the_bet, make_pair(curr_level, true));
 }
 
 void SATSolver::reset_valuation()

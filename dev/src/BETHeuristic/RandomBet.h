@@ -24,7 +24,7 @@ class RandomBet : public IBet
     public:
         RandomBet(bool p_randomBet);
         virtual ~RandomBet();
-        virtual void takeABet(SATSolver *p_solver);
+        virtual int takeABet(SATSolver *p_solver);
 
     private:
         bool m_randomBet;
