@@ -35,7 +35,7 @@ void DLISBet::takeABet(SATSolver *p_solver)
     assert(!p_solver->unsat_clauses.empty());
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", p_solver->curr_level));
 
-    int firstUnassigned = -1;
+    int firstUnassigned = 0;
     double max = 0;
 
     // Contains the literals and the number of clauses they appear in (or score if m_scoreMethod is true)
@@ -95,10 +95,10 @@ void DLISBet::takeABet(SATSolver *p_solver)
         }
     }
 
+    assert(firstUnassigned != 0);
     OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", firstUnassigned));
     p_solver->decision_stack.push_back(make_pair(firstUnassigned, true));
     if(settings_s.cl_s)
         p_solver->conflict_graph.add_node(firstUnassigned, make_pair(p_solver->curr_level, true));
     return;
 } // void takeABet(SATSolver *p_solver)
-

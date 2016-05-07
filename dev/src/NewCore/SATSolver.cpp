@@ -29,7 +29,6 @@ bool SATSolver::add_clause(clause c, bool input)
     assert(c.literal.size() != 0);
 
     OUTDEBUG(fprintf(stderr, "Adding %s.\n", c.to_str().c_str()));
-
     if(input)
         for(auto l : c.literal)
             if(valuation.find(abs(l)) == valuation.end())

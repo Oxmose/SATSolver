@@ -33,7 +33,7 @@ void MOMSBet::takeABet(SATSolver *p_solver)
     map<int, unsigned int> unassignedLits;
 
     int min = -1;
-    int selectedUnassigned = -1;
+    int selectedUnassigned = 0;
 
     // Gather minimal clauses
     for(auto it = *p_solver->unsat_clauses.begin(); it != *p_solver->unsat_clauses.end(); ++it)
@@ -80,7 +80,7 @@ void MOMSBet::takeABet(SATSolver *p_solver)
             max = entry.second;
         }    
     }
-
+    assert(selectedUnassigned != 0);
     OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", abs(selectedUnassigned)));
     p_solver->decision_stack.push_back(make_pair(abs(selectedUnassigned), true));
     if(settings_s.cl_s)
