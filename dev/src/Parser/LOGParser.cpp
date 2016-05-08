@@ -188,7 +188,6 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         hasTaut = false;
         clause.clear();
     }
-	exit(0);
     for(auto entry : corresp)
     {
         struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
