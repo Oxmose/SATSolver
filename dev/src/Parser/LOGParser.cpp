@@ -57,7 +57,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     /*
     ** Log expression format parse
     */
-    map<Expr*, Expr*> corresp;
+    map<pair<int, int>, Expr*> corresp;
 
     vector<Expr*> exps;
     do 
@@ -79,7 +79,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
-	    //cout << "STR " << strForm << endl;
+	    cout << "STR " << strForm << endl;
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
@@ -188,13 +188,16 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         clause.clear();
     }
 
-
+    for(auto entry : corresp)
+    {
+        cout << entry.first.first << " = " << entry.first.second << " => " << entry.second->to_string() << endl;
+    }
     OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
-
+    exit(0);
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
-vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<Expr*, Expr*> &corresp)
+vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp)
 {
     // Get the set af vars in the expression
     res->getVars(m_originalVars);

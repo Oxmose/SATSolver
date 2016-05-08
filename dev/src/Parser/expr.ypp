@@ -33,13 +33,13 @@ Expr *res = NULL;
 %token <ival> TK_VAR
 %type <exp> expression
 
-%left TK_EQUA
 %left TK_EQU
 %left TK_IMP
 %left TK_XOR
 %left TK_DIS
 %left TK_CON
 %left TK_ANT TK_NEG
+%left TK_EQUA
 
 
 %%
