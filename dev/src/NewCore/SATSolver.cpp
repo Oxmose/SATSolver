@@ -24,7 +24,7 @@
 /*
     Returns true if clause was unitary.
 */
-bool SATSolver::add_clause(clause c, bool input)
+bool SATSolver::add_clause(clause c, bool input/*=false*/)
 {
     assert(c.literal.size() != 0);
 
@@ -56,7 +56,6 @@ bool SATSolver::add_clause(clause c, bool input)
     //On s'assure l'exclusivité
     c.assoc_lit.clear();
     c.alive_lit.clear();
-    c.triggers.clear();
 
     for(auto l : c.literal)
     {
@@ -298,29 +297,20 @@ int SATSolver::apply_last_decisionSTD()
 */
 pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
 {
-    int bt_to = -1;//Where bt should stop inclusively
+    int bt_level = 0;//Where bt should stop inclusively
     if(!settings_s.cl_s)
     {
-        for(int i = decision_stack.size()-1 ; i >= 0 ; i--)
-        {
-            if(decision_stack[i].bet)
-            {
-                bt_to = decision_stack[i].dec;
-                OUTDEBUG(fprintf(stderr, "\tShould backtrack until %d (last bet) inclusively.\n", bt_to));
-                return make_pair(clause(-1), bt_to);
-            }
-        }
+        bt_level = curr_level;
+        OUTDEBUG(fprintf(stderr, "\tShould backtrack until level %d (last bet) inclusively.\n", bt_level));
+        return make_pair(clause(-1), bt_level);
     }
+
 
     assert(settings_s.cl_s);
     OUTDEBUG(fprintf(stderr, "Diagnosising conflict.\n"));
-
     conflict_graph.add_deduction_node(conflict_clause, true);
 
     clause to_learn(formula.size());
-    vector<int> level;
-
-    //conflict_graph.output();
     conflict_graph.find_uip_cut();
 
     OUTDEBUG(fprintf(stderr, "\tUIP found to be %d.\n", conflict_graph.uip));
@@ -337,7 +327,8 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
                 {                    
                     to_learn.literal.push_back(-n.first);
                     to_learn.assoc_lit[-n.first] = true;
-                    level.push_back(conflict_graph.infos_on[n.first].first);
+                    if(n.first != conflict_graph.uip)
+                        bt_level = max(bt_level, conflict_graph.infos_on[n.first].first);
                     break;
                 }
         }
@@ -349,41 +340,22 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
 
 
     int good_trig = 0;
-    if(to_learn.literal.size() == 1)
+    if(to_learn.literal.size() != 1)
     {
-        for(unsigned int i = 0 ; i < decision_stack.size() ; i++)
-        {
-            bt_to = decision_stack[i].dec;
-            if(decision_stack[i].bet)
-                break;
-        }
-    }
-    else
-    {
-        bt_to = 0;
         good_trig = 0;
         for(int i = decision_stack.size()-1 ; i >= 0 ; i--)
         {
             int dec = decision_stack[i].dec;
             if(dec != conflict_graph.uip && to_learn.assoc_lit.find(-dec) != to_learn.assoc_lit.end())
             {
-                for(int j = i ; j >= 0 ; j--)
-                {
-                    if(to_learn.assoc_lit.find(-decision_stack[j].dec) != to_learn.assoc_lit.end())
-                        good_trig = decision_stack[j].dec;
-                    if(decision_stack[j].bet)
-                    {
-                        bt_to = decision_stack[j].dec;
-                        break;
-                    }
-                }
+                    good_trig = decision_stack[i].dec;
+                    break;
             }
         }
+        assert(good_trig != 0);
     }
 
-    assert(bt_to != 0);
-
-    OUTDEBUG(fprintf(stderr, "\tShould backtrack until %d inclusively.\n", bt_to));
+    OUTDEBUG(fprintf(stderr, "\tShould backtrack until level %d inclusively.\n", bt_level));
 
     if(settings_s.bet_s == VSIDS)
     {
@@ -414,7 +386,7 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         {
             cout << endl << "Conflict spotted!" << endl;
             cout << "Will learn clause: " << to_learn.to_str().c_str() << endl;
-            cout << "Backtrack to level: " << conflict_graph.infos_on[bt_to].first << endl;
+            cout << "Backtrack to level: " << bt_level << endl;
             cout << endl;
             cout << "g: output conflict graph" << endl << "c: continue to next conflict" << endl << "t: disable interaction" << endl;
             char choice;
@@ -448,15 +420,15 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
 
     if(settings_s.wl_s && to_learn.literal.size() != 1)
     {
+
         //The good triggers to have
         to_learn.triggers.insert(-good_trig);
         to_learn.triggers.insert(-conflict_graph.uip);
-
         /*for(auto d : decision_stack)
             fprintf(stderr, "%d%s ", d.first, (d.second) ? "b" : "d");*/
-        OUTDEBUG(fprintf(stderr, "\tLearnt clause %s watched by %d (bt to) and %d (uip).\n", to_learn.to_str().c_str(), -bt_to, -conflict_graph.uip));
+        OUTDEBUG(fprintf(stderr, "\tLearnt clause %s watched by %d and %d (uip).\n", to_learn.to_str().c_str(), -good_trig, -conflict_graph.uip));
     }
-    return make_pair(to_learn,bt_to);
+    return make_pair(to_learn,bt_level);
 }
 
 /*
@@ -465,11 +437,11 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         Si full_bt n'est pas à vrai on laisse le noeud associé dans le graphe, on enleve juste ses fils.
 
 */
-decision SATSolver::backtrack(int bt_to, bool full_bt)
+decision SATSolver::backtrack(int bt_level, bool full_bt)
 {
     assert(!decision_stack.empty());
 
-    OUTDEBUG(fprintf((stderr), "Backtracking until %d inclusively.\n", bt_to));
+    OUTDEBUG(fprintf((stderr), "Backtracking until level %d inclusively.\n", bt_level));
     print_current_state();
 
     OUTDEBUG(fprintf(stderr, "\tClearing pending deductions.\n\t"));
@@ -485,6 +457,7 @@ decision SATSolver::backtrack(int bt_to, bool full_bt)
     {
         int toCancel = decision_stack.back().dec;
         bool bet = decision_stack.back().bet;
+        int level = decision_stack.back().level;
         decision last_dec = decision_stack.back();
         decision_stack.pop_back();
 
@@ -516,7 +489,7 @@ decision SATSolver::backtrack(int bt_to, bool full_bt)
         }
         clauses_sat_by[toCancel].clear();
 
-        if(toCancel == bt_to)
+        if(level == bt_level && bet)
         {
             if(settings_s.cl_s)
                 conflict_graph.remove_node(toCancel, full_bt);

@@ -188,7 +188,6 @@ void conflict_graph::find_uip_cut()
 {
     assert(settings_s.cl_s);
     OUTDEBUG(fprintf(stderr, "\tComputing UIP cut.\n"));
-    output(false);
     find_uip();
     assert(uip != 0);
 
