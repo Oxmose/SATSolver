@@ -41,8 +41,9 @@ Node<T>* UnionFind<T>::find(T p_value)
     if(m_values.find(p_value) == m_values.end())
         return nullptr;
     Node<T> *from = &(m_values[p_value]);
-    if(from.getParent() != from)
-        return find(from->getValue());
+    while(from.getParent() != from)
+        from = find(from->getValue());
+    return from;
 } // Node<T>* find(T)
 
 template<class T>

@@ -20,6 +20,11 @@
 // HEADER INCLUDE
 #include "SATSolver.h"
 
+SATSolver::~SATSolver()
+{
+    for(auto e : dpll_to_smt)
+        delete e.second;
+}
 
 /*
     Returns true if clause was unitary.
@@ -637,4 +642,9 @@ double SATSolver::VSIDSScoreFunction(double oldScore, bool inLearnedClause)
     {
         return oldScore*pondConstant;
     }
+}
+
+void SATSolver::emplace_eq(unsigned int var, struct smt_literal *eq)
+{
+    dpll_to_smt.emplace(var, eq);
 }

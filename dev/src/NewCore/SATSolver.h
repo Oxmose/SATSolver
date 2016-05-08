@@ -57,6 +57,7 @@ class SATSolver
 
     public:
         SATSolver() : curr_level(-1), iter(0), conflict_graph(this), smt_solver(NULL) {};
+        ~SATSolver();
 
         bool add_clause(clause c, bool input=false);
 
@@ -83,6 +84,8 @@ class SATSolver
 
         double getVarScores(int p_var);
         double VSIDSScoreFunction(double oldScore, bool inLearnedClause);
+
+        void emplace_eq(unsigned int var, struct smt_literal *eq);
 
     private:
 

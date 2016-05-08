@@ -14,6 +14,7 @@
 #include <atomic>   // std::atomic
 
 // OTHER INCLUDES FROM PROJECT
+#include "../NewCore/SMT/SMTSolver_eq.h" // SMTSolver_eq class
 #include "../NewCore/SATSolver.h" // SATSolver class
 #include "../NewCore/clause.h" // Clause class
 
@@ -187,13 +188,12 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         hasTaut = false;
         clause.clear();
     }
-
     for(auto entry : corresp)
     {
-        cout << entry.first.first << " = " << entry.first.second << " => " << entry.second->to_string() << endl;
+        struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
+        p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
     }
     OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
-    exit(0);
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 

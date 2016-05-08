@@ -119,6 +119,7 @@ int parseCommand(int argc, const char **argv)
     settings_s.cl_s = false;
     settings_s.clinterac_s = false;
     settings_s.forget_s = false;
+    settings_s.smte_s = false;
 
     int commandError = 0;
     bool argsValid[7] = {false, false, false, false, false, false, false};
@@ -200,6 +201,12 @@ int parseCommand(int argc, const char **argv)
                 settings_s.forget_s = true;
                 argsValid[5] = true;
             }
+            else if(value == "-smte" && !argsValid[6])
+            {
+                settings_s.smte_s = true;
+                settings_s.parser_s = LOG_PARSE;
+                argsValid[6] = true;
+            }
             else
             {
                 commandError = 1;
@@ -207,7 +214,7 @@ int parseCommand(int argc, const char **argv)
             }
         }
         int count = 0;
-        for(unsigned int i = 0; i < 6; ++i)
+        for(unsigned int i = 0; i < 7; ++i)
         {
             if(argsValid[i])
                 ++count;

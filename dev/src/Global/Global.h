@@ -32,6 +32,7 @@ struct settings_s
     bool cl_s;
     bool clinterac_s;
     bool forget_s;
+    bool smte_s;
 };
 
 extern struct settings_s settings_s;
