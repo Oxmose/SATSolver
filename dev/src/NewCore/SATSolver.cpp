@@ -114,7 +114,7 @@ bool SATSolver::add_pending_deduction()
     }
 
     OUTDEBUG(fprintf(stderr, "Add pending deduction %d to decision stack.\n", ded));
-    decision_stack.push_back(make_pair(ded, false));
+    decision_stack.push_back(decision(ded, curr_level, false));
     
     if(settings_s.cl_s)
         conflict_graph.add_deduction_node(from_clause);
@@ -128,16 +128,17 @@ bool SATSolver::add_pending_deduction()
 int SATSolver::apply_last_decision()
 {
     assert(!decision_stack.empty());
-    int last_decision = decision_stack.back().first;
-    OUTDEBUG(fprintf(stderr, "\nHandling last decision %d%s.\n", last_decision, (decision_stack.back().second) ? "b" : "d"));
+    int last_decision = decision_stack.back().dec;
+    OUTDEBUG(fprintf(stderr, "\nHandling last decision %d%s.\n", last_decision, (decision_stack.back().bet) ? "b" : "d"));
     print_current_state();
     OUTDEBUG(fprintf(stderr, "\n"));
+
     return (settings_s.wl_s) ? apply_last_decisionWL() : apply_last_decisionSTD();
 }
 
 int SATSolver::apply_last_decisionWL()
 {
-    int last_decision = decision_stack.back().first;
+    int last_decision = decision_stack.back().dec;
     valuation[abs(last_decision)] = last_decision > 0;
 
     int conflict_clause = -1;
@@ -245,7 +246,7 @@ int SATSolver::apply_last_decisionWL()
 
 int SATSolver::apply_last_decisionSTD()
 {
-    int last_decision = decision_stack.back().first;
+    int last_decision = decision_stack.back().dec;
     valuation[abs(last_decision)] = last_decision > 0;
 
     int conflict_clause = -1;
@@ -302,9 +303,9 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
     {
         for(int i = decision_stack.size()-1 ; i >= 0 ; i--)
         {
-            if(decision_stack[i].second)
+            if(decision_stack[i].bet)
             {
-                bt_to = decision_stack[i].first;
+                bt_to = decision_stack[i].dec;
                 OUTDEBUG(fprintf(stderr, "\tShould backtrack until %d (last bet) inclusively.\n", bt_to));
                 return make_pair(clause(-1), bt_to);
             }
@@ -352,8 +353,8 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
     {
         for(unsigned int i = 0 ; i < decision_stack.size() ; i++)
         {
-            bt_to = decision_stack[i].first;
-            if(decision_stack[i].second)
+            bt_to = decision_stack[i].dec;
+            if(decision_stack[i].bet)
                 break;
         }
     }
@@ -363,16 +364,16 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         good_trig = 0;
         for(int i = decision_stack.size()-1 ; i >= 0 ; i--)
         {
-            int dec = decision_stack[i].first;
+            int dec = decision_stack[i].dec;
             if(dec != conflict_graph.uip && to_learn.assoc_lit.find(-dec) != to_learn.assoc_lit.end())
             {
                 for(int j = i ; j >= 0 ; j--)
                 {
-                    if(to_learn.assoc_lit.find(-decision_stack[j].first) != to_learn.assoc_lit.end())
-                        good_trig = decision_stack[j].first;
-                    if(decision_stack[j].second)
+                    if(to_learn.assoc_lit.find(-decision_stack[j].dec) != to_learn.assoc_lit.end())
+                        good_trig = decision_stack[j].dec;
+                    if(decision_stack[j].bet)
                     {
-                        bt_to = decision_stack[j].first;
+                        bt_to = decision_stack[j].dec;
                         break;
                     }
                 }
@@ -464,7 +465,7 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         Si full_bt n'est pas à vrai on laisse le noeud associé dans le graphe, on enleve juste ses fils.
 
 */
-pair<int,bool> SATSolver::backtrack(int bt_to, bool full_bt)
+decision SATSolver::backtrack(int bt_to, bool full_bt)
 {
     assert(!decision_stack.empty());
 
@@ -482,8 +483,9 @@ pair<int,bool> SATSolver::backtrack(int bt_to, bool full_bt)
 
     while(!decision_stack.empty())
     {
-        int toCancel = decision_stack.back().first;
-        bool bet = decision_stack.back().second;
+        int toCancel = decision_stack.back().dec;
+        bool bet = decision_stack.back().bet;
+        decision last_dec = decision_stack.back();
         decision_stack.pop_back();
 
         OUTDEBUG(fprintf(stderr, "Cancelling %d%s.\n", toCancel, (bet) ? "b" : "d"));
@@ -520,21 +522,21 @@ pair<int,bool> SATSolver::backtrack(int bt_to, bool full_bt)
                 conflict_graph.remove_node(toCancel, full_bt);
             
             print_current_state();
-            return make_pair(toCancel,bet);
+            return last_dec;
         }
 
         OUTDEBUG(fprintf(stderr, "\t"));
         if(settings_s.cl_s)
             conflict_graph.remove_node(toCancel);
     }
-    return make_pair(-1, false);
+    return decision(-1, -2, false);
 }
 
 void SATSolver::take_a_bet()
 {
     int the_bet = m_bet->takeABet(this);
     ++curr_level;
-    decision_stack.push_back(make_pair(the_bet,true));
+    decision_stack.push_back(decision(the_bet,curr_level,true));
     OUTDEBUG(fprintf(stderr,"Taking bet %d.\n", the_bet));
     OUTDEBUG(fprintf(stderr, "Current level is now %d.\n", curr_level));
     if(settings_s.cl_s)
@@ -574,6 +576,14 @@ bool SATSolver::solve()
         }
 
         jump = false;
+
+        /* SMT */
+        /*
+        if(!smt_solver.apply_last_decision())
+        {
+            pair<clause,int> diagnosis = smt_solver.diagnose_conflict();
+        }*/
+
         int conflict_clause = apply_last_decision();
         if(conflict_clause != -1)
         {
@@ -584,16 +594,16 @@ bool SATSolver::solve()
             }
 
             pair<clause,int> diagnosis = diagnose_conflict(conflict_clause);//Learnt clause, bt level
-            pair<int,bool> last_dec = backtrack(diagnosis.second, diagnosis.first.literal.size() == 1);
+            decision last_dec = backtrack(diagnosis.second, diagnosis.first.literal.size() == 1);
             if(!settings_s.cl_s || !add_clause(diagnosis.first))//Added clause wasn't unitary, no deduction added
             {
-                assert(last_dec.second);
+                assert(last_dec.bet);
                 if(settings_s.cl_s)
                     curr_level++;
                 else
                 {
-                    last_dec.first *= -1;
-                    last_dec.second = false;
+                    last_dec.dec *= -1;
+                    last_dec.bet = false;
                 }
                 decision_stack.push_back(last_dec);
                 //conflict_graph.output();
@@ -609,7 +619,7 @@ void SATSolver::print_current_state()
 {
     OUTDEBUG(fprintf(stderr, "Current state: "));
     for(auto d : decision_stack)
-        OUTDEBUG(fprintf(stderr, "%d%s ", d.first, (d.second) ? "b" : "d"));
+        OUTDEBUG(fprintf(stderr, "%d%s ", d.dec, (d.bet) ? "b" : "d"));
     OUTDEBUG(fprintf(stderr, "\n"));
 }
 

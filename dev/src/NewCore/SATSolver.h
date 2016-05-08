@@ -32,6 +32,14 @@ using namespace std;
 
 class IBet;
 
+struct decision
+{
+    decision(int dec=0, int level=-2, bool bet=false) : dec(dec), level(level), bet(bet) {}
+    int dec;
+    int level;
+    bool bet;
+};
+
 class SATSolver
 {
     friend class conflict_graph;
@@ -55,7 +63,7 @@ class SATSolver
         int apply_last_decisionWL();
 
         pair<clause,int> diagnose_conflict(int conflict_clause);
-        pair<int,bool> backtrack(int bt_to, bool full_bt);
+        decision backtrack(int bt_to, bool full_bt);
 
         vector<clause>                                        formula;
         map<unsigned int, int>                              valuation;
@@ -77,7 +85,7 @@ class SATSolver
         /* DPLL interns */
         set<int>                                        unsat_clauses;
         queue<pair<int,int>>                          deduction_queue;//First: deduction, Second: clause coming from
-        vector<pair<int,bool>>                         decision_stack;//First: decision, Second: is a bet ?
+        vector<decision>                               decision_stack;//First: decision, Second: is a bet ?
         unordered_map<int,vector<int>>                  clauses_sat_by;
 
         unordered_map<unsigned int,set<int>>       clauses_watched_by;//WL
