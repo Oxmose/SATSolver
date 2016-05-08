@@ -551,11 +551,18 @@ bool SATSolver::solve()
         jump = false;
 
         /* SMT */
-        /*
-        if(!smt_solver.apply_last_decision())
+        
+        if(!smt_solver->apply_last_decision())
         {
-            pair<clause,int> diagnosis = smt_solver.diagnose_conflict();
-        }*/
+            pair<clause,int> diagnosis = smt_solver->diagnose_conflict();
+            assert(diagnosis.first.literal.size() != 1);
+            decision last_dec = backtrack(diagnosis.second, false);
+            add_clause(diagnosis.first);
+            curr_level++;
+            decision_stack.push_back(last_dec);
+            jump = true;
+            continue;
+        }
 
         int conflict_clause = apply_last_decision();
         if(conflict_clause != -1)

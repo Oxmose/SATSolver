@@ -20,6 +20,9 @@
 #include "clause.h"
 #include "conflict_graph.h"
 
+#include "SMT/SMTSolver.h"
+#include "SMT/SMTSolver_eq.h"
+
 // MACRO DEFINE
 #define OUTDEBUG(Out) do {  \
     if(settings_s.debug_s) { \
@@ -50,8 +53,10 @@ class SATSolver
     friend class MOMSBet;
     friend class VSIDSBet;
 
+    friend class SMTSolver;
+
     public:
-        SATSolver() : curr_level(-1), iter(0), conflict_graph(this) {};
+        SATSolver() : curr_level(-1), iter(0), conflict_graph(this), smt_solver(NULL) {};
 
         bool add_clause(clause c, bool input=false);
 
@@ -98,7 +103,11 @@ class SATSolver
 
         IBet                                                   *m_bet;
 
-        unordered_map<int, double>                        m_varScores;
+        unordered_map<int, double>                        m_varScores;//vsids
+
+        /* SMT */
+        SMTSolver* smt_solver;
+        map<unsigned int, smt_literal*>                   dpll_to_smt;
 };
 
 #endif // DEF_SATSOLVER_H
