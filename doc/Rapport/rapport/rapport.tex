@@ -2,9 +2,10 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
+\usepackage{dirtree}
 
 % elements du titre
-\title{Rapport projet 2, TSAT}
+\title{Rapport projet 2, TSAT - Solveur SAT}
 \author{T. Stérin, A. Torres}
 \date{Mai 2016}
 
@@ -18,61 +19,54 @@
 \maketitle
 
 \section{Présentation}
-TSAT est un solveur SAT écrit en C++ par Tristan Stérin et Alexy Torres--Aurora-Dugo.
-Réalisé a l'ENS Lyon pour l'année scolaire 2015-2016 et dans le cadre de la matière ``Projet2'', ce solveur permet de résoudre des formules SAT sous formes CNF et logique (en appliquant la transformation de Tseitin).
-\\
-
-
-
-Un peu de maths en \LaTeX: voici un exemple de clause:
-$$
-\litt_1\lor\non{\litt_2}\lor\litt_4
-$$
-On remarque au passage que $\non{\non{\litt}}$ est pareil que $\litt$.
-
-\section{Organisation du code}
-\label{s:orga}
-
-Le code est structuré de la manière suivante~:
+TSAT est un solveur SAT à l'instar de minisat \cite{minisat} qui a pour but de satisfaire des formules logiques qui lui sont données en entrée.
+TSAT est écrit en C++ par Tristan Stérin et Alexy Torres--Aurora-Dugo.
+Réalisé à l'ENS Lyon pour l'année scolaire 2015-2016 et dans le cadre de la matière ``Projet2'', ce solveur permet de résoudre des formules SAT sous formes CNF et logique (en appliquant la transformation de Tseitin).
+\\ \\
+Différentes méthode de résolution ont été implémentées dans TSAT : 
 \begin{itemize}
-\item bli
-\item bla
-\item blo
+	\item DPLL (Davis–Putnam–Logemann–Loveland) standard \cite{DPLL}.
+	\item DPLL avec méthode des litéraux surveillés \cite{WL}.
+	\item DPLL avec méthode avec apprentissage de clause \cite{CL}.
 \end{itemize}
 
+%Un peu de maths en \LaTeX: voici un exemple de clause:
+%$$
+%\litt_1\lor\non{\litt_2}\lor\litt_4
+%$$
+%On remarque au passage que $\non{\non{\litt}}$ est pareil que $\litt$.
+
+\section{Organisation du code}
+L'organisation du projet est la suivante :
+\dirtree{%
+    .1 src/.
+    .2 BETHeuristic (Classes contenant les stratégies de pari).
+    .2 Global (Fichiers source contenant les paramètres du programme).
+    .2 NewCore (Noyau TSAT, structures de clause).
+    .3 SMT (Noyau SMT).
+    .2 Parser (Parseurs CNF et logique).
+    .2 RandomSatExpGenerator (Générateur de formules SAT).
+    .2 SMTGenerator (FGénérateur de formules SMT).
+    .2 main.cpp (Fichier source principal du solveur).
+    .2 main.h (En tête du fichier main.cpp).
+    .2 Makefile (Fichier de compilation du solveur).
+}
+\section{Structures de données utilisées}
+
+\section{Choix des patrons de conception}
+Le patron de conception en statégies à été retenu pour le développement des heuristiques de pari. Celà permet d'ajouter une heuristique sans modifier le noyau SAT. Ainsi il est aisé de créer une nouvelle classe heuristique et de l'ajouter au programme en l'incluant dans le fichier main.cpp et modifiant quelques lignes de code dans ce fichier.
+Cette méthode de conception permet aussi de modifier l'heuristique de pari durant le traitement de la formule.
+
+\section{Choix des implémentations}
+
+\section{Détection de l'UIP}
+
 \section{Critique des performances}
+La méthode avec apprentissage de clause permet d'obtenir de très bons résultats. Certaine formules alors impossible à traiter à l'aide de DPLL standard et de la méthode avec les litéraux surveillés obtiennent un solution (afféctation ou réponse d'insatisfaisabilité) en un temps très court.
+Certaines heuristique de pari nous donne de meilleurs résultats dans certain cas. Ainsi, RAND permet dans les meilleur cas de satisfaire des formules en moins d'une second alros que l'heuristique standard ne me permet pas en moins de dix. Les meilleurs résultats s'obtiennent avec l'heuristique MOMS.
+Les optimisations à la compilation (-O3) permettent elles aussi de rendre le solveur beaucoup plus rapide (jusqu'à 70\% plus rapide dans certain cas).
 
-On constate que blibla.
-
-
-On est par ailleurs capable de citer des références, ainsi~: \cite{ProjInt16}.
-
-
-Pour citer une référence bibliographique, il faut insérer les
-informations correspondantes au format BibTeX dans le fichier
-\texttt{ex-biblio.bib}, et puis faire la citation en utilisant la
-commande \verb+\cite{tititoto}+.
-
-Ensuite, on compile de la manière suivante~:
-\begin{enumerate}
-\item \texttt{pdflatex ex-rapport}
-
-et là il proteste, car il a vu une citation de \texttt{tititoto}, mais
-ne sait pas à quoi cela fait référence
-
-\item \texttt{bibtex ex-rapport}
-
-et là il met ensemble les informations pour savoir engendrer
-l'information correspondant à la citation de \texttt{tititoto}
-
-\item \texttt{pdflatex ex-rapport}
-
-et là il peut engendrer le fichier pdf, avec la bonne citation et la
-bonne description dans les références
-\end{enumerate}
-
-
-\bibliographystyle{plain}
+\bibliographystyle{unsrt}
 \bibliography{ex-biblio}
 
 \end{document}

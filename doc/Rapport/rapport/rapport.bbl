@@ -1,0 +1,29 @@
+\begin{thebibliography}{1}
+
+\bibitem{minisat}
+Niklas E{\'{e}}n and Niklas S{\"{o}}rensson.
+\newblock An extensible sat-solver.
+\newblock In Enrico Giunchiglia and Armando Tacchella, editors, {\em Theory and
+  Applications of Satisfiability Testing, 6th International Conference, {SAT}
+  2003. Santa Margherita Ligure, Italy, May 5-8, 2003 Selected Revised Papers},
+  volume 2919 of {\em Lecture Notes in Computer Science}, pages 502--518.
+  Springer, 2003.
+
+\bibitem{DPLL}
+Martin Davis, George Logemann, and Donald~W. Loveland.
+\newblock A machine program for theorem-proving.
+\newblock {\em Commun. {ACM}}, 5(7):394--397, 1962.
+
+\bibitem{WL}
+Matthew~W. Moskewicz, Conor~F. Madigan, Ying Zhao, Lintao Zhang, and Sharad
+  Malik.
+\newblock Chaff: Engineering an efficient {SAT} solver.
+\newblock In {\em Proceedings of the 38th Design Automation Conference, {DAC}
+  2001, Las Vegas, NV, USA, June 18-22, 2001}, pages 530--535. {ACM}, 2001.
+
+\bibitem{CL}
+Jo{\~{a}}o P.~Marques Silva and Karem~A. Sakallah.
+\newblock {GRASP} - a new search algorithm for satisfiability.
+\newblock In {\em {ICCAD}}, pages 220--227, 1996.
+
+\end{thebibliography}
