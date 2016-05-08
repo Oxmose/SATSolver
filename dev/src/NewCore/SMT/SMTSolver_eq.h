@@ -5,9 +5,10 @@
 
 struct smt_literal_eq : smt_literal
 {
-	smt_literal_eq(int index) : smt_literal(index) {}
+	smt_literal_eq(int index, int left, int right, bool equal) : smt_literal(index), left(left), right(right), equal(equal) {}
 	int left;
 	int right;
+	bool equal;
 };
 
 class SMTSolver_eq : SMTSolver
