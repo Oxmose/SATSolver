@@ -646,5 +646,10 @@ double SATSolver::VSIDSScoreFunction(double oldScore, bool inLearnedClause)
 
 void SATSolver::emplace_eq(unsigned int var, struct smt_literal *eq)
 {
+    struct smt_literal_eq *eqi = (struct smt_literal_eq *)eq;
+	if(eqi->equal)
+        OUTDEBUG(fprintf(stderr, "Adding equality %d = %d with var %d\n", eqi->left, eqi->right, var));
+    else
+        OUTDEBUG(fprintf(stderr, "Adding non equality %d = %d with var %d\n", eqi->left, eqi->right, eqi->index));
     dpll_to_smt.emplace(var, eq);
 }

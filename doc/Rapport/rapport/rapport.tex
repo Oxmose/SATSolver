@@ -1,0 +1,78 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+
+% elements du titre
+\title{Rapport projet 2, TSAT}
+\author{T. Stérin, A. Torres}
+\date{Mai 2016}
+
+
+% definition de quelques macros, pour les maths
+\newcommand{\litt}{\alpha}
+\newcommand{\non}[1]{\overline{#1}}
+
+\begin{document}
+
+\maketitle
+
+\section{Présentation}
+TSAT est un solveur SAT écrit en C++ par Tristan Stérin et Alexy Torres--Aurora-Dugo.
+Réalisé a l'ENS Lyon pour l'année scolaire 2015-2016 et dans le cadre de la matière ``Projet2'', ce solveur permet de résoudre des formules SAT sous formes CNF et logique (en appliquant la transformation de Tseitin).
+\\
+
+
+
+Un peu de maths en \LaTeX: voici un exemple de clause:
+$$
+\litt_1\lor\non{\litt_2}\lor\litt_4
+$$
+On remarque au passage que $\non{\non{\litt}}$ est pareil que $\litt$.
+
+\section{Organisation du code}
+\label{s:orga}
+
+Le code est structuré de la manière suivante~:
+\begin{itemize}
+\item bli
+\item bla
+\item blo
+\end{itemize}
+
+\section{Critique des performances}
+
+On constate que blibla.
+
+
+On est par ailleurs capable de citer des références, ainsi~: \cite{ProjInt16}.
+
+
+Pour citer une référence bibliographique, il faut insérer les
+informations correspondantes au format BibTeX dans le fichier
+\texttt{ex-biblio.bib}, et puis faire la citation en utilisant la
+commande \verb+\cite{tititoto}+.
+
+Ensuite, on compile de la manière suivante~:
+\begin{enumerate}
+\item \texttt{pdflatex ex-rapport}
+
+et là il proteste, car il a vu une citation de \texttt{tititoto}, mais
+ne sait pas à quoi cela fait référence
+
+\item \texttt{bibtex ex-rapport}
+
+et là il met ensemble les informations pour savoir engendrer
+l'information correspondant à la citation de \texttt{tititoto}
+
+\item \texttt{pdflatex ex-rapport}
+
+et là il peut engendrer le fichier pdf, avec la bonne citation et la
+bonne description dans les références
+\end{enumerate}
+
+
+\bibliographystyle{plain}
+\bibliography{ex-biblio}
+
+\end{document}

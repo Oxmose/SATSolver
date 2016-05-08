@@ -15,12 +15,6 @@
 using namespace std;
 
 template<class T>
-UnionFind<T>::UnionFind(bool p_useCongruence)
-{
-    m_useCongruence = p_useCongruence;
-} // UnionFind()
-
-template<class T>
 UnionFind<T>::~UnionFind()
 {
 

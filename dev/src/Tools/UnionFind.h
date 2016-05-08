@@ -16,7 +16,6 @@ template<class T>
 class UnionFind
 {
     public:
-        UnionFind(bool p_useCongruence);
         ~UnionFind();
 
         Node<T>* add(T p_value);

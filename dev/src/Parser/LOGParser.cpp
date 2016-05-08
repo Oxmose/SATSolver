@@ -59,13 +59,13 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     ** Log expression format parse
     */
     map<pair<int, int>, Expr*> corresp;
-
+    map<pair<int, int>, Expr*> ncorresp;
     vector<Expr*> exps;
     do 
     {
         yy_flex_debug = 1;
         yyparse();
-        exps = tseitinTransform(res, p_maxIndex, corresp);        
+        exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp);        
     } while (!feof(yyin));   
 
     fclose(yyin);
@@ -193,11 +193,17 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
         p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
     }
+    for(auto entry : ncorresp)
+    {
+        struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, false);
+        p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
+    }
+
     OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
-vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp)
+vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
 {
     // Get the set af vars in the expression
     res->getVars(m_originalVars);
@@ -210,7 +216,7 @@ vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, m
 
     vector<Expr*> exps;
     // Transform the expression
-    Expr* global = res->tseitin(maxIndex, exps, corresp);
+    Expr* global = res->tseitin(maxIndex, exps, corresp, ncorresp);
     exps.push_back(global);
     p_maxIndex = maxIndex;
 

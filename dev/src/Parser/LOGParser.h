@@ -51,7 +51,7 @@ class LOGParser : public IParser
         bool tseitinResolution(std::map<unsigned int,int> &p_valuation, unsigned int &p_maxIndex);
 
     private:
-	    std::vector<Expr*> tseitinTransform(Expr *exp, unsigned int &p_maxIndex, std::map<std::pair<int, int>, Expr*> &corresp);
+	    std::vector<Expr*> tseitinTransform(Expr *exp, unsigned int &p_maxIndex, std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp);
 
         // Name of the file to parse
         std::string m_fileName;
