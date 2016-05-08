@@ -384,7 +384,7 @@ Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>
     Expr* var = new EVar(p_maxIndex);
     Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
 
-    corresp[pair_t] = ret;
+    ncorresp[pair_t] = ret;
 
     //p_exps.push_back(var);
 
