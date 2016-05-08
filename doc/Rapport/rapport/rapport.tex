@@ -5,7 +5,7 @@
 \usepackage{dirtree}
 
 % elements du titre
-\title{Rapport projet 2, TSAT - Solveur SAT}
+\title{Rapport projet 2, TSAT - Solveur SAT/SMT}
 \author{T. Stérin, A. Torres}
 \date{Mai 2016}
 
@@ -19,9 +19,9 @@
 \maketitle
 
 \section{Présentation}
-TSAT est un solveur SAT à l'instar de minisat \cite{minisat} qui a pour but de satisfaire des formules logiques qui lui sont données en entrée.
+TSAT est un solveur SAT/SMT à l'instar de minisat \cite{minisat} qui a pour but de satisfaire des formules logiques qui lui sont données en entrée.
 TSAT est écrit en C++ par Tristan Stérin et Alexy Torres--Aurora-Dugo.
-Réalisé à l'ENS Lyon pour l'année scolaire 2015-2016 et dans le cadre de la matière ``Projet2'', ce solveur permet de résoudre des formules SAT sous formes CNF et logique (en appliquant la transformation de Tseitin).
+Réalisé à l'ENS Lyon pour l'année scolaire 2015-2016 et dans le cadre de la matière ``Projet2'', ce solveur permet de résoudre des formules SAT/SMT sous formes CNF et logique (en appliquant la transformation de Tseitin).
 \\ \\
 Différentes méthode de résolution ont été implémentées dans TSAT : 
 \begin{itemize}
@@ -58,12 +58,17 @@ Le patron de conception en statégies à été retenu pour le développement des
 Cette méthode de conception permet aussi de modifier l'heuristique de pari durant le traitement de la formule.
 
 \section{Choix des implémentations}
+MAP pour gagner du temps
+Files ?
+Lien avec SMT?
 
 \section{Détection de l'UIP}
 
 \section{Critique des performances}
 La méthode avec apprentissage de clause permet d'obtenir de très bons résultats. Certaine formules alors impossible à traiter à l'aide de DPLL standard et de la méthode avec les litéraux surveillés obtiennent un solution (afféctation ou réponse d'insatisfaisabilité) en un temps très court.
+
 Certaines heuristique de pari nous donne de meilleurs résultats dans certain cas. Ainsi, RAND permet dans les meilleur cas de satisfaire des formules en moins d'une second alros que l'heuristique standard ne me permet pas en moins de dix. Les meilleurs résultats s'obtiennent avec l'heuristique MOMS.
+
 Les optimisations à la compilation (-O3) permettent elles aussi de rendre le solveur beaucoup plus rapide (jusqu'à 70\% plus rapide dans certain cas).
 
 \bibliographystyle{unsrt}

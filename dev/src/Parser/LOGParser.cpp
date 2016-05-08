@@ -79,6 +79,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     bool hasTaut = false;
     for(Expr* exp : exps)
     {
+        string strForm = exp->to_string();
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
