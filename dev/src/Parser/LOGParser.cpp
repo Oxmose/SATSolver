@@ -130,7 +130,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                     
                 }
                 else
-                    OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
+                    OUTDEBUG(fprintf(stderr,"%d is tautological, not added.\n", p_solver.formula.size()));
 
                 the_clause.id = p_solver.formula.size();
 	            the_clause.literal.clear();
@@ -179,7 +179,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
             p_solver.add_clause(the_clause, true);
         }
         else
-            OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
+            OUTDEBUG(fprintf(stderr,"%d is tautological, not added.\n", p_solver.formula.size()));
 
         the_clause.id = p_solver.formula.size();
 	    the_clause.literal.clear();

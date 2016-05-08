@@ -444,7 +444,6 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         }
     }
 
-
     if(settings_s.wl_s && to_learn.literal.size() != 1)
     {
         //The good triggers to have

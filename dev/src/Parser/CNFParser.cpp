@@ -183,7 +183,7 @@ bool CNFParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                     // Add one to counter for verification purposes                                    
                 }
                 else
-                    OUTDEBUG(fprintf(stderr,"%s is tautological, not added.\n", the_clause.to_str().c_str()));
+                    OUTDEBUG(fprintf(stderr,"%d is tautological, not added.\n", clausesCount));
                 defMaxIndex = maxIndex;
 		++clausesCount;    
             }
