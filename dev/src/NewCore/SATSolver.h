@@ -56,7 +56,7 @@ class SATSolver
     friend class SMTSolver;
 
     public:
-        SATSolver() : curr_level(-1), iter(0), conflict_graph(this), smt_solver(NULL) {};
+        SATSolver();
         ~SATSolver();
 
         bool add_clause(clause c, bool input=false);

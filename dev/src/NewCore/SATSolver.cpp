@@ -20,6 +20,17 @@
 // HEADER INCLUDE
 #include "SATSolver.h"
 
+SATSolver::SATSolver() : conflict_graph(this)
+{
+    curr_level = -1;
+    iter = 0; 
+    smt_solver = NULL;
+
+    if(settings_s.smte_s)
+        smt_solver = new SMTSolver_eq(this);
+}
+
+
 SATSolver::~SATSolver()
 {
     for(auto e : dpll_to_smt)
@@ -528,6 +539,14 @@ void SATSolver::reset_valuation()
 
 bool SATSolver::solve()
 {
+    for(auto c : formula)
+        printf("%s\n", c.to_str().c_str());
+    for(auto l : dpll_to_smt)
+        printf("%d %s\n", l.first, l.second->to_str().c_str());
+    for(auto l : valuation)
+        printf("%d\n", l.first);
+    exit(0);
+
     reset_valuation();//No unitary clash found in input
 
     bool is_unsat = false;

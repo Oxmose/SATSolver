@@ -5,7 +5,7 @@ EXPRNAME=Parser/expr
 CC=g++
 
 #compiler flags
-CFLAGS=-std=c++11 -O3 -Wno-write-strings -Wall
+CFLAGS=-std=c++11 -O3 -Wno-write-strings -Wall -fdiagnostics-color=always
 
 #lex name+path
 LEX=flex
@@ -23,12 +23,13 @@ BET=BETHeuristic/DLISBet.cpp BETHeuristic/MOMSBet.cpp BETHeuristic/RandomBet.cpp
 RANDOMGEN=RandomSatExpGenerator/randomGen.cpp
 MAIN=main.cpp
 CORE=NewCore/clause.cpp NewCore/conflict_graph.cpp NewCore/SATSolver.cpp
+SMT=NewCore/SMT/SMTSolver_eq.cpp
 PARSER=Parser/CNFParser.cpp Parser/LOGParser.cpp $(EXPRNAME).cpp $(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
 #TOOLS=Tools/Node.cpp Tools/UnionFind.cpp
 
 PRELOG=$(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
 
-SRCS= $(GLOBAL) $(RANDOMGEN) $(CORE) $(BET) $(MAIN) $(PARSER)
+SRCS= $(GLOBAL) $(RANDOMGEN) $(CORE) $(SMT) $(BET) $(MAIN) $(PARSER)
 
 #OBJS
 OBJS=$(SRCS:.cpp=.o)

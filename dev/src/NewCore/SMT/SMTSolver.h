@@ -3,12 +3,15 @@
 
 #include "../clause.h"
 
+using namespace std;
+
 class SATSolver;
 
 struct smt_literal
 {
 	smt_literal(int index) : index(index) {}
 	int index;
+	virtual string to_str() = 0;
 };
 
 class SMTSolver
