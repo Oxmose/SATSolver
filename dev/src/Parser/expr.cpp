@@ -338,13 +338,14 @@ Expr* EEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>,
     // Then we create the new variable for this expression
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
 
-    corresp[pair_t] = var;
+    corresp[pair_t] = ret;
 
-    p_exps.push_back(var);
+    //p_exps.push_back(var);
 
     // Then we return the newly created variable
-    return var;
+    return ret;
 } // Expr* tseitin(int&, vector<Expr*>&)
 
 void EEqua::getVars(vector<int> &p_originalVars)
@@ -381,13 +382,14 @@ Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>
     // Then we create the new variable for this expression
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
 
-    ncorresp[pair_t] = var;
+    corresp[pair_t] = ret;
 
-    p_exps.push_back(var);
+    //p_exps.push_back(var);
 
     // Then we return the newly created variable
-    return var;
+    return ret;
 } // Expr* tseitin(int&, vector<Expr*>&)
 
 void ENEqua::getVars(vector<int> &p_originalVars)
