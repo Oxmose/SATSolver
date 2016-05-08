@@ -11,7 +11,7 @@ struct smt_literal_eq : smt_literal
 
 	string to_str()
 	{
-		return to_string(index) + ": " + to_string(left) + " " + to_string(right) + " " + to_string(equal);
+		return to_string(index) + ": " + to_string(left) + " " + ((equal) ? "=" : "!=") + " " + to_string(right);
 	}
 
 	int left;

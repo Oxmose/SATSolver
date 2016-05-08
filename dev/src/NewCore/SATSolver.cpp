@@ -539,13 +539,13 @@ void SATSolver::reset_valuation()
 
 bool SATSolver::solve()
 {
+    /* MESSY DEBUG */
     for(auto c : formula)
-        printf("%s\n", c.to_str().c_str());
+        printf("for %s\n", c.to_str().c_str());
     for(auto l : dpll_to_smt)
-        printf("%d %s\n", l.first, l.second->to_str().c_str());
+        printf("dp sm %d %s\n", l.first, l.second->to_str().c_str());
     for(auto l : valuation)
-        printf("%d\n", l.first);
-    exit(0);
+        printf("var %d\n", l.first);
 
     reset_valuation();//No unitary clash found in input
 
@@ -575,7 +575,7 @@ bool SATSolver::solve()
 
         /* SMT */
         
-        if(!smt_solver->apply_last_decision())
+        /*if(!smt_solver->apply_last_decision())
         {
             pair<clause,int> diagnosis = smt_solver->diagnose_conflict();
             assert(diagnosis.first.literal.size() != 1);
@@ -585,7 +585,7 @@ bool SATSolver::solve()
             decision_stack.push_back(last_dec);
             jump = true;
             continue;
-        }
+        }*/
 
         int conflict_clause = apply_last_decision();
         if(conflict_clause != -1)
@@ -667,8 +667,7 @@ void SATSolver::emplace_eq(unsigned int var, struct smt_literal *eq)
 {
     struct smt_literal_eq *eqi = (struct smt_literal_eq *)eq;
 	if(eqi->equal)
-        OUTDEBUG(fprintf(stderr, "Adding equality %d = %d with var %d\n", eqi->left, eqi->right, var));
-    else
-        OUTDEBUG(fprintf(stderr, "Adding non equality %d = %d with var %d\n", eqi->left, eqi->right, eqi->index));
+        OUTDEBUG(fprintf(stderr, "Adding (non) equality %s with var %d\n", eqi->to_str().c_str(), var));
+    
     dpll_to_smt.emplace(var, eq);
 }
