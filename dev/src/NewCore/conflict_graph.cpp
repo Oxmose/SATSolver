@@ -79,9 +79,9 @@ void conflict_graph::find_uip()
 
     int the_bet = 0;
     for(int i = solver->decision_stack.size()-1 ; i >= 0 ; i--)
-        if(solver->decision_stack[i].second)
+        if(solver->decision_stack[i].bet)
         {
-            the_bet = solver->decision_stack[i].first;
+            the_bet = solver->decision_stack[i].dec;
             i--;
             break;
         }
@@ -144,7 +144,7 @@ void conflict_graph::add_deduction_node(int from_clause, bool conflict/*=false*/
 {
     assert(settings_s.cl_s);
     assert(!solver->decision_stack.empty());
-    int last_decision = solver->decision_stack.back().first;
+    int last_decision = solver->decision_stack.back().dec;
     conflict_literal = last_decision;
     if(conflict)
         conflict_literal *= -1;
@@ -188,7 +188,7 @@ void conflict_graph::find_uip_cut()
 {
     assert(settings_s.cl_s);
     OUTDEBUG(fprintf(stderr, "\tComputing UIP cut.\n"));
-
+    output(false);
     find_uip();
     assert(uip != 0);
 
@@ -227,7 +227,7 @@ void conflict_graph::output(bool extra_info/* = false */)
     ofstream myfile;
     myfile.open("conflictGraph"+to_string(i)+".dot");
 
-    OUTDEBUG(fprintf(stderr, "Outputing graph on d%s.dot.\n", to_string(i).c_str()));
+    OUTDEBUG(fprintf(stderr, "Outputing graph on conflictGraph%s.dot.\n", to_string(i).c_str()));
     if(settings_s.clinterac_s)
         cout << "Outputing graph on conflictGraph" << to_string(i).c_str() << ".dot" << endl;
     i++;

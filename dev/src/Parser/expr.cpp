@@ -26,7 +26,7 @@ using namespace std;
 
 EVar::EVar(int i) : index(i) {}
 
-Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
+Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<Expr*, Expr*> &corresp)
 {
     // Then We create the new variable for this expression
     ++p_maxIndex;
@@ -58,12 +58,12 @@ string EVar::to_string()
 
 EEqu::EEqu(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EEqu::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
+Expr* EEqu::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<Expr*, Expr*> &corresp)
 {
     // First we transform every sub expressions int the expression
     // and get the newly added variable
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp);
     Expr* op1TranNeg = new ENeg(op1Tran);
     Expr* op2TranNeg = new ENeg(op2Tran);
 
@@ -109,10 +109,10 @@ string EEqu::to_string()
 
 EImp::EImp(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EImp::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
+Expr* EImp::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<Expr*, Expr*> &corresp)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp);
 
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -145,10 +145,10 @@ string EImp::to_string()
 
 EXor::EXor(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EXor::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
+Expr* EXor::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<Expr*, Expr*> &corresp)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp);
     Expr* op1TranNeg = new ENeg(op1Tran);
     Expr* op2TranNeg = new ENeg(op2Tran);
 
@@ -190,10 +190,10 @@ string EXor::to_string()
 
 EDis::EDis(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EDis::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
+Expr* EDis::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<Expr*, Expr*> &corresp)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp);
     
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -227,10 +227,10 @@ string EDis::to_string()
 
 ECon::ECon(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* ECon::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
+Expr* ECon::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<Expr*, Expr*> &corresp)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp);
 
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -265,9 +265,9 @@ string ECon::to_string()
 
 EAnt::EAnt(Expr * e1) : op1(e1) {}
 
-Expr* EAnt::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
+Expr* EAnt::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<Expr*, Expr*> &corresp)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp);
 
     ++p_maxIndex;
     Expr *var = new EVar(p_maxIndex);
@@ -297,9 +297,9 @@ string EAnt::to_string()
 
 ENeg::ENeg(Expr * e1) : op1(e1) {}
 
-Expr* ENeg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps)
+Expr* ENeg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<Expr*, Expr*> &corresp)
 {
-    //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps);
+    //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp);
 
     ++p_maxIndex;
     Expr *var = new EVar(p_maxIndex);
@@ -321,3 +321,44 @@ string ENeg::to_string()
 {
     return "(-" + op1->to_string() + ")";
 } // string to_string()
+
+/***********************************/
+/**********  Equality   ************/
+/***********************************/
+
+EEqua::EEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
+
+Expr* EEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<Expr*, Expr*> &corresp)
+{
+    if(corresp.find(this) != corresp.end())
+    {
+        p_exps.push_back(corresp[this]);
+        return corresp[this];
+    }
+
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp);
+
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+
+    corresp[this] = var;
+
+    p_exps.push_back(var);
+
+    // Then we return the newly created variable
+    return var;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void EEqua::getVars(vector<int> &p_originalVars)
+{
+    // Get vars from the leaves of this expression
+    op1->getVars(p_originalVars);
+    op2->getVars(p_originalVars);
+} // getVars(vector<int>&)
+
+string EEqua::to_string()
+{
+    return "(" + op1->to_string() + " <=> " +  op2->to_string() + ")";
+} // string to_tring()

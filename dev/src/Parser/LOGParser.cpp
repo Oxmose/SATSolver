@@ -57,13 +57,14 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     /*
     ** Log expression format parse
     */
+    map<Expr*, Expr*> corresp;
 
     vector<Expr*> exps;
     do 
     {
         yy_flex_debug = 1;
         yyparse();
-        exps = tseitinTransform(res, p_maxIndex);        
+        exps = tseitinTransform(res, p_maxIndex, corresp);        
     } while (!feof(yyin));   
 
     fclose(yyin);
@@ -130,7 +131,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                     
                 }
                 else
-                    OUTDEBUG(fprintf(stderr,"%d is tautological, not added.\n", p_solver.formula.size()));
+                    OUTDEBUG(fprintf(stderr,"%lu is tautological, not added.\n", p_solver.formula.size()));
 
                 the_clause.id = p_solver.formula.size();
 	            the_clause.literal.clear();
@@ -179,7 +180,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
             p_solver.add_clause(the_clause, true);
         }
         else
-            OUTDEBUG(fprintf(stderr,"%d is tautological, not added.\n", p_solver.formula.size()));
+            OUTDEBUG(fprintf(stderr,"%lu is tautological, not added.\n", p_solver.formula.size()));
 
         the_clause.id = p_solver.formula.size();
 	    the_clause.literal.clear();
@@ -193,7 +194,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
-vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex)
+vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<Expr*, Expr*> &corresp)
 {
     // Get the set af vars in the expression
     res->getVars(m_originalVars);
@@ -206,7 +207,7 @@ vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex)
 
     vector<Expr*> exps;
     // Transform the expression
-    Expr* global = res->tseitin(maxIndex, exps);
+    Expr* global = res->tseitin(maxIndex, exps, corresp);
     exps.push_back(global);
     p_maxIndex = maxIndex;
 

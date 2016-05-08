@@ -46,7 +46,7 @@ int RandomBet::takeABet(SATSolver *p_solver)
 
     unsigned int rand_index = rand()%(alive_vars.size());
     int var = -1;
-    int i = 0;
+    unsigned int i = 0;
     for(auto v : alive_vars)
     {
         if(i == rand_index)

@@ -6,40 +6,43 @@ Grammaire
 
     2 expression: TK_VAR
     3           | TK_LPAREN expression TK_RPAREN
-    4           | expression TK_EQU expression
-    5           | expression TK_IMP expression
-    6           | expression TK_XOR expression
-    7           | expression TK_DIS expression
-    8           | expression TK_CON expression
-    9           | TK_ANT expression
-   10           | TK_NEG expression
+    4           | expression TK_EQUA expression
+    5           | expression TK_EQU expression
+    6           | expression TK_IMP expression
+    7           | expression TK_XOR expression
+    8           | expression TK_DIS expression
+    9           | expression TK_CON expression
+   10           | TK_ANT expression
+   11           | TK_NEG expression
 
 
 Terminaux, suivis des règles où ils apparaissent
 
 $end (0) 0
 error (256)
-TK_DIS (258) 7
-TK_CON (259) 8
-TK_XOR (260) 6
-TK_IMP (261) 5
-TK_EQU (262) 4
-TK_ANT (263) 9
-TK_NEG (264) 10
-TK_LPAREN (265) 3
-TK_RPAREN (266) 3
-TK_ZERO (267) 1
-TK_VAR (268) 2
+TK_DIS (258) 8
+TK_CON (259) 9
+TK_XOR (260) 7
+TK_IMP (261) 6
+TK_EQU (262) 5
+TK_ANT (263) 10
+TK_NEG (264) 11
+TK_EQUA (265) 4
+TK_LPAREN (266) 3
+TK_RPAREN (267) 3
+TK_ZERO (268) 1
+TK_VAR (269) 2
 
 
 Non-terminaux, suivis des règles où ils apparaissent
 
-$accept (14)
+$accept (15)
     à gauche: 0
-input (15)
+input (16)
     à gauche: 1, à droite: 0
-expression (16)
-    à gauche: 2 3 4 5 6 7 8 9 10, à droite: 1 3 4 5 6 7 8 9 10
+expression (17)
+    à gauche: 2 3 4 5 6 7 8 9 10 11, à droite: 1 3 4 5 6 7 8 9 10
+    11
 
 
 État 0
@@ -48,13 +51,14 @@ expression (16)
     1 input: . expression TK_ZERO
     2 expression: . TK_VAR
     3           | . TK_LPAREN expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    5           | . expression TK_IMP expression
-    6           | . expression TK_XOR expression
-    7           | . expression TK_DIS expression
-    8           | . expression TK_CON expression
-    9           | . TK_ANT expression
-   10           | . TK_NEG expression
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -69,14 +73,15 @@ expression (16)
 
     2 expression: . TK_VAR
     3           | . TK_LPAREN expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    5           | . expression TK_IMP expression
-    6           | . expression TK_XOR expression
-    7           | . expression TK_DIS expression
-    8           | . expression TK_CON expression
-    9           | . TK_ANT expression
-    9           | TK_ANT . expression
-   10           | . TK_NEG expression
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   10           | TK_ANT . expression
+   11           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -90,14 +95,15 @@ expression (16)
 
     2 expression: . TK_VAR
     3           | . TK_LPAREN expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    5           | . expression TK_IMP expression
-    6           | . expression TK_XOR expression
-    7           | . expression TK_DIS expression
-    8           | . expression TK_CON expression
-    9           | . TK_ANT expression
-   10           | . TK_NEG expression
-   10           | TK_NEG . expression
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
+   11           | TK_NEG . expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -112,13 +118,14 @@ expression (16)
     2 expression: . TK_VAR
     3           | . TK_LPAREN expression TK_RPAREN
     3           | TK_LPAREN . expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    5           | . expression TK_IMP expression
-    6           | . expression TK_XOR expression
-    7           | . expression TK_DIS expression
-    8           | . expression TK_CON expression
-    9           | . TK_ANT expression
-   10           | . TK_NEG expression
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -145,71 +152,79 @@ expression (16)
 État 6
 
     1 input: expression . TK_ZERO
-    4 expression: expression . TK_EQU expression
-    5           | expression . TK_IMP expression
-    6           | expression . TK_XOR expression
-    7           | expression . TK_DIS expression
-    8           | expression . TK_CON expression
+    4 expression: expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
 
     TK_DIS   décalage et aller à l'état 11
     TK_CON   décalage et aller à l'état 12
     TK_XOR   décalage et aller à l'état 13
     TK_IMP   décalage et aller à l'état 14
     TK_EQU   décalage et aller à l'état 15
-    TK_ZERO  décalage et aller à l'état 16
+    TK_EQUA  décalage et aller à l'état 16
+    TK_ZERO  décalage et aller à l'état 17
 
 
 État 7
 
-    4 expression: expression . TK_EQU expression
-    5           | expression . TK_IMP expression
-    6           | expression . TK_XOR expression
-    7           | expression . TK_DIS expression
-    8           | expression . TK_CON expression
-    9           | TK_ANT expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+    4 expression: expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
+   10           | TK_ANT expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
 
-    $défaut  réduction par utilisation de la règle 9 (expression)
+    $défaut  réduction par utilisation de la règle 10 (expression)
 
-    Conflit entre la règle 9 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_ANT).
-    Conflit entre la règle 9 et le jeton TK_CON résolu par réduction (TK_CON < TK_ANT).
-    Conflit entre la règle 9 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_ANT).
-    Conflit entre la règle 9 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_ANT).
-    Conflit entre la règle 9 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_ANT).
+    Conflit entre la règle 10 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_ANT).
+    Conflit entre la règle 10 et le jeton TK_CON résolu par réduction (TK_CON < TK_ANT).
+    Conflit entre la règle 10 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_ANT).
+    Conflit entre la règle 10 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_ANT).
+    Conflit entre la règle 10 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_ANT).
+    Conflit entre la règle 10 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_ANT).
 
 
 État 8
 
-    4 expression: expression . TK_EQU expression
-    5           | expression . TK_IMP expression
-    6           | expression . TK_XOR expression
-    7           | expression . TK_DIS expression
-    8           | expression . TK_CON expression
-   10           | TK_NEG expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+    4 expression: expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
+   11           | TK_NEG expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
 
-    $défaut  réduction par utilisation de la règle 10 (expression)
+    $défaut  réduction par utilisation de la règle 11 (expression)
 
-    Conflit entre la règle 10 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_NEG).
-    Conflit entre la règle 10 et le jeton TK_CON résolu par réduction (TK_CON < TK_NEG).
-    Conflit entre la règle 10 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_NEG).
-    Conflit entre la règle 10 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_NEG).
-    Conflit entre la règle 10 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_NEG).
+    Conflit entre la règle 11 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_NEG).
+    Conflit entre la règle 11 et le jeton TK_CON résolu par réduction (TK_CON < TK_NEG).
+    Conflit entre la règle 11 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_NEG).
+    Conflit entre la règle 11 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_NEG).
+    Conflit entre la règle 11 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_NEG).
+    Conflit entre la règle 11 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_NEG).
 
 
 État 9
 
     3 expression: TK_LPAREN expression . TK_RPAREN
-    4           | expression . TK_EQU expression
-    5           | expression . TK_IMP expression
-    6           | expression . TK_XOR expression
-    7           | expression . TK_DIS expression
-    8           | expression . TK_CON expression
+    4           | expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
 
     TK_DIS     décalage et aller à l'état 11
     TK_CON     décalage et aller à l'état 12
     TK_XOR     décalage et aller à l'état 13
     TK_IMP     décalage et aller à l'état 14
     TK_EQU     décalage et aller à l'état 15
-    TK_RPAREN  décalage et aller à l'état 17
+    TK_EQUA    décalage et aller à l'état 16
+    TK_RPAREN  décalage et aller à l'état 18
 
 
 État 10
@@ -223,35 +238,15 @@ expression (16)
 
     2 expression: . TK_VAR
     3           | . TK_LPAREN expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    5           | . expression TK_IMP expression
-    6           | . expression TK_XOR expression
-    7           | . expression TK_DIS expression
-    7           | expression TK_DIS . expression
-    8           | . expression TK_CON expression
-    9           | . TK_ANT expression
-   10           | . TK_NEG expression
-
-    TK_ANT     décalage et aller à l'état 1
-    TK_NEG     décalage et aller à l'état 2
-    TK_LPAREN  décalage et aller à l'état 3
-    TK_VAR     décalage et aller à l'état 4
-
-    expression  aller à l'état 18
-
-
-État 12
-
-    2 expression: . TK_VAR
-    3           | . TK_LPAREN expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    5           | . expression TK_IMP expression
-    6           | . expression TK_XOR expression
-    7           | . expression TK_DIS expression
-    8           | . expression TK_CON expression
-    8           | expression TK_CON . expression
-    9           | . TK_ANT expression
-   10           | . TK_NEG expression
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    8           | expression TK_DIS . expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -261,18 +256,19 @@ expression (16)
     expression  aller à l'état 19
 
 
-État 13
+État 12
 
     2 expression: . TK_VAR
     3           | . TK_LPAREN expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    5           | . expression TK_IMP expression
-    6           | . expression TK_XOR expression
-    6           | expression TK_XOR . expression
-    7           | . expression TK_DIS expression
-    8           | . expression TK_CON expression
-    9           | . TK_ANT expression
-   10           | . TK_NEG expression
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+    9           | expression TK_CON . expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -282,18 +278,19 @@ expression (16)
     expression  aller à l'état 20
 
 
-État 14
+État 13
 
     2 expression: . TK_VAR
     3           | . TK_LPAREN expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    5           | . expression TK_IMP expression
-    5           | expression TK_IMP . expression
-    6           | . expression TK_XOR expression
-    7           | . expression TK_DIS expression
-    8           | . expression TK_CON expression
-    9           | . TK_ANT expression
-   10           | . TK_NEG expression
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    7           | expression TK_XOR . expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -303,18 +300,19 @@ expression (16)
     expression  aller à l'état 21
 
 
-État 15
+État 14
 
     2 expression: . TK_VAR
     3           | . TK_LPAREN expression TK_RPAREN
-    4           | . expression TK_EQU expression
-    4           | expression TK_EQU . expression
-    5           | . expression TK_IMP expression
-    6           | . expression TK_XOR expression
-    7           | . expression TK_DIS expression
-    8           | . expression TK_CON expression
-    9           | . TK_ANT expression
-   10           | . TK_NEG expression
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    6           | expression TK_IMP . expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -324,119 +322,199 @@ expression (16)
     expression  aller à l'état 22
 
 
+État 15
+
+    2 expression: . TK_VAR
+    3           | . TK_LPAREN expression TK_RPAREN
+    4           | . expression TK_EQUA expression
+    5           | . expression TK_EQU expression
+    5           | expression TK_EQU . expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
+
+    TK_ANT     décalage et aller à l'état 1
+    TK_NEG     décalage et aller à l'état 2
+    TK_LPAREN  décalage et aller à l'état 3
+    TK_VAR     décalage et aller à l'état 4
+
+    expression  aller à l'état 23
+
+
 État 16
+
+    2 expression: . TK_VAR
+    3           | . TK_LPAREN expression TK_RPAREN
+    4           | . expression TK_EQUA expression
+    4           | expression TK_EQUA . expression
+    5           | . expression TK_EQU expression
+    6           | . expression TK_IMP expression
+    7           | . expression TK_XOR expression
+    8           | . expression TK_DIS expression
+    9           | . expression TK_CON expression
+   10           | . TK_ANT expression
+   11           | . TK_NEG expression
+
+    TK_ANT     décalage et aller à l'état 1
+    TK_NEG     décalage et aller à l'état 2
+    TK_LPAREN  décalage et aller à l'état 3
+    TK_VAR     décalage et aller à l'état 4
+
+    expression  aller à l'état 24
+
+
+État 17
 
     1 input: expression TK_ZERO .
 
     $défaut  réduction par utilisation de la règle 1 (input)
 
 
-État 17
+État 18
 
     3 expression: TK_LPAREN expression TK_RPAREN .
 
     $défaut  réduction par utilisation de la règle 3 (expression)
 
 
-État 18
+État 19
 
-    4 expression: expression . TK_EQU expression
-    5           | expression . TK_IMP expression
-    6           | expression . TK_XOR expression
-    7           | expression . TK_DIS expression
-    7           | expression TK_DIS expression .  [TK_DIS, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-    8           | expression . TK_CON expression
+    4 expression: expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    8           | expression TK_DIS expression .  [TK_DIS, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
+    9           | expression . TK_CON expression
 
     TK_CON  décalage et aller à l'état 12
 
-    $défaut  réduction par utilisation de la règle 7 (expression)
-
-    Conflit entre la règle 7 et le jeton TK_DIS résolu par réduction (%left TK_DIS).
-    Conflit entre la règle 7 et le jeton TK_CON résolu par décalage (TK_DIS < TK_CON).
-    Conflit entre la règle 7 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_DIS).
-    Conflit entre la règle 7 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_DIS).
-    Conflit entre la règle 7 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_DIS).
-
-
-État 19
-
-    4 expression: expression . TK_EQU expression
-    5           | expression . TK_IMP expression
-    6           | expression . TK_XOR expression
-    7           | expression . TK_DIS expression
-    8           | expression . TK_CON expression
-    8           | expression TK_CON expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-
     $défaut  réduction par utilisation de la règle 8 (expression)
 
-    Conflit entre la règle 8 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_CON).
-    Conflit entre la règle 8 et le jeton TK_CON résolu par réduction (%left TK_CON).
-    Conflit entre la règle 8 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_CON).
-    Conflit entre la règle 8 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_CON).
-    Conflit entre la règle 8 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_CON).
+    Conflit entre la règle 8 et le jeton TK_DIS résolu par réduction (%left TK_DIS).
+    Conflit entre la règle 8 et le jeton TK_CON résolu par décalage (TK_DIS < TK_CON).
+    Conflit entre la règle 8 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_DIS).
+    Conflit entre la règle 8 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_DIS).
+    Conflit entre la règle 8 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_DIS).
+    Conflit entre la règle 8 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_DIS).
 
 
 État 20
 
-    4 expression: expression . TK_EQU expression
-    5           | expression . TK_IMP expression
-    6           | expression . TK_XOR expression
-    6           | expression TK_XOR expression .  [TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-    7           | expression . TK_DIS expression
-    8           | expression . TK_CON expression
+    4 expression: expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
+    9           | expression TK_CON expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
 
-    TK_DIS  décalage et aller à l'état 11
-    TK_CON  décalage et aller à l'état 12
+    $défaut  réduction par utilisation de la règle 9 (expression)
 
-    $défaut  réduction par utilisation de la règle 6 (expression)
-
-    Conflit entre la règle 6 et le jeton TK_DIS résolu par décalage (TK_XOR < TK_DIS).
-    Conflit entre la règle 6 et le jeton TK_CON résolu par décalage (TK_XOR < TK_CON).
-    Conflit entre la règle 6 et le jeton TK_XOR résolu par réduction (%left TK_XOR).
-    Conflit entre la règle 6 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_XOR).
-    Conflit entre la règle 6 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_XOR).
+    Conflit entre la règle 9 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_CON).
+    Conflit entre la règle 9 et le jeton TK_CON résolu par réduction (%left TK_CON).
+    Conflit entre la règle 9 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_CON).
+    Conflit entre la règle 9 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_CON).
+    Conflit entre la règle 9 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_CON).
+    Conflit entre la règle 9 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_CON).
 
 
 État 21
 
-    4 expression: expression . TK_EQU expression
-    5           | expression . TK_IMP expression
-    5           | expression TK_IMP expression .  [TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-    6           | expression . TK_XOR expression
-    7           | expression . TK_DIS expression
-    8           | expression . TK_CON expression
+    4 expression: expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    7           | expression TK_XOR expression .  [TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
+
+    TK_DIS  décalage et aller à l'état 11
+    TK_CON  décalage et aller à l'état 12
+
+    $défaut  réduction par utilisation de la règle 7 (expression)
+
+    Conflit entre la règle 7 et le jeton TK_DIS résolu par décalage (TK_XOR < TK_DIS).
+    Conflit entre la règle 7 et le jeton TK_CON résolu par décalage (TK_XOR < TK_CON).
+    Conflit entre la règle 7 et le jeton TK_XOR résolu par réduction (%left TK_XOR).
+    Conflit entre la règle 7 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_XOR).
+    Conflit entre la règle 7 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_XOR).
+    Conflit entre la règle 7 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_XOR).
+
+
+État 22
+
+    4 expression: expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    6           | expression TK_IMP expression .  [TK_IMP, TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
 
     TK_DIS  décalage et aller à l'état 11
     TK_CON  décalage et aller à l'état 12
     TK_XOR  décalage et aller à l'état 13
 
-    $défaut  réduction par utilisation de la règle 5 (expression)
+    $défaut  réduction par utilisation de la règle 6 (expression)
 
-    Conflit entre la règle 5 et le jeton TK_DIS résolu par décalage (TK_IMP < TK_DIS).
-    Conflit entre la règle 5 et le jeton TK_CON résolu par décalage (TK_IMP < TK_CON).
-    Conflit entre la règle 5 et le jeton TK_XOR résolu par décalage (TK_IMP < TK_XOR).
-    Conflit entre la règle 5 et le jeton TK_IMP résolu par réduction (%left TK_IMP).
-    Conflit entre la règle 5 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_IMP).
+    Conflit entre la règle 6 et le jeton TK_DIS résolu par décalage (TK_IMP < TK_DIS).
+    Conflit entre la règle 6 et le jeton TK_CON résolu par décalage (TK_IMP < TK_CON).
+    Conflit entre la règle 6 et le jeton TK_XOR résolu par décalage (TK_IMP < TK_XOR).
+    Conflit entre la règle 6 et le jeton TK_IMP résolu par réduction (%left TK_IMP).
+    Conflit entre la règle 6 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_IMP).
+    Conflit entre la règle 6 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_IMP).
 
 
-État 22
+État 23
 
-    4 expression: expression . TK_EQU expression
-    4           | expression TK_EQU expression .  [TK_EQU, TK_RPAREN, TK_ZERO]
-    5           | expression . TK_IMP expression
-    6           | expression . TK_XOR expression
-    7           | expression . TK_DIS expression
-    8           | expression . TK_CON expression
+    4 expression: expression . TK_EQUA expression
+    5           | expression . TK_EQU expression
+    5           | expression TK_EQU expression .  [TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
 
     TK_DIS  décalage et aller à l'état 11
     TK_CON  décalage et aller à l'état 12
     TK_XOR  décalage et aller à l'état 13
     TK_IMP  décalage et aller à l'état 14
 
+    $défaut  réduction par utilisation de la règle 5 (expression)
+
+    Conflit entre la règle 5 et le jeton TK_DIS résolu par décalage (TK_EQU < TK_DIS).
+    Conflit entre la règle 5 et le jeton TK_CON résolu par décalage (TK_EQU < TK_CON).
+    Conflit entre la règle 5 et le jeton TK_XOR résolu par décalage (TK_EQU < TK_XOR).
+    Conflit entre la règle 5 et le jeton TK_IMP résolu par décalage (TK_EQU < TK_IMP).
+    Conflit entre la règle 5 et le jeton TK_EQU résolu par réduction (%left TK_EQU).
+    Conflit entre la règle 5 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_EQU).
+
+
+État 24
+
+    4 expression: expression . TK_EQUA expression
+    4           | expression TK_EQUA expression .  [TK_EQUA, TK_RPAREN, TK_ZERO]
+    5           | expression . TK_EQU expression
+    6           | expression . TK_IMP expression
+    7           | expression . TK_XOR expression
+    8           | expression . TK_DIS expression
+    9           | expression . TK_CON expression
+
+    TK_DIS  décalage et aller à l'état 11
+    TK_CON  décalage et aller à l'état 12
+    TK_XOR  décalage et aller à l'état 13
+    TK_IMP  décalage et aller à l'état 14
+    TK_EQU  décalage et aller à l'état 15
+
     $défaut  réduction par utilisation de la règle 4 (expression)
 
-    Conflit entre la règle 4 et le jeton TK_DIS résolu par décalage (TK_EQU < TK_DIS).
-    Conflit entre la règle 4 et le jeton TK_CON résolu par décalage (TK_EQU < TK_CON).
-    Conflit entre la règle 4 et le jeton TK_XOR résolu par décalage (TK_EQU < TK_XOR).
-    Conflit entre la règle 4 et le jeton TK_IMP résolu par décalage (TK_EQU < TK_IMP).
-    Conflit entre la règle 4 et le jeton TK_EQU résolu par réduction (%left TK_EQU).
+    Conflit entre la règle 4 et le jeton TK_DIS résolu par décalage (TK_EQUA < TK_DIS).
+    Conflit entre la règle 4 et le jeton TK_CON résolu par décalage (TK_EQUA < TK_CON).
+    Conflit entre la règle 4 et le jeton TK_XOR résolu par décalage (TK_EQUA < TK_XOR).
+    Conflit entre la règle 4 et le jeton TK_IMP résolu par décalage (TK_EQUA < TK_IMP).
+    Conflit entre la règle 4 et le jeton TK_EQU résolu par décalage (TK_EQUA < TK_EQU).
+    Conflit entre la règle 4 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).

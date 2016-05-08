@@ -19,6 +19,7 @@ using namespace std;
 "<=>"           { return TK_EQU; }
 "~"             { return TK_ANT; } //Antithese
 "-"             { return TK_NEG;}
+"="             { return TK_EQUA;}
 "0"("\n"*)            { return TK_ZERO;}//End Of Formule, the HEX 0a is a pain in the 
 .               ;
 %%
