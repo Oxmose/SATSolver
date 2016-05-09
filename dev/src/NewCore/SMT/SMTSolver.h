@@ -14,7 +14,6 @@ struct smt_literal
 
 	int index;
 	virtual string to_str() = 0;
-        virtual ~smt_literal() {}
 };
 
 class SMTSolver
