@@ -26,13 +26,11 @@ class UnionFind
         Node* add(int p_value);
 
         Node* find(int p_value);
-
-        Node* make_union(Node *p_nodeA, Node *p_nodeB);
         Node* make_union(int p_valueA, int p_valueB);
        
     private:
-        map<int, Node> m_values;
-        map<Node, size_t> m_rank;
+        map<int, Node*> m_values;
+        map<Node*, size_t> m_rank;
         bool m_useCongruence;
         
 }; // UnionFind
