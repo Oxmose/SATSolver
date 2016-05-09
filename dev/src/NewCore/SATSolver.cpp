@@ -576,6 +576,7 @@ bool SATSolver::solve()
         /* SMT */;
         if(int smt_conflict = smt_solver->apply_last_decision())
         {
+            smt_solver->diagnose_conflict(smt_conflict);
             exit(0);
             /*pair<clause,int> diagnosis = smt_solver->diagnose_conflict();
             assert(diagnosis.first.literal.size() != 1);
