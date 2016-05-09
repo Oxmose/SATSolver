@@ -72,3 +72,12 @@ Node* UnionFind::make_union(int p_valueA, int p_valueB)
         return rootA;
     }
 } // Node* make_union(int, int)
+
+void UnionFind::clear()
+{
+	for(auto entry : m_values)
+		delete entry.second;
+
+    m_rank.clear();
+    m_values.clear();
+} // clear()

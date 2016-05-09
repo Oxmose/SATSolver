@@ -27,6 +27,8 @@ class UnionFind
 
         Node* find(int p_value);
         Node* make_union(int p_valueA, int p_valueB);
+
+        void clear();
        
     private:
         map<int, Node*> m_values;
