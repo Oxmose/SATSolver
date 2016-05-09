@@ -4,7 +4,6 @@
 /* literal violated */
 int SMTSolver_eq::apply_last_decision()
 {
-
 	int last_dec_index = solver->decision_stack.size()-1;
 	decision last_decision = solver->decision_stack.back();
 
@@ -13,7 +12,6 @@ int SMTSolver_eq::apply_last_decision()
 
 	smt_literal_eq* corresponding_lit = (smt_literal_eq*)solver->dpll_to_smt[abs(last_decision.dec)];
 	OUTDEBUG(fprintf(stderr, "\t[SMT]Handling SMT literal %s\n", corresponding_lit->to_str().c_str()));
-
 	/*
 		Cases:
 
@@ -25,14 +23,18 @@ int SMTSolver_eq::apply_last_decision()
 	*/
 
 	bool add_edge = ((last_decision.dec > 0) && corresponding_lit->equal) || ((last_decision.dec < 0) && !corresponding_lit->equal);
+	
+
 	int s1 = min(corresponding_lit->left, corresponding_lit->right);
 	int s2 = max(corresponding_lit->left, corresponding_lit->right);
 
 	if(connectivity_check.find(s1) == nullptr)
 		connectivity_check.add(s1);
+	if(connectivity_check.find(s2) != nullptr)
+		exit(0);
 	if(connectivity_check.find(s2) == nullptr)
 		connectivity_check.add(s2);
-	
+
 	if(add_edge)
 	{
 		/*
@@ -47,7 +49,6 @@ int SMTSolver_eq::apply_last_decision()
 																				solver->decision_stack[edge[s1][s2]].level, solver->decision_stack[edge[s1][s2]].dec));
 		}
 
-		//exit(0);
 
 		connectivity_check.make_union(s1,s2);
 
@@ -64,6 +65,7 @@ int SMTSolver_eq::apply_last_decision()
 		return 0;
 	}
 
+	exit(0);
 	not_possible[s1][s2] = last_dec_index;
 	OUTDEBUG(fprintf(stderr, "\t[SMT]Remembering %d and %d shouldn't be connected.\n", s1, s2));
 	if(connectivity_check.find(s1) == connectivity_check.find(s2))
