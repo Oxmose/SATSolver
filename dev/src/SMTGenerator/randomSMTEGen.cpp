@@ -47,9 +47,9 @@ void randomGenerator(const string &p_fileName)
 	for(unsigned int i = 0; i < clausesCount; ++i)
 	{
 	    
-		int random1 = rand() % maxIndex;
+		int random1 = rand() % maxIndex + 1;
         int random2;
-        while((random2 = rand() % maxIndex) == random1);
+        while((random2 = rand() % maxIndex + 1) == random1);
 
         int eq = rand() % 2;
 
