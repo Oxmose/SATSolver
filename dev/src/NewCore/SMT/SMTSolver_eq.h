@@ -33,7 +33,7 @@ class SMTSolver_eq : public SMTSolver
 
 		unordered_map<int, unordered_map<int,pair<int,int>>> edge;//Lit, pond
 		unordered_map<int, unordered_map<int, int>> not_possible;
-		UnionFind<int> connectivity_check;
+		UnionFind connectivity_check;
 };
 
 #endif

@@ -4,10 +4,10 @@
  *
 */
 
-// STD INCLUDES
+// SintD INCLUDES
 #include <map>
 
-// PROJECT INCLUDES
+// PROJECint INCLUDES
 #include "Node.h"
 
 // CLASS HEADER INCLUDE
@@ -18,61 +18,59 @@
 #include "Node.h"
 using namespace std;
 
-template<class T>
-UnionFind<T>::~UnionFind()
+UnionFind::~UnionFind()
 {
 
 } // ~UnionFind()
 
-template<class T>
-Node<T>* UnionFind<T>::add(T p_value)
+Node* UnionFind::add(int p_value)
 {
-    Node<T> newNode(p_value);
+    Node newNode(p_value);
     m_values.emplace(p_value, newNode);
     m_rank.emplace(newNode, 1);
-    return &newNode;
-} // Node<T>* add(T)
+    return &m_values[p_value];
+} // Node* add(int)
 
-template<class T>
-Node<T>* UnionFind<T>::find(T p_value)
+
+Node* UnionFind::find(int p_value)
 {
     if(m_values.find(p_value) == m_values.end())
         return nullptr;
-    Node<T> *from = &(m_values[p_value]);
-    while(from.getParent() != from)
+    Node *from = &(m_values[p_value]);
+    while(from->getParent() != from)
         from = find(from->getValue());
     return from;
-} // Node<T>* find(T)
+} // Node* find(int)
 
-template<class T>
-Node<T>* UnionFind<T>::make_union(Node<T> *p_nodeA, Node<T> *p_nodeB)
+
+Node* UnionFind::make_union(Node *p_nodeA, Node *p_nodeB)
 {
       return make_union(p_nodeA->getValue(), p_nodeB->getValue());
-} // Node<T>* make_union(Node<T>*, Node<T>*)
+} // Node* make_union(Node*, Node*)
 
-template<class T>
-Node<T>* UnionFind<T>::make_union(T p_valueA, T p_valueB)
+
+Node* UnionFind::make_union(int p_valueA, int p_valueB)
 {
-    Node<T> rootA = find(p_valueA);
-    Node<T> rootB = find(p_valueB);
+    Node *rootA = find(p_valueA);
+    Node *rootB = find(p_valueB);
     
     if(rootA == rootB)
         return rootA;
 
     if(m_rank[*rootA] < m_rank[*rootB])
     {
-        rootA.setParent(rootB);
+        rootA->setParent(rootB);
         return rootB;
     }
     else if(m_rank[*rootA] > m_rank[*rootB])
     {
-        rootB.setParent(rootA);
+        rootB->setParent(rootA);
         return rootA;
     }
     else
     {
-        rootB.setParent(rootA);
+        rootB->setParent(rootA);
         ++m_rank[*rootA];
         return rootA;
     }
-} // Node<T>* make_union(T, T)
+} // Node* make_union(int, int)
