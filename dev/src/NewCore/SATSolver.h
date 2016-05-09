@@ -54,6 +54,7 @@ class SATSolver
     friend class VSIDSBet;
 
     friend class SMTSolver;
+    friend class SMTSolver_eq;
 
     public:
         SATSolver();

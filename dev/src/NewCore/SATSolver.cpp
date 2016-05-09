@@ -575,17 +575,19 @@ bool SATSolver::solve()
 
         /* SMT */
         
-        /*if(!smt_solver->apply_last_decision())
+        if(!smt_solver->apply_last_decision())
         {
-            pair<clause,int> diagnosis = smt_solver->diagnose_conflict();
+            OUTDEBUG(fprintf(stderr, "SMT Clash\n"));
+            exit(0);
+            /*pair<clause,int> diagnosis = smt_solver->diagnose_conflict();
             assert(diagnosis.first.literal.size() != 1);
             decision last_dec = backtrack(diagnosis.second, false);
             add_clause(diagnosis.first);
             curr_level++;
             decision_stack.push_back(last_dec);
             jump = true;
-            continue;
-        }*/
+            continue;*/
+        }
 
         int conflict_clause = apply_last_decision();
         if(conflict_clause != -1)
@@ -622,7 +624,7 @@ void SATSolver::print_current_state()
 {
     OUTDEBUG(fprintf(stderr, "Current state: "));
     for(auto d : decision_stack)
-        OUTDEBUG(fprintf(stderr, "%d%s ", d.dec, (d.bet) ? "b" : "d"));
+        OUTDEBUG(fprintf(stderr, "%d%s%s ", d.dec, (d.bet) ? "b" : "", (dpll_to_smt.find(abs(d.dec)) != dpll_to_smt.end()) ? string("("+dpll_to_smt[abs(d.dec)]->to_str()+")").c_str() : ""));
     OUTDEBUG(fprintf(stderr, "\n"));
 }
 

@@ -10,6 +10,8 @@ class SATSolver;
 struct smt_literal
 {
 	smt_literal(int index) : index(index) {}
+	virtual ~smt_literal() {}
+
 	int index;
 	virtual string to_str() = 0;
 };
@@ -23,8 +25,7 @@ class SMTSolver
 		virtual pair<clause,int> diagnose_conflict() = 0;
 
 
-	private:
-
+	protected:
 		SATSolver* solver;
 };
 
