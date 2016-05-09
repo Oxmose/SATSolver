@@ -15,7 +15,7 @@
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"   // DEBUG
-
+#include "Node.h"
 using namespace std;
 
 template<class T>
