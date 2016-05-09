@@ -40,23 +40,6 @@ Node* UnionFind::find(int p_value)
 {
     if(m_values.find(p_value) == m_values.end())
         return nullptr;
-<<<<<<< HEAD
-=======
-
-    Node *from = &(m_values[p_value]);
-    
-    while(from->getParent() != from)
-        from = find(from->getValue());
-
-    return from;
-} // Node* find(int)
-
-
-Node* UnionFind::make_union(Node *p_nodeA, Node *p_nodeB)
-{
-      return make_union(p_nodeA->getValue(), p_nodeB->getValue());
-} // Node* make_union(Node*, Node*)
->>>>>>> 8d764d0d53773cacf3e92b54e1e88c0bac813bcd
 
     Node *from = m_values[p_value];
     if(from->getParent() != from)

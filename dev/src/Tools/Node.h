@@ -18,8 +18,8 @@ class Node
 {
     public:
         Node(int p_value);
-	    Node();
-	    Node(const Node &N);
+        Node();
+        Node(const Node &N);
         ~Node();
 
         int getValue();
@@ -29,14 +29,14 @@ class Node
         void setParent(Node *p_parent);
 
         bool operator==(const Node &N) const;
-	    bool operator!=(const Node &N) const;
+        bool operator!=(const Node &N) const;
         bool operator<=(const Node &N) const;
-	    bool operator<(const Node &N) const;
-	    bool operator>=(const Node &N) const;
-	    bool operator>(const Node &N) const;
+    bool operator<(const Node &N) const;
+        bool operator>=(const Node &N) const;
+        bool operator>(const Node &N) const;
        
     private:
-	    Node *m_parent;
+        Node *m_parent;
         int m_value;
         
 }; // Node
