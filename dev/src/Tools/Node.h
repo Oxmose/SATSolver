@@ -7,28 +7,37 @@
 #ifndef DEF_NODE_H
 #define DEF_NODE_H
 
-// STD INCLUDES
+// SintD INCLUDES
 #include <memory>
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"   // DEBUG
 
-template<class T>
+
 class Node
 {
     public:
-        Node(T p_value);
+        Node(int p_value);
+	    Node();
+	    Node(const Node &N);
         ~Node();
 
-        T getValue();
-        void setValue(T p_value);
+        int getValue();
+        void setValue(int p_value);
 
-        Node<T>* getParent();
-        void setParent(Node<T> *p_parent);
+        Node* getParent();
+        void setParent(Node *p_parent);
+
+        bool operator==(const Node &N) const;
+	    bool operator!=(const Node &N) const;
+        bool operator<=(const Node &N) const;
+	    bool operator<(const Node &N) const;
+	    bool operator>=(const Node &N) const;
+	    bool operator>(const Node &N) const;
        
     private:
-	    Node<T> *m_parent;
-        T m_value;
+	    Node *m_parent;
+        int m_value;
         
 }; // Node
 

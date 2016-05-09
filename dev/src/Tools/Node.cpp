@@ -4,7 +4,7 @@
  *
 */
 
-// STD INCLUDES
+// SintD INCLUDES
 #include <memory>
 
 // CLASS HEADER INCLUDE
@@ -15,39 +15,77 @@
 
 using namespace std;
 
-template<class T>
-Node<T>::Node(T p_value)
+
+Node::Node(int p_value)
 {
     m_value = p_value;
     m_parent = this;
 
 }
 
-template<class T>
-Node<T>::~Node()
+
+Node::Node()
+{
+    m_value = -1;
+    m_parent = this;
+}
+
+Node::Node(const Node &N)
+{
+    m_value = N.m_value;
+    m_parent = N.m_parent;
+
+}
+
+Node::~Node()
 {
 }
 
-template<class T>
-T Node<T>::getValue()
+
+int Node::getValue()
 {
     return m_value;
 }
 
-template<class T>
-void Node<T>::setValue(T p_value)
+
+void Node::setValue(int p_value)
 {
     m_value = p_value;
 }
 
-template<class T>
-Node<T>* Node<T>::getParent()
+
+Node* Node::getParent()
 {
     return m_parent;
 }
 
-template<class T>
-void Node<T>::setParent(Node<T>* p_parent)
+
+void Node::setParent(Node* p_parent)
 {
     m_parent = p_parent;
+}
+
+bool Node::operator==(const Node &N) const
+{
+	return m_value == N.m_value;
+}
+bool Node::operator!=(const Node &N) const 
+{
+    return m_value != N.m_value;
+}
+bool Node::operator<=(const Node &N) const
+{
+    return m_value <= N.m_value;
+}
+bool Node::operator<(const Node &N) const 
+{
+    return m_value < N.m_value;
+}
+bool Node::operator>=(const Node &N) const 
+{
+    return m_value >= N.m_value;
+}
+bool Node::operator>(const Node &N) const
+{
+    return m_value > N.m_value;
 }

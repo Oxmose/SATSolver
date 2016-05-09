@@ -16,22 +16,23 @@
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"   // DEBUG
 
-template<class T>
+class Node;
+
 class UnionFind
 {
     public:
         ~UnionFind();
 
-        Node<T>* add(T p_value);
+        Node* add(int p_value);
 
-        Node<T>* find(T p_value);
+        Node* find(int p_value);
 
-        Node<T>* make_union(Node<T> *p_nodeA, Node<T> *p_nodeB);
-        Node<T>* make_union(T p_valueA, T p_valueB);
+        Node* make_union(Node *p_nodeA, Node *p_nodeB);
+        Node* make_union(int p_valueA, int p_valueB);
        
     private:
-        map<T, Node<T>> m_values;
-        map<Node<T>, size_t> m_rank;
+        map<int, Node> m_values;
+        map<Node, size_t> m_rank;
         bool m_useCongruence;
         
 }; // UnionFind
