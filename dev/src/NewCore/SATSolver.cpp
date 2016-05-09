@@ -26,8 +26,8 @@ SATSolver::SATSolver() : conflict_graph(this)
     iter = 0; 
     smt_solver = NULL;
 
-    if(settings_s.smte_s)
-        smt_solver = new SMTSolver_eq(this);
+
+    smt_solver = new SMTSolver_eq(this);
 }
 
 
@@ -574,10 +574,9 @@ bool SATSolver::solve()
         jump = false;
 
         /* SMT */
-        
-        if(!smt_solver->apply_last_decision())
+        smt_solver->apply_last_decision();
+        if(int smt_conflict = smt_solver->apply_last_decision())
         {
-            OUTDEBUG(fprintf(stderr, "SMT Clash\n"));
             exit(0);
             /*pair<clause,int> diagnosis = smt_solver->diagnose_conflict();
             assert(diagnosis.first.literal.size() != 1);

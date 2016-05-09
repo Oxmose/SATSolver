@@ -28,11 +28,11 @@ class SMTSolver_eq : public SMTSolver
 	public:
 		SMTSolver_eq(SATSolver* solver) : SMTSolver(solver) {}
 
-		bool apply_last_decision();
+		int apply_last_decision();
 		pair<clause,int> diagnose_conflict();
 
-		unordered_map<int, unordered_map<int,pair<int,int>>> edge;//Lit, pond
-		unordered_map<int, unordered_map<int, int>> not_possible;
+		unordered_map<int, unordered_map<int,int>> edge;
+		unordered_map<int, unordered_map<int,int>> not_possible;
 		UnionFind connectivity_check;
 };
 
