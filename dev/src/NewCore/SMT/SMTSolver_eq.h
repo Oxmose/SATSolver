@@ -9,6 +9,7 @@ struct smt_literal_eq : smt_literal
 {
 	smt_literal_eq(int index, int left, int right, bool equal) : smt_literal(index), left(left), right(right), equal(equal) {}
 
+        virtual ~smt_literal_eq() {}
 	string to_str()
 	{
 		return to_string(index) + ": " + to_string(left) + " " + ((equal) ? "=" : "!=") + " " + to_string(right);

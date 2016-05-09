@@ -8,6 +8,10 @@
 #define DEF_UNIONFIND_H
 
 // STD INCLUDES
+#include <map>
+
+// PROJECT INCLUDES
+#include "Node.h"
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"   // DEBUG

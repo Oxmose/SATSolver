@@ -57,6 +57,7 @@ L'organisation du projet est la suivante :
 Le patron de conception en statégies à été retenu pour le développement des heuristiques de pari. Celà permet d'ajouter une heuristique sans modifier le noyau SAT. Ainsi il est aisé de créer une nouvelle classe heuristique et de l'ajouter au programme en l'incluant dans le fichier main.cpp et modifiant quelques lignes de code dans ce fichier.
 Cette méthode de conception permet aussi de modifier l'heuristique de pari durant le traitement de la formule.
 
+Nous avons aussi développé les différents parseurs de formule à l'aide de ce patron de conception afin de faciliter l'ajout de nouveaux types de parseurs.
 \section{Choix des implémentations}
 MAP pour gagner du temps
 Files ?
@@ -67,7 +68,7 @@ Lien avec SMT?
 \section{Critique des performances}
 La méthode avec apprentissage de clause permet d'obtenir de très bons résultats. Certaine formules alors impossible à traiter à l'aide de DPLL standard et de la méthode avec les litéraux surveillés obtiennent un solution (afféctation ou réponse d'insatisfaisabilité) en un temps très court.
 
-Certaines heuristique de pari nous donne de meilleurs résultats dans certain cas. Ainsi, RAND permet dans les meilleur cas de satisfaire des formules en moins d'une second alros que l'heuristique standard ne me permet pas en moins de dix. Les meilleurs résultats s'obtiennent avec l'heuristique MOMS.
+Certaines heuristiques de pari nous donne de meilleurs résultats dans certain cas. Ainsi, RAND permet dans les meilleur cas de satisfaire des formules en moins d'une seconde alors que l'heuristique standard ne me permet pas en moins de dix. Les meilleurs résultats s'obtiennent avec l'heuristique MOMS.
 
 Les optimisations à la compilation (-O3) permettent elles aussi de rendre le solveur beaucoup plus rapide (jusqu'à 70\% plus rapide dans certain cas).
 

@@ -5,6 +5,10 @@
 */
 
 // STD INCLUDES
+#include <map>
+
+// PROJECT INCLUDES
+#include "Node.h"
 
 // CLASS HEADER INCLUDE
 #include "UnionFind.h"    // Class header
@@ -60,7 +64,7 @@ Node<T>* UnionFind<T>::make_union(T p_valueA, T p_valueB)
         rootA.setParent(rootB);
         return rootB;
     }
-    else if(m_rank[*rootA] > ranf[*rootB])
+    else if(m_rank[*rootA] > m_rank[*rootB])
     {
         rootB.setParent(rootA);
         return rootA;

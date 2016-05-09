@@ -12,13 +12,13 @@ struct smt_literal
 	smt_literal(int index) : index(index) {}
 	int index;
 	virtual string to_str() = 0;
+        virtual ~smt_literal() {}
 };
 
 class SMTSolver
 {
 	public:
 		SMTSolver(SATSolver* solver) : solver(solver) {}
-
 		virtual bool apply_last_decision() = 0;
 		virtual pair<clause,int> diagnose_conflict() = 0;
 

@@ -1,133 +1,135 @@
 {
     "SAT_WL": [
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-1_6-yes1-1.cnf",
+            "file": "test_base/time_test/sat/aim-100-1_6-yes1-1.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.02",
-            "dliswl": "0.03",
-            "dlis0wl": "0.00"
         },
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-1_6-yes1-2.cnf",
+            "file": "test_base/time_test/sat/aim-100-1_6-yes1-2.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.02",
-            "dliswl": "0.03",
-            "dlis0wl": "0.00"
         },
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-1_6-yes1-3.cnf",
-            "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.03",
-            "dliswl": "0.03",
-            "dlis0wl": "0.00"
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-1_6-yes1-4.cnf",
-            "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-1.cnf",
-            "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-2.cnf",
-            "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-3.cnf",
-            "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.04",
-            "dliswl": "0.15",
-            "dlis0wl": "0.00"
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-2_0-yes1-4.cnf",
-            "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-3_4-yes1-1.cnf",
-            "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.01",
-            "dlis0wl": "0.00"
-        },
-        {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-3_4-yes1-2.cnf",
+            "file": "test_base/time_test/sat/aim-100-1_6-yes1-3.cnf",
             "minisat": "0.00",
             "wl": "0.01",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
         },
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-3_4-yes1-3.cnf",
+            "file": "test_base/time_test/sat/aim-100-1_6-yes1-4.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
         },
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-3_4-yes1-4.cnf",
+            "file": "test_base/time_test/sat/aim-100-2_0-yes1-1.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
         },
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-6_0-yes1-1.cnf",
+            "file": "test_base/time_test/sat/aim-100-2_0-yes1-2.cnf",
             "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
+            "wl": "0.01",
         },
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-6_0-yes1-2.cnf",
+            "file": "test_base/time_test/sat/aim-100-2_0-yes1-3.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
         },
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-6_0-yes1-3.cnf",
+            "file": "test_base/time_test/sat/aim-100-2_0-yes1-4.cnf",
             "minisat": "0.00",
-            "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
+            "wl": "0.01",
         },
         {
-            "file": "test_base/cnf/serial_test/sat/aim/aim-50-6_0-yes1-4.cnf",
+            "file": "test_base/time_test/sat/aim-100-3_4-yes1-1.cnf",
+            "minisat": "0.00",
+            "wl": "0.02",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-100-3_4-yes1-2.cnf",
             "minisat": "0.00",
             "wl": "0.00",
-            "momswl": "0.00",
-            "dliswl": "0.00",
-            "dlis0wl": "0.00"
         },
-        { "file": "end" }
-    ]
-}
+        {
+            "file": "test_base/time_test/sat/aim-100-3_4-yes1-3.cnf",
+            "minisat": "0.00",
+            "wl": "0.02",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-100-3_4-yes1-4.cnf",
+            "minisat": "0.00",
+            "wl": "0.00",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-100-6_0-yes1-1.cnf",
+            "minisat": "0.00",
+            "wl": "0.00",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-100-6_0-yes1-2.cnf",
+            "minisat": "0.00",
+            "wl": "0.00",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-100-6_0-yes1-3.cnf",
+            "minisat": "0.00",
+            "wl": "0.01",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-100-6_0-yes1-4.cnf",
+            "minisat": "0.00",
+            "wl": "0.00",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-1_6-yes1-1.cnf",
+            "minisat": "0.00",
+            "wl": "0.00",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-1_6-yes1-2.cnf",
+            "minisat": "0.00",
+            "wl": "0.00",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-1_6-yes1-3.cnf",
+            "minisat": "0.00",
+            "wl": "0.00",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-1_6-yes1-4.cnf",
+            "minisat": "0.00",
+            "wl": "0.05",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-2_0-yes1-1.cnf",
+            "minisat": "0.00",
+            "wl": "0.07",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-2_0-yes1-2.cnf",
+            "minisat": "0.00",
+            "wl": "0.09",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-2_0-yes1-3.cnf",
+            "minisat": "0.00",
+            "wl": "0.05",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-2_0-yes1-4.cnf",
+            "minisat": "0.00",
+            "wl": "1.88",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-3_4-yes1-1.cnf",
+            "minisat": "0.00",
+            "wl": "2.62",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-3_4-yes1-2.cnf",
+            "minisat": "0.00",
+            "wl": "7.48",
+        },
+        {
+            "file": "test_base/time_test/sat/aim-200-3_4-yes1-3.cnf",
+            "minisat": "0.00",
