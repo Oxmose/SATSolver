@@ -30,8 +30,6 @@ int SMTSolver_eq::apply_last_decision()
 
 	if(connectivity_check.find(s1) == nullptr)
 		connectivity_check.add(s1);
-	if(connectivity_check.find(s2) != nullptr)
-		exit(0);
 	if(connectivity_check.find(s2) == nullptr)
 		connectivity_check.add(s2);
 
@@ -65,15 +63,14 @@ int SMTSolver_eq::apply_last_decision()
 		return 0;
 	}
 
-	exit(0);
 	not_possible[s1][s2] = last_dec_index;
 	OUTDEBUG(fprintf(stderr, "\t[SMT]Remembering %d and %d shouldn't be connected.\n", s1, s2));
 	if(connectivity_check.find(s1) == connectivity_check.find(s2))
 	{
-		OUTDEBUG(fprintf(stderr, "\t[SMT]Clash, literal %s violated!\n", solver->dpll_to_smt[abs(solver->decision_stack[last_dec_index].dec)]->to_str().c_str()));
+		OUTDEBUG(fprintf(stderr, "\t[SMT]Clash, smt literal %s incompatible!\n", solver->dpll_to_smt[abs(solver->decision_stack[last_dec_index].dec)]->to_str().c_str()));
 		return last_dec_index;
 	}
-
+	return 0;
 }
 
 

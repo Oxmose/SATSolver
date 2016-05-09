@@ -555,7 +555,6 @@ bool SATSolver::solve()
     while(!unsat_clauses.empty() && !is_unsat)
     {
         OUTDEBUG(fprintf(stderr, "\nIteration %d.\n", iter));
-        print_current_state();
         iter++;
 
         /*
@@ -570,6 +569,7 @@ bool SATSolver::solve()
             else if(add_pending_deduction())
                 continue;
         }
+        print_current_state();
 
         jump = false;
 
