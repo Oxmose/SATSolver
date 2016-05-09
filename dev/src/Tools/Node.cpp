@@ -33,7 +33,7 @@ Node::Node()
 Node::Node(const Node &N)
 {
     m_value = N.m_value;
-    m_parent = N.m_parent;
+    m_parent = this;
 
 }
 

@@ -573,8 +573,7 @@ bool SATSolver::solve()
 
         jump = false;
 
-        /* SMT */
-        smt_solver->apply_last_decision();
+        /* SMT */;
         if(int smt_conflict = smt_solver->apply_last_decision())
         {
             exit(0);
@@ -587,6 +586,7 @@ bool SATSolver::solve()
             jump = true;
             continue;*/
         }
+
 
         int conflict_clause = apply_last_decision();
         if(conflict_clause != -1)
