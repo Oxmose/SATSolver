@@ -36,9 +36,12 @@ Node* UnionFind::find(int p_value)
 {
     if(m_values.find(p_value) == m_values.end())
         return nullptr;
+
     Node *from = &(m_values[p_value]);
+    
     while(from->getParent() != from)
         from = find(from->getValue());
+
     return from;
 } // Node* find(int)
 

@@ -50,8 +50,6 @@ int SMTSolver_eq::apply_last_decision()
 		//exit(0);
 
 		connectivity_check.make_union(s1,s2);
-		
-		exit(0);
 
 		for(auto s1p : not_possible)
 			for(auto s2p : s1p.second)
