@@ -183,8 +183,8 @@ void generateTree(unsigned int maxIndex, unsigned int clausesCount, unsigned int
 
 void dfs(node *root, ofstream &out)
 {
-    
-    out << "(";
+    if(root->type != LIT)
+        out << "(";
     if(root->left)
         dfs(root->left, out);
 
@@ -195,5 +195,7 @@ void dfs(node *root, ofstream &out)
 
     if(root->right)
         dfs(root->right, out);
-    out << ")";
+
+    if(root->type != LIT)
+        out << ")";
 }
