@@ -270,6 +270,8 @@ int SATSolver::apply_last_decisionSTD()
         if(unsat_clauses.find(iClause) != unsat_clauses.end())
         {
             OUTDEBUG(fprintf(stderr, "Decision affects clause %d: %s.\n", iClause, formula[iClause].to_str().c_str()));
+            for(auto l : formula[iClause].literal)
+                fprintf(stderr, "%d %d\n", l, valuation[abs(l)]);
             if(formula[iClause].has(last_decision))
             {
                 OUTDEBUG(fprintf(stderr, "\tClause is now sat.\n"));
@@ -511,6 +513,7 @@ decision SATSolver::backtrack(int bt_level, bool full_bt)
                 conflict_graph.remove_node(toCancel, full_bt);
             
             print_current_state();
+            smt_solver->reset_method();
             return last_dec;
         }
 
@@ -576,27 +579,6 @@ bool SATSolver::solve()
 
         jump = false;
 
-        /* SMT */;
-        if(int smt_conflict = smt_solver->apply_last_decision())
-        {
-            if(curr_level == -1)
-            {
-                is_unsat = true;
-                continue;
-            }
-
-            pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
-            exit(0);
-            assert(diagnosis.first.literal.size() != 1);
-            decision last_dec = backtrack(diagnosis.second, false);
-            add_clause(diagnosis.first);
-            curr_level++;
-            decision_stack.push_back(last_dec);
-            jump = true;
-            continue;
-        }
-
-
         int conflict_clause = apply_last_decision();
         if(conflict_clause != -1)
         {
@@ -622,6 +604,28 @@ bool SATSolver::solve()
                 //conflict_graph.output();
                 jump = true;
             }
+        }
+
+        /* SMT */
+        int smt_conflict = smt_solver->apply_last_decision();
+        if(smt_conflict != -1)
+        {
+            if(curr_level == -1)
+            {
+                is_unsat = true;
+                continue;
+            }
+
+            pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
+            decision last_dec = backtrack(diagnosis.second, diagnosis.first.literal.size() == 1);
+            
+            if(!add_clause(diagnosis.first))
+            {
+                curr_level++;
+                decision_stack.push_back(last_dec);
+                jump = true;
+            }
+            continue;
         }
     }
 
