@@ -18,7 +18,7 @@
 
 using namespace std;
 
-string tab_char[7] = { "=>", "<=>", "\\/", "/\\", "X", "=", "!=" };
+string tab_char[8] = { "=>", "<=>", "\\/", "/\\", "X", "~", "=", "!=" };
 
 int main()
 {
@@ -82,92 +82,62 @@ void generateTree(unsigned int maxIndex, unsigned int clausesCount, unsigned int
         queue<node*> to_fill;
         to_fill.push(root);
 
-        while(clausesSizet && !to_fill.empty())
+        while(clausesSizet)
         {
-
             node* next_fill = to_fill.front();
-            if(next_fill->left)
-            {
-                to_fill.pop();
-            }
 
-            op = (OPERATOR) (rand() % 7);
+            op = (OPERATOR) (rand() % 5);
 
             node *op_n = new node(OP, nullptr, nullptr, op, 0);
 
-            int left, right;
+            to_fill.push(op_n);
 
-            while((left = rand() % (maxIndex * 2 + 2) - (maxIndex + 1)) == 0);
-            while((right = rand() % (maxIndex * 2 + 2) - (maxIndex + 1)) == left || right == 0);
-
-            if(op == EQUA || op == DIFF)
-            {
-                
-                node *left_n = new node(LIT, nullptr, nullptr, NONE, 0);
-                node *right_n = new node(LIT, nullptr, nullptr, NONE, 0);
-
-                left_n->lit = left;
-                right_n->lit = right;
-                
-                op_n->left = left_n;
-                op_n->right = right_n;                
-            }
-            else
-            {
-                node *left_n = new node(LIT, nullptr, nullptr, NONE, 0);
-
-                left_n->lit = left;                
-                op_n->left = left_n;
-
-                int rn = rand() % 3;
-                if(rn == 0)
-                {
-                    to_fill.push(op_n); 
-                }
-                else
-                {
-                    node *right_n = new node(LIT, nullptr, nullptr, NONE, 0);
-
-                    right_n->lit = right;                
-                    op_n->right = right_n;
-                }
-
-                
-            }
-
-            if(!next_fill->left)
+            if(rand() % 2)
                 next_fill->left = op_n;
             else
-                next_fill->right = op_n;
+                next_fill->right = op_n;            
 
             --clausesSizet;
         }
         while(!to_fill.empty())
         {
+            //cout << "HERE" << endl;
             node* next_fill = to_fill.front();
-            if(!next_fill->left)
+            if(next_fill->left != nullptr || next_fill->right != nullptr)
             {
                 to_fill.pop();
             }
 
             int left, right;
 
-            while((left = rand() % (maxIndex * 2 + 2) - (maxIndex + 1)) == 0);
-            while((right = rand() % (maxIndex * 2 + 2) - (maxIndex + 1)) == left || right == 0);
+            while((left = rand() % (maxIndex + 1)) == 0);
+            while((right = rand() % (maxIndex + 1)) == left || right == 0);
 
             node *left_n = new node(LIT, nullptr, nullptr, NONE, 0);
             node *right_n = new node(LIT, nullptr, nullptr, NONE, 0);
 
             left_n->lit = left;
             right_n->lit = right;
-            
+
+            node *equal;
+            int eq = rand() % 2;
+            if(eq)
+                equal = new node(OP, nullptr, nullptr, EQUA, 0);
+            else
+                equal = new node(OP, nullptr, nullptr, DIFF, 0);
+
+            equal->left = left_n;
+            equal->right = right_n;
+
 
             if(!next_fill->left)
             {
-                next_fill->left = left_n;
+                next_fill->left = equal;
             }
             else
-                next_fill->right = right_n;
+            {
+                next_fill->right = equal;
+            }
         }
         dfs(root, out);
         if(i == clausesCount - 1)
@@ -184,7 +154,18 @@ void generateTree(unsigned int maxIndex, unsigned int clausesCount, unsigned int
 void dfs(node *root, ofstream &out)
 {
     if(root->type != LIT)
-        out << "(";
+    {
+        if(root->op == DIFF || root->op == EQUA)
+        {
+            if(!(rand() % 4))
+                out << "~(";
+            else
+                out << "(";
+        }
+        else
+            out << "(";
+    }
+
     if(root->left)
         dfs(root->left, out);
 
