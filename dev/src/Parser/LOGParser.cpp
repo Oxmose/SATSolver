@@ -80,7 +80,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
-	cout << strForm << endl;
+
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
@@ -187,7 +187,6 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
 	    the_clause.literal.clear();
         hasTaut = false;
         clause.clear();
-        cout << "hehre " << strForm << endl;
     }
 
     for(auto entry : corresp)

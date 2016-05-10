@@ -30,8 +30,6 @@ int SMTSolver_eq::apply_last_decision()
 
 	if(connectivity_check.find(s1) == nullptr)
 		connectivity_check.add(s1);
-	if(connectivity_check.find(s2) != nullptr)
-		exit(0);
 	if(connectivity_check.find(s2) == nullptr)
 		connectivity_check.add(s2);
 
@@ -57,7 +55,7 @@ int SMTSolver_eq::apply_last_decision()
 			{
 				if(connectivity_check.find(s1p.first) == connectivity_check.find(s2p.first))
 				{
-					OUTDEBUG(fprintf(stderr, "\t[SMT]Clash, literal %s violated!\n", solver->dpll_to_smt[abs(solver->decision_stack[s2p.second].dec)]->to_str().c_str()));
+					OUTDEBUG(fprintf(stderr, "\t[SMT]Clash, decision %d (%s) violated!\n", solver->decision_stack[s2p.second].dec, solver->dpll_to_smt[abs(solver->decision_stack[s2p.second].dec)]->to_str().c_str()));
 					return s2p.second;
 				}
 			}
@@ -65,19 +63,54 @@ int SMTSolver_eq::apply_last_decision()
 		return 0;
 	}
 
-	exit(0);
 	not_possible[s1][s2] = last_dec_index;
-	OUTDEBUG(fprintf(stderr, "\t[SMT]Remembering %d and %d shouldn't be connected.\n", s1, s2));
+	OUTDEBUG(fprintf(stderr, "\t[SMT]Remembering that %d and %d shouldn't be connected.\n", s1, s2));
 	if(connectivity_check.find(s1) == connectivity_check.find(s2))
 	{
-		OUTDEBUG(fprintf(stderr, "\t[SMT]Clash, literal %s violated!\n", solver->dpll_to_smt[abs(solver->decision_stack[last_dec_index].dec)]->to_str().c_str()));
+		OUTDEBUG(fprintf(stderr, "\t[SMT]Clash, decision %d (%s) violated!\n", solver->decision_stack[last_dec_index].dec, solver->dpll_to_smt[abs(solver->decision_stack[last_dec_index].dec)]->to_str().c_str()));
 		return last_dec_index;
 	}
+	return 0;
+}
 
+void SMTSolver_eq::dfs_enumerate_paths(int curr, int from, int dest, map<int,int> succ)
+{
+	if(succ.find(curr) != succ.end())
+		return;
+
+	if(curr == dest)
+	{
+		curr = from;
+		while(curr != dest)
+		{
+			OUTDEBUG(fprintf(stderr, "\t\t%d %d, %d\n", curr, succ[curr], solver->decision_stack[edge[curr][succ[curr]]].level));
+			curr = succ[curr];
+		}
+		OUTDEBUG(fprintf(stderr, "\n"));
+		return;
+	}
+
+	for(auto v : edge[curr])
+	{
+		succ[curr] = v.first;
+		dfs_enumerate_paths(v.first,from,dest,succ);
+	}
 }
 
 
-pair<clause,int> SMTSolver_eq::diagnose_conflict()
+pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 {
+	decision conflict_dec = solver->decision_stack[conflict_dec_index];
+	smt_literal_eq* corresponding_lit = (smt_literal_eq*)solver->dpll_to_smt[abs(conflict_dec.dec)];
+	OUTDEBUG(fprintf(stderr, "\t[SMT]Diagnosing conflict because of %d (%s)\n", conflict_dec.dec, corresponding_lit->to_str().c_str()));
+	
+	int s1 = min(corresponding_lit->left, corresponding_lit->right);
+	int s2 = max(corresponding_lit->left, corresponding_lit->right);
 
+	OUTDEBUG(fprintf(stderr, "\t[SMT]Paths from %d to %d: \n", s1, s2));
+	dfs_enumerate_paths(s1, s1, s2, map<int,int>());
+
+
+	clause c(-1);
+	return make_pair(c,0);
 }
