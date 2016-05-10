@@ -38,8 +38,8 @@ Expr *res = NULL;
 %left TK_XOR
 %left TK_DIS
 %left TK_CON
-%left TK_ANT TK_NEG
 %left TK_EQUA TK_NEQUA
+%left TK_ANT TK_NEG
 
 
 %%

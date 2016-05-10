@@ -185,10 +185,7 @@ expression (18)
     8           | expression . TK_XOR expression
     9           | expression . TK_DIS expression
    10           | expression . TK_CON expression
-   11           | TK_ANT expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-
-    TK_EQUA   décalage et aller à l'état 16
-    TK_NEQUA  décalage et aller à l'état 17
+   11           | TK_ANT expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_NEQUA, TK_RPAREN, TK_ZERO]
 
     $défaut  réduction par utilisation de la règle 11 (expression)
 
@@ -197,8 +194,8 @@ expression (18)
     Conflit entre la règle 11 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_ANT).
     Conflit entre la règle 11 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_ANT).
     Conflit entre la règle 11 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_ANT).
-    Conflit entre la règle 11 et le jeton TK_EQUA résolu par décalage (TK_ANT < TK_EQUA).
-    Conflit entre la règle 11 et le jeton TK_NEQUA résolu par décalage (TK_ANT < TK_NEQUA).
+    Conflit entre la règle 11 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_ANT).
+    Conflit entre la règle 11 et le jeton TK_NEQUA résolu par réduction (TK_NEQUA < TK_ANT).
 
 
 État 8
@@ -210,10 +207,7 @@ expression (18)
     8           | expression . TK_XOR expression
     9           | expression . TK_DIS expression
    10           | expression . TK_CON expression
-   12           | TK_NEG expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-
-    TK_EQUA   décalage et aller à l'état 16
-    TK_NEQUA  décalage et aller à l'état 17
+   12           | TK_NEG expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_NEQUA, TK_RPAREN, TK_ZERO]
 
     $défaut  réduction par utilisation de la règle 12 (expression)
 
@@ -222,8 +216,8 @@ expression (18)
     Conflit entre la règle 12 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_NEG).
     Conflit entre la règle 12 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_NEG).
     Conflit entre la règle 12 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_NEG).
-    Conflit entre la règle 12 et le jeton TK_EQUA résolu par décalage (TK_NEG < TK_EQUA).
-    Conflit entre la règle 12 et le jeton TK_NEQUA résolu par décalage (TK_NEG < TK_NEQUA).
+    Conflit entre la règle 12 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_NEG).
+    Conflit entre la règle 12 et le jeton TK_NEQUA résolu par réduction (TK_NEQUA < TK_NEG).
 
 
 État 9
