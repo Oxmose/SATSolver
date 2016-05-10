@@ -29,6 +29,8 @@ class SMTSolver_eq : public SMTSolver
 		SMTSolver_eq(SATSolver* solver) : SMTSolver(solver) {}
 
 		int apply_last_decision();
+		void cancel_last_decision();
+		void reset_method();
 		pair<clause,int> diagnose_conflict(int conflict_dec_index);
 
 		bool dfs_enumerate_paths(int curr, int dest, map<int,int>& succ);

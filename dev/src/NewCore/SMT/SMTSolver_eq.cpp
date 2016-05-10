@@ -1,6 +1,54 @@
 #include "SMTSolver_eq.h"
 #include "../SATSolver.h"
 
+void SMTSolver_eq::reset_method()
+{
+	OUTDEBUG(fprintf(stderr,"Reconstructing union find\n"));
+	connectivity_check.clear();
+	for(auto a : edge)
+		for(auto b : a.second)
+		{
+			int s1 = a.first;
+			int s2 = b.first;
+
+			if(connectivity_check.find(s1) == nullptr)
+				connectivity_check.add(s1);
+			if(connectivity_check.find(s2) == nullptr)
+				connectivity_check.add(s2);
+			connectivity_check.make_union(s1,s2);
+		}
+}
+
+void SMTSolver_eq::cancel_last_decision()
+{
+	int last_dec_index = solver->decision_stack.size()-1;
+	decision last_decision = solver->decision_stack.back();
+
+	if(solver->dpll_to_smt.find(abs(last_decision.dec)) == solver->dpll_to_smt.end())
+		return;
+
+	smt_literal_eq* corresponding_lit = (smt_literal_eq*)solver->dpll_to_smt[abs(last_decision.dec)];
+
+	int s1 = min(corresponding_lit->left, corresponding_lit->right);
+	int s2 = max(corresponding_lit->left, corresponding_lit->right);
+
+	bool add_edge = ((last_decision.dec > 0) && corresponding_lit->equal) || ((last_decision.dec < 0) && !corresponding_lit->equal);
+
+	if(add_edge)
+	{
+		edge[s1].erase(s2);
+		edge[s2].erase(s1);
+		if(edge[s1].size() == 0)
+			edge.erase(s1);
+		if(edge[s2].size() == 0)
+			edge.erase(s2);
+		OUTDEBUG(fprintf(stderr,"\t[SMT]Canceling %d-%d\n", s1, s2));
+		return;
+	}	
+	OUTDEBUG(fprintf(stderr,"\t[SMT]Canceling %d != %d\n", s1, s2));
+	not_possible[s1].erase(s2);
+}
+
 /* literal violated */
 int SMTSolver_eq::apply_last_decision()
 {
@@ -75,7 +123,10 @@ bool SMTSolver_eq::dfs_enumerate_paths(int curr, int dest, map<int,int>& succ)
 		return false;
 
 	if(curr == dest)
+	{
+		printf("OK\n");
 		return true;
+	}
 
 	for(auto v : edge[curr])
 	{
@@ -101,12 +152,12 @@ pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 	map<int,int> succ;
 	dfs_enumerate_paths(s1, s2, succ);
 	int curr = s1;
-
+	exit(0);
 	clause c(solver->formula.size());
 	int bt_level = -1;
 	while(curr != s2)
 	{
-		assert(edge[curr][succ[curr]] != conflict_dec_index);
+		//assert(edge[curr][succ[curr]] != conflict_dec_index);
 		if(solver->decision_stack[edge[curr][succ[curr]]].level != solver->curr_level)
 			bt_level = max(bt_level, solver->decision_stack[edge[curr][succ[curr]]].level);
 		c.literal.push_back(-solver->decision_stack[edge[curr][succ[curr]]].dec);

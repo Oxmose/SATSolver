@@ -470,6 +470,7 @@ decision SATSolver::backtrack(int bt_level, bool full_bt)
 
     while(!decision_stack.empty())
     {
+        smt_solver->cancel_last_decision();
         int toCancel = decision_stack.back().dec;
         bool bet = decision_stack.back().bet;
         int level = decision_stack.back().level;
@@ -517,6 +518,8 @@ decision SATSolver::backtrack(int bt_level, bool full_bt)
         if(settings_s.cl_s)
             conflict_graph.remove_node(toCancel);
     }
+
+    smt_solver->reset_method();
     return decision(-1, -2, false);
 }
 
@@ -581,8 +584,9 @@ bool SATSolver::solve()
                 is_unsat = true;
                 continue;
             }
-            
+
             pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
+            exit(0);
             assert(diagnosis.first.literal.size() != 1);
             decision last_dec = backtrack(diagnosis.second, false);
             add_clause(diagnosis.first);
