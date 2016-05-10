@@ -35,31 +35,27 @@ int SMTSolver_eq::apply_last_decision()
 
 	if(add_edge)
 	{
-		/*
-			Si deja existante (4=3 puis 3=4) ne rien faire car de toute maniere osef
-		*/
-		if(edge.find(s1) == edge.end() || edge[s1].find(s2) == edge[s1].end())
+		/* Si il existe deja un chemin on s'en fiche*/
+		if(connectivity_check.find(s1) != connectivity_check.find(s2))
 		{
-			assert(edge.find(s2) == edge.end() || edge[s2].find(s1) == edge[s2].end());//costly 
 			edge[s1][s2] = last_dec_index;
 			edge[s2][s1] = last_dec_index;
 			OUTDEBUG(fprintf(stderr, "\t[SMT]Adding edge %d-%d, index in stack: %d, pond: %d, lit: %d.\n", corresponding_lit->left, corresponding_lit->right, edge[s1][s2], 
 																				solver->decision_stack[edge[s1][s2]].level, solver->decision_stack[edge[s1][s2]].dec));
-		}
 
 
-		connectivity_check.make_union(s1,s2);
+			connectivity_check.make_union(s1,s2);
 
-		for(auto s1p : not_possible)
-			for(auto s2p : s1p.second)
-			{
-				if(connectivity_check.find(s1p.first) == connectivity_check.find(s2p.first))
+			for(auto s1p : not_possible)
+				for(auto s2p : s1p.second)
 				{
-					OUTDEBUG(fprintf(stderr, "\t[SMT]Clash, decision %d (%s) violated!\n", solver->decision_stack[s2p.second].dec, solver->dpll_to_smt[abs(solver->decision_stack[s2p.second].dec)]->to_str().c_str()));
-					return s2p.second;
+					if(connectivity_check.find(s1p.first) == connectivity_check.find(s2p.first))
+					{
+						OUTDEBUG(fprintf(stderr, "\t[SMT]Clash, decision %d (%s) violated!\n", solver->decision_stack[s2p.second].dec, solver->dpll_to_smt[abs(solver->decision_stack[s2p.second].dec)]->to_str().c_str()));
+						return s2p.second;
+					}
 				}
-			}
-
+		}
 		return 0;
 	}
 
@@ -73,28 +69,22 @@ int SMTSolver_eq::apply_last_decision()
 	return 0;
 }
 
-void SMTSolver_eq::dfs_enumerate_paths(int curr, int from, int dest, map<int,int> succ)
+bool SMTSolver_eq::dfs_enumerate_paths(int curr, int dest, map<int,int>& succ)
 {
 	if(succ.find(curr) != succ.end())
-		return;
+		return false;
 
 	if(curr == dest)
-	{
-		curr = from;
-		while(curr != dest)
-		{
-			OUTDEBUG(fprintf(stderr, "\t\t%d %d, %d\n", curr, succ[curr], solver->decision_stack[edge[curr][succ[curr]]].level));
-			curr = succ[curr];
-		}
-		OUTDEBUG(fprintf(stderr, "\n"));
-		return;
-	}
+		return true;
 
 	for(auto v : edge[curr])
 	{
 		succ[curr] = v.first;
-		dfs_enumerate_paths(v.first,from,dest,succ);
+		if(dfs_enumerate_paths(v.first,dest,succ))
+			return true;
 	}
+
+	return false;
 }
 
 
@@ -107,10 +97,34 @@ pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 	int s1 = min(corresponding_lit->left, corresponding_lit->right);
 	int s2 = max(corresponding_lit->left, corresponding_lit->right);
 
-	OUTDEBUG(fprintf(stderr, "\t[SMT]Paths from %d to %d: \n", s1, s2));
-	dfs_enumerate_paths(s1, s1, s2, map<int,int>());
+	OUTDEBUG(fprintf(stderr, "\t[SMT]Path from %d to %d: \n", s1, s2));
+	map<int,int> succ;
+	dfs_enumerate_paths(s1, s2, succ);
+	int curr = s1;
+
+	clause c(solver->formula.size());
+	int bt_level = -1;
+	while(curr != s2)
+	{
+		assert(edge[curr][succ[curr]] != conflict_dec_index);
+		if(solver->decision_stack[edge[curr][succ[curr]]].level != solver->curr_level)
+			bt_level = max(bt_level, solver->decision_stack[edge[curr][succ[curr]]].level);
+		c.literal.push_back(-solver->decision_stack[edge[curr][succ[curr]]].dec);
+		OUTDEBUG(fprintf(stderr, "\t\t%d %d, dec: %d lvl: %d\n", curr, succ[curr], solver->decision_stack[edge[curr][succ[curr]]].dec, solver->decision_stack[edge[curr][succ[curr]]].level));
+		curr = succ[curr];
+	}
+	OUTDEBUG(fprintf(stderr, "\n"));
+
+	c.literal.push_back(-solver->decision_stack[conflict_dec_index].dec);
+	if(solver->decision_stack[conflict_dec_index].level != solver->curr_level)
+		bt_level = max(bt_level, solver->decision_stack[conflict_dec_index].level);
+	if(bt_level == -1)
+		bt_level = solver->curr_level;
+
+	OUTDEBUG(fprintf(stderr, "\t[SMT]Learning %s\n", c.to_str().c_str()));
+	OUTDEBUG(fprintf(stderr, "\t[SMT]Backtracking to %d\n", bt_level));
 
 
-	clause c(-1);
-	return make_pair(c,0);
+	
+	return make_pair(c,bt_level);
 }

@@ -576,16 +576,20 @@ bool SATSolver::solve()
         /* SMT */;
         if(int smt_conflict = smt_solver->apply_last_decision())
         {
-            smt_solver->diagnose_conflict(smt_conflict);
-            exit(0);
-            /*pair<clause,int> diagnosis = smt_solver->diagnose_conflict();
+            if(curr_level == -1)
+            {
+                is_unsat = true;
+                continue;
+            }
+            
+            pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
             assert(diagnosis.first.literal.size() != 1);
             decision last_dec = backtrack(diagnosis.second, false);
             add_clause(diagnosis.first);
             curr_level++;
             decision_stack.push_back(last_dec);
             jump = true;
-            continue;*/
+            continue;
         }
 
 
