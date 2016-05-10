@@ -86,7 +86,7 @@ void generateTree(unsigned int maxIndex, unsigned int clausesCount, unsigned int
         {
             node* next_fill = to_fill.front();
 
-            op = (OPERATOR) (rand() % 6);
+            op = (OPERATOR) (rand() % 5);
 
             node *op_n = new node(OP, nullptr, nullptr, op, 0);
 
@@ -154,7 +154,18 @@ void generateTree(unsigned int maxIndex, unsigned int clausesCount, unsigned int
 void dfs(node *root, ofstream &out)
 {
     if(root->type != LIT)
-        out << "(";
+    {
+        if(root->op == DIFF || root->op == EQUA)
+        {
+            if(!(rand() % 4))
+                out << "~(";
+            else
+                out << "(";
+        }
+        else
+            out << "(";
+    }
+
     if(root->left)
         dfs(root->left, out);
 
