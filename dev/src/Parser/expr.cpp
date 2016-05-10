@@ -324,7 +324,15 @@ EEqua::EEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
 Expr* EEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
 {
-    pair<int, int> pair_t = make_pair(atoi(op1->to_string().c_str()), atoi(op2->to_string().c_str()));
+    string str1 = op1->to_string();
+    string str2 = op2->to_string();
+
+    if(str1[0] == '(')
+        str1 = str1.substr(1, str1.size() - 2);
+    if(str2[0] == '(')
+        str2 = str2.substr(1, str2.size() - 2); 
+
+    pair<int, int> pair_t = make_pair(stoi(str1.c_str()), stoi(str2.c_str()));
 
     if(corresp.find(pair_t) != corresp.end())
     {
@@ -368,7 +376,17 @@ ENEqua::ENEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
 Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
 {
-    pair<int, int> pair_t = make_pair(atoi(op1->to_string().c_str()), atoi(op2->to_string().c_str()));
+    string str1 = op1->to_string();
+    string str2 = op2->to_string();
+
+    if(str1[0] == '(')
+        str1 = str1.substr(1, str1.size() - 2);
+    if(str2[0] == '(')
+        str2 = str2.substr(1, str2.size() - 2); 
+
+
+    pair<int, int> pair_t = make_pair(stoi(str1.c_str()), stoi(str2.c_str()));
+
 
     if(ncorresp.find(pair_t) != ncorresp.end())
     {
