@@ -22,9 +22,10 @@ enum OPERATOR
     OR   = 2,
     AND  = 3,
     XOR  = 4,
-    EQUA = 5,
-    DIFF = 6,
-    NONE = 7
+    NOT  = 5,
+    EQUA = 6,
+    DIFF = 7,
+    NONE = 8
 };
 
 enum TYPE
