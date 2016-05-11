@@ -26,7 +26,7 @@ UnionFind::~UnionFind()
 
 Node* UnionFind::add(int p_value)
 {
-    fprintf(stderr, "[UF]Add %d\n", p_value);
+    OUTDEBUG(fprintf(stderr, "[UF]Add %d\n", p_value));
     if(m_values.find(p_value) != m_values.end())
 	    return m_values[p_value];	
 
