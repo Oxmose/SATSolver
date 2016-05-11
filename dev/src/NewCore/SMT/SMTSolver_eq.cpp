@@ -176,7 +176,10 @@ pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 		if(edge[curr][succ[curr]] != uip_like) 
 			bt_level = max(bt_level, solver->decision_stack[edge[curr][succ[curr]]].level);
 		if(solver->decision_stack[edge[curr][succ[curr]]].level != -1)
+		{
 			c.literal.push_back(-solver->decision_stack[edge[curr][succ[curr]]].dec);
+			c.assoc_lit[-solver->decision_stack[edge[curr][succ[curr]]].dec] = true;
+		}
 		OUTDEBUG(fprintf(stderr, "\t\t%d %d, dec: %d lvl: %d\n", curr, succ[curr], solver->decision_stack[edge[curr][succ[curr]]].dec, solver->decision_stack[edge[curr][succ[curr]]].level));
 		curr = succ[curr];
 	}
@@ -184,10 +187,23 @@ pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 	OUTDEBUG(fprintf(stderr, "\n"));
 
 	if(solver->decision_stack[conflict_dec_index].level != -1)
+	{
 		c.literal.push_back(-solver->decision_stack[conflict_dec_index].dec);
+		c.assoc_lit[-solver->decision_stack[conflict_dec_index].dec] = true;
+	}
 	if(conflict_dec_index != uip_like)
 		bt_level = max(bt_level, solver->decision_stack[conflict_dec_index].level);
 	
+	if(c.literal.size() != 1 && settings_s.wl_s)
+	{
+		c.triggers.insert(-solver->decision_stack[uip_like].dec);
+		for(int i = uip_like-1 ; i >= 0 ; i--)
+			if(c.assoc_lit.find(-solver->decision_stack[i].dec) != c.assoc_lit.end())
+			{
+				c.triggers.insert(-solver->decision_stack[i].dec);
+				break;
+			}
+	}
 
 	OUTDEBUG(fprintf(stderr, "\t[SMT]Learning %s\n", c.to_str().c_str()));
 	OUTDEBUG(fprintf(stderr, "\t[SMT]Backtracking to %d\n", bt_level));

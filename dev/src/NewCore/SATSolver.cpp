@@ -642,8 +642,8 @@ bool SATSolver::solve()
 void SATSolver::print_current_state()
 {
     OUTDEBUG(fprintf(stderr, "Current state: "));
-    for(auto d : decision_stack)
-        OUTDEBUG(fprintf(stderr, "%d%s%s ", d.dec, (d.bet) ? "b" : "", (dpll_to_smt.find(abs(d.dec)) != dpll_to_smt.end()) ? string("("+dpll_to_smt[abs(d.dec)]->to_str()+")").c_str() : ""));
+    OUTDEBUG(for(auto d : decision_stack)
+        fprintf(stderr, "%d%s%s ", d.dec, (d.bet) ? "b" : "", (dpll_to_smt.find(abs(d.dec)) != dpll_to_smt.end()) ? string("("+dpll_to_smt[abs(d.dec)]->to_str()+")").c_str() : ""));
     OUTDEBUG(fprintf(stderr, "\n"));
 }
 
