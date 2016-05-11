@@ -21,7 +21,13 @@ void SMTSolver_eq::reset_method()
 	OUTDEBUG(fprintf(stderr,"Non equalities hold: \n"));
 	for(auto s1p : not_possible)
 		for(auto s2p : s1p.second)
+		{
+			if(connectivity_check.find(s1p.first) == nullptr)
+				connectivity_check.add(s1p.first);
+			if(connectivity_check.find(s2p.first) == nullptr)
+				connectivity_check.add(s2p.first);
 			OUTDEBUG(fprintf(stderr, "%d != %d\n", s1p.first, s2p.first));
+		}
 }
 
 void SMTSolver_eq::cancel_last_decision()
@@ -147,7 +153,7 @@ bool SMTSolver_eq::dfs_enumerate_paths(int curr, int dest, map<int,int>& succ)
 pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 {
 	assert(settings_s.smte_s);
-	
+
 	decision conflict_dec = solver->decision_stack[conflict_dec_index];
 
 	smt_literal_eq* corresponding_lit = (smt_literal_eq*)solver->dpll_to_smt[abs(conflict_dec.dec)];
@@ -189,4 +195,102 @@ pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 
 	
 	return make_pair(c,bt_level);
+}
+
+void SMTSolver_eq::visite_composante(int curr, int id, map<int,int>& id_composante)
+{
+	if(id_composante.find(curr) != id_composante.end())
+		return;
+	id_composante[curr] = id;
+	for(auto v : edge[curr])
+		visite_composante(v.first, id, id_composante);
+}
+
+void SMTSolver_eq::get_solution()
+{
+	OUTDEBUG(cerr << "[SMT]Computing solution." << endl);
+	map<int,int> id_composante;
+	int id = 0;
+	for(auto s : edge)
+		if(id_composante.find(s.first) == id_composante.end())
+		{
+			visite_composante(s.first, id, id_composante);
+			id++;
+		}
+
+	for(auto s1 : not_possible)
+		for(auto s2: s1.second)
+		{
+			if(id_composante.find(s1.first) == id_composante.end())
+			{
+				id_composante[s1.first] = id;
+				id++;
+			}
+			if(id_composante.find(s2.first) == id_composante.end())
+			{
+				id_composante[s2.first] = id;
+				id++;
+			}
+		}
+
+	map<int,vector<int>> composante;
+	for(auto a : id_composante)
+		composante[a.second].push_back(a.first);
+
+	for(auto c : composante)
+	{
+		OUTDEBUG(cerr << "C" << c.first << ", "<<  connectivity_check.find(c.second[0])->getValue() << ": {");
+		int k = 0;
+		for(auto b: c.second)
+		{
+			OUTDEBUG(cerr << b << ((k == c.second.size()-1) ? "" : ", "));
+			k ++;
+		}
+		OUTDEBUG(cerr << "}" << endl);
+	}
+
+	OUTDEBUG(cerr << "Non equalities : " << endl);
+	for(auto s1 : not_possible)
+		for(auto s2: s1.second)
+			OUTDEBUG(cerr << s1.first << " != " << s2.first << " " << connectivity_check.find(s1.first)->getValue() << " != " << connectivity_check.find(s2.first)->getValue() << endl);
+	
+	for(int i = 0 ; i < id ; i++)
+	{
+		for(int j = i+1 ; j < id ; j++)
+		{
+			OUTDEBUG(cerr << "Trying to merge C" << i << " and " << "C" << j << endl);
+			int r1 = connectivity_check.find(composante[i][0])->getValue();
+			int r2 = connectivity_check.find(composante[j][0])->getValue();
+			bool possible = true;
+			for(auto s1 : not_possible)
+				for(auto s2: s1.second)
+					if(connectivity_check.find(s1.first)->getValue() == r1 && connectivity_check.find(s2.first)->getValue() == r2 ||
+				   		connectivity_check.find(s1.first)->getValue() == r2 && connectivity_check.find(s2.first)->getValue() == r1)
+				   		possible = false;
+			if(possible)
+			{
+				OUTDEBUG(cerr << "\tRepresented by " << r1 << " and " << r2 << endl);
+				OUTDEBUG(cerr << "\tMerging possible !" << endl);
+				connectivity_check.make_union(r1, r2);
+				edge[r1][r2] = -1;
+				edge[r2][r1] = -1;	
+
+				get_solution();
+				return;
+			}
+		}
+	}
+
+	for(auto c : composante)
+	{
+		cout << "C(" << connectivity_check.find(c.second[0])->getValue() << "): {";
+		int k = 0;
+		for(auto b: c.second)
+		{
+			cout << b << ((k == c.second.size()-1) ? "" : ", ");
+			k ++;
+		}
+		cout << "}" << endl;
+	}
+
 }

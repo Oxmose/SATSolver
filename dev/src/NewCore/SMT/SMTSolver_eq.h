@@ -35,6 +35,9 @@ class SMTSolver_eq : public SMTSolver
 
 		bool dfs_enumerate_paths(int curr, int dest, map<int,int>& succ);
 
+		void visite_composante(int curr, int id, map<int,int>& id_composante);
+		void get_solution();
+
 		unordered_map<int, unordered_map<int,int>> edge;
 		unordered_map<int, unordered_map<int,int>> not_possible;
 		UnionFind connectivity_check;

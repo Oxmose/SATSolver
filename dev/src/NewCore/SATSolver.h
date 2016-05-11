@@ -88,6 +88,8 @@ class SATSolver
 
         void emplace_eq(unsigned int var, struct smt_literal *eq);
 
+        void get_smt_solution();
+
     private:
 
         

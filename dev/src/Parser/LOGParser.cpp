@@ -80,7 +80,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
-        cout << "HERE " << strForm << endl;
+
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
@@ -175,7 +175,6 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
 			
             }
         }
-        exit(0);
         // Create and add the last clause
         if(!hasTaut)
         {

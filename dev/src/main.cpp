@@ -88,12 +88,18 @@ int main(int argc, char const *argv[])
         return 0;
     }
 
+    cout << "s SATISFIABLE" << endl;
+    if(settings_s.smte_s)
+    {
+        solver.get_smt_solution();
+        return 0;
+    }
+
     if(settings_s.parser_s != CNF_PARSE)
     {
         parser->tseitinResolution(solver.valuation, maxIndex);
     }
-
-    cout << "s SATISFIABLE" << endl;    
+    
     for(auto v : solver.valuation)
     {
         int index = v.first;
