@@ -89,7 +89,9 @@ int main(int argc, char const *argv[])
     }
 
     if(settings_s.parser_s != CNF_PARSE)
+    {
         parser->tseitinResolution(solver.valuation, maxIndex);
+    }
 
     cout << "s SATISFIABLE" << endl;    
     for(auto v : solver.valuation)

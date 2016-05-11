@@ -70,7 +70,7 @@ class SATSolver
         int apply_last_decisionWL();
 
         pair<clause,int> diagnose_conflict(int conflict_clause);
-        decision backtrack(int bt_to, bool full_bt);
+        decision backtrack(int bt_to, bool full_bt, bool smt_conflict=false);
 
         vector<clause>                                        formula;
         map<unsigned int, int>                              valuation;

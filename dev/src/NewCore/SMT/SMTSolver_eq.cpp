@@ -3,6 +3,7 @@
 
 void SMTSolver_eq::reset_method()
 {
+	assert(settings_s.smte_s);
 	OUTDEBUG(fprintf(stderr,"Reconstructing union find\n"));
 	connectivity_check.clear();
 	for(auto a : edge)
@@ -25,6 +26,7 @@ void SMTSolver_eq::reset_method()
 
 void SMTSolver_eq::cancel_last_decision()
 {
+	assert(settings_s.smte_s);
 	int last_dec_index = solver->decision_stack.size()-1;
 	decision last_decision = solver->decision_stack.back();
 
@@ -56,6 +58,7 @@ void SMTSolver_eq::cancel_last_decision()
 /* literal violated */
 int SMTSolver_eq::apply_last_decision()
 {
+	assert(settings_s.smte_s);
 	int last_dec_index = solver->decision_stack.size()-1;
 	decision last_decision = solver->decision_stack.back();
 
@@ -123,6 +126,7 @@ int SMTSolver_eq::apply_last_decision()
 
 bool SMTSolver_eq::dfs_enumerate_paths(int curr, int dest, map<int,int>& succ)
 {
+	assert(settings_s.smte_s);
 	if(succ.find(curr) != succ.end())
 		return false;
 
@@ -142,6 +146,8 @@ bool SMTSolver_eq::dfs_enumerate_paths(int curr, int dest, map<int,int>& succ)
 
 pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 {
+	assert(settings_s.smte_s);
+	
 	decision conflict_dec = solver->decision_stack[conflict_dec_index];
 
 	smt_literal_eq* corresponding_lit = (smt_literal_eq*)solver->dpll_to_smt[abs(conflict_dec.dec)];

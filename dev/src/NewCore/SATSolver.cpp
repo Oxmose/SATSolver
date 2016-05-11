@@ -270,8 +270,8 @@ int SATSolver::apply_last_decisionSTD()
         if(unsat_clauses.find(iClause) != unsat_clauses.end())
         {
             OUTDEBUG(fprintf(stderr, "Decision affects clause %d: %s.\n", iClause, formula[iClause].to_str().c_str()));
-            for(auto l : formula[iClause].literal)
-                fprintf(stderr, "%d %d\n", l, valuation[abs(l)]);
+            /*for(auto l : formula[iClause].literal)
+                fprintf(stderr, "%d %d\n", l, valuation[abs(l)]);*/
             if(formula[iClause].has(last_decision))
             {
                 OUTDEBUG(fprintf(stderr, "\tClause is now sat.\n"));
@@ -454,7 +454,7 @@ pair<clause,int> SATSolver::diagnose_conflict(int conflict_clause)
         Si full_bt n'est pas à vrai on laisse le noeud associé dans le graphe, on enleve juste ses fils.
 
 */
-decision SATSolver::backtrack(int bt_level, bool full_bt)
+decision SATSolver::backtrack(int bt_level, bool full_bt, bool smt_conflict/*=false*/)
 {
     assert(!decision_stack.empty());
 
@@ -465,14 +465,16 @@ decision SATSolver::backtrack(int bt_level, bool full_bt)
     while(!deduction_queue.empty())
         deduction_queue.pop();
 
-    if(settings_s.cl_s)
+    if(settings_s.cl_s && !smt_conflict)
         conflict_graph.remove_node(conflict_graph.conflict_literal);
 
     pair<int,pair<int,bool>> last_node;
 
     while(!decision_stack.empty())
     {
-        smt_solver->cancel_last_decision();
+        if(settings_s.smte_s)
+            smt_solver->cancel_last_decision();
+
         int toCancel = decision_stack.back().dec;
         bool bet = decision_stack.back().bet;
         int level = decision_stack.back().level;
@@ -513,7 +515,8 @@ decision SATSolver::backtrack(int bt_level, bool full_bt)
                 conflict_graph.remove_node(toCancel, full_bt);
             
             print_current_state();
-            smt_solver->reset_method();
+            if(settings_s.smte_s)
+                smt_solver->reset_method();
             return last_dec;
         }
 
@@ -522,7 +525,8 @@ decision SATSolver::backtrack(int bt_level, bool full_bt)
             conflict_graph.remove_node(toCancel);
     }
 
-    smt_solver->reset_method();
+    if(settings_s.smte_s)
+        smt_solver->reset_method();
     return decision(-1, -2, false);
 }
 
@@ -607,25 +611,28 @@ bool SATSolver::solve()
         }
 
         /* SMT */
-        int smt_conflict = smt_solver->apply_last_decision();
-        if(smt_conflict != -1)
+        if(settings_s.smte_s)
         {
-            if(curr_level == -1)
+            int smt_conflict = smt_solver->apply_last_decision();
+            if(smt_conflict != -1)
             {
-                is_unsat = true;
+                if(curr_level == -1)
+                {
+                    is_unsat = true;
+                    continue;
+                }
+
+                pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
+                decision last_dec = backtrack(diagnosis.second, diagnosis.first.literal.size() == 1, true);
+                
+                if(!add_clause(diagnosis.first))
+                {
+                    curr_level++;
+                    decision_stack.push_back(last_dec);
+                    jump = true;
+                }
                 continue;
             }
-
-            pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
-            decision last_dec = backtrack(diagnosis.second, diagnosis.first.literal.size() == 1);
-            
-            if(!add_clause(diagnosis.first))
-            {
-                curr_level++;
-                decision_stack.push_back(last_dec);
-                jump = true;
-            }
-            continue;
         }
     }
 
