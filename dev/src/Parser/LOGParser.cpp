@@ -60,14 +60,22 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     */
     map<pair<int, int>, Expr*> corresp;
     map<pair<int, int>, Expr*> ncorresp;
+    map<string, function_s*> funcorresp;
+    map<string, args_s*> argscorresp;
+    map<string, unsigned int> arrities;
+
     vector<Expr*> exps;
     do 
     {
         yy_flex_debug = 1;
         yyparse();
-        exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp);        
+        exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp, funcorresp, arrities, argscorresp);        
     } while (!feof(yyin));   
 
+    for(auto i : funcorresp)
+        cout << "F:"  <<  i.first << " => " << i.second->assoc_var << endl;
+    for(auto i : argscorresp)
+        cout << "A: " << i.first << " => " << i.second->assoc_var << endl;
     fclose(yyin);
     vector<pair<map<int,bool>, bool>> clauses;   
 
@@ -80,7 +88,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
-
+    cout << strForm << endl;
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
@@ -120,7 +128,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
 
                 continue;
             }
-		
+        
             // If we are at the end of a clause
             if(i < strForm.size() -1 && strForm[i] == '/' && strForm[i + 1] == '\\')
             {
@@ -135,7 +143,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                     OUTDEBUG(fprintf(stderr,"%lu is tautological, not added.\n", p_solver.formula.size()));
 
                 the_clause.id = p_solver.formula.size();
-	            the_clause.literal.clear();
+                the_clause.literal.clear();
                 clause.clear();
                 hasTaut = false;
                 continue;
@@ -150,7 +158,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
 
             if(var.size() > 0)
             {
-		
+        
                 int varInt = stoi(var);
                 // Avoid mutiple same literals in the same clause
                 // Also check for tautology
@@ -165,14 +173,14 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                         hasTaut = true;
                     }
                 }
-		
+        
 
                 if(!found)
                 {
                     the_clause.literal.push_back(varInt);
                     clause[abs(varInt)] = (varInt < 0);
                 }
-			
+            
             }
         }
         // Create and add the last clause
@@ -184,14 +192,14 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
             OUTDEBUG(fprintf(stderr,"%lu is tautological, not added.\n", p_solver.formula.size()));
 
         the_clause.id = p_solver.formula.size();
-	    the_clause.literal.clear();
+        the_clause.literal.clear();
         hasTaut = false;
         clause.clear();
     }
 
     for(auto entry : corresp)
     {
-	cout <<  entry.first.first << " = " << entry.first.second << endl;
+        cout << entry.first.first << " = " << entry.first.second << " is " << atoi(entry.second->to_string().c_str()) << endl;
         struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
         p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
     }
@@ -205,7 +213,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
-vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities, map<string, args_s*> &argscorresp)
 {
     // Get the set af vars in the expression
     res->getVars(m_originalVars);
@@ -218,7 +226,7 @@ vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, m
 
     vector<Expr*> exps;
     // Transform the expression
-    Expr* global = res->tseitin(maxIndex, exps, corresp, ncorresp);
+    Expr* global = res->tseitin(maxIndex, exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
     exps.push_back(global);
     p_maxIndex = maxIndex;
 

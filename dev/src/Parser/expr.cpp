@@ -27,14 +27,24 @@ using namespace std;
 
 EVar::EVar(int i) : index(i) {}
 
-Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
     // Then We create the new variable for this expression
-    ++p_maxIndex;
-    Expr* var = new EVar(p_maxIndex);
-    Expr* varNeg = new ENeg(var);
-    p_exps.push_back(new ECon(new EDis(varNeg, this), new EDis(var, new ENeg(this))));
-    return var;
+    if(trans)
+    {
+        ++p_maxIndex;
+        Expr* var = new EVar(p_maxIndex);
+        Expr* varNeg = new ENeg(var);
+        p_exps.push_back(new ECon(new EDis(varNeg, this), new EDis(var, new ENeg(this))));
+        return var;
+    }
+    else
+    {
+        return this;
+    }
 } // Expr* tseitin(int&, vector<Expr*>&)
 
 void EVar::getVars(vector<int> &p_originalVars)
@@ -52,18 +62,184 @@ string EVar::to_string()
     return result;
 } // string tos_tring()
 
+int EVar::getVarTerm()
+{
+    string str = to_string();
+
+    if(str[0] == '(')
+        str = str.substr(1, str.size() - 2);
+
+    return stoi(str);
+} // int getVatTerm()
+
+unsigned int EVar::size()
+{
+    return 1;
+} // unsigned int size()
+
+/***********************************/
+/**********  Functions   ***********/
+/***********************************/
+
+EFun::EFun(char *name, Expr* e) : m_args(e) 
+{
+    string str_name = string(name);
+    m_name = str_name.substr(0, str_name.find("("));
+}
+
+Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
+{
+    // Check arrity
+    unsigned int arrity = m_args->size();
+    if(arrities.find(m_name) != arrities.end())
+        if(arrities[m_name] != arrity)
+        {
+            cerr << "Found functions with differents argumetns count\n" << endl;
+            exit(1);
+        }
+
+    cout << m_name << " has arrity " << arrity << endl;
+    fflush(stdout);
+
+    string key = to_string();
+    if(funcorresp.find(key) != funcorresp.end())
+    {
+        //p_exps.push_back(funcorresp[key]->ptr);
+        return funcorresp[key]->ptr;
+    }
+
+    // Then We create the new variable for this expression
+    m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
+
+    string newkey = m_args->to_string();
+    if(argscorresp.find(newkey) == argscorresp.end())
+    {
+        args_s *arg = new args_s;
+        arg->ptr = m_args;
+        arg->count = 1;
+        arg->assoc_var = m_args->getVarTerm();
+
+        argscorresp[newkey] = arg;
+    } 
+    
+    
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+
+    function_s *fun  = new function_s;
+    fun->name = key;
+    fun->arrity = arrity;
+    fun->assoc_var = p_maxIndex;
+    fun->ptr = var;
+
+    index = p_maxIndex;   
+
+    funcorresp[key] = fun;
+
+    // Then we return the newly created variable
+    return var;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void EFun::getVars(vector<int> &p_originalVars)
+{
+    m_args->getVars(p_originalVars);
+} // getVars(vector<int> &)
+
+string EFun::to_string()
+{
+    ostringstream oss;
+    oss << m_name << "("; 
+    oss << m_args->to_string();
+    oss << ")";
+    string result = oss.str();
+    return result;
+} // string tos_tring()
+
+int EFun::getVarTerm()
+{    
+    return index;
+} // int getVatTerm()
+
+unsigned int EFun::size()
+{
+    return 1;
+} // unsigned int size()
+
+/***********************************/
+/*********  Arguments     **********/
+/***********************************/
+
+EArg::EArg(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
+
+Expr* EArg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
+{
+    string key = to_string();
+    if(argscorresp.find(key) != argscorresp.end())
+    {
+        //p_exps.push_back(argscorresp[key]->ptr);
+        
+        return argscorresp[key]->ptr;
+    }
+    
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+
+    args_s *arg = new args_s;
+    arg->ptr = var;
+    arg->count = size();
+    arg->assoc_var = p_maxIndex;
+
+    argscorresp[key] = arg;
+
+    // Then we return the newly created variable
+    return var;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void EArg::getVars(vector<int> &p_originalVars)
+{
+    // Get vars from the leaves of this expression
+    op1->getVars(p_originalVars);
+    op2->getVars(p_originalVars);
+} // getVars(vector<int>&)
+
+string EArg::to_string()
+{
+    return op1->to_string() + ", " +  op2->to_string();
+} // string to_tring()
+
+int EArg::getVarTerm()
+{
+    return index;
+} // int getVatTerm()
+
+unsigned int EArg::size()
+{
+    return op1->size() + op2->size();
+} // unsigned int size()
+
 /***********************************/
 /*********  Equivalence   **********/
 /***********************************/
 
 EEqu::EEqu(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EEqu::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* EEqu::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
     // First we transform every sub expressions int the expression
     // and get the newly added variable
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
     Expr* op1TranNeg = new ENeg(op1Tran);
     Expr* op2TranNeg = new ENeg(op2Tran);
 
@@ -102,16 +278,29 @@ string EEqu::to_string()
     return "(" + op1->to_string() + " <=> " +  op2->to_string() + ")";
 } // string to_tring()
 
+int EEqu::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int EEqu::size()
+{
+    return 0;
+} // unsigned int size()
+
 /***********************************/
 /**********  Implication   *********/
 /***********************************/
 
 EImp::EImp(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EImp::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* EImp::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -137,16 +326,29 @@ string EImp::to_string()
     return "(" + op1->to_string() + " => " +  op2->to_string() + ")";
 } // string to_string()
 
+int EImp::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int EImp::size()
+{
+    return 0;
+} // unsigned int size()
+
 /***********************************/
 /*********  Exclusive Or   *********/
 /***********************************/
 
 EXor::EXor(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EXor::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* EXor::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
     Expr* op1TranNeg = new ENeg(op1Tran);
     Expr* op2TranNeg = new ENeg(op2Tran);
 
@@ -181,16 +383,29 @@ string EXor::to_string()
     return "(" + op1->to_string() + " X " +  op2->to_string() + ")";
 } // string to_string()
 
+int EXor::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int EXor::size()
+{
+    return 0;
+} // unsigned int size()
+
 /***********************************/
 /**********  Disjunction   *********/
 /***********************************/
 
 EDis::EDis(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EDis::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* EDis::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
     
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -217,16 +432,29 @@ string EDis::to_string()
     return "(" + op1->to_string() + " \\/ " +  op2->to_string() + ")";
 } // string to_string()
 
+int EDis::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int EDis::size()
+{
+    return 0;
+} // unsigned int size()
+
 /***********************************/
 /**********  Conjunction   *********/
 /***********************************/
 
 ECon::ECon(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* ECon::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* ECon::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -254,15 +482,28 @@ string ECon::to_string()
     return "(" + op1->to_string() + " /\\ " +  op2->to_string() + ")";
 } // string to_string()
 
+int ECon::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int ECon::size()
+{
+    return 0;
+} // unsigned int size()
+
 /***********************************/
 /**********  Antithesis   **********/
 /***********************************/
 
 EAnt::EAnt(Expr * e1) : op1(e1) {}
 
-Expr* EAnt::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* EAnt::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
     ++p_maxIndex;
     Expr *var = new EVar(p_maxIndex);
@@ -285,15 +526,28 @@ string EAnt::to_string()
     return "(~" + op1->to_string() + ")";
 } // string to_string()
 
+int EAnt::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int EAnt::size()
+{
+    return 0;
+} // unsigned int size()
+
 /***********************************/
 /**********  Negation   ************/
 /***********************************/
 
 ENeg::ENeg(Expr * e1) : op1(e1) {}
 
-Expr* ENeg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,  map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* ENeg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
-    //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
     ++p_maxIndex;
     Expr *var = new EVar(p_maxIndex);
@@ -316,23 +570,31 @@ string ENeg::to_string()
     return "(-" + op1->to_string() + ")";
 } // string to_string()
 
+int ENeg::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int ENeg::size()
+{
+    return 0;
+} // unsigned int size()
+
 /***********************************/
 /**********  Equality   ************/
 /***********************************/
 
 EEqua::EEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* EEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* EEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
-    string str1 = op1->to_string();
-    string str2 = op2->to_string();
+    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
+    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
 
-    if(str1[0] == '(')
-        str1 = str1.substr(1, str1.size() - 2);
-    if(str2[0] == '(')
-        str2 = str2.substr(1, str2.size() - 2); 
-
-    pair<int, int> pair_t = make_pair(stoi(str1.c_str()), stoi(str2.c_str()));
+    pair<int, int> pair_t = make_pair(op1->getVarTerm(), op2->getVarTerm());
 
     if(corresp.find(pair_t) != corresp.end())
     {
@@ -340,17 +602,12 @@ Expr* EEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>,
         return corresp[pair_t];
     }
 
-    //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-    //Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-
     // Then we create the new variable for this expression
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
-    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
     corresp[pair_t] = ret;
-
-    //p_exps.push_back(var);
 
     // Then we return the newly created variable
     return ret;
@@ -368,25 +625,28 @@ string EEqua::to_string()
     return "(" + op1->to_string() + " = " +  op2->to_string() + ")";
 } // string to_tring()
 
+int EEqua::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int EEqua::size()
+{
+    return 0;
+} // unsigned int size()
+
 /***********************************/
 /********  Non Equality   **********/
 /***********************************/
 
 ENEqua::ENEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 
-Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp)
+Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans)
 {
-    string str1 = op1->to_string();
-    string str2 = op2->to_string();
-
-    if(str1[0] == '(')
-        str1 = str1.substr(1, str1.size() - 2);
-    if(str2[0] == '(')
-        str2 = str2.substr(1, str2.size() - 2); 
-
-
-    pair<int, int> pair_t = make_pair(stoi(str1.c_str()), stoi(str2.c_str()));
-
+    pair<int, int> pair_t = make_pair(op1->getVarTerm(), op2->getVarTerm());
 
     if(ncorresp.find(pair_t) != ncorresp.end())
     {
@@ -394,17 +654,12 @@ Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, map<pair<int, int>
         return ncorresp[pair_t];
     }
 
-    //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-    //Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
-
     // Then we create the new variable for this expression
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
-    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
     ncorresp[pair_t] = ret;
-
-    //p_exps.push_back(var);
 
     // Then we return the newly created variable
     return ret;
@@ -421,3 +676,13 @@ string ENEqua::to_string()
 {
     return "(" + op1->to_string() + " != " +  op2->to_string() + ")";
 } // string to_tring()
+
+int ENEqua::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int ENEqua::size()
+{
+    return 0;
+} // unsigned int size()
