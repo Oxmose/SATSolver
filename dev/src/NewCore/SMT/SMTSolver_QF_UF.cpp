@@ -1,17 +1,24 @@
 #include "SMTSolver_QF_UF.h"
 #include <string>
-
+#include <iostream>
+#include <sstream>
 using namespace std;
 
 string smt_term::to_str()
 {
 	if(var != 0)
+	{
 		return to_string(var);
+	}
 
 	if(args.size() == 0)
-		return to_string(s);
+	{
+		return string(1, s);
+	}
 
-	string str = s +"(";
+	
+
+	string str = string(1, s) +"(";
 	for(auto a : args)
 		str += a.to_str();
 	str += ")";
