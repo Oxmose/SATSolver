@@ -3,19 +3,18 @@
 
 #include "SMTSolver.h"
 
-
 using namespace std;
 
 struct smt_term : smt_literal
 {
 	smt_term(int index, char s=0, int var=0, vector<smt_term> args=vector<smt_term>()) : smt_literal(index), s(s), var(var), args(args) {}
-	~smt_term() {}
+	virtual ~smt_term() {}
 	
 	char s;
 	int var; //L'un ou l'autre
 	vector<smt_term> args;
 
-	string to_str();
+	virtual string to_str();
 };
 
 #endif

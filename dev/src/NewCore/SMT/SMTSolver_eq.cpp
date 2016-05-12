@@ -1,5 +1,6 @@
 #include "SMTSolver_eq.h"
-#include "../SATSolver.h"
+
+#include "../../Tools/UnionFind.h"
 
 void SMTSolver_eq::reset_method()
 {

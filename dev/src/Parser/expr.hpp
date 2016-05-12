@@ -14,6 +14,7 @@
 #include <algorithm>    //std::find
 #include <map>          //std::map
 
+#include "../NewCore/SMT/SMTSolver_QF_UF.h"
 class Expr;
 
 
@@ -86,6 +87,37 @@ class EVar : public Expr
         virtual unsigned int size();
 
         int index;
+}; // EVar
+
+/***********************************/
+/**********  Constant    ***********/
+/***********************************/
+
+class ECst : public Expr
+{
+    public:
+        ECst(char name[256]); 
+
+        // Tseitin transformation of this expression
+        virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
+                              std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
+                              std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+    
+        // Return the variable indexes (in-out parameter) of the expression
+        virtual void getVars(std::vector<int> &p_originalVars);
+
+        // Stringify the expression
+        virtual std::string to_string();
+
+        // Get var assiociated to the term
+        virtual int getVarTerm();
+
+        // Get the number or arguments
+        virtual unsigned int size();
+
+        char value;
+	int index;
 }; // EVar
 
 /***********************************/
