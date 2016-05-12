@@ -34,6 +34,19 @@
 
 using namespace std;
 
+void dfsdeb(struct smt_term *root, int tab)
+{
+    for(unsigned int i = 0; i < tab; ++i)
+        cout << "\t";
+    cout << root->index << " " << root->s << " " << root->var << endl;
+    
+    for(unsigned int i = 0; i < root->args.size(); ++i)
+    {
+        //cout << "SEND" << root->args[i].index << endl;
+        dfsdeb(&(root->args[i]), tab + 1);
+    }
+}
+
 LOGParser::LOGParser(const string &p_fileName /* = ""  */)
 {
     m_fileName = p_fileName;
@@ -76,10 +89,12 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     } while (!feof(yyin));   
     fclose(yyin);
     
-    for(auto i : funcorresp)
+    /*for(auto i : funcorresp)
         cout << "F:"  <<  i.first << " => " << i.second->assoc_var << endl;
     for(auto i : argscorresp)
         cout << "A: " << i.first << " => " << i.second->assoc_var << endl;
+
+    dfsdeb(root, 0);*/
 
     vector<pair<map<int,bool>, bool>> clauses;   
 
@@ -205,7 +220,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
 
     for(auto entry : corresp)
     {
-        cout << entry.first.first << " = " << entry.first.second << " is " << atoi(entry.second->to_string().c_str()) << endl;
+        //cout << entry.first.first << " = " << entry.first.second << " is " << atoi(entry.second->to_string().c_str()) << endl;
         struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
         p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
     }

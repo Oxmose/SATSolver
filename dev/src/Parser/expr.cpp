@@ -232,9 +232,9 @@ Expr* EArg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
                     map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
-    struct smt_term arg_t(index);
-    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &arg_t);
-    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &arg_t);
+    //struct smt_term arg_t(index);
+    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
+    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
 
     string key = to_string();
     if(argscorresp.find(key) != argscorresp.end())
@@ -255,8 +255,8 @@ Expr* EArg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
 
     argscorresp[key] = arg;
     
-    arg_t.index = p_maxIndex;
-    root->args.push_back(arg_t);
+    //arg_t.index = p_maxIndex;
+    //root->args.push_back(arg_t);
 
     // Then we return the newly created variable
     return var;
