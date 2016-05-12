@@ -147,8 +147,7 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
             exit(1);
         }
 
-    cout << m_name << " has arrity " << arrity << endl;
-    fflush(stdout);
+    //cout << m_name << " has arrity " << arrity << endl;
 
     string key = to_string();
     if(funcorresp.find(key) != funcorresp.end())
@@ -186,7 +185,7 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     index = p_maxIndex;
 
     
-    fun_t.index = index;
+    fun_t.in_literal = index;
     fun_t.s = m_name[0];
     root->args.push_back(fun_t);
 

@@ -34,7 +34,7 @@ void SMTSolver_eq::reset_method()
 void SMTSolver_eq::cancel_last_decision()
 {
 	assert(settings_s.smte_s);
-	int last_dec_index = solver->decision_stack.size()-1;
+	//int last_dec_index = solver->decision_stack.size()-1;
 	decision last_decision = solver->decision_stack.back();
 
 	if(solver->dpll_to_smt.find(abs(last_decision.dec)) == solver->dpll_to_smt.end())
@@ -257,7 +257,7 @@ void SMTSolver_eq::get_solution()
 	for(auto c : composante)
 	{
 		OUTDEBUG(cerr << "C" << c.first << ", "<<  connectivity_check.find(c.second[0])->getValue() << ": {");
-		int k = 0;
+		unsigned int k = 0;
 		for(auto b: c.second)
 		{
 			OUTDEBUG(cerr << b << ((k == c.second.size()-1) ? "" : ", "));
@@ -281,8 +281,8 @@ void SMTSolver_eq::get_solution()
 			bool possible = true;
 			for(auto s1 : not_possible)
 				for(auto s2: s1.second)
-					if(connectivity_check.find(s1.first)->getValue() == r1 && connectivity_check.find(s2.first)->getValue() == r2 ||
-				   		connectivity_check.find(s1.first)->getValue() == r2 && connectivity_check.find(s2.first)->getValue() == r1)
+					if((((int)connectivity_check.find(s1.first)->getValue() == r1) && ((int)connectivity_check.find(s2.first)->getValue() == r2)) ||
+				   		(((int)connectivity_check.find(s1.first)->getValue() == r2) && ((int)connectivity_check.find(s2.first)->getValue() == r1)))
 				   		possible = false;
 			if(possible)
 			{
@@ -301,7 +301,7 @@ void SMTSolver_eq::get_solution()
 	for(auto c : composante)
 	{
 		cout << "C(" << connectivity_check.find(c.second[0])->getValue() << "): {";
-		int k = 0;
+		unsigned int k = 0;
 		for(auto b: c.second)
 		{
 			cout << b << ((k == c.second.size()-1) ? "" : ", ");

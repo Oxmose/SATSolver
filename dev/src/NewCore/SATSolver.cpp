@@ -706,7 +706,6 @@ void SATSolver::emplace_eq(unsigned int var, struct smt_literal *eq)
     dpll_to_smt.emplace(var, eq);
 }
 
-
 void SATSolver::get_smt_solution()
 {
     smt_solver->get_solution();

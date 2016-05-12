@@ -36,9 +36,9 @@ using namespace std;
 
 void dfsdeb(struct smt_term *root, int tab)
 {
-    for(unsigned int i = 0; i < tab; ++i)
+    for(int i = 0; i < tab; ++i)
         cout << "\t";
-    cout << root->index << " " << root->s << " " << root->var << endl;
+    cout << root->in_literal << " " << root->s << " " << root->var << endl;
     
     for(unsigned int i = 0; i < root->args.size(); ++i)
     {
@@ -108,7 +108,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     {
         string strForm = exp->to_string();
 
-        cout << strForm << endl;
+        //cout << strForm << endl;
 
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
@@ -218,16 +218,82 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         clause.clear();
     }
 
-    for(auto entry : corresp)
+    if(settings_s.smte_s)
     {
-        //cout << entry.first.first << " = " << entry.first.second << " is " << atoi(entry.second->to_string().c_str()) << endl;
-        struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
-        p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
+        for(auto entry : corresp)
+        {
+            //cout << entry.first.first << " = " << entry.first.second << " is " << atoi(entry.second->to_string().c_str()) << endl;
+            struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
+            p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
+        }
+        for(auto entry : ncorresp)
+        {
+            struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, false);
+            p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
+        }
     }
-    for(auto entry : ncorresp)
+    else if(settings_s.smtc_s)
     {
-        struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, false);
-        p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
+        for(auto entry : corresp)
+        {
+            struct smt_term left, right;
+            bool fleft = false;
+            bool fright = false;
+            for(unsigned int i = 0; i < root->args.size(); ++i)
+            {
+                if(fleft && fright) break;
+                if(root->args[i].in_literal == entry.first.first)
+                {
+                    left.in_literal = root->args[i].in_literal;
+                    left.s = root->args[i].s;
+                    left.var = root->args[i].var;
+                    left.args = root->args[i].args;
+                    fleft = true;
+                }
+                else if(root->args[i].in_literal == entry.first.second)
+                {
+                    right.in_literal = root->args[i].in_literal;
+                    right.s = root->args[i].s;
+                    right.var = root->args[i].var;
+                    right.args = root->args[i].args;
+                    fright = true;
+                }                
+            }
+
+            //cout << left.in_literal << " = " << right.in_literal << " is " << atoi(entry.second->to_string().c_str()) << endl;
+            struct smt_literal *eq = new smt_literal_qf_uf(atoi(entry.second->to_string().c_str()), left, right, true);
+            p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
+        }
+        for(auto entry : ncorresp)
+        {
+            struct smt_term left, right;
+            bool fleft = false;
+            bool fright = false;
+            for(unsigned int i = 0; i < root->args.size(); ++i)
+            {
+                if(fleft && fright) break;
+                if(root->args[i].in_literal == entry.first.first)
+                {
+                    left.in_literal = root->args[i].in_literal;
+                    left.s = root->args[i].s;
+                    left.var = root->args[i].var;
+                    left.args = root->args[i].args;
+                    fleft = true;
+                }
+                else if(root->args[i].in_literal == entry.first.second)
+                {
+                    right.in_literal = root->args[i].in_literal;
+                    right.s = root->args[i].s;
+                    right.var = root->args[i].var;
+                    right.args = root->args[i].args;
+                    fright = true;
+                }                
+            }
+
+            //cout << left.in_literal << " != " << right.in_literal << " is " << atoi(entry.second->to_string().c_str()) << endl;
+            struct smt_literal *eq = new smt_literal_qf_uf(atoi(entry.second->to_string().c_str()), left, right, false);
+            p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
+        }
     }
 
     OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
