@@ -40,6 +40,8 @@ extern int yy_flex_debug;
 // Function that stop the programm on error (kind of excpetion)
 void yyerror(const char *s);
 
+void dfsdeb(struct smt_term *root, int tab);
+
 class LOGParser : public IParser
 {
     public:
