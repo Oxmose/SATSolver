@@ -3,7 +3,6 @@
 
 #include "SMTSolver.h"
 
-#include "../../Tools/UnionFind.h"
 
 using namespace std;
 

@@ -43,7 +43,7 @@ Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     }
     else
     {
-        struct smt_term var(index, 0, index);
+        smt_term var(index, 0, index);
         root->args.push_back(var);
         return this;
     }
