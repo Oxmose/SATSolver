@@ -1,12 +1,13 @@
 #ifndef DEF_SMT_SOLVER_EQ_H
 #define DEF_SMT_SOLVER_EQ_H
 
-#include "SMTSolver.h"
-
 #include "../../Tools/UnionFind.h"
+#include "SMTSolver.h"
 #include <unordered_map>
 
 using namespace std;
+
+class UnionFind;
 
 struct smt_literal_eq : smt_literal
 {
@@ -34,6 +35,9 @@ class SMTSolver_eq : public SMTSolver
 		pair<clause,int> diagnose_conflict(int conflict_dec_index);
 
 		bool dfs_enumerate_paths(int curr, int dest, map<int,int>& succ);
+
+		void visite_composante(int curr, int id, map<int,int>& id_composante);
+		void get_solution();
 
 		unordered_map<int, unordered_map<int,int>> edge;
 		unordered_map<int, unordered_map<int,int>> not_possible;

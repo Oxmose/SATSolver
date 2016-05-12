@@ -14,6 +14,7 @@
 #include <atomic>   // std::atomic
 
 // OTHER INCLUDES FROM PROJECT
+#include "../NewCore/SMT/SMTSolver_QF_UF.h" // SMTSolver_QF_UF class
 #include "../NewCore/SMT/SMTSolver_eq.h" // SMTSolver_eq class
 #include "../NewCore/SATSolver.h" // SATSolver class
 #include "../NewCore/clause.h" // Clause class
@@ -64,12 +65,14 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     map<string, args_s*> argscorresp;
     map<string, unsigned int> arrities;
 
+    struct smt_term *root = new struct smt_term(0);
+
     vector<Expr*> exps;
     do 
     {
         yy_flex_debug = 1;
         yyparse();
-        exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp, funcorresp, arrities, argscorresp);        
+        exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp, funcorresp, arrities, argscorresp, root);        
     } while (!feof(yyin));   
     fclose(yyin);
     
@@ -98,6 +101,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         string strForm = exp->to_string();
 
         cout << strForm << endl;
+
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
@@ -222,7 +226,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
-vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities, map<string, args_s*> &argscorresp)
+vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities, map<string, args_s*> &argscorresp, struct smt_term *root)
 {
     // Get the set af vars in the expression
     res->getVars(m_originalVars);
@@ -235,7 +239,7 @@ vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, m
 
     vector<Expr*> exps;
     // Transform the expression
-    Expr* global = res->tseitin(maxIndex, exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
+    Expr* global = res->tseitin(maxIndex, exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
     exps.push_back(global);
     p_maxIndex = maxIndex;
 

@@ -30,7 +30,7 @@ EVar::EVar(int i) : index(i) {}
 Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     // Then We create the new variable for this expression
     if(trans)
@@ -43,6 +43,8 @@ Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     }
     else
     {
+        struct smt_term var(index, 0, index);
+        root->args.push_back(var);
         return this;
     }
 } // Expr* tseitin(int&, vector<Expr*>&)
@@ -90,7 +92,7 @@ EFun::EFun(char *name, Expr* e) : m_args(e)
 Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     // Check arrity
     unsigned int arrity = m_args->size();
@@ -111,8 +113,9 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
         return funcorresp[key]->ptr;
     }
 
+    struct smt_term var(index, m_name);
     // Then We create the new variable for this expression
-    m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
+    m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, &var);
 
     string newkey = m_args->to_string();
     if(argscorresp.find(newkey) == argscorresp.end())
@@ -136,7 +139,12 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     fun->assoc_var = p_maxIndex;
     fun->ptr = this;
 
-    index = p_maxIndex;   
+    index = p_maxIndex;
+
+    
+    var->index = index;
+    var->s = m_name[0];
+    root->args.push_back(var);
 
     funcorresp[key] = fun;
 
@@ -178,10 +186,12 @@ EArg::EArg(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EArg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
-    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
-    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
+    struct smt_term var(index);
+    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, &var);
+    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, &var);
+
     string key = to_string();
     if(argscorresp.find(key) != argscorresp.end())
     {
@@ -200,6 +210,9 @@ Expr* EArg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     arg->assoc_var = p_maxIndex;
 
     argscorresp[key] = arg;
+    
+    var->index = p_maxIndex;
+    root->args.push_back(var);
 
     // Then we return the newly created variable
     return var;
@@ -236,7 +249,7 @@ EEqu::EEqu(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EEqu::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     // First we transform every sub expressions int the expression
     // and get the newly added variable
@@ -299,7 +312,7 @@ EImp::EImp(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EImp::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
     Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
@@ -347,7 +360,7 @@ EXor::EXor(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EXor::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
     Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
@@ -404,7 +417,7 @@ EDis::EDis(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EDis::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
     Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
@@ -453,7 +466,7 @@ ECon::ECon(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* ECon::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
     Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
@@ -503,7 +516,7 @@ EAnt::EAnt(Expr * e1) : op1(e1) {}
 Expr* EAnt::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
@@ -547,7 +560,7 @@ ENeg::ENeg(Expr * e1) : op1(e1) {}
 Expr* ENeg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
@@ -591,7 +604,7 @@ EEqua::EEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
     op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
@@ -646,7 +659,7 @@ ENEqua::ENEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
     pair<int, int> pair_t = make_pair(op1->getVarTerm(), op2->getVarTerm());
 
