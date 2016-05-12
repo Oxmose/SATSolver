@@ -12,41 +12,42 @@ Grammaire
 
     4 term: TK_VAR
     5     | TK_FUN TK_LPAREN args TK_RPAREN
+    6     | TK_FUN
 
-    6 expression: TK_VAR
-    7           | TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | expression TK_COMMA expression
-    9           | TK_LPAREN expression TK_RPAREN
-   10           | term TK_EQUA term
-   11           | term TK_NEQUA term
-   12           | expression TK_EQU expression
-   13           | expression TK_IMP expression
-   14           | expression TK_XOR expression
-   15           | expression TK_DIS expression
-   16           | expression TK_CON expression
-   17           | TK_ANT expression
-   18           | TK_NEG expression
+    7 expression: TK_VAR
+    8           | TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | expression TK_COMMA expression
+   10           | TK_LPAREN expression TK_RPAREN
+   11           | term TK_EQUA term
+   12           | term TK_NEQUA term
+   13           | expression TK_EQU expression
+   14           | expression TK_IMP expression
+   15           | expression TK_XOR expression
+   16           | expression TK_DIS expression
+   17           | expression TK_CON expression
+   18           | TK_ANT expression
+   19           | TK_NEG expression
 
 
 Terminaux, suivis des règles où ils apparaissent
 
 $end (0) 0
 error (256)
-TK_DIS (258) 15
-TK_CON (259) 16
-TK_XOR (260) 14
-TK_IMP (261) 13
-TK_EQU (262) 12
-TK_ANT (263) 17
-TK_NEG (264) 18
-TK_EQUA (265) 10
-TK_NEQUA (266) 11
-TK_LPAREN (267) 5 7 9
-TK_RPAREN (268) 5 7 9
-TK_COMMA (269) 3 8
+TK_DIS (258) 16
+TK_CON (259) 17
+TK_XOR (260) 15
+TK_IMP (261) 14
+TK_EQU (262) 13
+TK_ANT (263) 18
+TK_NEG (264) 19
+TK_EQUA (265) 11
+TK_NEQUA (266) 12
+TK_LPAREN (267) 5 8 10
+TK_RPAREN (268) 5 8 10
+TK_COMMA (269) 3 9
 TK_ZERO (270) 1
-TK_FUN (271) 5 7
-TK_VAR (272) 4 6
+TK_FUN (271) 5 6 8
+TK_VAR (272) 4 7
 
 
 Non-terminaux, suivis des règles où ils apparaissent
@@ -58,10 +59,10 @@ input (19)
 args (20)
     à gauche: 2 3, à droite: 3 5
 term (21)
-    à gauche: 4 5, à droite: 2 3 10 11
+    à gauche: 4 5 6, à droite: 2 3 11 12
 expression (22)
-    à gauche: 6 7 8 9 10 11 12 13 14 15 16 17 18, à droite: 1 7 8
-    9 12 13 14 15 16 17 18
+    à gauche: 7 8 9 10 11 12 13 14 15 16 17 18 19, à droite: 1 8
+    9 10 13 14 15 16 17 18 19
 
 
 État 0
@@ -70,19 +71,20 @@ expression (22)
     1 input: . expression TK_ZERO
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -99,20 +101,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   17           | TK_ANT . expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   18           | TK_ANT . expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -128,20 +131,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
-   18           | TK_NEG . expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
+   19           | TK_NEG . expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -157,20 +161,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-    9           | TK_LPAREN . expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   10           | TK_LPAREN . expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -185,23 +190,26 @@ expression (22)
 État 4
 
     5 term: TK_FUN . TK_LPAREN args TK_RPAREN
-    7 expression: TK_FUN . TK_LPAREN expression TK_RPAREN
+    6     | TK_FUN .  [TK_EQUA, TK_NEQUA, TK_RPAREN, TK_COMMA]
+    8 expression: TK_FUN . TK_LPAREN expression TK_RPAREN
 
     TK_LPAREN  décalage et aller à l'état 12
+
+    $défaut  réduction par utilisation de la règle 6 (term)
 
 
 État 5
 
     4 term: TK_VAR .  [TK_EQUA, TK_NEQUA, TK_RPAREN, TK_COMMA]
-    6 expression: TK_VAR .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_COMMA, TK_ZERO]
+    7 expression: TK_VAR .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_COMMA, TK_ZERO]
 
     TK_EQUA    réduction par utilisation de la règle 4 (term)
     TK_NEQUA   réduction par utilisation de la règle 4 (term)
     TK_RPAREN  réduction par utilisation de la règle 4 (term)
-    TK_RPAREN  [réduction par utilisation de la règle 6 (expression)]
+    TK_RPAREN  [réduction par utilisation de la règle 7 (expression)]
     TK_COMMA   réduction par utilisation de la règle 4 (term)
-    TK_COMMA   [réduction par utilisation de la règle 6 (expression)]
-    $défaut   réduction par utilisation de la règle 6 (expression)
+    TK_COMMA   [réduction par utilisation de la règle 7 (expression)]
+    $défaut   réduction par utilisation de la règle 7 (expression)
 
 
 État 6
@@ -213,8 +221,8 @@ expression (22)
 
 État 7
 
-   10 expression: term . TK_EQUA term
-   11           | term . TK_NEQUA term
+   11 expression: term . TK_EQUA term
+   12           | term . TK_NEQUA term
 
     TK_EQUA   décalage et aller à l'état 14
     TK_NEQUA  décalage et aller à l'état 15
@@ -223,12 +231,12 @@ expression (22)
 État 8
 
     1 input: expression . TK_ZERO
-    8 expression: expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
+    9 expression: expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
 
     TK_DIS    décalage et aller à l'état 16
     TK_CON    décalage et aller à l'état 17
@@ -241,57 +249,57 @@ expression (22)
 
 État 9
 
-    8 expression: expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
-   17           | TK_ANT expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-
-    TK_COMMA  décalage et aller à l'état 21
-
-    $défaut  réduction par utilisation de la règle 17 (expression)
-
-    Conflit entre la règle 17 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_ANT).
-    Conflit entre la règle 17 et le jeton TK_CON résolu par réduction (TK_CON < TK_ANT).
-    Conflit entre la règle 17 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_ANT).
-    Conflit entre la règle 17 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_ANT).
-    Conflit entre la règle 17 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_ANT).
-    Conflit entre la règle 17 et le jeton TK_COMMA résolu par décalage (TK_ANT < TK_COMMA).
-
-
-État 10
-
-    8 expression: expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
-   18           | TK_NEG expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+    9 expression: expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
+   18           | TK_ANT expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
 
     TK_COMMA  décalage et aller à l'état 21
 
     $défaut  réduction par utilisation de la règle 18 (expression)
 
-    Conflit entre la règle 18 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_NEG).
-    Conflit entre la règle 18 et le jeton TK_CON résolu par réduction (TK_CON < TK_NEG).
-    Conflit entre la règle 18 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_NEG).
-    Conflit entre la règle 18 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_NEG).
-    Conflit entre la règle 18 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_NEG).
-    Conflit entre la règle 18 et le jeton TK_COMMA résolu par décalage (TK_NEG < TK_COMMA).
+    Conflit entre la règle 18 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_ANT).
+    Conflit entre la règle 18 et le jeton TK_CON résolu par réduction (TK_CON < TK_ANT).
+    Conflit entre la règle 18 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_ANT).
+    Conflit entre la règle 18 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_ANT).
+    Conflit entre la règle 18 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_ANT).
+    Conflit entre la règle 18 et le jeton TK_COMMA résolu par décalage (TK_ANT < TK_COMMA).
+
+
+État 10
+
+    9 expression: expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
+   19           | TK_NEG expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+
+    TK_COMMA  décalage et aller à l'état 21
+
+    $défaut  réduction par utilisation de la règle 19 (expression)
+
+    Conflit entre la règle 19 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_NEG).
+    Conflit entre la règle 19 et le jeton TK_CON résolu par réduction (TK_CON < TK_NEG).
+    Conflit entre la règle 19 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_NEG).
+    Conflit entre la règle 19 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_NEG).
+    Conflit entre la règle 19 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_NEG).
+    Conflit entre la règle 19 et le jeton TK_COMMA résolu par décalage (TK_NEG < TK_COMMA).
 
 
 État 11
 
-    8 expression: expression . TK_COMMA expression
-    9           | TK_LPAREN expression . TK_RPAREN
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
+    9 expression: expression . TK_COMMA expression
+   10           | TK_LPAREN expression . TK_RPAREN
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
 
     TK_DIS     décalage et aller à l'état 16
     TK_CON     décalage et aller à l'état 17
@@ -309,20 +317,21 @@ expression (22)
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
     5     | TK_FUN TK_LPAREN . args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    7           | TK_FUN TK_LPAREN . expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    8           | TK_FUN TK_LPAREN . expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -346,7 +355,8 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-   10 expression: term TK_EQUA . term
+    6     | . TK_FUN
+   11 expression: term TK_EQUA . term
 
     TK_FUN  décalage et aller à l'état 27
     TK_VAR  décalage et aller à l'état 28
@@ -358,7 +368,8 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-   11 expression: term TK_NEQUA . term
+    6     | . TK_FUN
+   12 expression: term TK_NEQUA . term
 
     TK_FUN  décalage et aller à l'état 27
     TK_VAR  décalage et aller à l'état 28
@@ -370,20 +381,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   15           | expression TK_DIS . expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   16           | expression TK_DIS . expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -399,20 +411,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   16           | expression TK_CON . expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   17           | expression TK_CON . expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -428,20 +441,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   14           | expression TK_XOR . expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   15           | expression TK_XOR . expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -457,20 +471,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   13           | expression TK_IMP . expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   14           | expression TK_IMP . expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -486,20 +501,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   12           | expression TK_EQU . expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   13           | expression TK_EQU . expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -515,20 +531,21 @@ expression (22)
 
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
-    6 expression: . TK_VAR
-    7           | . TK_FUN TK_LPAREN expression TK_RPAREN
-    8           | . expression TK_COMMA expression
-    8           | expression TK_COMMA . expression
-    9           | . TK_LPAREN expression TK_RPAREN
-   10           | . term TK_EQUA term
-   11           | . term TK_NEQUA term
-   12           | . expression TK_EQU expression
-   13           | . expression TK_IMP expression
-   14           | . expression TK_XOR expression
-   15           | . expression TK_DIS expression
-   16           | . expression TK_CON expression
-   17           | . TK_ANT expression
-   18           | . TK_NEG expression
+    6     | . TK_FUN
+    7 expression: . TK_VAR
+    8           | . TK_FUN TK_LPAREN expression TK_RPAREN
+    9           | . expression TK_COMMA expression
+    9           | expression TK_COMMA . expression
+   10           | . TK_LPAREN expression TK_RPAREN
+   11           | . term TK_EQUA term
+   12           | . term TK_NEQUA term
+   13           | . expression TK_EQU expression
+   14           | . expression TK_IMP expression
+   15           | . expression TK_XOR expression
+   16           | . expression TK_DIS expression
+   17           | . expression TK_CON expression
+   18           | . TK_ANT expression
+   19           | . TK_NEG expression
 
     TK_ANT     décalage et aller à l'état 1
     TK_NEG     décalage et aller à l'état 2
@@ -549,9 +566,9 @@ expression (22)
 
 État 23
 
-    9 expression: TK_LPAREN expression TK_RPAREN .
+   10 expression: TK_LPAREN expression TK_RPAREN .
 
-    $défaut  réduction par utilisation de la règle 9 (expression)
+    $défaut  réduction par utilisation de la règle 10 (expression)
 
 
 État 24
@@ -566,8 +583,8 @@ expression (22)
 État 25
 
     2 args: term .  [TK_RPAREN, TK_COMMA]
-   10 expression: term . TK_EQUA term
-   11           | term . TK_NEQUA term
+   11 expression: term . TK_EQUA term
+   12           | term . TK_NEQUA term
 
     TK_EQUA   décalage et aller à l'état 14
     TK_NEQUA  décalage et aller à l'état 15
@@ -577,13 +594,13 @@ expression (22)
 
 État 26
 
-    7 expression: TK_FUN TK_LPAREN expression . TK_RPAREN
-    8           | expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
+    8 expression: TK_FUN TK_LPAREN expression . TK_RPAREN
+    9           | expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
 
     TK_DIS     décalage et aller à l'état 16
     TK_CON     décalage et aller à l'état 17
@@ -597,8 +614,11 @@ expression (22)
 État 27
 
     5 term: TK_FUN . TK_LPAREN args TK_RPAREN
+    6     | TK_FUN .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_COMMA, TK_ZERO]
 
     TK_LPAREN  décalage et aller à l'état 40
+
+    $défaut  réduction par utilisation de la règle 6 (term)
 
 
 État 28
@@ -610,121 +630,121 @@ expression (22)
 
 État 29
 
-   10 expression: term TK_EQUA term .
-
-    $défaut  réduction par utilisation de la règle 10 (expression)
-
-
-État 30
-
-   11 expression: term TK_NEQUA term .
+   11 expression: term TK_EQUA term .
 
     $défaut  réduction par utilisation de la règle 11 (expression)
 
 
+État 30
+
+   12 expression: term TK_NEQUA term .
+
+    $défaut  réduction par utilisation de la règle 12 (expression)
+
+
 État 31
 
-    8 expression: expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   15           | expression TK_DIS expression .  [TK_DIS, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-   16           | expression . TK_CON expression
+    9 expression: expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   16           | expression TK_DIS expression .  [TK_DIS, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+   17           | expression . TK_CON expression
 
     TK_CON    décalage et aller à l'état 17
     TK_COMMA  décalage et aller à l'état 21
 
-    $défaut  réduction par utilisation de la règle 15 (expression)
+    $défaut  réduction par utilisation de la règle 16 (expression)
 
-    Conflit entre la règle 15 et le jeton TK_DIS résolu par réduction (%left TK_DIS).
-    Conflit entre la règle 15 et le jeton TK_CON résolu par décalage (TK_DIS < TK_CON).
-    Conflit entre la règle 15 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_DIS).
-    Conflit entre la règle 15 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_DIS).
-    Conflit entre la règle 15 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_DIS).
-    Conflit entre la règle 15 et le jeton TK_COMMA résolu par décalage (TK_DIS < TK_COMMA).
+    Conflit entre la règle 16 et le jeton TK_DIS résolu par réduction (%left TK_DIS).
+    Conflit entre la règle 16 et le jeton TK_CON résolu par décalage (TK_DIS < TK_CON).
+    Conflit entre la règle 16 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_DIS).
+    Conflit entre la règle 16 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_DIS).
+    Conflit entre la règle 16 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_DIS).
+    Conflit entre la règle 16 et le jeton TK_COMMA résolu par décalage (TK_DIS < TK_COMMA).
 
 
 État 32
 
-    8 expression: expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
-   16           | expression TK_CON expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+    9 expression: expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
+   17           | expression TK_CON expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
 
     TK_COMMA  décalage et aller à l'état 21
 
-    $défaut  réduction par utilisation de la règle 16 (expression)
+    $défaut  réduction par utilisation de la règle 17 (expression)
 
-    Conflit entre la règle 16 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_CON).
-    Conflit entre la règle 16 et le jeton TK_CON résolu par réduction (%left TK_CON).
-    Conflit entre la règle 16 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_CON).
-    Conflit entre la règle 16 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_CON).
-    Conflit entre la règle 16 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_CON).
-    Conflit entre la règle 16 et le jeton TK_COMMA résolu par décalage (TK_CON < TK_COMMA).
+    Conflit entre la règle 17 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_CON).
+    Conflit entre la règle 17 et le jeton TK_CON résolu par réduction (%left TK_CON).
+    Conflit entre la règle 17 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_CON).
+    Conflit entre la règle 17 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_CON).
+    Conflit entre la règle 17 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_CON).
+    Conflit entre la règle 17 et le jeton TK_COMMA résolu par décalage (TK_CON < TK_COMMA).
 
 
 État 33
 
-    8 expression: expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   14           | expression TK_XOR expression .  [TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
+    9 expression: expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   15           | expression TK_XOR expression .  [TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
 
     TK_DIS    décalage et aller à l'état 16
     TK_CON    décalage et aller à l'état 17
     TK_COMMA  décalage et aller à l'état 21
 
-    $défaut  réduction par utilisation de la règle 14 (expression)
+    $défaut  réduction par utilisation de la règle 15 (expression)
 
-    Conflit entre la règle 14 et le jeton TK_DIS résolu par décalage (TK_XOR < TK_DIS).
-    Conflit entre la règle 14 et le jeton TK_CON résolu par décalage (TK_XOR < TK_CON).
-    Conflit entre la règle 14 et le jeton TK_XOR résolu par réduction (%left TK_XOR).
-    Conflit entre la règle 14 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_XOR).
-    Conflit entre la règle 14 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_XOR).
-    Conflit entre la règle 14 et le jeton TK_COMMA résolu par décalage (TK_XOR < TK_COMMA).
+    Conflit entre la règle 15 et le jeton TK_DIS résolu par décalage (TK_XOR < TK_DIS).
+    Conflit entre la règle 15 et le jeton TK_CON résolu par décalage (TK_XOR < TK_CON).
+    Conflit entre la règle 15 et le jeton TK_XOR résolu par réduction (%left TK_XOR).
+    Conflit entre la règle 15 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_XOR).
+    Conflit entre la règle 15 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_XOR).
+    Conflit entre la règle 15 et le jeton TK_COMMA résolu par décalage (TK_XOR < TK_COMMA).
 
 
 État 34
 
-    8 expression: expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   13           | expression TK_IMP expression .  [TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
+    9 expression: expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   14           | expression TK_IMP expression .  [TK_IMP, TK_EQU, TK_RPAREN, TK_ZERO]
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
 
     TK_DIS    décalage et aller à l'état 16
     TK_CON    décalage et aller à l'état 17
     TK_XOR    décalage et aller à l'état 18
     TK_COMMA  décalage et aller à l'état 21
 
-    $défaut  réduction par utilisation de la règle 13 (expression)
+    $défaut  réduction par utilisation de la règle 14 (expression)
 
-    Conflit entre la règle 13 et le jeton TK_DIS résolu par décalage (TK_IMP < TK_DIS).
-    Conflit entre la règle 13 et le jeton TK_CON résolu par décalage (TK_IMP < TK_CON).
-    Conflit entre la règle 13 et le jeton TK_XOR résolu par décalage (TK_IMP < TK_XOR).
-    Conflit entre la règle 13 et le jeton TK_IMP résolu par réduction (%left TK_IMP).
-    Conflit entre la règle 13 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_IMP).
-    Conflit entre la règle 13 et le jeton TK_COMMA résolu par décalage (TK_IMP < TK_COMMA).
+    Conflit entre la règle 14 et le jeton TK_DIS résolu par décalage (TK_IMP < TK_DIS).
+    Conflit entre la règle 14 et le jeton TK_CON résolu par décalage (TK_IMP < TK_CON).
+    Conflit entre la règle 14 et le jeton TK_XOR résolu par décalage (TK_IMP < TK_XOR).
+    Conflit entre la règle 14 et le jeton TK_IMP résolu par réduction (%left TK_IMP).
+    Conflit entre la règle 14 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_IMP).
+    Conflit entre la règle 14 et le jeton TK_COMMA résolu par décalage (TK_IMP < TK_COMMA).
 
 
 État 35
 
-    8 expression: expression . TK_COMMA expression
-   12           | expression . TK_EQU expression
-   12           | expression TK_EQU expression .  [TK_EQU, TK_RPAREN, TK_ZERO]
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
+    9 expression: expression . TK_COMMA expression
+   13           | expression . TK_EQU expression
+   13           | expression TK_EQU expression .  [TK_EQU, TK_RPAREN, TK_ZERO]
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
 
     TK_DIS    décalage et aller à l'état 16
     TK_CON    décalage et aller à l'état 17
@@ -732,34 +752,34 @@ expression (22)
     TK_IMP    décalage et aller à l'état 19
     TK_COMMA  décalage et aller à l'état 21
 
-    $défaut  réduction par utilisation de la règle 12 (expression)
+    $défaut  réduction par utilisation de la règle 13 (expression)
 
-    Conflit entre la règle 12 et le jeton TK_DIS résolu par décalage (TK_EQU < TK_DIS).
-    Conflit entre la règle 12 et le jeton TK_CON résolu par décalage (TK_EQU < TK_CON).
-    Conflit entre la règle 12 et le jeton TK_XOR résolu par décalage (TK_EQU < TK_XOR).
-    Conflit entre la règle 12 et le jeton TK_IMP résolu par décalage (TK_EQU < TK_IMP).
-    Conflit entre la règle 12 et le jeton TK_EQU résolu par réduction (%left TK_EQU).
-    Conflit entre la règle 12 et le jeton TK_COMMA résolu par décalage (TK_EQU < TK_COMMA).
+    Conflit entre la règle 13 et le jeton TK_DIS résolu par décalage (TK_EQU < TK_DIS).
+    Conflit entre la règle 13 et le jeton TK_CON résolu par décalage (TK_EQU < TK_CON).
+    Conflit entre la règle 13 et le jeton TK_XOR résolu par décalage (TK_EQU < TK_XOR).
+    Conflit entre la règle 13 et le jeton TK_IMP résolu par décalage (TK_EQU < TK_IMP).
+    Conflit entre la règle 13 et le jeton TK_EQU résolu par réduction (%left TK_EQU).
+    Conflit entre la règle 13 et le jeton TK_COMMA résolu par décalage (TK_EQU < TK_COMMA).
 
 
 État 36
 
-    8 expression: expression . TK_COMMA expression
-    8           | expression TK_COMMA expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_COMMA, TK_ZERO]
-   12           | expression . TK_EQU expression
-   13           | expression . TK_IMP expression
-   14           | expression . TK_XOR expression
-   15           | expression . TK_DIS expression
-   16           | expression . TK_CON expression
+    9 expression: expression . TK_COMMA expression
+    9           | expression TK_COMMA expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_RPAREN, TK_COMMA, TK_ZERO]
+   13           | expression . TK_EQU expression
+   14           | expression . TK_IMP expression
+   15           | expression . TK_XOR expression
+   16           | expression . TK_DIS expression
+   17           | expression . TK_CON expression
 
-    $défaut  réduction par utilisation de la règle 8 (expression)
+    $défaut  réduction par utilisation de la règle 9 (expression)
 
-    Conflit entre la règle 8 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_COMMA).
-    Conflit entre la règle 8 et le jeton TK_CON résolu par réduction (TK_CON < TK_COMMA).
-    Conflit entre la règle 8 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_COMMA).
-    Conflit entre la règle 8 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_COMMA).
-    Conflit entre la règle 8 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_COMMA).
-    Conflit entre la règle 8 et le jeton TK_COMMA résolu par réduction (%left TK_COMMA).
+    Conflit entre la règle 9 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_COMMA).
+    Conflit entre la règle 9 et le jeton TK_CON résolu par réduction (TK_CON < TK_COMMA).
+    Conflit entre la règle 9 et le jeton TK_XOR résolu par réduction (TK_XOR < TK_COMMA).
+    Conflit entre la règle 9 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_COMMA).
+    Conflit entre la règle 9 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_COMMA).
+    Conflit entre la règle 9 et le jeton TK_COMMA résolu par réduction (%left TK_COMMA).
 
 
 État 37
@@ -774,6 +794,7 @@ expression (22)
     3 args: args TK_COMMA . term
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
+    6     | . TK_FUN
 
     TK_FUN  décalage et aller à l'état 27
     TK_VAR  décalage et aller à l'état 28
@@ -783,9 +804,9 @@ expression (22)
 
 État 39
 
-    7 expression: TK_FUN TK_LPAREN expression TK_RPAREN .
+    8 expression: TK_FUN TK_LPAREN expression TK_RPAREN .
 
-    $défaut  réduction par utilisation de la règle 7 (expression)
+    $défaut  réduction par utilisation de la règle 8 (expression)
 
 
 État 40
@@ -795,6 +816,7 @@ expression (22)
     4 term: . TK_VAR
     5     | . TK_FUN TK_LPAREN args TK_RPAREN
     5     | TK_FUN TK_LPAREN . args TK_RPAREN
+    6     | . TK_FUN
 
     TK_FUN  décalage et aller à l'état 27
     TK_VAR  décalage et aller à l'état 28

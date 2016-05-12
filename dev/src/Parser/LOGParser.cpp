@@ -81,13 +81,6 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     for(auto i : argscorresp)
         cout << "A: " << i.first << " => " << i.second->assoc_var << endl;
 
-
-    for(unsigned int i : funcorresp)
-    {
-        
-    }
-
-    
     vector<pair<map<int,bool>, bool>> clauses;   
 
     // Browse each clause extracted and create the formula

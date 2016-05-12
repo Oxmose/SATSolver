@@ -63,6 +63,7 @@ args:
 term:
       TK_VAR                                     {$$ = new EVar($1);}
     | TK_FUN TK_LPAREN args TK_RPAREN            {$$ = new EFun($1, $3);} 
+    | TK_FUN					 {$$ = new ECst($1);}
     ; 
                           
 expression:

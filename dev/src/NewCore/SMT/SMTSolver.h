@@ -2,7 +2,6 @@
 #define DEF_SMT_SOLVER_H
 
 #include "../clause.h"
-#include "../../Tools/UnionFind.h"
 
 using namespace std;
 
