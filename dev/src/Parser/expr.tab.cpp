@@ -405,7 +405,7 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  19
+#define YYNRULES  20
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  43
 
@@ -455,8 +455,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    55,    55,    59,    60,    64,    65,    69,    70,    71,
-      72,    73,    74,    75,    76,    77,    78,    79,    80,    81
+       0,    55,    55,    59,    60,    64,    65,    66,    70,    71,
+      72,    73,    74,    75,    76,    77,    78,    79,    80,    81,
+      82
 };
 #endif
 
@@ -508,10 +509,10 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     0,     0,     7,     0,     0,     0,    18,
-      19,     0,     0,     1,     0,     0,     0,     0,     0,     0,
-       0,     0,     2,    10,     0,     3,     0,     0,     5,    11,
-      12,    16,    17,    15,    14,    13,     9,     6,     0,     8,
+       0,     0,     0,     0,     7,     8,     0,     0,     0,    19,
+      20,     0,     0,     1,     0,     0,     0,     0,     0,     0,
+       0,     0,     2,    11,     0,     3,     0,     7,     5,    12,
+      13,    17,    18,    16,    15,    14,    10,     6,     0,     9,
        0,     4,     3
 };
 
@@ -568,15 +569,17 @@ static const yytype_uint8 yystos[] =
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    18,    19,    20,    20,    21,    21,    22,    22,    22,
-      22,    22,    22,    22,    22,    22,    22,    22,    22,    22
+       0,    18,    19,    20,    20,    21,    21,    21,    22,    22,
+      22,    22,    22,    22,    22,    22,    22,    22,    22,    22,
+      22
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     1,     3,     1,     4,     1,     4,     3,
-       3,     3,     3,     3,     3,     3,     3,     3,     2,     2
+       0,     2,     2,     1,     3,     1,     4,     1,     1,     4,
+       3,     3,     3,     3,     3,     3,     3,     3,     3,     2,
+       2
 };
 
 
@@ -1255,107 +1258,113 @@ yyreduce:
         case 2:
 #line 55 "Parser/expr.ypp" /* yacc.c:1646  */
     { res = (yyvsp[-1].exp); }
-#line 1259 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1262 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 60 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EArg((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1265 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1268 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 64 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EVar((yyvsp[0].ival));}
-#line 1271 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1274 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 65 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new EFun((yyvsp[-3].name), (yyvsp[-1].exp));}
-#line 1277 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1280 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 69 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EVar((yyvsp[0].ival));}
-#line 1283 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 66 "Parser/expr.ypp" /* yacc.c:1646  */
+    {(yyval.exp) = new ECst((yyvsp[0].name));}
+#line 1286 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 70 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EFun((yyvsp[-3].name), (yyvsp[-1].exp));}
-#line 1289 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new EVar((yyvsp[0].ival));}
+#line 1292 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 71 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EArg((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1295 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new EFun((yyvsp[-3].name), (yyvsp[-1].exp));}
+#line 1298 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 72 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = (yyvsp[-1].exp);}
-#line 1301 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new EArg((yyvsp[-2].exp), (yyvsp[0].exp));}
+#line 1304 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 73 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EEqua((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1307 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = (yyvsp[-1].exp);}
+#line 1310 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 74 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new ENEqua((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1313 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new EEqua((yyvsp[-2].exp), (yyvsp[0].exp));}
+#line 1316 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 75 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EEqu((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1319 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new ENEqua((yyvsp[-2].exp), (yyvsp[0].exp));}
+#line 1322 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 76 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EImp((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1325 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new EEqu((yyvsp[-2].exp), (yyvsp[0].exp));}
+#line 1328 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 77 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EXor((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1331 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new EImp((yyvsp[-2].exp), (yyvsp[0].exp));}
+#line 1334 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 78 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EDis((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1337 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new EXor((yyvsp[-2].exp), (yyvsp[0].exp));}
+#line 1340 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 79 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new ECon((yyvsp[-2].exp), (yyvsp[0].exp));}
-#line 1343 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new EDis((yyvsp[-2].exp), (yyvsp[0].exp));}
+#line 1346 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 80 "Parser/expr.ypp" /* yacc.c:1646  */
-    {(yyval.exp) = new EAnt((yyvsp[0].exp));}
-#line 1349 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    {(yyval.exp) = new ECon((yyvsp[-2].exp), (yyvsp[0].exp));}
+#line 1352 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 81 "Parser/expr.ypp" /* yacc.c:1646  */
+    {(yyval.exp) = new EAnt((yyvsp[0].exp));}
+#line 1358 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 20:
+#line 82 "Parser/expr.ypp" /* yacc.c:1646  */
     {(yyval.exp) = new ENeg((yyvsp[0].exp));}
-#line 1355 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1364 "Parser/expr.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1359 "Parser/expr.tab.cpp" /* yacc.c:1646  */
+#line 1368 "Parser/expr.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1583,5 +1592,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 83 "Parser/expr.ypp" /* yacc.c:1906  */
+#line 84 "Parser/expr.ypp" /* yacc.c:1906  */
 

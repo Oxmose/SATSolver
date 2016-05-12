@@ -5,16 +5,28 @@
 
 using namespace std;
 
-struct smt_term : smt_literal
+struct smt_term
 {
-	smt_term(int index, char s=0, int var=0, vector<smt_term> args=vector<smt_term>()) : smt_literal(index), s(s), var(var), args(args) {}
-	virtual ~smt_term() {}
-	
+	smt_term(char s=0, int var=0, vector<smt_term> args = vector<smt_term>()) : s(s), var(var), args(args) {}
+
 	char s;
 	int var; //L'un ou l'autre
 	vector<smt_term> args;
 
-	virtual string to_str();
+	string to_str();
+};
+
+struct smt_literal_qf_uf : smt_literal
+{
+	smt_literal_qf_uf(int index, smt_term left, smt_term right, bool equal) : smt_literal(index), left(left), right(right), equal(equal) {}
+	virtual ~smt_literal_qf_uf() {}
+	
+	smt_term left;
+	smt_term right;
+
+	bool equal;
+	
+	string to_str();
 };
 
 #endif

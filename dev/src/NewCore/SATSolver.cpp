@@ -562,6 +562,10 @@ bool SATSolver::solve()
     bool is_unsat = false;
     bool jump = false;
 
+    for(auto a : dpll_to_smt)
+        printf("%d: %s\n", a.first, a.second->to_str().c_str());
+
+    exit(0);
     while(!unsat_clauses.empty() && !is_unsat)
     {
         OUTDEBUG(fprintf(stderr, "\nIteration %d.\n", iter));
