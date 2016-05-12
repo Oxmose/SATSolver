@@ -87,9 +87,16 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         yyparse();
         exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp, funcorresp, arrities, argscorresp, root);        
     } while (!feof(yyin));   
+
     fclose(yyin);
     
-    /*for(auto i : funcorresp)
+
+    /*for(auto i : ncorresp)
+        cout << "N:"  <<  i.first.first << " != " << i.first.second << endl;
+    for(auto i : corresp)
+        cout << "E:"  <<  i.first.first << " = " << i.first.second << endl;
+
+    for(auto i : funcorresp)
         cout << "F:"  <<  i.first << " => " << i.second->assoc_var << endl;
     for(auto i : argscorresp)
         cout << "A: " << i.first << " => " << i.second->assoc_var << endl;
@@ -257,11 +264,13 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                     right.var = root->args[i].var;
                     right.args = root->args[i].args;
                     fright = true;
-                }                
+                }              
             }
 
-            //cout << left.in_literal << " = " << right.in_literal << " is " << atoi(entry.second->to_string().c_str()) << endl;
+            OUTDEBUG(fprintf(stderr, "Added %c = %c with var %d", left.in_literal, right.in_literal, atoi(entry.second->to_string().c_str())));
+            
             struct smt_literal *eq = new smt_literal_qf_uf(atoi(entry.second->to_string().c_str()), left, right, true);
+            //cout << "EQ " << eq->to_str() << endl;
             p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
         }
         for(auto entry : ncorresp)
@@ -290,7 +299,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                 }                
             }
 
-            //cout << left.in_literal << " != " << right.in_literal << " is " << atoi(entry.second->to_string().c_str()) << endl;
+            OUTDEBUG(fprintf(stderr, "Added %c != %c with var %d", left.in_literal, right.in_literal, atoi(entry.second->to_string().c_str())));
             struct smt_literal *eq = new smt_literal_qf_uf(atoi(entry.second->to_string().c_str()), left, right, false);
             p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
         }

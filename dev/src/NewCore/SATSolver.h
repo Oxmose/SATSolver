@@ -22,6 +22,7 @@
 
 #include "SMT/SMTSolver.h"
 #include "SMT/SMTSolver_eq.h"
+#include "SMT/SMTSolver_QF_UF.h"
 
 #include "../Tools/UnionFind.h"
 

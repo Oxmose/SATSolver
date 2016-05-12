@@ -91,9 +91,28 @@ Expr* ECst::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
                     map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
-    // Then We create the new variable for this expression
+    
+    
+    if(argscorresp.find("cc" + value) != argscorresp.end())
+    {
+        index = argscorresp["cc" + value]->assoc_var;
+        struct smt_term var(index, value);
+        var.in_literal = argscorresp["cc" + value]->assoc_var;
+        root->args.push_back(var);
+        return argscorresp["cc" + value]->ptr;
+    }
+
     ++p_maxIndex;
     index = p_maxIndex;
+
+    args_s *arg = new args_s;
+    arg->ptr = this;
+    arg->count = 1;
+    arg->assoc_var = index;
+
+    argscorresp["cc" + value] = arg;
+    // Then We create the new variable for this expression
+    
     struct smt_term var(index, value);
     root->args.push_back(var);
     return this;
@@ -102,7 +121,6 @@ Expr* ECst::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
 
 void ECst::getVars(vector<int> &p_originalVars)
 {
-    //VOID
 } // getVars(vector<int> &)
 
 string ECst::to_string()
@@ -150,13 +168,18 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     //cout << m_name << " has arrity " << arrity << endl;
 
     string key = to_string();
+    struct smt_term fun_t(index, m_name[0]);
     if(funcorresp.find(key) != funcorresp.end())
     {
         //p_exps.push_back(funcorresp[key]->ptr);
+        m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &fun_t);
+        fun_t.in_literal = funcorresp[key]->assoc_var;
+        fun_t.s = m_name[0];
+        root->args.push_back(fun_t);
+        index = funcorresp[key]->assoc_var;
         return funcorresp[key]->ptr;
     }
 
-    struct smt_term fun_t(index, m_name[0]);
     // Then We create the new variable for this expression
     m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &fun_t);
 
@@ -704,6 +727,9 @@ Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
                     map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
 {
+    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
+    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
+
     pair<int, int> pair_t = make_pair(op1->getVarTerm(), op2->getVarTerm());
 
     if(ncorresp.find(pair_t) != ncorresp.end())
