@@ -1,3153 +1,637 @@
-[UF]Add 11
-[UF]Add 37
-[UF]Add 14
-[UF]Add 33
-[UF]Add 7
-[UF]Add 10
-[UF]Add 13
-[UF]Add 3
-[UF]Add 4
-[UF]Add 15
-[UF]Add 32
-[UF]Add 16
-[UF]Add 26
-[UF]Add 23
-[UF]Add 31
-[UF]Add 17
-[UF]Add 36
-[UF]Add 21
-[UF]Add 20
-[UF]Add 22
-[UF]Add 5
-[UF]Add 9
-[UF]Add 39
+LOG PARSE BEGIN
+Adding -17 16 0.
+	-17 triggered.
+	16 triggered.
+Clause added with id 0.
+Adding 17 -16 0.
+	17 triggered.
+	-16 triggered.
+Clause added with id 1.
+Adding -19 18 0.
+	-19 triggered.
+	18 triggered.
+Clause added with id 2.
+Adding 19 -18 0.
+	19 triggered.
+	-18 triggered.
+Clause added with id 3.
+Adding -17 20 0.
+	-17 triggered.
+	20 triggered.
+Clause added with id 4.
+Adding -19 20 0.
+	-19 triggered.
+	20 triggered.
+Clause added with id 5.
+Adding 17 19 -20 0.
+	17 triggered.
+	19 triggered.
+Clause added with id 6.
+Adding -22 21 0.
+	-22 triggered.
+	21 triggered.
+Clause added with id 7.
+Adding 22 -21 0.
+	22 triggered.
+	-21 triggered.
+Clause added with id 8.
+Adding -20 23 0.
+	-20 triggered.
+	23 triggered.
+Clause added with id 9.
+Adding -22 23 0.
+	-22 triggered.
+	23 triggered.
+Clause added with id 10.
+Adding 20 22 -23 0.
+	20 triggered.
+	22 triggered.
+Clause added with id 11.
+Adding -25 24 0.
+	-25 triggered.
+	24 triggered.
+Clause added with id 12.
+Adding 25 -24 0.
+	25 triggered.
+	-24 triggered.
+Clause added with id 13.
+Adding -23 26 0.
+	-23 triggered.
+	26 triggered.
+Clause added with id 14.
+Adding -25 26 0.
+	-25 triggered.
+	26 triggered.
+Clause added with id 15.
+Adding 23 25 -26 0.
+	23 triggered.
+	25 triggered.
+Clause added with id 16.
+Adding -28 27 0.
+	-28 triggered.
+	27 triggered.
+Clause added with id 17.
+Adding 28 -27 0.
+	28 triggered.
+	-27 triggered.
+Clause added with id 18.
+Adding -26 29 0.
+	-26 triggered.
+	29 triggered.
+Clause added with id 19.
+Adding -28 29 0.
+	-28 triggered.
+	29 triggered.
+Clause added with id 20.
+Adding 26 28 -29 0.
+	26 triggered.
+	28 triggered.
+Clause added with id 21.
+Adding -31 30 0.
+	-31 triggered.
+	30 triggered.
+Clause added with id 22.
+Adding 31 -30 0.
+	31 triggered.
+	-30 triggered.
+Clause added with id 23.
+Adding -29 32 0.
+	-29 triggered.
+	32 triggered.
+Clause added with id 24.
+Adding -31 32 0.
+	-31 triggered.
+	32 triggered.
+Clause added with id 25.
+Adding 29 31 -32 0.
+	29 triggered.
+	31 triggered.
+Clause added with id 26.
+Adding -34 33 0.
+	-34 triggered.
+	33 triggered.
+Clause added with id 27.
+Adding 34 -33 0.
+	34 triggered.
+	-33 triggered.
+Clause added with id 28.
+Adding -32 35 0.
+	-32 triggered.
+	35 triggered.
+Clause added with id 29.
+Adding -34 35 0.
+	-34 triggered.
+	35 triggered.
+Clause added with id 30.
+Adding 32 34 -35 0.
+	32 triggered.
+	34 triggered.
+Clause added with id 31.
+Adding 35 0.
+	Is unitary, becomes a deduction.
+Adding equality 17: 2 = 3 with var 17
+Adding equality 19: 4 = 5 with var 19
+Adding equality 22: 6 = 7 with var 22
+Adding equality 25: 8 = 9 with var 25
+Adding equality 28: 10 = 11 with var 28
+Adding equality 31: 12 = 13 with var 31
+Adding equality 34: 14 = 15 with var 34
+LOG PARSE END WITH STATUS 1
+
+Iteration 0.
+Add pending deduction 35 to decision stack.
+Adding node (lit: 35, level: -1, bet: 0).
+Current state: 35 
+
+Handling last decision 35d.
+Current state: 35 
+
+Decision affects clause 29: -32 35 0.
+Watched by -32 and 35.
+	Clause is now sat.
+
+Decision affects clause 30: -34 35 0.
+Watched by -34 and 35.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 1.
+Standard bet
+Taking bet 17.
+Current level is now 0.
+Adding node (lit: 17, level: 0, bet: 1).
+Current state: 35 17b(17: 2 = 3) 
+
+Handling last decision 17b.
+Current state: 35 17b(17: 2 = 3) 
+
+Decision affects clause 0: -17 16 0.
+Watched by -17 and 16.
+	Unit prop 16 spotted.
+Decision affects clause 1: 17 -16 0.
+Watched by -16 and 17.
+	Clause is now sat.
+
+Decision affects clause 4: -17 20 0.
+Watched by -17 and 20.
+	Unit prop 20 spotted.
+Decision affects clause 6: 17 19 -20 0.
+Watched by 17 and 19.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+	[SMT]Handling SMT literal 17: 2 = 3
 [UF]Add 2
-[UF]Add 6
-[UF]Add 25
-[UF]Add 23
-[UF]Add 37
-[UF]Add 2
-[UF]Add 32
-[UF]Add 11
-[UF]Add 15
-[UF]Add 14
-[UF]Add 33
 [UF]Add 3
-[UF]Add 7
-[UF]Add 10
-[UF]Add 13
-[UF]Add 6
-[UF]Add 25
-[UF]Add 22
-[UF]Add 39
+	[SMT]Adding edge 2-3, index in stack: 1, pond: 0, lit: 17.
+
+Iteration 2.
+Add pending deduction 16 to decision stack.
+Adding node (lit: 16, level: 0, bet: 0).
+Adding edge 17 -> 16.
+Current state: 35 17b(17: 2 = 3) 16 
+
+Handling last decision 16d.
+Current state: 35 17b(17: 2 = 3) 16 
+
+Decision affects clause 0: -17 16 0.
+Watched by -17 and 16.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 3.
+Add pending deduction 20 to decision stack.
+Adding node (lit: 20, level: 0, bet: 0).
+Adding edge 17 -> 20.
+Current state: 35 17b(17: 2 = 3) 16 20 
+
+Handling last decision 20d.
+Current state: 35 17b(17: 2 = 3) 16 20 
+
+Decision affects clause 4: -17 20 0.
+Watched by -17 and 20.
+	Clause is now sat.
+
+Decision affects clause 5: -19 20 0.
+Watched by -19 and 20.
+	Clause is now sat.
+
+Decision affects clause 9: -20 23 0.
+Watched by -20 and 23.
+	Unit prop 23 spotted.
+Decision affects clause 11: 20 22 -23 0.
+Watched by 20 and 22.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 4.
+Add pending deduction 23 to decision stack.
+Adding node (lit: 23, level: 0, bet: 0).
+Adding edge 20 -> 23.
+Current state: 35 17b(17: 2 = 3) 16 20 23 
+
+Handling last decision 23d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 
+
+Decision affects clause 9: -20 23 0.
+Watched by -20 and 23.
+	Clause is now sat.
+
+Decision affects clause 10: -22 23 0.
+Watched by -22 and 23.
+	Clause is now sat.
+
+Decision affects clause 14: -23 26 0.
+Watched by -23 and 26.
+	Unit prop 26 spotted.
+Decision affects clause 16: 23 25 -26 0.
+Watched by 23 and 25.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 5.
+Add pending deduction 26 to decision stack.
+Adding node (lit: 26, level: 0, bet: 0).
+Adding edge 23 -> 26.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 
+
+Handling last decision 26d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 
+
+Decision affects clause 14: -23 26 0.
+Watched by -23 and 26.
+	Clause is now sat.
+
+Decision affects clause 15: -25 26 0.
+Watched by -25 and 26.
+	Clause is now sat.
+
+Decision affects clause 19: -26 29 0.
+Watched by -26 and 29.
+	Unit prop 29 spotted.
+Decision affects clause 21: 26 28 -29 0.
+Watched by 26 and 28.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 6.
+Add pending deduction 29 to decision stack.
+Adding node (lit: 29, level: 0, bet: 0).
+Adding edge 26 -> 29.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 
+
+Handling last decision 29d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 
+
+Decision affects clause 19: -26 29 0.
+Watched by -26 and 29.
+	Clause is now sat.
+
+Decision affects clause 20: -28 29 0.
+Watched by -28 and 29.
+	Clause is now sat.
+
+Decision affects clause 24: -29 32 0.
+Watched by -29 and 32.
+	Unit prop 32 spotted.
+Decision affects clause 26: 29 31 -32 0.
+Watched by 29 and 31.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 7.
+Add pending deduction 32 to decision stack.
+Adding node (lit: 32, level: 0, bet: 0).
+Adding edge 29 -> 32.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 
+
+Handling last decision 32d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 
+
+Decision affects clause 24: -29 32 0.
+Watched by -29 and 32.
+	Clause is now sat.
+
+Decision affects clause 25: -31 32 0.
+Watched by -31 and 32.
+	Clause is now sat.
+
+Decision affects clause 31: 32 34 -35 0.
+Watched by 32 and 34.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 8.
+Standard bet
+Taking bet 19.
+Current level is now 1.
+Adding node (lit: 19, level: 1, bet: 1).
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 
+
+Handling last decision 19b.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 
+
+Decision affects clause 2: -19 18 0.
+Watched by -19 and 18.
+	Unit prop 18 spotted.
+Decision affects clause 3: 19 -18 0.
+Watched by -18 and 19.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+	[SMT]Handling SMT literal 19: 4 = 5
 [UF]Add 4
-[UF]Add 16
-[UF]Add 26
 [UF]Add 5
-[UF]Add 31
-[UF]Add 20
-[UF]Add 9
-[UF]Add 17
-[UF]Add 36
-[UF]Add 21
-[UF]Add 19
-[UF]Add 29
-[UF]Add 18
-[UF]Add 28
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 24
-[UF]Add 38
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 14
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 19
+	[SMT]Adding edge 4-5, index in stack: 8, pond: 1, lit: 19.
+
+Iteration 9.
+Add pending deduction 18 to decision stack.
+Adding node (lit: 18, level: 1, bet: 0).
+Adding edge 19 -> 18.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 
+
+Handling last decision 18d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 
+
+Decision affects clause 2: -19 18 0.
+Watched by -19 and 18.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 10.
+Standard bet
+Taking bet 22.
+Current level is now 2.
+Adding node (lit: 22, level: 2, bet: 1).
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 
+
+Handling last decision 22b.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 
+
+Decision affects clause 7: -22 21 0.
+Watched by -22 and 21.
+	Unit prop 21 spotted.
+Decision affects clause 8: 22 -21 0.
+Watched by -21 and 22.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+	[SMT]Handling SMT literal 22: 6 = 7
 [UF]Add 6
-[UF]Add 25
-[UF]Add 22
-[UF]Add 39
-[UF]Add 4
-[UF]Add 16
-[UF]Add 26
-[UF]Add 5
-[UF]Add 31
-[UF]Add 20
-[UF]Add 9
-[UF]Add 17
-[UF]Add 36
-[UF]Add 21
-[UF]Add 29
-[UF]Add 18
-[UF]Add 28
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 24
-[UF]Add 38
+[UF]Add 7
+	[SMT]Adding edge 6-7, index in stack: 10, pond: 2, lit: 22.
+
+Iteration 11.
+Add pending deduction 21 to decision stack.
+Adding node (lit: 21, level: 2, bet: 0).
+Adding edge 22 -> 21.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 
+
+Handling last decision 21d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 
+
+Decision affects clause 7: -22 21 0.
+Watched by -22 and 21.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 12.
+Standard bet
+Taking bet 25.
+Current level is now 3.
+Adding node (lit: 25, level: 3, bet: 1).
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 
+
+Handling last decision 25b.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 
+
+Decision affects clause 12: -25 24 0.
+Watched by -25 and 24.
+	Unit prop 24 spotted.
+Decision affects clause 13: 25 -24 0.
+Watched by -24 and 25.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+	[SMT]Handling SMT literal 25: 8 = 9
 [UF]Add 8
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 14
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 4
-[UF]Add 19
-[UF]Add 6
-[UF]Add 25
-[UF]Add 22
-[UF]Add 39
-[UF]Add 16
-[UF]Add 26
-[UF]Add 5
-[UF]Add 31
-[UF]Add 20
 [UF]Add 9
-[UF]Add 17
-[UF]Add 36
-[UF]Add 21
-[UF]Add 29
-[UF]Add 18
-[UF]Add 28
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
+	[SMT]Adding edge 8-9, index in stack: 12, pond: 3, lit: 25.
+
+Iteration 13.
+Add pending deduction 24 to decision stack.
+Adding node (lit: 24, level: 3, bet: 0).
+Adding edge 25 -> 24.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 
+
+Handling last decision 24d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 
+
+Decision affects clause 12: -25 24 0.
+Watched by -25 and 24.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 14.
+Standard bet
+Taking bet 28.
+Current level is now 4.
+Adding node (lit: 28, level: 4, bet: 1).
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 
+
+Handling last decision 28b.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 
+
+Decision affects clause 17: -28 27 0.
+Watched by -28 and 27.
+	Unit prop 27 spotted.
+Decision affects clause 18: 28 -27 0.
+Watched by -27 and 28.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+	[SMT]Handling SMT literal 28: 10 = 11
 [UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 14
-[UF]Add 37
-[UF]Add 23
 [UF]Add 11
-[UF]Add 4
-[UF]Add 19
-[UF]Add 6
-[UF]Add 25
-[UF]Add 22
-[UF]Add 39
-[UF]Add 16
-[UF]Add 26
-[UF]Add 5
-[UF]Add 31
-[UF]Add 20
-[UF]Add 9
-[UF]Add 17
-[UF]Add 36
-[UF]Add 21
-[UF]Add 29
-[UF]Add 18
-[UF]Add 28
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 4
-[UF]Add 24
-[UF]Add 38
-[UF]Add 25
-[UF]Add 39
-[UF]Add 9
-[UF]Add 17
-[UF]Add 40
-[UF]Add 1
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 4
-[UF]Add 24
-[UF]Add 38
-[UF]Add 25
-[UF]Add 39
-[UF]Add 9
-[UF]Add 17
-[UF]Add 40
-[UF]Add 1
-[UF]Add 40
-[UF]Add 21
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 4
-[UF]Add 24
-[UF]Add 38
-[UF]Add 25
-[UF]Add 39
-[UF]Add 9
-[UF]Add 17
-[UF]Add 1
-[UF]Add 25
-[UF]Add 5
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 14
-[UF]Add 21
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 10
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 25
-[UF]Add 5
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 14
-[UF]Add 21
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 10
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 25
-[UF]Add 5
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 14
-[UF]Add 21
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 10
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 14
-[UF]Add 21
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 10
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 25
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 25
-[UF]Add 5
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 14
-[UF]Add 21
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 10
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 25
-[UF]Add 5
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 14
-[UF]Add 21
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 10
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 25
-[UF]Add 5
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 14
-[UF]Add 21
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 10
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 36
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 22
-[UF]Add 5
-[UF]Add 16
-[UF]Add 26
-[UF]Add 18
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 19
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 40
-[UF]Add 1
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 40
-[UF]Add 29
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 25
-[UF]Add 5
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 29
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 27
+	[SMT]Adding edge 10-11, index in stack: 14, pond: 4, lit: 28.
+
+Iteration 15.
+Add pending deduction 27 to decision stack.
+Adding node (lit: 27, level: 4, bet: 0).
+Adding edge 28 -> 27.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 
+
+Handling last decision 27d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 
+
+Decision affects clause 17: -28 27 0.
+Watched by -28 and 27.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 16.
+Standard bet
+Taking bet 31.
+Current level is now 5.
+Adding node (lit: 31, level: 5, bet: 1).
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 31b(31: 12 = 13) 
+
+Handling last decision 31b.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 31b(31: 12 = 13) 
+
+Decision affects clause 22: -31 30 0.
+Watched by -31 and 30.
+	Unit prop 30 spotted.
+Decision affects clause 23: 31 -30 0.
+Watched by -30 and 31.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+	[SMT]Handling SMT literal 31: 12 = 13
 [UF]Add 12
-[UF]Add 25
-[UF]Add 5
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 29
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 11
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 7
 [UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 25
-[UF]Add 5
-[UF]Add 1
+	[SMT]Adding edge 12-13, index in stack: 16, pond: 5, lit: 31.
+
+Iteration 17.
+Add pending deduction 30 to decision stack.
+Adding node (lit: 30, level: 5, bet: 0).
+Adding edge 31 -> 30.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 31b(31: 12 = 13) 30 
+
+Handling last decision 30d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 31b(31: 12 = 13) 30 
+
+Decision affects clause 22: -31 30 0.
+Watched by -31 and 30.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+
+Iteration 18.
+Standard bet
+Taking bet 34.
+Current level is now 6.
+Adding node (lit: 34, level: 6, bet: 1).
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 31b(31: 12 = 13) 30 34b(34: 14 = 15) 
+
+Handling last decision 34b.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 31b(31: 12 = 13) 30 34b(34: 14 = 15) 
+
+Decision affects clause 27: -34 33 0.
+Watched by -34 and 33.
+	Unit prop 33 spotted.
+Decision affects clause 28: 34 -33 0.
+Watched by -33 and 34.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+	[SMT]Handling SMT literal 34: 14 = 15
 [UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 29
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 11
-[UF]Add 36
 [UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 28
-[UF]Add 23
-[UF]Add 31
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 22
-[UF]Add 18
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 36
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 5
-[UF]Add 16
-[UF]Add 26
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 19
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 40
-[UF]Add 1
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 19
-[UF]Add 37
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 16
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 16
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 19
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 36
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 5
-[UF]Add 16
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 19
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 19
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 36
-[UF]Add 15
-[UF]Add 26
-[UF]Add 18
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 29
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 19
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 25
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 14
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 21
-[UF]Add 17
-[UF]Add 36
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 22
-[UF]Add 31
-[UF]Add 5
-[UF]Add 16
-[UF]Add 26
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 29
-[UF]Add 18
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 14
-[UF]Add 37
-[UF]Add 23
-[UF]Add 11
-[UF]Add 21
-[UF]Add 17
-[UF]Add 36
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 22
-[UF]Add 31
-[UF]Add 5
-[UF]Add 28
-[UF]Add 16
-[UF]Add 26
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 19
-[UF]Add 29
-[UF]Add 18
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 40
-[UF]Add 31
-[UF]Add 29
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 14
-[UF]Add 23
-[UF]Add 11
-[UF]Add 21
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 22
-[UF]Add 5
-[UF]Add 28
-[UF]Add 16
-[UF]Add 26
-[UF]Add 18
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 19
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 40
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 1
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 15
-[UF]Add 33
-[UF]Add 14
-[UF]Add 23
-[UF]Add 11
-[UF]Add 21
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 22
-[UF]Add 31
-[UF]Add 5
-[UF]Add 28
-[UF]Add 16
-[UF]Add 26
-[UF]Add 4
-[UF]Add 6
-[UF]Add 25
-[UF]Add 19
-[UF]Add 29
-[UF]Add 18
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 40
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 1
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 28
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 19
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 28
-[UF]Add 33
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 19
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 26
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 19
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 28
-[UF]Add 33
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 19
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 28
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 19
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 26
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 19
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 26
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 28
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 5
-[UF]Add 16
-[UF]Add 4
-[UF]Add 6
-[UF]Add 19
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 12
-[UF]Add 25
-[UF]Add 27
-[UF]Add 32
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 2
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 19
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 28
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 40
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 23
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 6
-[UF]Add 24
-[UF]Add 38
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 4
-[UF]Add 1
-[UF]Add 27
-[UF]Add 40
-[UF]Add 17
-[UF]Add 30
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 12
-[UF]Add 9
-[UF]Add 39
-[UF]Add 24
-[UF]Add 4
-[UF]Add 1
-[UF]Add 27
-[UF]Add 40
-[UF]Add 17
-[UF]Add 30
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 12
-[UF]Add 9
-[UF]Add 39
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 38
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 4
-[UF]Add 1
-[UF]Add 27
-[UF]Add 40
-[UF]Add 17
-[UF]Add 30
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 12
-[UF]Add 9
-[UF]Add 39
-[UF]Add 24
-[UF]Add 9
-[UF]Add 20
-[UF]Add 4
-[UF]Add 1
-[UF]Add 27
-[UF]Add 40
-[UF]Add 17
-[UF]Add 30
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 12
-[UF]Add 39
-[UF]Add 24
-[UF]Add 4
-[UF]Add 1
-[UF]Add 27
-[UF]Add 40
-[UF]Add 17
-[UF]Add 30
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 12
-[UF]Add 9
-[UF]Add 39
-[UF]Add 24
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 14
-[UF]Add 23
-[UF]Add 11
-[UF]Add 21
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 20
-[UF]Add 22
-[UF]Add 31
-[UF]Add 5
-[UF]Add 28
-[UF]Add 16
-[UF]Add 26
-[UF]Add 4
-[UF]Add 6
-[UF]Add 19
-[UF]Add 29
-[UF]Add 18
-[UF]Add 35
-[UF]Add 30
-[UF]Add 34
-[UF]Add 40
-[UF]Add 24
-[UF]Add 38
-[UF]Add 8
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 10
-[UF]Add 21
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 33
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 40
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 3
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 6
-[UF]Add 24
-[UF]Add 38
-[UF]Add 1
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 35
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 35
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 1
-[UF]Add 14
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 25
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 35
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 27
-[UF]Add 12
-[UF]Add 38
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 5
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 34
-[UF]Add 30
-[UF]Add 21
-[UF]Add 14
-[UF]Add 35
-[UF]Add 31
-[UF]Add 25
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 32
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 17
-[UF]Add 9
-[UF]Add 39
-[UF]Add 4
-[UF]Add 24
-[UF]Add 1
-[UF]Add 27
-[UF]Add 12
-[UF]Add 4
-[UF]Add 1
-[UF]Add 12
-[UF]Add 25
-[UF]Add 27
-[UF]Add 32
-[UF]Add 14
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 35
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 39
-[UF]Add 17
-[UF]Add 9
-[UF]Add 24
-[UF]Add 4
-[UF]Add 1
-[UF]Add 12
-[UF]Add 25
-[UF]Add 27
-[UF]Add 32
-[UF]Add 14
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 35
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 39
-[UF]Add 17
-[UF]Add 9
-[UF]Add 24
-[UF]Add 4
-[UF]Add 1
-[UF]Add 12
-[UF]Add 25
-[UF]Add 27
-[UF]Add 32
-[UF]Add 14
-[UF]Add 38
-[UF]Add 5
-[UF]Add 34
-[UF]Add 40
-[UF]Add 6
-[UF]Add 3
-[UF]Add 20
-[UF]Add 16
-[UF]Add 8
-[UF]Add 19
-[UF]Add 28
-[UF]Add 26
-[UF]Add 18
-[UF]Add 29
-[UF]Add 22
-[UF]Add 30
-[UF]Add 21
-[UF]Add 35
-[UF]Add 31
-[UF]Add 15
-[UF]Add 36
-[UF]Add 37
-[UF]Add 7
-[UF]Add 13
-[UF]Add 10
-[UF]Add 2
-[UF]Add 33
-[UF]Add 23
-[UF]Add 11
-[UF]Add 39
-[UF]Add 17
-[UF]Add 9
-[UF]Add 24
+	[SMT]Adding edge 14-15, index in stack: 18, pond: 6, lit: 34.
+
+Iteration 19.
+Add pending deduction 33 to decision stack.
+Adding node (lit: 33, level: 6, bet: 0).
+Adding edge 34 -> 33.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 31b(31: 12 = 13) 30 34b(34: 14 = 15) 33 
+
+Handling last decision 33d.
+Current state: 35 17b(17: 2 = 3) 16 20 23 26 29 32 19b(19: 4 = 5) 18 22b(22: 6 = 7) 21 25b(25: 8 = 9) 24 28b(28: 10 = 11) 27 31b(31: 12 = 13) 30 34b(34: 14 = 15) 33 
+
+Decision affects clause 27: -34 33 0.
+Watched by -34 and 33.
+	Clause is now sat.
+
+Make trigger changes effective.
+
+[SMT]Computing solution.
+C0, 14: {14, 15}
+C1, 12: {12, 13}
+C2, 2: {2, 3}
+C3, 4: {4, 5}
+C4, 6: {6, 7}
+C5, 8: {8, 9}
+C6, 10: {10, 11}
+Non equalities : 
+Trying to merge C0 and C1
+	Represented by 14 and 12
+	Merging possible !
+[SMT]Computing solution.
+C0, 14: {12, 13, 14, 15}
+C1, 2: {2, 3}
+C2, 4: {4, 5}
+C3, 6: {6, 7}
+C4, 8: {8, 9}
+C5, 10: {10, 11}
+Non equalities : 
+Trying to merge C0 and C1
+	Represented by 14 and 2
+	Merging possible !
+[SMT]Computing solution.
+C0, 14: {2, 3, 12, 13, 14, 15}
+C1, 4: {4, 5}
+C2, 6: {6, 7}
+C3, 8: {8, 9}
+C4, 10: {10, 11}
+Non equalities : 
+Trying to merge C0 and C1
+	Represented by 14 and 4
+	Merging possible !
+[SMT]Computing solution.
+C0, 14: {2, 3, 4, 5, 12, 13, 14, 15}
+C1, 6: {6, 7}
+C2, 8: {8, 9}
+C3, 10: {10, 11}
+Non equalities : 
+Trying to merge C0 and C1
+	Represented by 14 and 6
+	Merging possible !
+[SMT]Computing solution.
+C0, 14: {2, 3, 4, 5, 6, 7, 12, 13, 14, 15}
+C1, 8: {8, 9}
+C2, 10: {10, 11}
+Non equalities : 
+Trying to merge C0 and C1
+	Represented by 14 and 8
+	Merging possible !
+[SMT]Computing solution.
+C0, 14: {2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15}
+C1, 10: {10, 11}
+Non equalities : 
+Trying to merge C0 and C1
+	Represented by 14 and 10
+	Merging possible !
+[SMT]Computing solution.
+C0, 14: {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
+Non equalities : 
