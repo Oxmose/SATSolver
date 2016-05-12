@@ -29,9 +29,11 @@ class SMTSolver_eq : public SMTSolver
 		SMTSolver_eq(SATSolver* solver) : SMTSolver(solver) {}
 
 		int apply_last_decision();
+		void cancel_last_decision();
+		void reset_method();
 		pair<clause,int> diagnose_conflict(int conflict_dec_index);
 
-		void dfs_enumerate_paths(int curr, int from, int dest, map<int,int> succ);
+		bool dfs_enumerate_paths(int curr, int dest, map<int,int>& succ);
 
 		unordered_map<int, unordered_map<int,int>> edge;
 		unordered_map<int, unordered_map<int,int>> not_possible;

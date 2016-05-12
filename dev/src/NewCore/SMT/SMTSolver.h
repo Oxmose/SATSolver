@@ -21,6 +21,8 @@ class SMTSolver
 	public:
 		SMTSolver(SATSolver* solver) : solver(solver) {}
 		virtual int apply_last_decision() = 0;
+		virtual void cancel_last_decision() = 0;
+		virtual void reset_method() = 0;
 		virtual pair<clause,int> diagnose_conflict(int conflict_dec_index) = 0;
 
 

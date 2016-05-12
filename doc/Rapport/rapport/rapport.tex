@@ -18,7 +18,7 @@
 
 \maketitle
 
-\section{Présentation}
+\begin{abstract}
 TSAT est un solveur SAT/SMT à l'instar de minisat \cite{minisat} qui a pour but de satisfaire des formules logiques qui lui sont données en entrée.
 TSAT est écrit en C++ par Tristan Stérin et Alexy Torres--Aurora-Dugo.
 Réalisé à l'ENS Lyon pour l'année scolaire 2015-2016 et dans le cadre de la matière ``Projet2'', ce solveur permet de résoudre des formules SAT/SMT sous formes CNF et logique (en appliquant la transformation de Tseitin).
@@ -29,7 +29,7 @@ Différentes méthode de résolution ont été implémentées dans TSAT :
 	\item DPLL avec méthode des litéraux surveillés \cite{WL}.
 	\item DPLL avec méthode avec apprentissage de clause \cite{CL}.
 \end{itemize}
-
+\end{abstract}
 %Un peu de maths en \LaTeX: voici un exemple de clause:
 %$$
 %\litt_1\lor\non{\litt_2}\lor\litt_4
@@ -71,6 +71,9 @@ La méthode avec apprentissage de clause permet d'obtenir de très bons résulta
 Certaines heuristiques de pari nous donne de meilleurs résultats dans certain cas. Ainsi, RAND permet dans les meilleur cas de satisfaire des formules en moins d'une seconde alors que l'heuristique standard ne me permet pas en moins de dix. Les meilleurs résultats s'obtiennent avec l'heuristique MOMS.
 
 Les optimisations à la compilation (-O3) permettent elles aussi de rendre le solveur beaucoup plus rapide (jusqu'à 70\% plus rapide dans certain cas).
+
+\section{Amélioration possible}
+Plusieurs possibilités d'améliorations sont envisageables, une paraléllisation des tâche peut fournir un apport conssidérable en temps. Une des options pour la parallélisation serait de faire tourner 
 
 \bibliographystyle{unsrt}
 \bibliography{ex-biblio}

@@ -134,7 +134,7 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     fun->name = key;
     fun->arrity = arrity;
     fun->assoc_var = p_maxIndex;
-    fun->ptr = var;
+    fun->ptr = this;
 
     index = p_maxIndex;   
 
@@ -180,6 +180,8 @@ Expr* EArg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
                     map<string, args_s*> &argscorresp, bool trans)
 {
+    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
+    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false);
     string key = to_string();
     if(argscorresp.find(key) != argscorresp.end())
     {
@@ -193,7 +195,7 @@ Expr* EArg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     Expr* var = new EVar(p_maxIndex);
 
     args_s *arg = new args_s;
-    arg->ptr = var;
+    arg->ptr = this;
     arg->count = size();
     arg->assoc_var = p_maxIndex;
 

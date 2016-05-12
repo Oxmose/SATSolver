@@ -71,12 +71,20 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         yyparse();
         exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp, funcorresp, arrities, argscorresp);        
     } while (!feof(yyin));   
-
+    fclose(yyin);
+    
     for(auto i : funcorresp)
         cout << "F:"  <<  i.first << " => " << i.second->assoc_var << endl;
     for(auto i : argscorresp)
         cout << "A: " << i.first << " => " << i.second->assoc_var << endl;
-    fclose(yyin);
+
+
+    for(unsigned int i : funcorresp)
+    {
+        
+    }
+
+    
     vector<pair<map<int,bool>, bool>> clauses;   
 
     // Browse each clause extracted and create the formula
@@ -88,7 +96,8 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     for(Expr* exp : exps)
     {
         string strForm = exp->to_string();
-    cout << strForm << endl;
+
+        cout << strForm << endl;
         for(unsigned int i = 0; i < strForm.size(); ++i)
         {
             // Check for parenthesis
