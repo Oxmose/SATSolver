@@ -37,8 +37,5 @@ string smt_term::to_str()
 
 string smt_literal_qf_uf::to_str()
 {
-	printf("%d\n", left.args.size());
-	return "o";
-	//return left.s;
-	//return to_string(index) + ": " + left.to_str() + ((equal) ? " = " : " != ") + right.to_str();
+	return to_string(index) + ": " + left.to_str() + ((equal) ? " = " : " != ") + right.to_str();
 }

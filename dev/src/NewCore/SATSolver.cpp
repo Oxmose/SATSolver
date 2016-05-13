@@ -563,7 +563,10 @@ bool SATSolver::solve()
     bool jump = false;
 
     for(auto a : dpll_to_smt)
-        printf("%d: %s\n", a.first, a.second->to_str().c_str());
+    {
+        smt_literal_qf_uf* b = (smt_literal_qf_uf*)a.second;
+        printf("%d: %s, -%s- -%s-\n", a.first, a.second->to_str().c_str(), b->left.to_str().c_str(), b->right.to_str().c_str());
+    }
 
     exit(0);
     while(!unsat_clauses.empty() && !is_unsat)
