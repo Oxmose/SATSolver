@@ -28,6 +28,8 @@ class SMTSolver_eq : public SMTSolver
 	public:
 		SMTSolver_eq(SATSolver* solver) : SMTSolver(solver) {}
 
+		void init();
+
 		int apply_last_decision();
 		void cancel_last_decision();
 		void reset_method();

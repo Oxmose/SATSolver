@@ -26,8 +26,8 @@ SATSolver::SATSolver() : conflict_graph(this)
     iter = 0; 
     smt_solver = NULL;
 
-
-    smt_solver = new SMTSolver_eq(this);
+    if(settings_s.smte_s || settings_s.smtc_s)
+        smt_solver = new SMTSolver_eq(this);
 }
 
 
@@ -562,13 +562,6 @@ bool SATSolver::solve()
     bool is_unsat = false;
     bool jump = false;
 
-    for(auto a : dpll_to_smt)
-    {
-        smt_literal_qf_uf* b = (smt_literal_qf_uf*)a.second;
-        printf("%d: %s, -%s- -%s-\n", a.first, a.second->to_str().c_str(), b->left.to_str().c_str(), b->right.to_str().c_str());
-    }
-
-    exit(0);
     while(!unsat_clauses.empty() && !is_unsat)
     {
         OUTDEBUG(fprintf(stderr, "\nIteration %d.\n", iter));
@@ -630,13 +623,12 @@ bool SATSolver::solve()
                 }
 
                 pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
-                decision last_dec = backtrack(curr_level, settings_s.disable_smt_cl_s || diagnosis.first.literal.size() == 1, true);
+                decision last_dec = backtrack(diagnosis.second, settings_s.disable_smt_cl_s || diagnosis.first.literal.size() == 1, true);
+                
                 if(settings_s.disable_smt_cl_s || !add_clause(diagnosis.first))
                 {
                     if(!settings_s.disable_smt_cl_s)
-                    {
                         curr_level++;
-                    }
                     else
                     {
                         last_dec.dec *= -1;

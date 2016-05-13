@@ -20,6 +20,7 @@ class SMTSolver
 {
 	public:
 		SMTSolver(SATSolver* solver) : solver(solver) {}
+		virtual void init() = 0;
 		virtual int apply_last_decision() = 0;
 		virtual void cancel_last_decision() = 0;
 		virtual void reset_method() = 0;

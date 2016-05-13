@@ -29,10 +29,9 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
+    int commandError = parseCommand(argc, argv);
     SATSolver solver;
 
-    int commandError = parseCommand(argc, argv);
-    
     if(settings_s.smtc_s)
         settings_s.disable_smt_cl_s = true;
 

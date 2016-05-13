@@ -2,6 +2,15 @@
 
 #include "../../Tools/UnionFind.h"
 
+void SMTSolver_eq::init()
+{
+	if(settings_s.smte_s)
+		return;
+	assert(settings_s.smtc_s);
+
+	
+}
+
 void SMTSolver_eq::reset_method()
 {
 	assert(settings_s.smte_s);
@@ -74,6 +83,9 @@ int SMTSolver_eq::apply_last_decision()
 
 	smt_literal_eq* corresponding_lit = (smt_literal_eq*)solver->dpll_to_smt[abs(last_decision.dec)];
 	OUTDEBUG(fprintf(stderr, "\t[SMT]Handling SMT literal %s\n", corresponding_lit->to_str().c_str()));
+
+	int s1 = min(corresponding_lit->left, corresponding_lit->right);
+	int s2 = max(corresponding_lit->left, corresponding_lit->right);
 	/*
 		Cases:
 
@@ -87,8 +99,6 @@ int SMTSolver_eq::apply_last_decision()
 	bool add_edge = ((last_decision.dec > 0) && corresponding_lit->equal) || ((last_decision.dec < 0) && !corresponding_lit->equal);
 	
 
-	int s1 = min(corresponding_lit->left, corresponding_lit->right);
-	int s2 = max(corresponding_lit->left, corresponding_lit->right);
 
 	if(connectivity_check.find(s1) == nullptr)
 		connectivity_check.add(s1);
@@ -154,6 +164,13 @@ bool SMTSolver_eq::dfs_enumerate_paths(int curr, int dest, map<int,int>& succ)
 pair<clause,int> SMTSolver_eq::diagnose_conflict(int conflict_dec_index)
 {
 	assert(settings_s.smte_s);
+
+	if(settings_s.disable_smt_cl_s)
+    {
+        int bt_level = solver->curr_level;
+        OUTDEBUG(fprintf(stderr, "\tShould backtrack until level %d (last bet) inclusively.\n", bt_level));
+        return make_pair(clause(-1), bt_level);
+    }
 
 	decision conflict_dec = solver->decision_stack[conflict_dec_index];
 
