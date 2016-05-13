@@ -25,6 +25,7 @@ string smt_term::to_str()
 	size_t size = args.size();
 	for(unsigned int i = 0; i < size; ++i)
 	{
+
 		if(i == size - 1)
 			str += args[i].to_str();
 		else
@@ -36,8 +37,5 @@ string smt_term::to_str()
 
 string smt_literal_qf_uf::to_str()
 {
-	printf("%d\n", left.args.size());
-	return "o";
-	//return left.s;
-	//return to_string(index) + ": " + left.to_str() + ((equal) ? " = " : " != ") + right.to_str();
+	return to_string(index) + ": " + left.to_str() + ((equal) ? " = " : " != ") + right.to_str();
 }

@@ -43,7 +43,7 @@ Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     }
     else
     {
-        smt_term var(index, 0, index);
+        smt_term var(index, "", index);
         root->args.push_back(var);
         return this;
     }
@@ -84,7 +84,11 @@ unsigned int EVar::size()
 /**********  Constants   ***********/
 /***********************************/
 
+<<<<<<< HEAD
 ECst::ECst(char name[256])
+=======
+ECst::ECst(char name[256]) 
+>>>>>>> bd3c43d2c9bba4d5219715be0a0db6cd3d2a0e34
 {
     ostringstream oss;
     oss << name;

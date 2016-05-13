@@ -33,6 +33,9 @@ int main(int argc, char const *argv[])
 
     int commandError = parseCommand(argc, argv);
     
+    if(settings_s.smtc_s)
+        settings_s.disable_smt_cl_s = true;
+
     if(commandError == 1)
     {
         cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-smte | -smtc | -smtd] [-disable_smt_cl] [-cl | -cl-interac] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;

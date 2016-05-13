@@ -563,7 +563,10 @@ bool SATSolver::solve()
     bool jump = false;
 
     for(auto a : dpll_to_smt)
-        printf("%d: %s\n", a.first, a.second->to_str().c_str());
+    {
+        smt_literal_qf_uf* b = (smt_literal_qf_uf*)a.second;
+        printf("%d: %s, -%s- -%s-\n", a.first, a.second->to_str().c_str(), b->left.to_str().c_str(), b->right.to_str().c_str());
+    }
 
     exit(0);
     while(!unsat_clauses.empty() && !is_unsat)
@@ -626,18 +629,24 @@ bool SATSolver::solve()
                     continue;
                 }
 
-                //pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
-                decision last_dec = backtrack(curr_level, true, true);
-                last_dec.dec *= -1;
-                last_dec.bet = false;
-                if(settings_s.cl_s)
-                    conflict_graph.add_node(last_dec.dec, make_pair(curr_level, false));
-                //if(!add_clause(diagnosis.first))
-                //{
-                  //  curr_level++;
+                pair<clause,int> diagnosis = smt_solver->diagnose_conflict(smt_conflict);
+                decision last_dec = backtrack(curr_level, settings_s.disable_smt_cl_s || diagnosis.first.literal.size() == 1, true);
+                if(settings_s.disable_smt_cl_s || !add_clause(diagnosis.first))
+                {
+                    if(!settings_s.disable_smt_cl_s)
+                    {
+                        curr_level++;
+                    }
+                    else
+                    {
+                        last_dec.dec *= -1;
+                        last_dec.bet = false;
+                        if(settings_s.cl_s)
+                            conflict_graph.add_node(last_dec.dec, make_pair(curr_level, false));
+                    }
                     decision_stack.push_back(last_dec);
                     jump = true;
-                //}
+                }
                 continue;
             }
         }
