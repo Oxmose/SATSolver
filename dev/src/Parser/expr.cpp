@@ -819,7 +819,7 @@ unsigned int ELth::size()
 /********  GREATER THAN   **********/
 /***********************************/
 
-/*EGth::EGth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
+EGth::EGth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
 
 Expr* EGth::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
