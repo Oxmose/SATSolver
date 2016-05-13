@@ -14,7 +14,8 @@
 #include <algorithm>    //std::find
 #include <map>          //std::map
 
-#include "../NewCore/SMT/SMTSolver_QF_UF.h"
+#include "../NewCore/SMT/SMTSolver_eq.h"
+
 class Expr;
 
 
@@ -116,7 +117,7 @@ class ECst : public Expr
         // Get the number or arguments
         virtual unsigned int size();
 
-        string value;
+        std::string value;
 	int index;
 }; // EVar
 

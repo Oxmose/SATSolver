@@ -22,7 +22,6 @@
 
 #include "SMT/SMTSolver.h"
 #include "SMT/SMTSolver_eq.h"
-#include "SMT/SMTSolver_QF_UF.h"
 
 #include "../Tools/UnionFind.h"
 
@@ -39,6 +38,9 @@ using namespace std;
 class IBet;
 
 class SMTSolver;
+
+
+struct smt_term;
 
 struct decision
 {
@@ -92,6 +94,7 @@ class SATSolver
         double VSIDSScoreFunction(double oldScore, bool inLearnedClause);
 
         void emplace_eq(unsigned int var, struct smt_literal *eq);
+        void set_terms_mapping(unordered_map<int, smt_term*> &term_corresp);
 
         void get_smt_solution();
 
@@ -119,6 +122,7 @@ class SATSolver
         /* SMT */
         SMTSolver* smt_solver;
         map<unsigned int, smt_literal*>                   dpll_to_smt;
+        unordered_map<int, smt_term*>                   terms_mapping;
 };
 
 #endif // DEF_SATSOLVER_H

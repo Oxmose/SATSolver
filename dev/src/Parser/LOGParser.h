@@ -17,7 +17,6 @@
 #include <atomic>   // std::atomic
 
 // OTHER INCLUDES FROM PROJECT
-#include "../NewCore/SMT/SMTSolver_QF_UF.h" // SMTSolver_QF_UF class
 #include "../NewCore/SMT/SMTSolver_eq.h" // SMTSolver_eq class
 #include "../NewCore/SATSolver.h" // SATSolver class
 #include "../NewCore/clause.h" // Clause class

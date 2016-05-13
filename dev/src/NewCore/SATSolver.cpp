@@ -705,3 +705,8 @@ void SATSolver::get_smt_solution()
 {
     smt_solver->get_solution();
 }
+
+void SATSolver::set_terms_mapping(unordered_map<int, smt_term*> &term_corresp)
+{
+    terms_mapping = term_corresp;
+}

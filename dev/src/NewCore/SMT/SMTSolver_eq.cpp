@@ -2,6 +2,38 @@
 
 #include "../../Tools/UnionFind.h"
 
+string smt_term::to_str()
+{
+	if(var != 0)
+	{
+		return to_string(var);
+	}
+
+	stringstream ss;
+	string ssss;
+	ss << s;
+	ss >> ssss;
+
+	if(args.size() == 0)
+	{
+		return ssss;
+	}
+
+	string str = ssss +"(";
+	size_t size = args.size();
+	for(unsigned int i = 0; i < size; ++i)
+	{
+
+		if(i == size - 1)
+			str += args[i].to_str();
+		else
+			str += args[i].to_str() + ",";
+	}
+	str += ")";
+	return str;
+}
+
+
 void SMTSolver_eq::init()
 {
 	if(settings_s.smte_s)

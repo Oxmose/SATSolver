@@ -23,7 +23,7 @@ BET=BETHeuristic/DLISBet.cpp BETHeuristic/MOMSBet.cpp BETHeuristic/RandomBet.cpp
 RANDOMGEN=RandomSatExpGenerator/randomGen.cpp
 MAIN=main.cpp
 CORE=NewCore/clause.cpp NewCore/conflict_graph.cpp NewCore/SATSolver.cpp
-SMT=NewCore/SMT/SMTSolver_eq.cpp NewCore/SMT/SMTSolver_QF_UF.cpp
+SMT=NewCore/SMT/SMTSolver_eq.cpp
 TOOLS=Tools/Node.cpp Tools/UnionFind.cpp
 PARSER=Parser/CNFParser.cpp Parser/LOGParser.cpp $(EXPRNAME).cpp $(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
 

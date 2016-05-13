@@ -14,7 +14,6 @@
 #include <atomic>   // std::atomic
 
 // OTHER INCLUDES FROM PROJECT
-#include "../NewCore/SMT/SMTSolver_QF_UF.h" // SMTSolver_QF_UF class
 #include "../NewCore/SMT/SMTSolver_eq.h" // SMTSolver_eq class
 #include "../NewCore/SATSolver.h" // SATSolver class
 #include "../NewCore/clause.h" // Clause class
@@ -241,9 +240,9 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     }
     else if(settings_s.smtc_s)
     {
+        unordered_map<int, smt_term*> term_corresp;
         for(auto entry : corresp)
         {
-            struct smt_term left, right;
             bool fleft = false;
             bool fright = false;
             for(unsigned int i = 0; i < root->args.size(); ++i)
@@ -251,31 +250,20 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                 if(fleft && fright) break;
                 if(root->args[i].in_literal == entry.first.first)
                 {
-                    left.in_literal = root->args[i].in_literal;
-                    left.s = root->args[i].s;
-                    left.var = root->args[i].var;
-                    left.args = root->args[i].args;
-                    fleft = true;
+                    term_corresp[entry.first.first] = &root->args[i];
                 }
                 else if(root->args[i].in_literal == entry.first.second)
                 {
-                    right.in_literal = root->args[i].in_literal;
-                    right.s = root->args[i].s;
-                    right.var = root->args[i].var;
-                    right.args = root->args[i].args;
-                    fright = true;
+                    term_corresp[entry.first.second] = &root->args[i];
                 }              
             }
 
-            OUTDEBUG(fprintf(stderr, "Added %d = %d with var %d\n", left.in_literal, right.in_literal, atoi(entry.second->to_string().c_str())));
-            
-            struct smt_literal *eq = new smt_literal_qf_uf(atoi(entry.second->to_string().c_str()), left, right, true);
-            //cout << "EQ " << eq->to_str() << endl;
+            OUTDEBUG(fprintf(stderr, "Added %d = %d with var %d\n", entry.first.first, entry.first.second, atoi(entry.second->to_string().c_str())));            
+            struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
             p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
         }
         for(auto entry : ncorresp)
         {
-            struct smt_term left, right;
             bool fleft = false;
             bool fright = false;
             for(unsigned int i = 0; i < root->args.size(); ++i)
@@ -283,26 +271,19 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                 if(fleft && fright) break;
                 if(root->args[i].in_literal == entry.first.first)
                 {
-                    left.in_literal = root->args[i].in_literal;
-                    left.s = root->args[i].s;
-                    left.var = root->args[i].var;
-                    left.args = root->args[i].args;
-                    fleft = true;
+                    term_corresp[entry.first.first] = &root->args[i];
                 }
                 else if(root->args[i].in_literal == entry.first.second)
                 {
-                    right.in_literal = root->args[i].in_literal;
-                    right.s = root->args[i].s;
-                    right.var = root->args[i].var;
-                    right.args = root->args[i].args;
-                    fright = true;
-                }                
+                    term_corresp[entry.first.second] = &root->args[i];
+                }              
             }
 
-            OUTDEBUG(fprintf(stderr, "Added %d != %d with var %d\n", left.in_literal, right.in_literal, atoi(entry.second->to_string().c_str())));
-            struct smt_literal *eq = new smt_literal_qf_uf(atoi(entry.second->to_string().c_str()), left, right, false);
+            OUTDEBUG(fprintf(stderr, "Added %d != %d with var %d\n", entry.first.first, entry.first.second, atoi(entry.second->to_string().c_str())));            
+            struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, false);
             p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
         }
+        p_solver.set_terms_mapping(term_corresp);
     }
 
     OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
