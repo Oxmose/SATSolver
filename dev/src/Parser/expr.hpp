@@ -116,7 +116,7 @@ class ECst : public Expr
         // Get the number or arguments
         virtual unsigned int size();
 
-        char value;
+        string value;
 	int index;
 }; // EVar
 
