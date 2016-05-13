@@ -15,6 +15,7 @@
 #include <sstream>  // std::stringstream
 #include <iostream> // std::cout std::cerr std::endl
 #include <atomic>   // std::atomic
+#include <unordered_map> // std::unordered_map
 
 // OTHER INCLUDES FROM PROJECT
 #include "../NewCore/SMT/SMTSolver_eq.h" // SMTSolver_eq class
@@ -39,7 +40,7 @@ extern int yy_flex_debug;
 // Function that stop the programm on error (kind of excpetion)
 void yyerror(const char *s);
 
-void dfsdeb(struct smt_term *root, int tab);
+void dfsdeb(struct smt_term *root, std::unordered_map<int, smt_term*> &term_corresp, int tab, bool output);
 
 class LOGParser : public IParser
 {

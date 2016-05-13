@@ -33,16 +33,22 @@
 
 using namespace std;
 
-void dfsdeb(struct smt_term *root, int tab)
+void dfsdeb(struct smt_term *root, unordered_map<int, smt_term*> &term_corresp, int tab, bool output)
 {
-    for(int i = 0; i < tab; ++i)
-        cout << "\t";
-    cout << root->in_literal << " " << root->s << " " << root->var << endl;
-    
+    if(output)
+    {
+        for(int i = 0; i < tab; ++i)
+            cout << "\t";
+        cout << root->in_literal << " " << root->s << " " << root->var << endl;
+    }
+
+    //if(root->in_literal != 0)
+        term_corresp[root->in_literal] = root;
+
     for(unsigned int i = 0; i < root->args.size(); ++i)
     {
         //cout << "SEND" << root->args[i].index << endl;
-        dfsdeb(&(root->args[i]), tab + 1);
+        dfsdeb(&(root->args[i]), term_corresp, tab + 1, output);
     }
 }
 
@@ -76,7 +82,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     map<string, function_s*> funcorresp;
     map<string, args_s*> argscorresp;
     map<string, unsigned int> arrities;
-
+    
     struct smt_term *root = new struct smt_term(0);
 
     vector<Expr*> exps;
@@ -99,8 +105,9 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         cout << "F:"  <<  i.first << " => " << i.second->assoc_var << endl;
     for(auto i : argscorresp)
         cout << "A: " << i.first << " => " << i.second->assoc_var << endl;
-
-    dfsdeb(root, 0);*/
+    */
+    unordered_map<int, smt_term*> term_corresp;	
+    dfsdeb(root, term_corresp, 0, false);
 
     vector<pair<map<int,bool>, bool>> clauses;   
 
@@ -224,67 +231,23 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         clause.clear();
     }
 
-    if(settings_s.smte_s)
+    for(auto entry : corresp)
     {
-        for(auto entry : corresp)
-        {
-            //cout << entry.first.first << " = " << entry.first.second << " is " << atoi(entry.second->to_string().c_str()) << endl;
-            struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
-            p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
-        }
-        for(auto entry : ncorresp)
-        {
-            struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, false);
-            p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
-        }
+        OUTDEBUG(fprintf(stderr, "Added %d = %d with var %d\n", entry.first.first, entry.first.second, atoi(entry.second->to_string().c_str()))); 
+        struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
+        p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
     }
-    else if(settings_s.smtc_s)
+    for(auto entry : ncorresp)
     {
-        unordered_map<int, smt_term*> term_corresp;
-        for(auto entry : corresp)
-        {
-            bool fleft = false;
-            bool fright = false;
-            for(unsigned int i = 0; i < root->args.size(); ++i)
-            {
-                if(fleft && fright) break;
-                if(root->args[i].in_literal == entry.first.first)
-                {
-                    term_corresp[entry.first.first] = &root->args[i];
-                }
-                else if(root->args[i].in_literal == entry.first.second)
-                {
-                    term_corresp[entry.first.second] = &root->args[i];
-                }              
-            }
-
-            OUTDEBUG(fprintf(stderr, "Added %d = %d with var %d\n", entry.first.first, entry.first.second, atoi(entry.second->to_string().c_str())));            
-            struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, true);
-            p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
-        }
-        for(auto entry : ncorresp)
-        {
-            bool fleft = false;
-            bool fright = false;
-            for(unsigned int i = 0; i < root->args.size(); ++i)
-            {
-                if(fleft && fright) break;
-                if(root->args[i].in_literal == entry.first.first)
-                {
-                    term_corresp[entry.first.first] = &root->args[i];
-                }
-                else if(root->args[i].in_literal == entry.first.second)
-                {
-                    term_corresp[entry.first.second] = &root->args[i];
-                }              
-            }
-
-            OUTDEBUG(fprintf(stderr, "Added %d != %d with var %d\n", entry.first.first, entry.first.second, atoi(entry.second->to_string().c_str())));            
-            struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, false);
-            p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
-        }
-        p_solver.set_terms_mapping(term_corresp);
+        OUTDEBUG(fprintf(stderr, "Added %d != %d with var %d\n", entry.first.first, entry.first.second, atoi(entry.second->to_string().c_str()))); 
+        struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, false);
+        p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
     }
+
+    for(auto i : term_corresp)
+        cout << i.first << " => " << i.second->to_str() << endl;
+    
+    p_solver.set_terms_mapping(term_corresp);
 
     OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
     return noParseError;
