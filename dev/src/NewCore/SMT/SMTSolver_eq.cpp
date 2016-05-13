@@ -40,12 +40,23 @@ void SMTSolver_eq::init()
 		return;
 	assert(settings_s.smtc_s);
 
+	for(auto t : solver->terms_mapping)
+		if(t.first != 0 && t.second->args.size() != 0)
+		{
+
+			for(auto t_arg : t.second->args)
+			{
+				has_as_arg[t_arg.in_literal].insert(t.first);
+				//printf("%s in arg of %s\n", t_arg.to_str().c_str(), t.second->to_str().c_str());
+			}
+
+		}
 	
 }
 
 void SMTSolver_eq::reset_method()
 {
-	assert(settings_s.smte_s);
+	assert(settings_s.smte_s || settings_s.smtc_s);
 	OUTDEBUG(fprintf(stderr,"Reconstructing union find\n"));
 	connectivity_check.clear();
 	for(auto a : edge)
@@ -58,7 +69,11 @@ void SMTSolver_eq::reset_method()
 				connectivity_check.add(s1);
 			if(connectivity_check.find(s2) == nullptr)
 				connectivity_check.add(s2);
-			connectivity_check.make_union(s1,s2);
+
+			if(settings_s.smte_s)
+				connectivity_check.make_union(s1,s2);
+			else if(settings_s.smtc_s)
+				merge(s1,s2);
 		}
 	OUTDEBUG(fprintf(stderr,"Non equalities hold: \n"));
 	for(auto s1p : not_possible)
@@ -74,7 +89,7 @@ void SMTSolver_eq::reset_method()
 
 void SMTSolver_eq::cancel_last_decision()
 {
-	assert(settings_s.smte_s);
+	assert(settings_s.smte_s || settings_s.smtc_s);
 	//int last_dec_index = solver->decision_stack.size()-1;
 	decision last_decision = solver->decision_stack.back();
 
@@ -103,10 +118,86 @@ void SMTSolver_eq::cancel_last_decision()
 	not_possible[s1].erase(s2);
 }
 
+bool SMTSolver_eq::sig(int x, int y)
+{
+	assert(settings_s.smtc_s);
+
+	OUTDEBUG(fprintf((stderr), "Sig1 %d %d\n", x, y));
+
+	smt_term* xt = solver->terms_mapping[x];
+	smt_term* yt = solver->terms_mapping[y];
+	assert(xt != nullptr && yt != nullptr);
+
+	if(xt->args.size() != yt->args.size())
+		return false;
+	OUTDEBUG(fprintf((stderr), "Sig2 %d %d\n", x, y));
+
+	if(xt->args.size() == 0 && xt->var != yt->var)
+		return false;
+	OUTDEBUG(fprintf((stderr), "Sig3 %d %d\n", x, y));
+
+	if(xt->s != yt->s)
+		return false;
+	OUTDEBUG(fprintf((stderr), "Sig4 %d %d\n", x, y));
+
+	for(int i = 0 ; i < xt->args.size() ; i++)
+	{
+		if(connectivity_check.find(xt->args[i].in_literal) == nullptr)
+			connectivity_check.add(xt->args[i].in_literal);
+		if(connectivity_check.find(yt->args[i].in_literal) == nullptr)
+			connectivity_check.add(yt->args[i].in_literal);
+
+		if(connectivity_check.find(xt->args[i].in_literal) != connectivity_check.find(yt->args[i].in_literal))
+			return false;
+	}
+
+	return true;
+}
+
+void SMTSolver_eq::merge(int s1, int s2)
+{
+	assert(settings_s.smtc_s);
+
+	fprintf(stderr, "Merging %d and %d.\n", s1, s2);
+
+	if(s1 == s2)
+		return;
+	assert(connectivity_check.find(s1) != nullptr && connectivity_check.find(s2) != nullptr);
+	connectivity_check.make_union(s1,s2);
+	for(int good_term: has_as_arg[s1])
+	{
+		fprintf(stderr, "%d has %d as arg.\n", good_term, s1);
+		for(auto y : solver->terms_mapping)
+			if(y.first != 0 && sig(good_term, y.first))
+			{
+				if(connectivity_check.find(y.first) == nullptr)
+					connectivity_check.add(y.first);
+				if(connectivity_check.find(good_term) == nullptr)
+					connectivity_check.add(good_term);
+				merge(connectivity_check.find(good_term)->getValue(), connectivity_check.find(y.first)->getValue());
+			}
+	}
+
+	for(int good_term: has_as_arg[s2])
+	{
+		fprintf(stderr, "%d has %d as arg.\n", good_term, s1);
+		for(auto y : solver->terms_mapping)
+			if(y.first != 0 && sig(good_term, y.first))
+			{
+				if(connectivity_check.find(y.first) == nullptr)
+					connectivity_check.add(y.first);
+				if(connectivity_check.find(good_term) == nullptr)
+					connectivity_check.add(good_term);
+				merge(connectivity_check.find(good_term)->getValue(), connectivity_check.find(y.first)->getValue());
+			}
+	}
+
+}
+
 /* literal violated */
 int SMTSolver_eq::apply_last_decision()
 {
-	assert(settings_s.smte_s);
+	assert(settings_s.smte_s || settings_s.smtc_s);
 	int last_dec_index = solver->decision_stack.size()-1;
 	decision last_decision = solver->decision_stack.back();
 
@@ -148,7 +239,10 @@ int SMTSolver_eq::apply_last_decision()
 																				solver->decision_stack[edge[s1][s2]].level, solver->decision_stack[edge[s1][s2]].dec));
 
 
-			connectivity_check.make_union(s1,s2);
+			if(settings_s.smte_s)
+				connectivity_check.make_union(s1,s2);
+			else if(settings_s.smtc_s)
+				merge(s1,s2);
 
 			for(auto s1p : not_possible)
 				for(auto s2p : s1p.second)
@@ -274,6 +368,8 @@ void SMTSolver_eq::visite_composante(int curr, int id, map<int,int>& id_composan
 
 void SMTSolver_eq::get_solution()
 {
+	assert((settings_s.smte_s && !settings_s.smtc_s) ||
+	(!settings_s.smte_s && settings_s.smtc_s));
 	OUTDEBUG(cerr << "[SMT]Computing solution." << endl);
 	map<int,int> id_composante;
 	int id = 0;
@@ -353,7 +449,7 @@ void SMTSolver_eq::get_solution()
 		unsigned int k = 0;
 		for(auto b: c.second)
 		{
-			cout << b << ((k == c.second.size()-1) ? "" : ", ");
+			cout << ((settings_s.smte_s) ? to_string(b) : solver->terms_mapping[b]->to_str()) << ((k == c.second.size()-1) ? "" : ", ");
 			k ++;
 		}
 		cout << "}" << endl;
