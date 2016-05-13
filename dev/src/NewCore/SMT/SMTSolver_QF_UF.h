@@ -7,11 +7,11 @@ using namespace std;
 
 struct smt_term
 {
-	smt_term(int index = 0, char s=0, int var=0, vector<smt_term> args = vector<smt_term>()) : in_literal(index), s(s), var(var), args(args) {}
+	smt_term(int index = 0, string s=0, int var=0, vector<smt_term> args = vector<smt_term>()) : in_literal(index), s(s), var(var), args(args) {}
 
 
 	int in_literal;
-	char s;
+	string s;
 	int var; //L'un ou l'autre
 	vector<smt_term> args;
 
