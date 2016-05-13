@@ -267,7 +267,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                 }              
             }
 
-            OUTDEBUG(fprintf(stderr, "Added %c = %c with var %d", left.in_literal, right.in_literal, atoi(entry.second->to_string().c_str())));
+            OUTDEBUG(fprintf(stderr, "Added %c = %c with var %d\n", left.in_literal, right.in_literal, atoi(entry.second->to_string().c_str())));
             
             struct smt_literal *eq = new smt_literal_qf_uf(atoi(entry.second->to_string().c_str()), left, right, true);
             //cout << "EQ " << eq->to_str() << endl;
@@ -299,7 +299,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
                 }                
             }
 
-            OUTDEBUG(fprintf(stderr, "Added %c != %c with var %d", left.in_literal, right.in_literal, atoi(entry.second->to_string().c_str())));
+            OUTDEBUG(fprintf(stderr, "Added %c != %c with var %d\n", left.in_literal, right.in_literal, atoi(entry.second->to_string().c_str())));
             struct smt_literal *eq = new smt_literal_qf_uf(atoi(entry.second->to_string().c_str()), left, right, false);
             p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
         }

@@ -116,7 +116,7 @@ class ECst : public Expr
         // Get the number or arguments
         virtual unsigned int size();
 
-        char value;
+        string value;
 	int index;
 }; // EVar
 
@@ -449,6 +449,127 @@ class ENEqua : public Expr
 
         Expr * op1, * op2;
 }; // EEQua
+
+/***********************************/
+/********  LESS THAN      **********/
+/***********************************/
+/*
+class ELth : public Expr
+{
+    public:
+        ELth(Expr * e1, Expr * e2, Expr * e3 = nullptr);
+
+        // Tseitin transformation of this expression
+        virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
+                              std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
+                              std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+    
+        // Return the variable indexes (in-out parameter) of the expression
+        virtual void getVars(std::vector<int> &p_originalVars);
+
+        // Stringify the expression
+        virtual std::string to_string();
+
+        // Get var assiociated to the term
+        virtual int getVarTerm();
+
+        // Get the number or arguments
+        virtual unsigned int size();
+
+        Expr * op1, * op2, * op3;
+}; // ELth
+
+/***********************************/
+/********  GREATER THAN   **********/
+/***********************************/
+/*
+class EGth : public Expr
+{
+    public:
+        EGth(Expr * e1, Expr * e2, Expr * e3 = nullptr);
+
+        // Tseitin transformation of this expression
+        virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
+                              std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
+                              std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+    
+        // Return the variable indexes (in-out parameter) of the expression
+        virtual void getVars(std::vector<int> &p_originalVars);
+
+        // Stringify the expression
+        virtual std::string to_string();
+
+        // Get var assiociated to the term
+        virtual int getVarTerm();
+
+        // Get the number or arguments
+        virtual unsigned int size();
+
+        Expr * op1, * op2, * op3;
+}; // EGth
+
+/***********************************/
+/******  LESS THAN OR EQUAL ********/
+/***********************************/
+/*
+class ELeq : public Expr
+{
+    public:
+        ELeq(Expr * e1, Expr * e2, Expr * e3 = nullptr);
+
+        // Tseitin transformation of this expression
+        virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
+                              std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
+                              std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+    
+        // Return the variable indexes (in-out parameter) of the expression
+        virtual void getVars(std::vector<int> &p_originalVars);
+
+        // Stringify the expression
+        virtual std::string to_string();
+
+        // Get var assiociated to the term
+        virtual int getVarTerm();
+
+        // Get the number or arguments
+        virtual unsigned int size();
+
+        Expr * op1, * op2, * op3;
+}; // ELeq
+
+/***********************************/
+/****  GREATER THAN  OR EQUAL  *****/
+/***********************************/
+/*
+class EGeq : public Expr
+{
+    public:
+        EGeq(Expr * e1, Expr * e2, Expr * e3 = nullptr);
+
+        // Tseitin transformation of this expression
+        virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
+                              std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
+                              std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+    
+        // Return the variable indexes (in-out parameter) of the expression
+        virtual void getVars(std::vector<int> &p_originalVars);
+
+        // Stringify the expression
+        virtual std::string to_string();
+
+        // Get var assiociated to the term
+        virtual int getVarTerm();
+
+        // Get the number or arguments
+        virtual unsigned int size();
+
+        Expr * op1, * op2, * op3;
+}; // EGeq */
+
 
 #endif // DEF_EXPR_HPP
 

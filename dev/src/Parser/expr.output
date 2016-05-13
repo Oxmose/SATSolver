@@ -1,3 +1,11 @@
+Terminaux inutilisés dans la grammaire
+
+   TK_LTH
+   TK_GTH
+   TK_LEQ
+   TK_GEQ
+
+
 État 5 conflits: 2 réduction/réduction
 
 
@@ -42,25 +50,29 @@ TK_ANT (263) 18
 TK_NEG (264) 19
 TK_EQUA (265) 11
 TK_NEQUA (266) 12
-TK_LPAREN (267) 5 8 10
-TK_RPAREN (268) 5 8 10
-TK_COMMA (269) 3 9
-TK_ZERO (270) 1
-TK_FUN (271) 5 6 8
-TK_VAR (272) 4 7
+TK_LTH (267)
+TK_GTH (268)
+TK_LEQ (269)
+TK_GEQ (270)
+TK_LPAREN (271) 5 8 10
+TK_RPAREN (272) 5 8 10
+TK_COMMA (273) 3 9
+TK_ZERO (274) 1
+TK_FUN (275) 5 6 8
+TK_VAR (276) 4 7
 
 
 Non-terminaux, suivis des règles où ils apparaissent
 
-$accept (18)
+$accept (22)
     à gauche: 0
-input (19)
+input (23)
     à gauche: 1, à droite: 0
-args (20)
+args (24)
     à gauche: 2 3, à droite: 3 5
-term (21)
+term (25)
     à gauche: 4 5 6, à droite: 2 3 11 12
-expression (22)
+expression (26)
     à gauche: 7 8 9 10 11 12 13 14 15 16 17 18 19, à droite: 1 8
     9 10 13 14 15 16 17 18 19
 

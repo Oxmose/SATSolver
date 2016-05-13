@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
     
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-smte | -smtc] [-disable_smt_cl] [-cl | -cl-interac] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-smte | -smtc | -smtd] [-disable_smt_cl] [-cl | -cl-interac] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == -1)
@@ -129,6 +129,7 @@ int parseCommand(int argc, const char **argv)
     settings_s.forget_s = false;
     settings_s.smte_s = false;
     settings_s.smtc_s = false;
+    settings_s.smtd_s = false;
     settings_s.disable_smt_cl_s = false;
 
     int commandError = 0;
@@ -223,6 +224,12 @@ int parseCommand(int argc, const char **argv)
                 settings_s.parser_s = LOG_PARSE;
                 argsValid[6] = true;
             }
+            else if(value == "-smtd" && !argsValid[6])
+            {
+                settings_s.smtd_s = true;
+                settings_s.parser_s = LOG_PARSE;
+                argsValid[6] = true;
+            }
             else if(value == "-disable_smt_cl" && !argsValid[7])
             {
                 settings_s.disable_smt_cl_s = true;
@@ -298,7 +305,7 @@ void displayMenu(const char *softName)
     cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
     cout << "\t\t" << softName << " [-wl] [-cl | -cl-interac] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-tseitin] [-smte | -smtc] [-disable_smt_cl] [-wl] [-cl | -cl-interac] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+    cout << "\t\t" << softName << " [-tseitin] [-smte | -smtc | -smtd] [-disable_smt_cl] [-wl] [-cl | -cl-interac] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
     cout << "\t The argument -wl enable the watched literals method." << endl;
     cout << "\t The argument -cl enable clauses learning. -cl-interac enable interactive clauses learning." << endl;
     cout << "\t [-rand | -moms | -dlis ...] define the used heuristic to bet on the next literal :" << endl;
