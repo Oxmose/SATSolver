@@ -88,7 +88,7 @@ ECst::ECst(char name[256])
 {
     ostringstream oss;
     oss << name;
-    value = oss.str();
+    value = oss.str().substr(0, 1);
 }
 
 Expr* ECst::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
