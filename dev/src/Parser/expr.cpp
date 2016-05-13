@@ -84,11 +84,7 @@ unsigned int EVar::size()
 /**********  Constants   ***********/
 /***********************************/
 
-<<<<<<< HEAD
-ECst::ECst(char name[256])
-=======
 ECst::ECst(char name[256]) 
->>>>>>> bd3c43d2c9bba4d5219715be0a0db6cd3d2a0e34
 {
     ostringstream oss;
     oss << name;
@@ -784,8 +780,8 @@ unsigned int ENEqua::size()
 /***********************************/
 /********  LESS THAN      **********/
 /***********************************/
-/*
-ELth::ELth(Expr * e1, Expr * e2, Expr * e3) : op1(e1), op2(e2), op3(e3) {}
+
+ELth::ELth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
 
 Expr* ELth::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
@@ -823,7 +819,7 @@ unsigned int ELth::size()
 /********  GREATER THAN   **********/
 /***********************************/
 
-/*EGth::EGth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr ) : op1(e1), op2(e2), op3(e3) {}
+/*EGth::EGth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
 
 Expr* EGth::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
@@ -860,8 +856,8 @@ unsigned int EGth::size()
 /***********************************/
 /******  LESS THAN OR EQUAL ********/
 /***********************************/
-/*
-ELeq::ELeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr ) : op1(e1), op2(e2), op3(e3) {}
+
+ELeq::ELeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
 
 Expr* ELeq::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
@@ -899,7 +895,7 @@ unsigned int ELeq::size()
 /****  GREATER THAN  OR EQUAL  *****/
 /***********************************/
 
-/*EGeq::EGeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr ) : op1(e1), op2(e2), op3(e3) {}
+EGeq::EGeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
 
 Expr* EGeq::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
@@ -931,4 +927,4 @@ int EGeq::getVarTerm()
 unsigned int EGeq::size()
 {
     return 0;
-} // unsigned int size()*/
+} // unsigned int size()

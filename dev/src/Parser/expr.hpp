@@ -453,7 +453,7 @@ class ENEqua : public Expr
 /***********************************/
 /********  LESS THAN      **********/
 /***********************************/
-/*
+
 class ELth : public Expr
 {
     public:
@@ -483,7 +483,7 @@ class ELth : public Expr
 /***********************************/
 /********  GREATER THAN   **********/
 /***********************************/
-/*
+
 class EGth : public Expr
 {
     public:
@@ -513,7 +513,7 @@ class EGth : public Expr
 /***********************************/
 /******  LESS THAN OR EQUAL ********/
 /***********************************/
-/*
+
 class ELeq : public Expr
 {
     public:
@@ -543,7 +543,7 @@ class ELeq : public Expr
 /***********************************/
 /****  GREATER THAN  OR EQUAL  *****/
 /***********************************/
-/*
+
 class EGeq : public Expr
 {
     public:

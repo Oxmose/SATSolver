@@ -81,13 +81,13 @@ expression:
     | expression TK_CON expression                      {$$ = new ECon($1, $3);}
     | TK_ANT expression                                 {$$ = new EAnt($2);}
     | TK_NEG expression                                 {$$ = new ENeg($2);}
-    //| expression TK_NEG expression TK_LTH expression    {$$ = new ELth($1, $3, $5);}
-    //| expression TK_NEG expression TK_GTH expression    {$$ = new EGth($1, $3, $5);}
-    //| expression TK_NEG expression TK_LEQ expression    {$$ = new ELeq($1, $3, $5);}
-    //| expression TK_NEG expression TK_GEQ expression    {$$ = new EGeq($1, $3, $5);}
-    //| expression TK_LTH expression                      {$$ = new ELth($1, $3);}
-    //| expression TK_GTH expression                      {$$ = new EGth($1, $3);}
-    //| expression TK_LEQ expression                      {$$ = new ELeq($1, $3);}
-    //| expression TK_GEQ expression                      {$$ = new EGeq($1, $3);}
+    | expression TK_NEG expression TK_LTH expression    {$$ = new ELth($1, $3, $5);}
+    | expression TK_NEG expression TK_GTH expression    {$$ = new EGth($1, $3, $5);}
+    | expression TK_NEG expression TK_LEQ expression    {$$ = new ELeq($1, $3, $5);}
+    | expression TK_NEG expression TK_GEQ expression    {$$ = new EGeq($1, $3, $5);}
+    | expression TK_LTH expression                      {$$ = new ELth($1, $3);}
+    | expression TK_GTH expression                      {$$ = new EGth($1, $3);}
+    | expression TK_LEQ expression                      {$$ = new ELeq($1, $3);}
+    | expression TK_GEQ expression                      {$$ = new EGeq($1, $3);}
     ;
 %%

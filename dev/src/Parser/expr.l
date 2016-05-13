@@ -22,6 +22,10 @@ using namespace std;
 "="             { return TK_EQUA; }
 "!="            { return TK_NEQUA; }
 ","		{ return TK_COMMA; }
+"<"		{ return TK_LTH; }
+">"		{ return TK_GTH; }
+"<="		{ return TK_LEQ; }
+">="		{ return TK_GEQ; }
 [a-z]+          { yylval.name = yytext; return TK_FUN; }
 "0"("\n"*)            { return TK_ZERO;}//End Of Formule, the HEX 0a is a pain in the 
 .               ;
