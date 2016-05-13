@@ -558,6 +558,10 @@ bool SATSolver::solve()
         printf("var %d\n", l.first);*/
 
     reset_valuation();//No unitary clash found in input
+    
+    smt_solver->init();
+
+    exit(0);
 
     bool is_unsat = false;
     bool jump = false;

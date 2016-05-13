@@ -54,12 +54,16 @@ extern int yydebug;
     TK_NEG = 264,
     TK_EQUA = 265,
     TK_NEQUA = 266,
-    TK_LPAREN = 267,
-    TK_RPAREN = 268,
-    TK_COMMA = 269,
-    TK_ZERO = 270,
-    TK_FUN = 271,
-    TK_VAR = 272
+    TK_LTH = 267,
+    TK_GTH = 268,
+    TK_LEQ = 269,
+    TK_GEQ = 270,
+    TK_LPAREN = 271,
+    TK_RPAREN = 272,
+    TK_COMMA = 273,
+    TK_ZERO = 274,
+    TK_FUN = 275,
+    TK_VAR = 276
   };
 #endif
 
@@ -74,7 +78,7 @@ union YYSTYPE
     char *name;
     class Expr *exp;
 
-#line 78 "Parser/expr.tab.hpp" /* yacc.c:1909  */
+#line 82 "Parser/expr.tab.hpp" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
