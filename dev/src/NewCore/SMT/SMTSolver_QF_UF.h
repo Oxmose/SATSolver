@@ -3,6 +3,8 @@
 
 #include "SMTSolver.h"
 
+#include "../../Tools/UnionFind.h"
+
 using namespace std;
 
 struct smt_term
