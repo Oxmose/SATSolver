@@ -34,6 +34,7 @@ struct settings_s
     bool forget_s;
     bool smte_s;
     bool smtc_s;
+    bool smtd_s;
     bool disable_smt_cl_s;
 };
 

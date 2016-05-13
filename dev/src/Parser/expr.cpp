@@ -775,3 +775,156 @@ unsigned int ENEqua::size()
 {
     return 0;
 } // unsigned int size()
+
+
+/***********************************/
+/********  LESS THAN      **********/
+/***********************************/
+
+ELth::ELth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
+
+Expr* ELth::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+{
+    
+    return nullptr;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void ELth::getVars(vector<int> &p_originalVars)
+{
+    // Get vars from the leaves of this expression
+    op1->getVars(p_originalVars);
+    op2->getVars(p_originalVars);
+    op3->getVars(p_originalVars);
+} // getVars(vector<int>&)
+
+string ELth::to_string()
+{
+    return "(" + op1->to_string() + " - " +  op2->to_string() + " < " + op3->to_string() + ")";
+} // string to_tring()
+
+int ELth::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int ELth::size()
+{
+    return 0;
+} // unsigned int size()
+
+/***********************************/
+/********  GREATER THAN   **********/
+/***********************************/
+
+EGth::EGth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
+
+Expr* EGth::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+{
+    
+    return nullptr;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void EGth::getVars(vector<int> &p_originalVars)
+{
+    // Get vars from the leaves of this expression
+    op1->getVars(p_originalVars);
+    op2->getVars(p_originalVars);
+    op3->getVars(p_originalVars);
+} // getVars(vector<int>&)
+
+string EGth::to_string()
+{
+    return "(" + op1->to_string() + " - " +  op2->to_string() + " > " + op3->to_string() + ")";
+} // string to_tring()
+
+int EGth::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int EGth::size()
+{
+    return 0;
+} // unsigned int size()
+
+/***********************************/
+/******  LESS THAN OR EQUAL ********/
+/***********************************/
+
+ELeq::ELeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
+
+Expr* ELeq::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+{
+    
+    return nullptr;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void ELeq::getVars(vector<int> &p_originalVars)
+{
+    // Get vars from the leaves of this expression
+    op1->getVars(p_originalVars);
+    op2->getVars(p_originalVars);
+    op3->getVars(p_originalVars);
+} // getVars(vector<int>&)
+
+string ELeq::to_string()
+{
+    return "(" + op1->to_string() + " - " +  op2->to_string() + " <= " + op3->to_string()  + ")";
+} // string to_tring()
+
+int ELeq::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int ELeq::size()
+{
+    return 0;
+} // unsigned int size()
+
+/***********************************/
+/****  GREATER THAN  OR EQUAL  *****/
+/***********************************/
+
+EGeq::EGeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
+
+Expr* EGeq::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+{
+    
+    return nullptr;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void EGeq::getVars(vector<int> &p_originalVars)
+{
+    // Get vars from the leaves of this expression
+    op1->getVars(p_originalVars);
+    op2->getVars(p_originalVars);
+    op3->getVars(p_originalVars);
+} // getVars(vector<int>&)
+
+string EGeq::to_string()
+{
+    return "(" + op1->to_string() + " - " +  op2->to_string() + " >= " + op3->to_string() + ")";
+} // string to_tring()
+
+int EGeq::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int EGeq::size()
+{
+    return 0;
+} // unsigned int size()
