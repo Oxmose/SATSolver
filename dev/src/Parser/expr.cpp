@@ -43,7 +43,7 @@ Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     }
     else
     {
-        smt_term var(index, 0, index);
+        smt_term var(index, "", index);
         root->args.push_back(var);
         return this;
     }
@@ -84,7 +84,12 @@ unsigned int EVar::size()
 /**********  Constants   ***********/
 /***********************************/
 
-ECst::ECst(char name[256]) : value(name[0]) {}
+ECst::ECst(char name[256]) 
+{
+    ostringstream oss;
+    oss << name;
+    value = oss.str();
+}
 
 Expr* ECst::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
@@ -168,13 +173,13 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     //cout << m_name << " has arrity " << arrity << endl;
 
     string key = to_string();
-    struct smt_term fun_t(index, m_name[0]);
+    struct smt_term fun_t(index, m_name);
     if(funcorresp.find(key) != funcorresp.end())
     {
         //p_exps.push_back(funcorresp[key]->ptr);
         m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &fun_t);
         fun_t.in_literal = funcorresp[key]->assoc_var;
-        fun_t.s = m_name[0];
+        fun_t.s = m_name;
         root->args.push_back(fun_t);
         index = funcorresp[key]->assoc_var;
         return funcorresp[key]->ptr;
@@ -209,7 +214,7 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
 
     
     fun_t.in_literal = index;
-    fun_t.s = m_name[0];
+    fun_t.s = m_name;
     root->args.push_back(fun_t);
 
     funcorresp[key] = fun;
