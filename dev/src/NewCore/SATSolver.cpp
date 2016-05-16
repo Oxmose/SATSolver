@@ -559,8 +559,12 @@ bool SATSolver::solve()
 
     reset_valuation();//No unitary clash found in input
     
-    for(auto a :  terms_mapping)
-        printf("%d %s\n", a.first, a.second->to_str().c_str());
+    if(settings_s.smtc_s)
+    {
+        fprintf(stderr, "Terms mapping\n");
+        for(auto a :  terms_mapping)
+            fprintf(stderr, "%d %s\n", a.first, a.second->to_str().c_str());
+    }
 
     if(smt_solver)
         smt_solver->init();

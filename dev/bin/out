@@ -29,6 +29,15 @@ Added 3 = 1 with var 5
 Added 6 = 7 with var 9
 Added 12 != 14 with var 16
 LOG PARSE END WITH STATUS 1
+Terms mapping
+7 b
+6 f(f(f(a)))
+12 g(a,b)
+1 a
+2 f(a)
+14 g(f(a),b)
+3 f(f(a))
+0 (f(f(a)),a,f(f(f(a))),b,g(a,b),g(f(a),b))
 
 Iteration 0.
 Add pending deduction 17 to decision stack.
