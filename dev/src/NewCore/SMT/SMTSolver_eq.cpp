@@ -473,7 +473,10 @@ void SMTSolver_eq::get_solution()
 
 	for(auto c : composante)
 	{
-		cout << "C(" << connectivity_check.find(c.second[0])->getValue() << "): {";
+		if(settings_s.smte_s)
+			cout << "C(" << connectivity_check.find(c.second[0])->getValue() << "): {";
+		else
+			cout << "C(" << solver->terms_mapping[connectivity_check.find(c.second[0])->getValue()]->to_str() << "): {";
 		unsigned int k = 0;
 		for(auto b: c.second)
 		{
