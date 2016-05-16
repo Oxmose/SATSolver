@@ -54,21 +54,24 @@ Node* UnionFind::make_union(int p_valueA, int p_valueB)
     Node *rootB = find(p_valueB);
     
     if(rootA == rootB)
-        return rootA;;
+        return rootA;
 
     if(m_rank[rootA] < m_rank[rootB])
     {
         rootA->setParent(rootB);
+	rootB->add_son(rootA);
         return rootB;
     }
     else if(m_rank[rootA] > m_rank[rootB])
     {
         rootB->setParent(rootA);
+	rootA->add_son(rootB);
         return rootA;
     }
     else
     {
         rootB->setParent(rootA);
+	rootA->add_son(rootB);
         ++m_rank[rootA];
         return rootA;
     }
@@ -82,3 +85,4 @@ void UnionFind::clear()
     m_rank.clear();
     m_values.clear();
 } // clear()
+

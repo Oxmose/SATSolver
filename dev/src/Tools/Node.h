@@ -27,6 +27,9 @@ class Node
 
         Node* getParent();
         void setParent(Node *p_parent);
+	
+	void add_son(Node *son);
+	std::vector<Node*> get_sons();
 
         bool operator==(const Node &N) const;
         bool operator!=(const Node &N) const;
@@ -37,6 +40,7 @@ class Node
        
     private:
         Node *m_parent;
+        std::vector<Node*> m_sons;
         int m_value;
         
 }; // Node

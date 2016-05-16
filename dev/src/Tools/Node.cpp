@@ -20,7 +20,6 @@ Node::Node(int p_value)
 {
     m_value = p_value;
     m_parent = this;
-
 }
 
 
@@ -63,6 +62,17 @@ Node* Node::getParent()
 void Node::setParent(Node* p_parent)
 {
     m_parent = p_parent;
+}
+
+
+void Node::add_son(Node *son)
+{
+    m_sons.push_back(son);
+} // add_son(Node*)
+
+vector<Node*> Node::get_sons()
+{
+	return m_sons;
 }
 
 bool Node::operator==(const Node &N) const
