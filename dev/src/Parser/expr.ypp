@@ -34,6 +34,7 @@ Expr *res = NULL;
 %token TK_ZERO
 %token <name> TK_FUN
 %token <ival> TK_VAR
+%token <name> TK_LOVAR
 %type <exp> expression
 %type <exp> args
 %type <exp> term
@@ -69,6 +70,7 @@ term:
                           
 expression:
       TK_VAR                                            {$$ = new EVar($1);}
+    | TK_LOVAR                                          {$$ = new ELoVar($1);}
     | TK_FUN TK_LPAREN expression TK_RPAREN             {$$ = new EFun($1, $3);}
     | expression TK_COMMA expression                    {$$ = new EArg($1, $3);}
     | TK_LPAREN expression TK_RPAREN                    {$$ = $2;}
@@ -85,9 +87,13 @@ expression:
     | expression TK_NEG expression TK_GTH expression    {$$ = new EGth($1, $3, $5);}
     | expression TK_NEG expression TK_LEQ expression    {$$ = new ELeq($1, $3, $5);}
     | expression TK_NEG expression TK_GEQ expression    {$$ = new EGeq($1, $3, $5);}
+    | expression TK_NEG expression TK_EQUA expression   {$$ = new ELoEq($1, $3, $5);}
+    | expression TK_NEG expression TK_NEQUA expression  {$$ = new ELoNeq($1, $3, $5);}
     | expression TK_LTH expression                      {$$ = new ELth($1, $3);}
     | expression TK_GTH expression                      {$$ = new EGth($1, $3);}
     | expression TK_LEQ expression                      {$$ = new ELeq($1, $3);}
     | expression TK_GEQ expression                      {$$ = new EGeq($1, $3);}
+    | expression TK_EQUA expression                     {$$ = new ELoEq($1, $3);}
+    | expression TK_NEQUA expression                    {$$ = new ELoNeq($1, $3);}
     ;
 %%

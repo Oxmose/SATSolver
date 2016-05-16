@@ -30,7 +30,8 @@ EVar::EVar(int i) : index(i) {}
 Expr* EVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     // Then We create the new variable for this expression
     if(trans)
@@ -70,11 +71,62 @@ int EVar::getVarTerm()
 
     if(str[0] == '(')
         str = str.substr(1, str.size() - 2);
-
     return stoi(str);
 } // int getVatTerm()
 
 unsigned int EVar::size()
+{
+    return 1;
+} // unsigned int size()
+
+
+/***********************************/
+/******  Logical Variables   *******/
+/***********************************/
+
+ELoVar::ELoVar(char name[256]) 
+{
+    ostringstream oss;
+    oss << name;
+    string result = oss.str();
+    index = stoi(result.substr(1, result.size()));
+}
+
+Expr* ELoVar::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
+{
+    // Then We create the new variable for this expression
+    ++p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+    Expr* varNeg = new ENeg(var);
+    p_exps.push_back(new ECon(new EDis(varNeg, this), new EDis(var, new ENeg(this))));
+    return var;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void ELoVar::getVars(vector<int> &p_originalVars)
+{
+    // Fill the vector with the index of the var if not already in
+    if(find(p_originalVars.begin(), p_originalVars.end(), index) == p_originalVars.end())
+        p_originalVars.push_back(index);
+} // getVars(vector<int> &)
+
+string ELoVar::to_string()
+{
+    ostringstream oss;
+    oss << index;
+    string result = "x" + oss.str();
+    return result;
+} // string tos_tring()
+
+int ELoVar::getVarTerm()
+{
+    return index;
+} // int getVatTerm()
+
+unsigned int ELoVar::size()
 {
     return 1;
 } // unsigned int size()
@@ -94,7 +146,8 @@ ECst::ECst(char name[256])
 Expr* ECst::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     
     
@@ -159,14 +212,15 @@ EFun::EFun(char *name, Expr* e) : m_args(e)
 Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     // Check arrity
     unsigned int arrity = m_args->size();
     if(arrities.find(m_name) != arrities.end())
         if(arrities[m_name] != arrity)
         {
-            cerr << "Found functions with differents argumetns count\n" << endl;
+            cerr << "Found functions with differents arguments count\n" << endl;
             exit(1);
         }
 
@@ -177,7 +231,7 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     if(funcorresp.find(key) != funcorresp.end())
     {
         //p_exps.push_back(funcorresp[key]->ptr);
-        m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &fun_t);
+        m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &fun_t, str_to_ineq, int_to_ineq);
         fun_t.in_literal = funcorresp[key]->assoc_var;
         fun_t.s = m_name;
         root->args.push_back(fun_t);
@@ -186,7 +240,7 @@ Expr* EFun::tseitin(int &p_maxIndex, vector<Expr*> &p_exps,
     }
 
     // Then We create the new variable for this expression
-    m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &fun_t);
+    m_args->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, &fun_t, str_to_ineq, int_to_ineq);
 
     string newkey = m_args->to_string();
     if(argscorresp.find(newkey) == argscorresp.end())
@@ -257,11 +311,12 @@ EArg::EArg(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EArg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     //struct smt_term arg_t(index);
-    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
-    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
+    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root, str_to_ineq, int_to_ineq);
+    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root, str_to_ineq, int_to_ineq);
 
     string key = to_string();
     if(argscorresp.find(key) != argscorresp.end())
@@ -320,12 +375,13 @@ EEqu::EEqu(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EEqu::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     // First we transform every sub expressions int the expression
     // and get the newly added variable
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
     Expr* op1TranNeg = new ENeg(op1Tran);
     Expr* op2TranNeg = new ENeg(op2Tran);
 
@@ -383,10 +439,11 @@ EImp::EImp(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EImp::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
 
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -431,10 +488,11 @@ EXor::EXor(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EXor::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
     Expr* op1TranNeg = new ENeg(op1Tran);
     Expr* op2TranNeg = new ENeg(op2Tran);
 
@@ -488,10 +546,11 @@ EDis::EDis(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EDis::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
     
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -537,10 +596,11 @@ ECon::ECon(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* ECon::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
-    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    Expr* op2Tran = op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
 
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
@@ -587,9 +647,10 @@ EAnt::EAnt(Expr * e1) : op1(e1) {}
 Expr* EAnt::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
-    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
 
     ++p_maxIndex;
     Expr *var = new EVar(p_maxIndex);
@@ -631,7 +692,8 @@ ENeg::ENeg(Expr * e1) : op1(e1) {}
 Expr* ENeg::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     //Expr* op1Tran = op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true);
 
@@ -658,7 +720,7 @@ string ENeg::to_string()
 
 int ENeg::getVarTerm()
 {
-    return 0;
+    return -op1->getVarTerm();
 } // int getVatTerm()
 
 unsigned int ENeg::size()
@@ -675,23 +737,24 @@ EEqua::EEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* EEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
-    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
-    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
+    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root, str_to_ineq, int_to_ineq);
+    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root, str_to_ineq, int_to_ineq);
 
     pair<int, int> pair_t = make_pair(op1->getVarTerm(), op2->getVarTerm());
 
     if(corresp.find(pair_t) != corresp.end())
     {
-        p_exps.push_back(corresp[pair_t]);
+        //p_exps.push_back(corresp[pair_t]);
         return corresp[pair_t];
     }
 
     // Then we create the new variable for this expression
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
-    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
 
     corresp[pair_t] = ret;
 
@@ -730,23 +793,24 @@ ENEqua::ENEqua(Expr * e1, Expr * e2) : op1(e1), op2(e2) {}
 Expr* ENEqua::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
-    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
-    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root);
+    op1->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root, str_to_ineq, int_to_ineq);
+    op2->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, false, root, str_to_ineq, int_to_ineq);
 
     pair<int, int> pair_t = make_pair(op1->getVarTerm(), op2->getVarTerm());
 
     if(ncorresp.find(pair_t) != ncorresp.end())
     {
-        p_exps.push_back(ncorresp[pair_t]);
+        //p_exps.push_back(ncorresp[pair_t]);
         return ncorresp[pair_t];
     }
 
     // Then we create the new variable for this expression
     ++p_maxIndex;
     Expr* var = new EVar(p_maxIndex);
-    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
 
     ncorresp[pair_t] = ret;
 
@@ -786,10 +850,47 @@ ELth::ELth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2),
 Expr* ELth::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     
-    return nullptr;
+    ineq_s *in = new ineq_s;
+
+    if(str_to_ineq.find(to_string()) != str_to_ineq.end())
+    {
+        return str_to_ineq[to_string()]->ptr;
+    }
+
+    in->left = op1->getVarTerm();
+    
+    if(op3)
+    {
+        in->right = op2->getVarTerm();
+        in->coeff = op3->getVarTerm();
+        in->name = "(" + std::to_string(in->left) + " < " + std::to_string(in->right) + " + " + std::to_string(in->coeff) + ")";
+    }
+    else
+    {
+        in->right = 0;
+        in->coeff = op2->getVarTerm();
+        in->name = "(" + std::to_string(in->left) + " < " + std::to_string(in->coeff) + ")";
+    }
+
+    in->old_name = to_string();
+    in->type = INEQUAL;
+
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    in->assoc_var = p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    
+    in->ptr = ret;
+    str_to_ineq[in->old_name] = in;
+    int_to_ineq[in->assoc_var] = in;
+
+    // Then we return the newly created variable
+    return ret;
 } // Expr* tseitin(int&, vector<Expr*>&)
 
 void ELth::getVars(vector<int> &p_originalVars)
@@ -797,12 +898,16 @@ void ELth::getVars(vector<int> &p_originalVars)
     // Get vars from the leaves of this expression
     op1->getVars(p_originalVars);
     op2->getVars(p_originalVars);
-    op3->getVars(p_originalVars);
+    if(op3)
+    	op3->getVars(p_originalVars);
 } // getVars(vector<int>&)
 
 string ELth::to_string()
 {
-    return "(" + op1->to_string() + " - " +  op2->to_string() + " < " + op3->to_string() + ")";
+    if(op3)
+        return "(" + op1->to_string() + " - " +  op2->to_string() + " < " + op3->to_string() + ")";
+    else
+        return "(" + op1->to_string() + " < " +  op2->to_string() + ")";
 } // string to_tring()
 
 int ELth::getVarTerm()
@@ -824,10 +929,48 @@ EGth::EGth(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2),
 Expr* EGth::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     
-    return nullptr;
+    ineq_s *in = new ineq_s;
+
+    if(str_to_ineq.find(to_string()) != str_to_ineq.end())
+    {
+        return str_to_ineq[to_string()]->ptr;
+    }
+
+    in->left = op2->getVarTerm();
+    
+    if(op3)
+    {
+        in->right = op1->getVarTerm();
+        in->coeff = -op3->getVarTerm();
+        in->name = "(" + std::to_string(in->left) + " < " + std::to_string(in->right) + " + " + std::to_string(in->coeff) + ")";
+    }
+    else
+    {
+        in->right = op1->getVarTerm();
+        in->left = 0;
+        in->coeff = -op2->getVarTerm();
+        in->name = "(0 < " + std::to_string(in->right) + " + " + std::to_string(in->coeff) + ")";
+    }
+
+    in->old_name = to_string();
+    in->type = INEQUAL;
+
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    in->assoc_var = p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    
+    in->ptr = ret;
+    str_to_ineq[in->old_name] = in;
+    int_to_ineq[in->assoc_var] = in;
+
+    // Then we return the newly created variable
+    return ret;
 } // Expr* tseitin(int&, vector<Expr*>&)
 
 void EGth::getVars(vector<int> &p_originalVars)
@@ -835,12 +978,16 @@ void EGth::getVars(vector<int> &p_originalVars)
     // Get vars from the leaves of this expression
     op1->getVars(p_originalVars);
     op2->getVars(p_originalVars);
-    op3->getVars(p_originalVars);
+    if(op3)
+    	op3->getVars(p_originalVars);
 } // getVars(vector<int>&)
 
 string EGth::to_string()
 {
-    return "(" + op1->to_string() + " - " +  op2->to_string() + " > " + op3->to_string() + ")";
+    if(op3)
+        return "(" + op1->to_string() + " - " +  op2->to_string() + " > " + op3->to_string() + ")";
+    else
+        return "(" + op1->to_string() + " > " +  op2->to_string() + ")";
 } // string to_tring()
 
 int EGth::getVarTerm()
@@ -862,10 +1009,46 @@ ELeq::ELeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2),
 Expr* ELeq::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     
-    return nullptr;
+    ineq_s *in = new ineq_s;
+
+    if(str_to_ineq.find(to_string()) != str_to_ineq.end())
+    {
+        return str_to_ineq[to_string()]->ptr;
+    }
+
+    in->left = op1->getVarTerm();    
+    if(op3)
+    {
+        in->right = op2->getVarTerm();
+        in->coeff = op3->getVarTerm() + 1;	
+        in->name = "(" + std::to_string(in->left) + " < " + std::to_string(in->right) + " + " + std::to_string(in->coeff) + ")";
+    }
+    else
+    {
+        in->right = 0;
+        in->coeff = op2->getVarTerm() + 1;
+        in->name = "(" + std::to_string(in->left) + " < " + std::to_string(in->coeff) + ")";
+    }
+
+    in->old_name = to_string();
+    in->type = INEQUAL;
+
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    in->assoc_var = p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    
+    in->ptr = ret;
+    str_to_ineq[in->old_name] = in;
+    int_to_ineq[in->assoc_var] = in;
+
+    // Then we return the newly created variable
+    return ret;
 } // Expr* tseitin(int&, vector<Expr*>&)
 
 void ELeq::getVars(vector<int> &p_originalVars)
@@ -873,13 +1056,18 @@ void ELeq::getVars(vector<int> &p_originalVars)
     // Get vars from the leaves of this expression
     op1->getVars(p_originalVars);
     op2->getVars(p_originalVars);
-    op3->getVars(p_originalVars);
+    if(op3)
+    	op3->getVars(p_originalVars);
 } // getVars(vector<int>&)
 
 string ELeq::to_string()
 {
-    return "(" + op1->to_string() + " - " +  op2->to_string() + " <= " + op3->to_string()  + ")";
+    if(op3)
+        return "(" + op1->to_string() + " - " +  op2->to_string() + " <= " + op3->to_string() + ")";
+    else
+        return "(" + op1->to_string() + " <= " +  op2->to_string() + ")";
 } // string to_tring()
+
 
 int ELeq::getVarTerm()
 {
@@ -900,10 +1088,48 @@ EGeq::EGeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2),
 Expr* EGeq::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
                     map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
                     map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
-                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root)
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     
-    return nullptr;
+    ineq_s *in = new ineq_s;
+
+    if(str_to_ineq.find(to_string()) != str_to_ineq.end())
+    {
+        return str_to_ineq[to_string()]->ptr;
+    }
+
+    in->left = op1->getVarTerm();
+    
+    if(op3)
+    {
+        in->right = op2->getVarTerm();
+        in->coeff = -(op3->getVarTerm() - 1);
+        in->name = "(" + std::to_string(in->left) + " < " + std::to_string(in->right) + " + " + std::to_string(in->coeff) + ")";
+    }
+    else
+    {
+        in->left = 0;
+        in->right = op1->getVarTerm();
+        in->coeff = -(op2->getVarTerm() - 1);
+        in->name = "(" + std::to_string(in->left) + " < " + std::to_string(in->right) + " + " + std::to_string(in->coeff) + ")";
+    }
+
+    in->old_name = to_string();
+    in->type = INEQUAL;
+
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    in->assoc_var = p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    
+    in->ptr = ret;
+    str_to_ineq[in->old_name] = in;
+    int_to_ineq[in->assoc_var] = in;
+
+    // Then we return the newly created variable
+    return ret;
 } // Expr* tseitin(int&, vector<Expr*>&)
 
 void EGeq::getVars(vector<int> &p_originalVars)
@@ -911,12 +1137,16 @@ void EGeq::getVars(vector<int> &p_originalVars)
     // Get vars from the leaves of this expression
     op1->getVars(p_originalVars);
     op2->getVars(p_originalVars);
-    op3->getVars(p_originalVars);
+    if(op3)
+    	op3->getVars(p_originalVars);
 } // getVars(vector<int>&)
 
 string EGeq::to_string()
 {
-    return "(" + op1->to_string() + " - " +  op2->to_string() + " >= " + op3->to_string() + ")";
+    if(op3)
+        return "(" + op1->to_string() + " - " +  op2->to_string() + " >= " + op3->to_string() + ")";
+    else
+        return "(" + op1->to_string() + " >= " +  op2->to_string() + ")";
 } // string to_tring()
 
 int EGeq::getVarTerm()
@@ -925,6 +1155,164 @@ int EGeq::getVarTerm()
 } // int getVatTerm()
 
 unsigned int EGeq::size()
+{
+    return 0;
+} // unsigned int size()
+
+/***********************************/
+/********  LOGICAL EQUAL  **********/
+/***********************************/
+
+ELoEq::ELoEq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
+
+Expr* ELoEq::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
+{
+    
+    ineq_s *in = new ineq_s;
+
+    if(str_to_ineq.find(to_string()) != str_to_ineq.end())
+    {
+        return str_to_ineq[to_string()]->ptr;
+    }
+
+    in->left = op1->getVarTerm();
+    
+    if(op3)
+    {
+        in->right = op2->getVarTerm();
+        in->coeff = op3->getVarTerm();
+        in->name = "(" + std::to_string(in->left) + " = " + std::to_string(in->right) + " + " + std::to_string(in->coeff) + ")";
+    }
+    else
+    {
+        in->right = 0;
+        in->coeff = op2->getVarTerm();
+        in->name = "(" + std::to_string(in->left) + " = " + std::to_string(in->coeff) + ")";
+    }
+
+    in->old_name = to_string();
+    in->type = EQUAL;
+
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    in->assoc_var = p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    
+    in->ptr = ret;
+    str_to_ineq[in->old_name] = in;
+    int_to_ineq[in->assoc_var] = in;
+
+    // Then we return the newly created variable
+    return ret;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void ELoEq::getVars(vector<int> &p_originalVars)
+{
+    // Get vars from the leaves of this expression
+    op1->getVars(p_originalVars);
+    op2->getVars(p_originalVars);
+    if(op3)
+    	op3->getVars(p_originalVars);
+} // getVars(vector<int>&)
+
+string ELoEq::to_string()
+{
+    if(op3)
+        return "(" + op1->to_string() + " - " +  op2->to_string() + " = " + op3->to_string() + ")";
+    else
+        return "(" + op1->to_string() + " = " +  op2->to_string() + ")";
+} // string to_tring()
+
+int ELoEq::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int ELoEq::size()
+{
+    return 0;
+} // unsigned int size()
+
+/***********************************/
+/******  LOGICAL NON EQUAL  ********/
+/***********************************/
+
+ELoNeq::ELoNeq(Expr * e1, Expr * e2, Expr * e3 /* = nullptr */ ) : op1(e1), op2(e2), op3(e3) {}
+
+Expr* ELoNeq::tseitin(int &p_maxIndex, vector<Expr*> &p_exps, 
+                    map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, 
+                    map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities,
+                    map<string, args_s*> &argscorresp, bool trans,  struct smt_term *root, 
+                    map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
+{
+    
+    ineq_s *in = new ineq_s;
+
+    if(str_to_ineq.find(to_string()) != str_to_ineq.end())
+    {
+        return str_to_ineq[to_string()]->ptr;
+    }
+
+    in->left = op1->getVarTerm();
+    
+    if(op3)
+    {
+        in->right = op2->getVarTerm();
+        in->coeff = op3->getVarTerm();
+        in->name = "(" + std::to_string(in->left) + " != " + std::to_string(in->right) + " + " + std::to_string(in->coeff) + ")";
+    }
+    else
+    {
+        in->right = 0;
+        in->coeff = op2->getVarTerm();
+        in->name = "(" + std::to_string(in->left) + " != " + std::to_string(in->coeff) + ")";
+    }
+
+    in->old_name = to_string();
+    in->type = NOT_EQUAL;
+
+    // Then we create the new variable for this expression
+    ++p_maxIndex;
+    in->assoc_var = p_maxIndex;
+    Expr* var = new EVar(p_maxIndex);
+    Expr* ret = var->tseitin(p_maxIndex, p_exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
+    
+    in->ptr = ret;
+    str_to_ineq[in->old_name] = in;
+    int_to_ineq[in->assoc_var] = in;
+
+    // Then we return the newly created variable
+    return ret;
+} // Expr* tseitin(int&, vector<Expr*>&)
+
+void ELoNeq::getVars(vector<int> &p_originalVars)
+{
+    // Get vars from the leaves of this expression
+    op1->getVars(p_originalVars);
+    op2->getVars(p_originalVars);
+    if(op3)
+    	op3->getVars(p_originalVars);
+} // getVars(vector<int>&)
+
+string ELoNeq::to_string()
+{
+    if(op3)
+        return "(" + op1->to_string() + " - " +  op2->to_string() + " != " + op3->to_string() + ")";
+    else
+        return "(" + op1->to_string() + " != " +  op2->to_string() + ")";
+} // string to_tring()
+
+int ELoNeq::getVarTerm()
+{
+    return 0;
+} // int getVatTerm()
+
+unsigned int ELoNeq::size()
 {
     return 0;
 } // unsigned int size()

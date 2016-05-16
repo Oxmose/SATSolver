@@ -82,7 +82,11 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     map<string, function_s*> funcorresp;
     map<string, args_s*> argscorresp;
     map<string, unsigned int> arrities;
+    map<string, ineq_s*> str_to_ineq;
+    map<int, ineq_s*> int_to_ineq;
     
+    
+
     struct smt_term *root = new struct smt_term(0);
 
     vector<Expr*> exps;
@@ -90,10 +94,15 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     {
         yy_flex_debug = 1;
         yyparse();
-        exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp, funcorresp, arrities, argscorresp, root);        
+        exps = tseitinTransform(res, p_maxIndex, corresp, ncorresp, funcorresp, arrities, argscorresp, root, str_to_ineq, int_to_ineq);        
     } while (!feof(yyin));   
 
     fclose(yyin);
+
+    for(auto i : int_to_ineq)
+    {
+        cout << i.first << " => new : " << i.second->name << " old : " << i.second->old_name << endl;
+    }
     
 
     /*for(auto i : ncorresp)
@@ -243,17 +252,15 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
         struct smt_literal *eq = new smt_literal_eq(atoi(entry.second->to_string().c_str()), entry.first.first, entry.first.second, false);
         p_solver.emplace_eq(atoi(entry.second->to_string().c_str()), eq);
     }
-
-    for(auto i : term_corresp)
-        cout << i.first << " => " << i.second->to_str() << endl;
     
     p_solver.set_terms_mapping(term_corresp);
 
     OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
+    exit(0);
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
-vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities, map<string, args_s*> &argscorresp, struct smt_term *root)
+vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, map<pair<int, int>, Expr*> &corresp, map<pair<int, int>, Expr*> &ncorresp, map<string, function_s*> &funcorresp, map<string, unsigned int> &arrities, map<string, args_s*> &argscorresp, struct smt_term *root, map<string, ineq_s*> &str_to_ineq, map<int, ineq_s*> &int_to_ineq)
 {
     // Get the set af vars in the expression
     res->getVars(m_originalVars);
@@ -266,7 +273,7 @@ vector<Expr*> LOGParser::tseitinTransform(Expr *exp, unsigned int &p_maxIndex, m
 
     vector<Expr*> exps;
     // Transform the expression
-    Expr* global = res->tseitin(maxIndex, exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root);
+    Expr* global = res->tseitin(maxIndex, exps, corresp, ncorresp, funcorresp, arrities, argscorresp, true, root, str_to_ineq, int_to_ineq);
     exps.push_back(global);
     p_maxIndex = maxIndex;
 

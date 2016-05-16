@@ -37,6 +37,25 @@ struct function_s : args_s
 };
 typedef struct function_s function_s;
 
+enum ineq_type
+{
+    INEQUAL   = 0,
+    EQUAL     = 1,
+    NOT_EQUAL = 2
+};
+struct ineq_s
+{
+    std::string name;
+    std::string old_name;
+    int left;
+    int right;
+    int coeff;
+    int assoc_var;
+    ineq_type type;
+    Expr *ptr;
+};
+typedef struct ineq_s ineq_s;
+
 /***********************************/
 /*********  Expressions   **********/
 /***********************************/
@@ -50,7 +69,8 @@ class Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root)=0;
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq)=0;
         virtual void getVars(std::vector<int> &p_originalVars)=0;
         virtual std::string to_string()=0;
         virtual int getVarTerm()=0;
@@ -73,7 +93,8 @@ class EVar : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -91,6 +112,37 @@ class EVar : public Expr
 }; // EVar
 
 /***********************************/
+/******  Logival Variables   *******/
+/***********************************/
+
+class ELoVar : public Expr
+{
+    public:
+        ELoVar(char name[256]); 
+
+        // Tseitin transformation of this expression
+        virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
+                              std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
+                              std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
+    
+        // Return the variable indexes (in-out parameter) of the expression
+        virtual void getVars(std::vector<int> &p_originalVars);
+
+        // Stringify the expression
+        virtual std::string to_string();
+
+        // Get var assiociated to the term
+        virtual int getVarTerm();
+
+        // Get the number or arguments
+        virtual unsigned int size();
+
+        int index;
+}; // ELoVar
+
+/***********************************/
 /**********  Constant    ***********/
 /***********************************/
 
@@ -103,7 +155,8 @@ class ECst : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -118,7 +171,7 @@ class ECst : public Expr
         virtual unsigned int size();
 
         std::string value;
-	int index;
+	    int index;
 }; // EVar
 
 /***********************************/
@@ -133,7 +186,8 @@ class EFun : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			                  std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -164,7 +218,8 @@ class EArg : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -194,7 +249,8 @@ class EEqu : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -224,7 +280,8 @@ class EImp : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -254,7 +311,8 @@ class EXor : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -284,7 +342,8 @@ class EDis : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -314,7 +373,8 @@ class ECon : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -344,7 +404,8 @@ class EAnt : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -374,7 +435,8 @@ class ENeg : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -404,7 +466,8 @@ class EEqua : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -434,7 +497,8 @@ class ENEqua : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -464,7 +528,8 @@ class ELth : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -494,7 +559,8 @@ class EGth : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -524,7 +590,8 @@ class ELeq : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -554,7 +621,8 @@ class EGeq : public Expr
         virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
                               std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
                               std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
-                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root);
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
     
         // Return the variable indexes (in-out parameter) of the expression
         virtual void getVars(std::vector<int> &p_originalVars);
@@ -570,6 +638,68 @@ class EGeq : public Expr
 
         Expr * op1, * op2, * op3;
 }; // EGeq */
+
+/***********************************/
+/********  LOGICAL EQUAL  **********/
+/***********************************/
+
+class ELoEq : public Expr
+{
+    public:
+        ELoEq(Expr * e1, Expr * e2, Expr * e3 = nullptr);
+
+        // Tseitin transformation of this expression
+        virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
+                              std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
+                              std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
+    
+        // Return the variable indexes (in-out parameter) of the expression
+        virtual void getVars(std::vector<int> &p_originalVars);
+
+        // Stringify the expression
+        virtual std::string to_string();
+
+        // Get var assiociated to the term
+        virtual int getVarTerm();
+
+        // Get the number or arguments
+        virtual unsigned int size();
+
+        Expr * op1, * op2, * op3;
+}; // ELoEq
+
+/***********************************/
+/******  LOGICAL NON EQUAL  ********/
+/***********************************/
+
+class ELoNeq : public Expr
+{
+    public:
+        ELoNeq(Expr * e1, Expr * e2, Expr * e3 = nullptr);
+
+        // Tseitin transformation of this expression
+        virtual Expr* tseitin(int &p_maxIndex, std::vector<Expr*> &p_exps, 
+                              std::map<std::pair<int, int>, Expr*> &corresp, std::map<std::pair<int, int>, Expr*> &ncorresp, 
+                              std::map<std::string, function_s*> &funcoresp, std::map<std::string, unsigned int> &arrities,
+                              std::map<std::string, args_s*> &argscorresp, bool trans, struct smt_term *root,
+			      std::map<string, ineq_s*> &str_to_ineq, std::map<int, ineq_s*> &int_to_ineq);
+    
+        // Return the variable indexes (in-out parameter) of the expression
+        virtual void getVars(std::vector<int> &p_originalVars);
+
+        // Stringify the expression
+        virtual std::string to_string();
+
+        // Get var assiociated to the term
+        virtual int getVarTerm();
+
+        // Get the number or arguments
+        virtual unsigned int size();
+
+        Expr * op1, * op2, * op3;
+}; // ELoNeq
 
 
 #endif // DEF_EXPR_HPP
