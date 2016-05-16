@@ -54,8 +54,13 @@ class SMTSolver_eq : public SMTSolver
 		void visite_composante(int curr, int id, map<int,int>& id_composante);
 		void get_solution();
 
+		/* QF_UF */
+		bool sig(int x, int y);
+		void merge(int s1, int s2);
+
 		unordered_map<int, unordered_map<int,int>> edge;
 		unordered_map<int, unordered_map<int,int>> not_possible;
+		unordered_map<int, set<int>> has_as_arg;
 		UnionFind connectivity_check;
 };
 

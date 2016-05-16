@@ -91,7 +91,7 @@ int main(int argc, char const *argv[])
     }
 
     cout << "s SATISFIABLE" << endl;
-    if(settings_s.smte_s)
+    if(settings_s.smte_s || settings_s.smtc_s)
     {
         solver.get_smt_solution();
         return 0;

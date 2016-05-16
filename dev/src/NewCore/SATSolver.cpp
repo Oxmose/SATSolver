@@ -559,9 +559,11 @@ bool SATSolver::solve()
 
     reset_valuation();//No unitary clash found in input
     
-    smt_solver->init();
+   /* for(auto a :  terms_mapping)
+        printf("%d %s\n", a.first, a.second->to_str().c_str());*/
 
-    exit(0);
+    if(smt_solver)
+        smt_solver->init();
 
     bool is_unsat = false;
     bool jump = false;
@@ -615,7 +617,7 @@ bool SATSolver::solve()
         }
 
         /* SMT */
-        if(settings_s.smte_s)
+        if(settings_s.smte_s || settings_s.smtc_s)
         {
             int smt_conflict = smt_solver->apply_last_decision();
             if(smt_conflict != -1)
