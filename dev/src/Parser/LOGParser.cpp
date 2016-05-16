@@ -256,7 +256,7 @@ bool LOGParser::parse(SATSolver &p_solver, unsigned int &p_maxIndex)
     p_solver.set_terms_mapping(term_corresp);
 
     OUTDEBUG(fprintf(stderr, "LOG PARSE END WITH STATUS %d\n", noParseError));
-    exit(0);
+
     return noParseError;
 } // bool parse(unsigned int &, vector<Clause>&)
 
