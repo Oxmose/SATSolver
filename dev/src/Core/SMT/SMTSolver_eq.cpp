@@ -366,6 +366,15 @@ void SMTSolver_eq::visite_composante(int curr, int id, map<int,int>& id_composan
 		visite_composante(v.first, id, id_composante);
 }
 
+void SMTSolver_eq::visite_composante_qf(Node* curr, int id, map<int,int>& id_composante)
+{
+	if(id_composante.find(curr->getValue()) != id_composante.end())
+		return;
+	id_composante[curr->getValue()] = id;
+	for(auto v : curr->get_sons())
+		visite_composante_qf(v, id, id_composante);
+}
+
 void SMTSolver_eq::get_solution()
 {
 	assert((settings_s.smte_s && !settings_s.smtc_s) ||
@@ -373,12 +382,31 @@ void SMTSolver_eq::get_solution()
 	OUTDEBUG(cerr << "[SMT]Computing solution." << endl);
 	map<int,int> id_composante;
 	int id = 0;
-	for(auto s : edge)
-		if(id_composante.find(s.first) == id_composante.end())
+
+	if(settings_s.smte_s)
+	{
+		for(auto s : edge)
+			if(id_composante.find(s.first) == id_composante.end())
+			{
+				visite_composante(s.first, id, id_composante);
+				id++;
+			}
+	}
+	else
+	{
+		for(auto s : solver->terms_mapping)
 		{
-			visite_composante(s.first, id, id_composante);
-			id++;
+			if(s.first != 0 && connectivity_check.find(s.first) == nullptr)
+				connectivity_check.add(s.first);
+
+			if(s.first != 0 && id_composante.find(s.first) == id_composante.end())
+			{
+				visite_composante_qf(connectivity_check.find(s.first), id, id_composante);
+				id++;
+			}
 		}
+	}
+
 
 	for(auto s1 : not_possible)
 		for(auto s2: s1.second)
@@ -445,7 +473,10 @@ void SMTSolver_eq::get_solution()
 
 	for(auto c : composante)
 	{
-		cout << "C(" << connectivity_check.find(c.second[0])->getValue() << "): {";
+		if(settings_s.smte_s)
+			cout << "C(" << connectivity_check.find(c.second[0])->getValue() << "): {";
+		else
+			cout << "C(" << solver->terms_mapping[connectivity_check.find(c.second[0])->getValue()]->to_str() << "): {";
 		unsigned int k = 0;
 		for(auto b: c.second)
 		{

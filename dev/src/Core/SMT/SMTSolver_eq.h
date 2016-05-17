@@ -51,6 +51,7 @@ class SMTSolver_eq : public SMTSolver
 
 		bool dfs_enumerate_paths(int curr, int dest, map<int,int>& succ);
 
+		void visite_composante_qf(Node* curr, int id, map<int,int>& id_composante);
 		void visite_composante(int curr, int id, map<int,int>& id_composante);
 		void get_solution();
 
