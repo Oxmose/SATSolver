@@ -11,7 +11,7 @@
 #include <vector>   // std::vector
 
 // PROJECT INCLUDES
-#include "../NewCore/SATSolver.h"  // Solver
+#include "../Core/SATSolver.h"  // Solver
 
 enum BET_METHOD
 {

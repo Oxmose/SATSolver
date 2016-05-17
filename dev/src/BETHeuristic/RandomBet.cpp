@@ -11,7 +11,7 @@
 #include <set>      // std::set
 
 // PROJECT INCLUDES
-#include "../NewCore/SATSolver.h"  // Solver
+#include "../Core/SATSolver.h"  // Solver
 
 // INHERITANCE CLASS
 #include "IBet.h"

@@ -7,7 +7,7 @@
 #ifndef DEF_IPARSER_H
 #define DEF_IPARSER_H
 
-#include "../NewCore/SATSolver.h"
+#include "../Core/SATSolver.h"
 
 class IParser
 {

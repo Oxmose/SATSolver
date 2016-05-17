@@ -9,7 +9,7 @@
 #include <iterator> // std::distance
 
 // PROJECT INCLUDES
-#include "../NewCore/SATSolver.h"  // Sovler
+#include "../Core/SATSolver.h"  // Sovler
 
 // INHERITANCE CLASS
 #include "IBet.h"

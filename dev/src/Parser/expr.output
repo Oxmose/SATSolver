@@ -1,5 +1,5 @@
 État 5 conflits: 4 réduction/réduction
-État 64 conflits: 11 réduction/réduction
+État 64 conflits: 6 réduction/réduction
 État 65 conflits: 11 réduction/réduction
 État 66 conflits: 11 réduction/réduction
 État 67 conflits: 11 réduction/réduction
@@ -1549,10 +1549,15 @@ expression (27)
    29           | expression . TK_LEQ expression
    30           | expression . TK_GEQ expression
    31           | expression . TK_EQUA expression
-   31           | expression TK_EQUA expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_NEQUA, TK_LTH, TK_GTH, TK_LEQ, TK_GEQ, TK_RPAREN, TK_ZERO]
+   31           | expression TK_EQUA expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
    32           | expression . TK_NEQUA expression
 
     TK_NEG    décalage et aller à l'état 22
+    TK_NEQUA  décalage et aller à l'état 24
+    TK_LTH    décalage et aller à l'état 25
+    TK_GTH    décalage et aller à l'état 26
+    TK_LEQ    décalage et aller à l'état 27
+    TK_GEQ    décalage et aller à l'état 28
     TK_COMMA  décalage et aller à l'état 29
 
     $défaut  réduction par utilisation de la règle 31 (expression)
@@ -1564,11 +1569,11 @@ expression (27)
     Conflit entre la règle 31 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_EQUA).
     Conflit entre la règle 31 et le jeton TK_NEG résolu par décalage (TK_EQUA < TK_NEG).
     Conflit entre la règle 31 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
-    Conflit entre la règle 31 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
-    Conflit entre la règle 31 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
-    Conflit entre la règle 31 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
-    Conflit entre la règle 31 et le jeton TK_LEQ résolu par réduction (%left TK_LEQ).
-    Conflit entre la règle 31 et le jeton TK_GEQ résolu par réduction (%left TK_GEQ).
+    Conflit entre la règle 31 et le jeton TK_NEQUA résolu par décalage (TK_EQUA < TK_NEQUA).
+    Conflit entre la règle 31 et le jeton TK_LTH résolu par décalage (TK_EQUA < TK_LTH).
+    Conflit entre la règle 31 et le jeton TK_GTH résolu par décalage (TK_EQUA < TK_GTH).
+    Conflit entre la règle 31 et le jeton TK_LEQ résolu par décalage (TK_EQUA < TK_LEQ).
+    Conflit entre la règle 31 et le jeton TK_GEQ résolu par décalage (TK_EQUA < TK_GEQ).
     Conflit entre la règle 31 et le jeton TK_COMMA résolu par décalage (TK_EQUA < TK_COMMA).
 
 
@@ -1605,7 +1610,7 @@ expression (27)
     Conflit entre la règle 32 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_NEQUA).
     Conflit entre la règle 32 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_NEQUA).
     Conflit entre la règle 32 et le jeton TK_NEG résolu par décalage (TK_NEQUA < TK_NEG).
-    Conflit entre la règle 32 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 32 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_NEQUA).
     Conflit entre la règle 32 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 32 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 32 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -1647,7 +1652,7 @@ expression (27)
     Conflit entre la règle 27 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_LTH).
     Conflit entre la règle 27 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_LTH).
     Conflit entre la règle 27 et le jeton TK_NEG résolu par décalage (TK_LTH < TK_NEG).
-    Conflit entre la règle 27 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 27 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_LTH).
     Conflit entre la règle 27 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 27 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 27 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -1689,7 +1694,7 @@ expression (27)
     Conflit entre la règle 28 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_GTH).
     Conflit entre la règle 28 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_GTH).
     Conflit entre la règle 28 et le jeton TK_NEG résolu par décalage (TK_GTH < TK_NEG).
-    Conflit entre la règle 28 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 28 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_GTH).
     Conflit entre la règle 28 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 28 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 28 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -1731,7 +1736,7 @@ expression (27)
     Conflit entre la règle 29 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_LEQ).
     Conflit entre la règle 29 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_LEQ).
     Conflit entre la règle 29 et le jeton TK_NEG résolu par décalage (TK_LEQ < TK_NEG).
-    Conflit entre la règle 29 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 29 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_LEQ).
     Conflit entre la règle 29 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 29 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 29 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -1773,7 +1778,7 @@ expression (27)
     Conflit entre la règle 30 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_GEQ).
     Conflit entre la règle 30 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_GEQ).
     Conflit entre la règle 30 et le jeton TK_NEG résolu par décalage (TK_GEQ < TK_NEG).
-    Conflit entre la règle 30 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 30 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_GEQ).
     Conflit entre la règle 30 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 30 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 30 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -2161,17 +2166,22 @@ expression (27)
    23           | expression . TK_NEG expression TK_LEQ expression
    24           | expression . TK_NEG expression TK_GEQ expression
    25           | expression . TK_NEG expression TK_EQUA expression
-   25           | expression TK_NEG expression TK_EQUA expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_NEQUA, TK_LTH, TK_GTH, TK_LEQ, TK_GEQ, TK_RPAREN, TK_ZERO]
+   25           | expression TK_NEG expression TK_EQUA expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_RPAREN, TK_ZERO]
    26           | expression . TK_NEG expression TK_NEQUA expression
    27           | expression . TK_LTH expression
    28           | expression . TK_GTH expression
    29           | expression . TK_LEQ expression
    30           | expression . TK_GEQ expression
    31           | expression . TK_EQUA expression
-   31           | expression TK_EQUA expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA, TK_NEQUA, TK_LTH, TK_GTH, TK_LEQ, TK_GEQ]
+   31           | expression TK_EQUA expression .  [TK_DIS, TK_CON, TK_XOR, TK_IMP, TK_EQU, TK_EQUA]
    32           | expression . TK_NEQUA expression
 
     TK_NEG    décalage et aller à l'état 22
+    TK_NEQUA  décalage et aller à l'état 24
+    TK_LTH    décalage et aller à l'état 25
+    TK_GTH    décalage et aller à l'état 26
+    TK_LEQ    décalage et aller à l'état 27
+    TK_GEQ    décalage et aller à l'état 28
     TK_COMMA  décalage et aller à l'état 29
 
     TK_DIS    réduction par utilisation de la règle 25 (expression)
@@ -2186,16 +2196,6 @@ expression (27)
     TK_EQU    [réduction par utilisation de la règle 31 (expression)]
     TK_EQUA   réduction par utilisation de la règle 25 (expression)
     TK_EQUA   [réduction par utilisation de la règle 31 (expression)]
-    TK_NEQUA  réduction par utilisation de la règle 25 (expression)
-    TK_NEQUA  [réduction par utilisation de la règle 31 (expression)]
-    TK_LTH    réduction par utilisation de la règle 25 (expression)
-    TK_LTH    [réduction par utilisation de la règle 31 (expression)]
-    TK_GTH    réduction par utilisation de la règle 25 (expression)
-    TK_GTH    [réduction par utilisation de la règle 31 (expression)]
-    TK_LEQ    réduction par utilisation de la règle 25 (expression)
-    TK_LEQ    [réduction par utilisation de la règle 31 (expression)]
-    TK_GEQ    réduction par utilisation de la règle 25 (expression)
-    TK_GEQ    [réduction par utilisation de la règle 31 (expression)]
     $défaut  réduction par utilisation de la règle 25 (expression)
 
     Conflit entre la règle 25 et le jeton TK_DIS résolu par réduction (TK_DIS < TK_EQUA).
@@ -2205,13 +2205,18 @@ expression (27)
     Conflit entre la règle 25 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_EQUA).
     Conflit entre la règle 25 et le jeton TK_NEG résolu par décalage (TK_EQUA < TK_NEG).
     Conflit entre la règle 25 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
-    Conflit entre la règle 25 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
-    Conflit entre la règle 25 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
-    Conflit entre la règle 25 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
-    Conflit entre la règle 25 et le jeton TK_LEQ résolu par réduction (%left TK_LEQ).
-    Conflit entre la règle 25 et le jeton TK_GEQ résolu par réduction (%left TK_GEQ).
+    Conflit entre la règle 25 et le jeton TK_NEQUA résolu par décalage (TK_EQUA < TK_NEQUA).
+    Conflit entre la règle 25 et le jeton TK_LTH résolu par décalage (TK_EQUA < TK_LTH).
+    Conflit entre la règle 25 et le jeton TK_GTH résolu par décalage (TK_EQUA < TK_GTH).
+    Conflit entre la règle 25 et le jeton TK_LEQ résolu par décalage (TK_EQUA < TK_LEQ).
+    Conflit entre la règle 25 et le jeton TK_GEQ résolu par décalage (TK_EQUA < TK_GEQ).
     Conflit entre la règle 25 et le jeton TK_COMMA résolu par décalage (TK_EQUA < TK_COMMA).
     Conflit entre la règle 31 et le jeton TK_NEG résolu par décalage (TK_EQUA < TK_NEG).
+    Conflit entre la règle 31 et le jeton TK_NEQUA résolu par décalage (TK_EQUA < TK_NEQUA).
+    Conflit entre la règle 31 et le jeton TK_LTH résolu par décalage (TK_EQUA < TK_LTH).
+    Conflit entre la règle 31 et le jeton TK_GTH résolu par décalage (TK_EQUA < TK_GTH).
+    Conflit entre la règle 31 et le jeton TK_LEQ résolu par décalage (TK_EQUA < TK_LEQ).
+    Conflit entre la règle 31 et le jeton TK_GEQ résolu par décalage (TK_EQUA < TK_GEQ).
     Conflit entre la règle 31 et le jeton TK_COMMA résolu par décalage (TK_EQUA < TK_COMMA).
 
 
@@ -2271,7 +2276,7 @@ expression (27)
     Conflit entre la règle 26 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_NEQUA).
     Conflit entre la règle 26 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_NEQUA).
     Conflit entre la règle 26 et le jeton TK_NEG résolu par décalage (TK_NEQUA < TK_NEG).
-    Conflit entre la règle 26 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 26 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_NEQUA).
     Conflit entre la règle 26 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 26 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 26 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -2338,7 +2343,7 @@ expression (27)
     Conflit entre la règle 21 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_LTH).
     Conflit entre la règle 21 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_LTH).
     Conflit entre la règle 21 et le jeton TK_NEG résolu par décalage (TK_LTH < TK_NEG).
-    Conflit entre la règle 21 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 21 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_LTH).
     Conflit entre la règle 21 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 21 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 21 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -2405,7 +2410,7 @@ expression (27)
     Conflit entre la règle 22 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_GTH).
     Conflit entre la règle 22 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_GTH).
     Conflit entre la règle 22 et le jeton TK_NEG résolu par décalage (TK_GTH < TK_NEG).
-    Conflit entre la règle 22 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 22 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_GTH).
     Conflit entre la règle 22 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 22 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 22 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -2472,7 +2477,7 @@ expression (27)
     Conflit entre la règle 23 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_LEQ).
     Conflit entre la règle 23 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_LEQ).
     Conflit entre la règle 23 et le jeton TK_NEG résolu par décalage (TK_LEQ < TK_NEG).
-    Conflit entre la règle 23 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 23 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_LEQ).
     Conflit entre la règle 23 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 23 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 23 et le jeton TK_GTH résolu par réduction (%left TK_GTH).
@@ -2539,7 +2544,7 @@ expression (27)
     Conflit entre la règle 24 et le jeton TK_IMP résolu par réduction (TK_IMP < TK_GEQ).
     Conflit entre la règle 24 et le jeton TK_EQU résolu par réduction (TK_EQU < TK_GEQ).
     Conflit entre la règle 24 et le jeton TK_NEG résolu par décalage (TK_GEQ < TK_NEG).
-    Conflit entre la règle 24 et le jeton TK_EQUA résolu par réduction (%left TK_EQUA).
+    Conflit entre la règle 24 et le jeton TK_EQUA résolu par réduction (TK_EQUA < TK_GEQ).
     Conflit entre la règle 24 et le jeton TK_NEQUA résolu par réduction (%left TK_NEQUA).
     Conflit entre la règle 24 et le jeton TK_LTH résolu par réduction (%left TK_LTH).
     Conflit entre la règle 24 et le jeton TK_GTH résolu par réduction (%left TK_GTH).

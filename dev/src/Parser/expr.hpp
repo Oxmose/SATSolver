@@ -14,7 +14,7 @@
 #include <algorithm>    //std::find
 #include <map>          //std::map
 
-#include "../NewCore/SMT/SMTSolver_eq.h"
+#include "../Core/SMT/SMTSolver_eq.h"
 
 class Expr;
 

@@ -18,9 +18,9 @@
 #include <unordered_map> // std::unordered_map
 
 // OTHER INCLUDES FROM PROJECT
-#include "../NewCore/SMT/SMTSolver_eq.h" // SMTSolver_eq class
-#include "../NewCore/SATSolver.h" // SATSolver class
-#include "../NewCore/clause.h" // Clause class
+#include "../Core/SMT/SMTSolver_eq.h" // SMTSolver_eq class
+#include "../Core/SATSolver.h" // SATSolver class
+#include "../Core/clause.h" // Clause class
 
 // PARSER INCLUDES
 #include "expr.hpp"

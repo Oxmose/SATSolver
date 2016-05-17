@@ -140,7 +140,7 @@ bool SMTSolver_eq::sig(int x, int y)
 		return false;
 	OUTDEBUG(fprintf((stderr), "Sig4 %d %d\n", x, y));
 
-	for(int i = 0 ; i < xt->args.size() ; i++)
+	for(unsigned int i = 0 ; i < xt->args.size() ; i++)
 	{
 		if(connectivity_check.find(xt->args[i].in_literal) == nullptr)
 			connectivity_check.add(xt->args[i].in_literal);

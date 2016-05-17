@@ -5,7 +5,7 @@
 */
 
 // PROJECT INCLUDES
-#include "../NewCore/SATSolver.h"  // Solver
+#include "../Core/SATSolver.h"  // Solver
 
 #include "../Global/Global.h"
 

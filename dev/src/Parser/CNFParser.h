@@ -16,8 +16,8 @@
 #include <iostream> // std::cout std::cerr std::endl
 
 // OTHER INCLUDES FROM PROJECT
-#include "../NewCore/SATSolver.h" // SATSolver class
-#include "../NewCore/clause.h" // Clause class
+#include "../Core/SATSolver.h" // SATSolver class
+#include "../Core/clause.h" // Clause class
 
 // GLOBAL FLAGS/VARS
 #include "../Global/Global.h"

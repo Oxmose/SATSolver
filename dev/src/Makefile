@@ -22,8 +22,8 @@ GLOBAL=Global/Global.cpp
 BET=BETHeuristic/DLISBet.cpp BETHeuristic/MOMSBet.cpp BETHeuristic/RandomBet.cpp BETHeuristic/StandardBet.cpp BETHeuristic/VSIDSBet.cpp
 RANDOMGEN=RandomSatExpGenerator/randomGen.cpp SMTGenerator/randomSMTEGen.cpp
 MAIN=main.cpp
-CORE=NewCore/clause.cpp NewCore/conflict_graph.cpp NewCore/SATSolver.cpp
-SMT=NewCore/SMT/SMTSolver_eq.cpp
+CORE=Core/clause.cpp Core/conflict_graph.cpp Core/SATSolver.cpp
+SMT=Core/SMT/SMTSolver_eq.cpp
 TOOLS=Tools/Node.cpp Tools/UnionFind.cpp
 PARSER=Parser/CNFParser.cpp Parser/LOGParser.cpp $(EXPRNAME).cpp $(EXPRNAME).tab.cpp $(EXPRNAME).yy.c
 

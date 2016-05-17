@@ -44,7 +44,8 @@ Expr *res = NULL;
 %left TK_XOR
 %left TK_DIS
 %left TK_CON
-%left TK_EQUA TK_NEQUA TK_LTH TK_GTH TK_LEQ TK_GEQ
+%left TK_EQUA 
+%left TK_NEQUA TK_LTH TK_GTH TK_LEQ TK_GEQ
 %left TK_ANT TK_NEG
 %left TK_FUN
 %left TK_COMMA

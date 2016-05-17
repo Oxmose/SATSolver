@@ -8,7 +8,7 @@
 #define DEF_STANDARDBET_H
 
 // PROJECT INCLUDES
-#include "../NewCore/SATSolver.h"  // Solver
+#include "../Core/SATSolver.h"  // Solver
 
 // INHERITANCE CLASS
 #include "IBet.h"

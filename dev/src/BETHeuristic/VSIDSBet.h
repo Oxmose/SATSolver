@@ -12,7 +12,7 @@
 #include <cmath>    // std::exp2, std::abs
 
 // PROJECT INCLUDES
-#include "../NewCore/SATSolver.h"  // Solver
+#include "../Core/SATSolver.h"  // Solver
 
 // INHERITANCE CLASS
 #include "IBet.h"

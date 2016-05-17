@@ -13,7 +13,7 @@
 #include "SMTGenerator/randomSMTEGen.h"
 
 // SAT CORE
-#include "NewCore/SATSolver.h"
+#include "Core/SATSolver.h"
 
 // PARSERS
 #include "Parser/IParser.h"
