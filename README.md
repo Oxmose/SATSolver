@@ -1,47 +1,39 @@
-# SATSolver
+# TSAT
 SAT Solver by Tristan Stérin and Alexy Torres at the ENS Lyon 2015-216
 TSAT
 Powered by git: https://github.com/Oxmose/SATSolver
 
 ## Arguments de la ligne de commande
-./reso1 : Démmare l'interface utilisateur du programme tout est expliqué.
+./resol : Démmare l'interface utilisateur du programme où tout est expliqué.
 
-## Résumé rendu 3
+## Résumé rendu 4
+Pour le rendu 4, l'algortithme DPLL à été totallement recodé afin de corriger certain bugs réccurents et d'alléger le code. Le solveur gère maintenant DPLL standard, avec litéraux surveillés et avec apprentissage de clauses.
+Nous avons implémenté les solveur SMT pour l'égalité et la congruence. Seul le parsing des formules SMT pour la logique de différence à été ralisé mais n'est interfacé à aucun solveur.
+Le clause learning est actif pour SMT pour l'égalité.
+L'ancien noyau du solveur est sauvegardé dans le dossier "Old" dans le dossier des sources. Le nouveau noyau est venu le remplacer. Le noyau SMT quand à lui se trouve dans le dossier "Core/SMT".
 
-On travaille uniquement avec le graphe que l'on maintient tout le temps à jour. On trouve le 1-UIP avec un algo linéaire similaire à articulation point. Nous avons rencontrés de gros soucis avec la gestion de l'apprentissage des clauses unitaires. Notre implémentation de CL est assez rustinée mais semble correcte. Nous avons cependant des exemples non corrects pour CL + VSIDS (test_base/cnf/corr_test/sat/aim-100-3_4-yes1-1.cnf) et CL WL (test_base/cnf/corr_test/sat/aim-100-1_6-yes1-3.cnf).    
-Nous n'avons pas implémenté -forget, avec uniquement le graphe comme outil -forget est assez couteux et aussi nécessiterait que l'on change pas mal de choses dans l'architecture, d'autres binômes nous ont dits que les gains étaient de plus faibles. Nous l'implémenterons au rendu 4 si nécessaire.  
-Nos graphes sortent en .dot avec l'option -cl-interact, le nom du fichier est également outputé. La commande "dot -Tpng conflictGraphx.dot -o conflictGraphx.png" permet la conversion par exemple. Nous avons pris quelques libertés sur la légende car cela nous a beaucoup servi pour débugguer, avec du rouge pour le conflit, du vert pour le bet de niveau courant et du rose pour les noeuds de la clause apprise hors UIP.   
-
-### Améliorations:         
-
-- Notre architecture est clairement caduque dans le cadre du CL. Tout devient compliqué et se bug très facilement, il faut que l'on reprenne ça.   
-- CL-WL nous semble vraiment vraiment faux tels que conçu dans notre programme il faut que l'on y re-réfléchisse. Notamment quoi faire quand on ne watch pas les bons littéraux dans une clause apprise..
-
-
-## Structure des fichiers
-
+### Améliorations:
+- Refonte totale de DPLL, allègement du code et des traitements.
+- Alègement des heuristiques de pari.
 
 ## Performances
-On obtient des "s UNSATISFIABLE" bien plus rapidement qu'avant avec -cl -vsids. Les dubois2x prenaient entre 1 et 2 minutes au dernier rendu contre quelques millisecondes maintenant. Aussi la clause que l'on arrivait pas à faire finir ("bf0432-007.cnf") termine maintenant en 20 secondes.
-
+Un set de test à été réalisé pour récupérer quelques résultats de temps de notre parser. Pour consulter le graphique des temps moyens, ouvrez le fichier time.png dans le dossier "doc" du projet.
 
 ## Qui a fait quoi
-#Tristan
-* rendu1 : Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.   
-* rendu2 : Refonte DPLL, implémentation Watched Literals, redesign en statégies, scripts de tests, optimisation.    
+###Tristan
+* rendu1 : Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.
+* rendu2 : Refonte DPLL, implémentation Watched Literals, redesign en statégies, scripts de tests, optimisation.
 * rendu3 : Implémentation CL, CL+WL, recherche de l'UIP dans le graph linéaire, scripts de test, corrections de bugs, optimisation.
+* rendu4 : Réimplémentation de DPLL, WL et CL, implémentation SMTE/SMTC, rapport.
 
-#Alexy
+###Alexy
 * rendu1 : Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
 * rendu2 : Heuristiques de paris, redesign en statégies, modifications du parser, scripts de tests, optimisation.
 * rendu3 : Recherche de l'UIP dans le graph (quadratique et linéaire), VSIDS, interface, scripts de test, corrections de bugs, optimisation.
+* rendu4 : Structures de données (UnionFind,...), parser et prétraitement pour SMTE, SMTC, SMTD, rapport.
 
-## Retour sur les algorithmes de détection de UIP
-### Naif
-Le premier algorithme implémenté pour la détection du premier UIP se déroule en temps quadratique. Pour chaque noeuds dans le graph, on retire le noeud. On parcour ensuite le graph du noeud de conflit. Si l'on atteind la racine alors ce noeud n'est pas un UIP. Une fois tous les UIP détectés, on choisi le premier en faisant un BFS à partir du conflit et pour chaque noeuds rencontrés, on vérifie s'il est dans la liste des UIP. Au premier UIP rencontré on le retourne.
-### Linéraire
-Le second algorithme se déroule en temps linéaire en le nombre de noeuds et d'arrêtes du graphe.
-* Dans un premier temps, on produit le graphe inverse (G-1).
-* Puis parcours BFS à partir du dernier BET, on recréé alors un graph de ce BET vers le noeud de conflit en syétrisant les arrêtes.
-* On applique un algorithme de détéction de points d'articulations dans ce nouveau graph.
-* On parcours le graph G-1 à partir du noeuds de conflict, le premier noeud rencontré étant un noeud d'articulation dans le graph symétrisé est le First UIP.
+## Retour sur les algorithmes de détection de UIP (Nouveau, rendu 4)
+### Linéaire
+Nous avons implémenté un algorithme linéaire trouvé pour l'occasion. Étant donné un DAG à une source et un puit on souhaite trouver les noeuds tels que tous les chemins de la source au puit passe par eux : les UIP. On cherche plus particulièrement celui qui est le plus proche du puit.
+On s'appuie sur la remarque suivante : tous les UIP sont sur le plus court chemin entre la source et le puit.
+Nous sommes dans un cas particulier où le puit a exactement deux pères. Pour ces deux noeuds on calcule le plus haut noeud du plus court chemin auquel il peut remonter sans passer par les arêtes du plus court chemin. Le plus haut des deux est le 1-UIP. Cet algorithme est linéaire.
