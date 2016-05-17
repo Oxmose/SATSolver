@@ -233,12 +233,47 @@ void conflict_graph::output(bool extra_info/* = false */)
 
     myfile << "digraph {\n";
 
-    for(auto& e: sons_of)
+
+    map<int,bool> active;
+    if(extra_info)
     {
-        for(auto& v : e.second)
-            myfile << node_to_str(e.first) + "->" + node_to_str(v) << ";\n";
-        if(e.second.empty())
-            myfile << node_to_str(e.first) << ";\n";
+        for(auto& e: sons_of)
+        {
+            active[e.first] = false;
+            int level = infos_on[e.first].first;
+            if(level == solver->curr_level)
+                active[e.first] = true;
+            else
+            {
+                for(auto v: sons_of[e.first])
+                    active[e.first] = active[e.first] || in_uip_cut.find(v) != in_uip_cut.end();
+            }
+        }
+
+        for(auto& e: sons_of)
+        {
+            if(!active[e.first])
+                continue;
+            for(auto& v : e.second)
+            {
+                if(!active[v])
+                    continue;
+                myfile << node_to_str(e.first) + "->" + node_to_str(v) << ";\n";
+            }
+            if(e.second.empty())
+                myfile << node_to_str(e.first) << ";\n";
+        }
+
+    }
+    else
+    {
+        for(auto& e: sons_of)
+        {
+            for(auto& v : e.second)
+                myfile << node_to_str(e.first) + "->" + node_to_str(v) << ";\n";
+            if(e.second.empty())
+                myfile << node_to_str(e.first) << ";\n";
+        }
     }
 
     for(auto& e: sons_of)
@@ -251,6 +286,8 @@ void conflict_graph::output(bool extra_info/* = false */)
             myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=green];\n";
         else if(abs(e.first) == abs(conflict_literal))
             myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=red];\n";
+        else if(extra_info && in_uip_cut.find(e.first) != in_uip_cut.end())
+            myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=purple];\n";
         else if(level == solver->curr_level)
             myfile << node_to_str(e.first) << "[shape=circle, style=filled, fillcolor=blue];\n";
     }
