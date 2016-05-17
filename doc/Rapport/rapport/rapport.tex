@@ -28,7 +28,7 @@ Différentes méthode de résolution ont été implémentées dans TSAT :
 	\item DPLL (Davis–Putnam–Logemann–Loveland) standard \cite{DPLL}.
 	\item DPLL avec méthode des litéraux surveillés \cite{WL}.
 	\item DPLL avec méthode avec apprentissage de clause \cite{CL}.
-	\item DPLL(T) dans le cadre SMT avec les théories de l'égalité, de la congruence \cite{SMT} et de la logique des différences. 
+	\item DPLL(T) dans le cadre SMT avec les théories de l'égalité, de la congruence \cite{SMT}. 
 \end{itemize}
 \end{abstract}
 %Un peu de maths en \LaTeX: voici un exemple de clause:
@@ -43,7 +43,7 @@ L'organisation du projet est la suivante :
     .1 src/.
     .2 BETHeuristic (Classes contenant les stratégies de pari).
     .2 Global (Fichiers source contenant les paramètres du programme).
-    .2 NewCore (Noyau TSAT, structures de clause).
+    .2 Core (Noyau TSAT, structures de clause).
     .3 SMT (Noyau SMT).
     .2 Parser (Parseurs CNF et logique).
     .2 RandomSatExpGenerator (Générateur de formules SAT).
@@ -67,7 +67,6 @@ L'organisation du projet est la suivante :
 \begin{itemize}
 \item Égalité \textbf{avec clause learning SMT}.
 \item Congruence (QF UF) \textbf{sans clause learning SMT}.
-\item Différences ?
 \item Possibilité de désactiver le clause learning SMT pour comparer les performances (-disable\_smt\_cl).
 \item Génération de formules aléatoires.
 \end{itemize}
@@ -79,7 +78,8 @@ Cette méthode de conception permettrait aussi de modifier l'heuristique de pari
 
 Nous avons aussi développé les différents parseurs de formule à l'aide de ce patron de conception afin de faciliter l'ajout de nouveaux types de parseurs.
 
-Les solveurs SMT sont aussi construits selon cette idée.
+Les théories de l'égalité et de la congruence ont une formulation proche, nous aons donc utilisé la même base de code pour les traiter.
+Elles utilisent toutes deux un union find codé séparément en tant qu'outil.
 
 Cela a beaucoup évolué au cours du projet. Nous avons trouvé d'ailleurs que c'était l'une des difficultés du cours : faire une architecture assez maléable pour intégrer facilement des ajouts futurs. En pratique nous avons souvent ré-écrit tout le code (3 fois).
 L'architecture finale se veut la plus simple possible avec une utilisation massive d'unordered set et d'unordered map.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.5.16)  17 MAY 2016 14:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.5.16)  17 MAY 2016 19:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -444,10 +444,10 @@ Package pdftex.def Info: time.png used on input line 102.
  [3 <./time.png>]
 (./rapport.bbl) [4] (./rapport.aux) ) 
 Here is how much of TeX's memory you used:
- 2917 strings out of 494950
- 40029 string characters out of 6179040
+ 2915 strings out of 494950
+ 40006 string characters out of 6179040
  103486 words of memory out of 5000000
- 6110 multiletter control sequences out of 15000+600000
+ 6108 multiletter control sequences out of 15000+600000
  9317 words of font info for 33 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  37i,7n,30p,324b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -461,7 +461,7 @@ onts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on rapport.pdf (4 pages, 164226 bytes).
+Output written on rapport.pdf (4 pages, 163929 bytes).
 PDF statistics:
  58 PDF objects out of 1000 (max. 8388607)
  40 compressed objects within 1 object stream
