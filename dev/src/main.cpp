@@ -58,10 +58,11 @@ int main(int argc, char const *argv[])
         cout << "\t Enable CNF DIMACS file parser" << endl;
         cout << "Argument [-tseitin]" << endl;
         cout << "\t Enable logical SAT formula parser" << endl;
-        cout << "Argument [-smte | -smtc | -smtd]" << endl;
+        cout << "Argument [-smte | -smtc | -smtd] [-disable_smt_cl] " << endl;
         cout << "\t -smte : Enable SMT for equality" << endl;
         cout << "\t -smtc : Enable SMT for congruence" << endl;
         cout << "\t -smtd : Enable SMT for difference logic" << endl;
+        cout << "\t -disable_smt_cl : Disable CL for smte" << endl;
         cout << endl << endl;
 
 
@@ -408,10 +409,11 @@ void menuChoice()
             cout << "\t Enable CNF DIMACS file parser" << endl;
             cout << "Argument [-tseitin]" << endl;
             cout << "\t Enable logical SAT formula parser" << endl;
-            cout << "Argument [-smte | -smtc | -smtd]" << endl;
+            cout << "Argument [-smte | -smtc | -smtd] [-disable_smt_cl]" << endl;
             cout << "\t -smte : Enable SMT for equality" << endl;
             cout << "\t -smtc : Enable SMT for congruence" << endl;
             cout << "\t -smtd : Enable SMT for difference logic" << endl;
+            cout << "\t -disable_smt_cl : Disable CL for smte" << endl;
             cout << endl << endl;
 
 

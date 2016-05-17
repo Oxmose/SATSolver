@@ -15,6 +15,7 @@ L'ancien noyau du solveur est sauvegardé dans le dossier "Old" dans le dossier 
 ### Améliorations:
 - Refonte totale de DPLL, allègement du code et des traitements.
 - Alègement des heuristiques de pari.
+- Possibilité de désactivation de CL avec SMT pour l'égalité : -disable_smt_cl
 
 ## Performances
 Un set de test à été réalisé pour récupérer quelques résultats de temps de notre parser. Pour consulter le graphique des temps moyens, ouvrez le fichier time.png dans le dossier "doc" du projet.
