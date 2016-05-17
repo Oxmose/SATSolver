@@ -17,7 +17,7 @@ Powered by git: https://github.com/Oxmose/SATSolver
 - Seul le parser est implémenté pour la logique des différences, nous n'avons pas eu le temps de finir le solver.    
 - Enfin nous avons implémenté un générateur de formules pour SMT_eq, il est accessible via le prompt en lançant ./resol. Le test gros.for a été généré ainsi.
 
-### Améliorations possibles:
+### Améliorations possibles
 - Implémentation de la logique des différences côté solver.
 - Implémentation du clause learning QF_UF (congruence).
 - L'architecture peut encore et toujours être allégée.
