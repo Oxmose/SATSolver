@@ -12,7 +12,8 @@ Powered by git: https://github.com/Oxmose/SATSolver
 - L'ancien noyau du solveur est sauvegardé dans le dossier "Old" dans le dossier des sources. Le nouveau noyau est venu le remplacer. Le noyau SMT quand à lui se trouve dans le dossier "Core/SMT".                       
 - Nous avons implémenté DPLL(T) en ligne avec apprentissage de clause côté smt possible, il est entièrement compatible avec les WL et le clause learning SAT.
 - DPLL(T) est appliqué à l'égalité et à la congruence, dans le cadre de la congruence nous n'avons pas d'apprentissage de clauses SMT.   
-- Pour se rendre compte de l'efficacité du clause learning côté SMT nous avons ajouté l'option -disable_smt_cl qui permet de le désactiver. Pour l'égalité qui implémente le CL SMT, le gain est énorme par exemple sur le fichier test_smt/smt_eq/gros.for. Il termine en 15s avec CL SMT, et ne termine pas en temps raisonnable sans.    
+- Pour se rendre compte de l'efficacité du clause learning côté SMT nous avons ajouté l'option -disable_smt_cl qui permet de le désactiver. Pour l'égalité qui implémente le CL SMT, le gain est énorme par exemple sur le fichier test_smt/smt_eq/gros.for. Il termine en 15s avec CL SMT, et ne termine pas en temps raisonnable sans.  
+- En cas de satisfiabilité SMT le solveur renvoie un nombre minimal de classes d'équivalences incompatibles incluant tous les termes qui aparaissent (même en sous terme) dans la formule dans le cas QF_UF.
 - Seul le parser est implémenté pour la logique des différences, nous n'avons pas eu le temps de finir le solver.    
 - Enfin nous avons implémenté un générateur de formules pour SMT_eq, il est accessible via le prompt en lançant ./resol. Le test gros.for a été généré ainsi.
 
