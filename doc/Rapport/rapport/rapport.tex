@@ -70,14 +70,15 @@ L'organisation du projet est la suivante :
 \item Possibilité de désactiver le clause learning SMT pour comparer les performances (-disable\_smt\_cl).
 \item Génération de formules aléatoires.
 \end{itemize}
+\subsection{SMT}
 
 \section{Choix d'implémentation}
-Le patron de conception en statégies à été retenu pour le développement des heuristiques de pari. Cela permet d'ajouter une heuristique sans modifier le noyau SAT. 
+Le patron de conception en statégies a été retenu pour le développement des heuristiques de pari. Cela permet d'ajouter une heuristique sans modifier le noyau SAT. 
 Cette méthode de conception permettrait aussi de modifier l'heuristique de pari durant le traitement de la formule.
 
 Nous avons aussi développé les différents parseurs de formule à l'aide de ce patron de conception afin de faciliter l'ajout de nouveaux types de parseurs.
 
-Les théories de l'égalité et de la congruence ont une formulation proche, nous aons donc utilisé la même base de code pour les traiter.
+Les théories de l'égalité et de la congruence ont une formulation proche, nous avons donc utilisé la même base de code pour les traiter.
 Elles utilisent toutes deux un union find codé séparément en tant qu'outil.
 
 Cela a beaucoup évolué au cours du projet. Nous avons trouvé d'ailleurs que c'était l'une des difficultés du cours : faire une architecture assez maléable pour intégrer facilement des ajouts futurs. En pratique nous avons souvent ré-écrit tout le code (3 fois).
@@ -90,7 +91,7 @@ Nous sommes dans un cas particulier où le puit a exactement deux pères. Pour c
 
 \section{Critique des performances}
 \subsection{SAT}
-La méthode avec apprentissage de clause permet d'obtenir de très bons résultats.
+La méthode avec apprentissage de clause permet d'obtenir de très bons résultats. CL et CL WL ont des résultats comparables.
 
 Pour les heuristiques, les meilleurs résultats s'obtiennent avec l'heuristique MOMS.
 
