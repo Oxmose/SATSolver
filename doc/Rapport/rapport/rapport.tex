@@ -27,8 +27,8 @@ Différentes méthodes de résolution ont été implémentées dans TSAT :
 \begin{itemize}
 	\item DPLL (Davis–Putnam–Logemann–Loveland) standard \cite{DPLL}.
 	\item DPLL avec méthode des litéraux surveillés \cite{WL}.
-	\item DPLL avec méthode avec apprentissage de clauses \cite{CL}.
-	\item DPLL(T) dans le cadre SMT avec les théories de l'égalité et de la congruence \cite{SMT}. 
+	\item DPLL avec méthode avec apprentissage de clause \cite{CL}.
+	\item DPLL(T) en ligne dans le cadre SMT avec les théories de l'égalité, de la congruence \cite{SMT}, avec clause learning SMT pour l'égalité. 
 \end{itemize}
 \end{abstract}
 %Un peu de maths en \LaTeX: voici un exemple de clause:
@@ -70,7 +70,6 @@ L'organisation du projet est la suivante :
 \item Possibilité de désactiver le clause learning SMT pour comparer les performances (-disable\_smt\_cl).
 \item Génération de formules aléatoires.
 \end{itemize}
-\subsection{SMT}
 
 \section{Choix d'implémentation}
 Le patron de conception en statégies a été retenu pour le développement des heuristiques de pari. Cela permet d'ajouter une heuristique sans modifier le noyau SAT. 
