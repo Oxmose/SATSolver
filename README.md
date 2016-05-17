@@ -29,7 +29,7 @@ On obtient des "s UNSATISFIABLE" bien plus rapidement qu'avant avec -cl -vsids. 
 #Tristan
 * rendu1 : Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.   
 * rendu2 : Refonte DPLL, implémentation Watched Literals, redesign en statégies, scripts de tests, optimisation.    
-* rendu3 : Implémentation CL, CL+WL.
+* rendu3 : Implémentation CL, CL+WL, recherche de l'UIP dans le graph linéaire, scripts de test, corrections de bugs, optimisation.
 
 #Alexy
 * rendu1 : Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
