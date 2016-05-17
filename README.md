@@ -7,10 +7,14 @@ Powered by git: https://github.com/Oxmose/SATSolver
 ./resol : Démmare l'interface utilisateur du programme où tout est expliqué.
 
 ## Résumé rendu 4
-Pour le rendu 4, l'algortithme DPLL à été totallement recodé afin de corriger certain bugs réccurents et d'alléger le code. Le solveur gère maintenant DPLL standard, avec litéraux surveillés et avec apprentissage de clauses.
-Nous avons implémenté les solveur SMT pour l'égalité et la congruence. Seul le parsing des formules SMT pour la logique de différence à été ralisé mais n'est interfacé à aucun solveur.
-Le clause learning est actif pour SMT pour l'égalité.
-L'ancien noyau du solveur est sauvegardé dans le dossier "Old" dans le dossier des sources. Le nouveau noyau est venu le remplacer. Le noyau SMT quand à lui se trouve dans le dossier "Core/SMT".
+Pour le rendu 4, l'algorithme DPLL a été totalement recodé afin de corriger certain bugs récurrents et d'alléger le code.   
+Le solveur SAT gère DPLL standard, avec litéraux surveillés et avec apprentissage de clauses ainsi que les heuristiques demandées.   
+L'ancien noyau du solveur est sauvegardé dans le dossier "Old" dans le dossier des sources. Le nouveau noyau est venu le remplacer. Le noyau SMT quand à lui se trouve dans le dossier "Core/SMT".     
+Nous avons implémenté DPLL(T) en ligne avec apprentissage de clause côté smt possible, il est entièrement compatible avec les WL et le clause learning SAT.     
+DPLL(T) est appliqué à l'égalité et à la congruence, dans le cadre de la congruence nous n'avons pas d'apprentissage de clauses SMT.   
+Pour se rendre compte de l'efficacité du clause learning côté SMT nous avons ajouté l'option -disable_smt_cl qui permet de le désactivé. Pour l'égalité qui implémente le CL SMT, le gain est énorme par exemple sur le fichier test_smt/smt_eq/gros.for. Il termine en 15s avec CL SMT, et ne termine pas en temps raisonnable sans.    
+Seul le parser est implémenté pour la logique des différences, nous n'avons pas eu le temps de finir le solver.    
+Enfin nous avons implémenté un générateur de formules pour SMT_eq, il est accessible via le prompt en lançant ./resol. Le test gros.for a été généré ainsi.
 
 ### Améliorations:
 - Refonte totale de DPLL, allègement du code et des traitements.
@@ -25,7 +29,7 @@ Un set de test à été réalisé pour récupérer quelques résultats de temps 
 * rendu1 : Implémentation DPLL, prétraitement, optimisation avec liste de priorité, structures de données et tests.
 * rendu2 : Refonte DPLL, implémentation Watched Literals, redesign en statégies, scripts de tests, optimisation.
 * rendu3 : Implémentation CL, CL+WL, recherche de l'UIP dans le graph linéaire, scripts de test, corrections de bugs, optimisation.
-* rendu4 : Réimplémentation de DPLL, WL et CL, implémentation SMTE/SMTC, rapport.
+* rendu4 : Réimplémentation de DPLL, WL et CL, DPLL(T), implémentation SMTE/SMTC, rapport.
 
 ###Alexy
 * rendu1 : Parser CNF, prétraitement, transformation de Tseitin, structures de données, interface, générateur de formules et tests.
