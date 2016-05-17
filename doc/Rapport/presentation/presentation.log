@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.16)  16 MAY 2016 21:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.16)  17 MAY 2016 21:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1219,11 +1219,11 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 ] [3
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 48.
+LaTeX Font Info:    Try loading font information for U+msa on input line 45.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 48.
+LaTeX Font Info:    Try loading font information for U+msb on input line 45.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1231,27 +1231,25 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] [5
 
-] [6
-
 ]
-<graphe.png, id=228, 689.57625pt x 1090.0725pt>
+<graphe.png, id=198, 2271.48625pt x 2400.97pt>
 File: graphe.png Graphic file (type png)
  <use graphe.png>
-Package pdftex.def Info: graphe.png used on input line 76.
-(pdftex.def)             Requested size: 103.43196pt x 163.50381pt.
- [7
+Package pdftex.def Info: graphe.png used on input line 65.
+(pdftex.def)             Requested size: 159.02028pt x 168.08507pt.
+ [6
 
- <./graphe.png>] <time.png, id=262, 1312.905pt x 666.49pt>
+ <./graphe.png>] <time.png, id=230, 1312.905pt x 666.49pt>
 File: time.png Graphic file (type png)
  <use time.png>
-Package pdftex.def Info: time.png used on input line 83.
+Package pdftex.def Info: time.png used on input line 72.
 (pdftex.def)             Requested size: 328.22545pt x 166.62209pt.
 
-Overfull \hbox (20.93558pt too wide) in paragraph at lines 83--83
+Overfull \hbox (20.93558pt too wide) in paragraph at lines 72--72
  [] 
  []
 
-[8
+[7
 
  <./time.png>]
 \tf@nav=\write6
@@ -1263,11 +1261,11 @@ Overfull \hbox (20.93558pt too wide) in paragraph at lines 83--83
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 85.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 85.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 74.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 74.
  (./presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 85.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 85.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 74.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 74.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: C2DCF1FC407C5C624B5A5CBB48D26767;202.
 
@@ -1275,13 +1273,13 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 85.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 74.
  ) 
 Here is how much of TeX's memory you used:
- 16978 strings out of 494924
- 322383 string characters out of 6179708
+ 16974 strings out of 494924
+ 322350 string characters out of 6179708
  391947 words of memory out of 5000000
- 19845 multiletter control sequences out of 15000+600000
+ 19843 multiletter control sequences out of 15000+600000
  10124 words of font info for 38 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  48i,16n,51p,410b,563s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1291,10 +1289,10 @@ e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on presentation.pdf (8 pages, 199765 bytes).
+Output written on presentation.pdf (7 pages, 472080 bytes).
 PDF statistics:
- 320 PDF objects out of 1000 (max. 8388607)
- 287 compressed objects within 3 object streams
- 21 named destinations out of 1000 (max. 500000)
+ 290 PDF objects out of 1000 (max. 8388607)
+ 258 compressed objects within 3 object streams
+ 19 named destinations out of 1000 (max. 500000)
  85 words of extra memory for PDF output out of 10000 (max. 10000000)
 
