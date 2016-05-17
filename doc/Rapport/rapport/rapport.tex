@@ -42,12 +42,12 @@ L'organisation du projet est la suivante :
 \dirtree{%
     .1 src/.
     .2 BETHeuristic (Classes contenant les stratégies de pari).
-    .2 Global (Fichiers source contenant les paramètres du programme).
+    .2 Global (Fichiers sources contenant les paramètres du programme).
     .2 Core (Noyau TSAT, structures de clause).
     .3 SMT (Noyau SMT).
     .2 Parser (Parseurs CNF et logique).
     .2 RandomSatExpGenerator (Générateur de formules SAT).
-    .2 SMTGenerator (FGénérateur de formules SMT).
+    .2 SMTGenerator (Générateur de formules SMT).
     .2 main.cpp (Fichier source principal du solveur).
     .2 main.h (En tête du fichier main.cpp).
     .2 Makefile (Fichier de compilation du solveur).
@@ -85,9 +85,9 @@ Cela a beaucoup évolué au cours du projet. Nous avons trouvé d'ailleurs que c
 L'architecture finale se veut la plus simple possible avec une utilisation massive d'unordered set et d'unordered map.
 
 \section{Détection de l'UIP}
-Nous avons implémenté un algorithme linéaire trouvé pour l'occasion. Étant donné un DAG à une source et un puit on souhaite trouver les noeuds tels que tous les chemins de la source au puit passe par eux : les UIP. On cherche plus particulièrement celui qui est le plus proche du puit.
-On s'appuie sur la remarque suivante : tous les UIP sont sur le plus court chemin entre la source et le puit. \\
-Nous sommes dans un cas particulier où le puit a exactement deux pères. Pour ces deux noeuds on calcule le plus haut noeud du plus court chemin auquel il peut remonter sans passer par les arêtes du plus court chemin. Le plus haut des deux est le 1-UIP. Cet algorithme est linéaire.
+Nous avons implémenté un algorithme linéaire trouvé pour l'occasion. Étant donné un DAG à une source et un puits on souhaite trouver les noeuds tels que tous les chemins de la source au puits passent par eux : les UIP. On cherche plus particulièrement celui qui est le plus proche du puits.
+On s'appuie sur la remarque suivante : tous les UIP sont sur le plus court chemin entre la source et le puits. \\
+Nous sommes dans un cas particulier où le puits a exactement deux pères. Pour ces deux noeuds on calcule le plus haut noeud du plus court chemin auquel il peut remonter sans passer par les arêtes du plus court chemin. Le plus haut des deux est le 1-UIP. Cet algorithme est linéaire.
 
 \section{Critique des performances}
 \subsection{SAT}
@@ -101,7 +101,7 @@ Les optimisations à la compilation (-O3) permettent elles aussi de rendre le so
     \begin{center}
         \includegraphics[scale=0.25]{time.png}
     \end{center}
-    \caption{Comparaison des temps d'execution de TSAT à MINISAT}
+    \caption{Comparaison des temps d'exécution de MINISAT à TSAT}
     \label{Comparaisons}
 \end{figure}
 
@@ -112,8 +112,8 @@ Dans le cadre de l'égalité on propose de désactiver l'apprentissage de clause
 
 En cas de satisfiabilité SMT le solveur renvoie : 
 \begin{itemize}
-\item Égalité : un nombre minimal de classes d'équivalences incompatibles.
-\item QF UF : un nombre minimal de classes d'équivalences de termes incompatibles. On prend en compte ici tous les termes qui apparaissent dans la formule (y compris les sous termes).
+\item Égalité : un nombre minimal de classes d'équivalence incompatibles.
+\item QF UF : un nombre minimal de classes d'équivalence de termes incompatibles. On prend en compte ici tous les termes qui apparaissent dans la formule (y compris les sous-termes).
 
 \end{itemize}
 
