@@ -37,7 +37,7 @@ int main(int argc, char const *argv[])
 
     if(commandError == 1)
     {
-        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-smte | -smtc | -smtd] [-disable_smt_cl] [-cl | -cl-interac] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
+        cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-smte | -smtc | -smtd] [-disable_smt_cl] [-cl | -cl-interac] [-wl] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
     else if(commandError == 2)
