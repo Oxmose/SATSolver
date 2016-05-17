@@ -70,7 +70,7 @@ term:
                           
 expression:
       TK_VAR                                            {$$ = new EVar($1);}
-    | TK_LOVAR                                          {$$ = new ELoVar($1);}
+    | TK_LOVAR						{$$ = new ELoVar($1);}
     | TK_FUN TK_LPAREN expression TK_RPAREN             {$$ = new EFun($1, $3);}
     | expression TK_COMMA expression                    {$$ = new EArg($1, $3);}
     | TK_LPAREN expression TK_RPAREN                    {$$ = $2;}

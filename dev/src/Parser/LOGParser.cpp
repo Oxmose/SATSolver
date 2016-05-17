@@ -47,7 +47,6 @@ void dfsdeb(struct smt_term *root, unordered_map<int, smt_term*> &term_corresp, 
 
     for(unsigned int i = 0; i < root->args.size(); ++i)
     {
-        //cout << "SEND" << root->args[i].index << endl;
         dfsdeb(&(root->args[i]), term_corresp, tab + 1, output);
     }
 }

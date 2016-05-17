@@ -10,6 +10,7 @@
 // PROJECT INCLUDES
 #include "Global/Global.h"
 #include "RandomSatExpGenerator/randomGen.h"
+#include "SMTGenerator/randomSMTEGen.h"
 
 // SAT CORE
 #include "NewCore/SATSolver.h"

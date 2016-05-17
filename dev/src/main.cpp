@@ -40,6 +40,50 @@ int main(int argc, char const *argv[])
         cerr << "Error, wrong arguments." << endl << "Usage : " << argv[0] << " [-tseitin] [-smte | -smtc | -smtd] [-disable_smt_cl] [-cl | -cl-interac] [-wl] [-forget] [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
         return 1;
     }
+    else if(commandError == 2)
+    {
+        cout << "If you have a DIMACS CNF file to solve, please run this software as:" << endl;
+        cout << "\t" << argv[0] << " [arguments] <file_name>" << endl;
+        cout << "If you have a logic SAT formula file to solve, please run this software as:" << endl;
+        cout << "\t" << argv[0] << " [-tseitin] [arguments] <file_name>" << endl;
+        cout << "If you have a SMTE/SMTC/SMTD formula file to solver, please run this software as:" << endl;
+        cout << "\t" << argv[0] << " [-smte | -smtc | -smtd] [arguments] <file_name>" << endl;
+        cout << endl << endl;
+
+        cout << "Arguments order does not matter, the file name should always be given as last argument" << endl;
+        cout << endl << endl;
+
+        cout << "Parsers: " << endl;
+        cout << "No arguments" << endl;
+        cout << "\t Enable CNF DIMACS file parser" << endl;
+        cout << "Argument [-tseitin]" << endl;
+        cout << "\t Enable logical SAT formula parser" << endl;
+        cout << "Argument [-smte | -smtc | -smtd]" << endl;
+        cout << "\t -smte : Enable SMT for equality" << endl;
+        cout << "\t -smtc : Enable SMT for congruence" << endl;
+        cout << "\t -smtd : Enable SMT for difference logic" << endl;
+        cout << endl << endl;
+
+
+        cout << "Arguments [-wl] [-cl | -cl-interac] (can be combined)" << endl;
+        cout << "\t -wl : enable watched litterals method" << endl;
+        cout << "\t -cl : enable clause learning method" << endl;
+        cout << "\t -cl-interac : enable clause learning with menu interaction" << endl;
+        cout << endl << endl;
+
+        cout << "Arguments [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0]" << endl;
+        cout << "\t -vsids : next bet on the most active literal in learned clauses" << endl;
+        cout << "\t -rand : next bet on a random literal (bet is not random)" << endl;
+        cout << "\t -rand0 :  next bet on a random literal (bet is random)" << endl;
+        cout << "\t -moms : next bet on the literal which has the maximum occurences count in clauses of minimum size" << endl;
+        cout << "\t -dlis : next bet on next literal which can satify the maximum count of clauses" << endl;
+        cout << "\t -dlis0 : next bet on next literal which can satify the maximum count of clauses with score sum(pow(2, -C)) with C the size of the clauses the literal appears in" << endl;
+        cout << endl << endl;
+
+        cout << "Argument [-debug]" << endl;
+        cout << "\t Enable debug output" << endl;
+        return 0;
+    }
     else if(commandError == -1)
         return 0;
 
@@ -148,7 +192,12 @@ int parseCommand(int argc, const char **argv)
     {
         for(int i = 1; i < argc; ++i)
         {
+           
             string value = string(argv[i]);
+
+            if(value == "-help")
+                return 2;
+
             if(i == argc - 1)
             {
                 settings_s.filename_s = value;
@@ -282,8 +331,8 @@ void displayMenu(const char *softName)
         ++total;
     }
     
-    cout << " SATSolver V" << VERSION << " ";
-    total += 16;
+    cout << " TSAT V" << VERSION << " ";
+    total += 11;
     for(unsigned int i = total; i < w.ws_col; ++i)
         cout << "=";
     cout << endl;
@@ -303,26 +352,23 @@ void displayMenu(const char *softName)
         cout << "=";
     cout << endl;
 
-    cout << "How to use :" << endl;
-    cout << "\t If you have a DIMACS CNF file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-wl] [-cl | -cl-interac] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
-    cout << "\t If you have a logic formula file to solve, please run this software as : " << endl;
-    cout << "\t\t" << softName << " [-tseitin] [-smte | -smtc | -smtd] [-disable_smt_cl] [-wl] [-cl | -cl-interac] [-vsids | -forget | -rand | -rand0 | -moms | -dlis | -dlis0] [-debug] <file_name>" << endl;
-    cout << "\t The argument -wl enable the watched literals method." << endl;
-    cout << "\t The argument -cl enable clauses learning. -cl-interac enable interactive clauses learning." << endl;
-    cout << "\t [-rand | -moms | -dlis ...] define the used heuristic to bet on the next literal :" << endl;
-    cout << "\t\t -vsids : next bet on the most active literal" << endl;
-    cout << "\t\t -forget : get track on clause activity." << endl;
-    cout << "\t\t -rand : next bet on a random literal." << endl;
-    cout << "\t\t -rand0 : next bet on a random literal (the bet is random here)." << endl;
-    cout << "\t\t -moms : next bet on the variable which has the maximum occurences count in clauses of minimum size." << endl;
-    cout << "\t\t -dlis : next bet on next variable which can satify the maximum count of clauses." << endl;
-    cout << "\t\t -dlis0 : next bet on next variable which can satify the maximum count of clauses with score sum(pow(2, -C)) with C the size of the clauses the variable appears in." << endl;
-
+    cout << "---- TSAT MENU ";
+    for(int i = 0; i < w.ws_col - 15; ++i)
+    {
+        cout << "-";
+    }
     cout << endl;
-    cout << "\t To generate DIMAC CNF file, press 1 and then [ENTER]" << endl;
-    cout << "\t To read the credits, press 2 and then [ENTER]" << endl;
-    cout << "\t To quit, press 3 and then [ENTER]" << endl;
+    cout << "| 1. Generate DIMAC CNF file" << endl;
+    cout << "| 2. Generate SMTE logical file" << endl;
+    cout << "| 3. Read the credits" << endl;
+    cout << "| 4. List available arguments" << endl;
+    cout << "| 5. Quit" << endl;
+
+    cout << endl << "---- TSAT PROMPT ";
+    for(int i = 0; i < w.ws_col - 17; ++i)
+    {
+        cout << "-";
+    }
 
 } // displayMenu()
 
@@ -333,7 +379,7 @@ void menuChoice()
     bool ok = false;
     do
     {
-        cout << ">";
+        cout << "> ";
         cin >> choice;
         if(choice == 1)
         {
@@ -345,13 +391,49 @@ void menuChoice()
         }
         else if(choice == 2)
         {
-            cout << endl << endl << "SATSolver V " << VERSION << endl;
+            randomSMTEGen();
+        }
+        else if(choice == 3)
+        {
+            cout << endl << endl << "TSAT V " << VERSION << endl;
             cout << "Created by Tristan Sterin and Alexy Torres." << endl;
             cout << "Project realized at the ENS (Ecole Normale Superieure) of Lyon." << endl;
             cout << "Year 2015/2016" << endl;
             ok = true;
         }
-        else if(choice == 3)
+        else if(choice == 4)
+        {
+            cout << "Parsers: " << endl;
+            cout << "No arguments" << endl;
+            cout << "\t Enable CNF DIMACS file parser" << endl;
+            cout << "Argument [-tseitin]" << endl;
+            cout << "\t Enable logical SAT formula parser" << endl;
+            cout << "Argument [-smte | -smtc | -smtd]" << endl;
+            cout << "\t -smte : Enable SMT for equality" << endl;
+            cout << "\t -smtc : Enable SMT for congruence" << endl;
+            cout << "\t -smtd : Enable SMT for difference logic" << endl;
+            cout << endl << endl;
+
+
+            cout << "Arguments [-wl] [-cl | -cl-interac] (can be combined)" << endl;
+            cout << "\t -wl : enable watched litterals method" << endl;
+            cout << "\t -cl : enable clause learning method" << endl;
+            cout << "\t -cl-interac : enable clause learning with menu interaction" << endl;
+            cout << endl << endl;
+
+            cout << "Arguments [-vsids | -rand | -rand0 | -moms | -dlis | -dlis0]" << endl;
+            cout << "\t -vsids : next bet on the most active literal in learned clauses" << endl;
+            cout << "\t -rand : next bet on a random literal (bet is not random)" << endl;
+            cout << "\t -rand0 :  next bet on a random literal (bet is random)" << endl;
+            cout << "\t -moms : next bet on the literal which has the maximum occurences count in clauses of minimum size" << endl;
+            cout << "\t -dlis : next bet on next literal which can satify the maximum count of clauses" << endl;
+            cout << "\t -dlis0 : next bet on next literal which can satify the maximum count of clauses with score sum(pow(2, -C)) with C the size of the clauses the literal appears in" << endl;
+            cout << endl << endl;
+
+            cout << "Argument [-debug]" << endl;
+            cout << "\t Enable debug output" << endl;
+        }
+        else if(choice == 5)
         {
             ok = true;
         }

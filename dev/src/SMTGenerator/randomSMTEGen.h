@@ -52,8 +52,9 @@ struct node
     }
 };
 
-void randomGenerator(const std::string &p_fileName);
+void randomSMTEGen();
+void randomSMTEGenerator(const std::string &p_fileName);
 void generateTree(unsigned int maxIndex, unsigned int clausesCount, unsigned int clausesSize, std::ofstream &out);
-void dfs(node *root, std::ofstream &out);
+void smtedfs(node *root, std::ofstream &out);
 
 #endif // DEF_RANDOMSMTEGENERATOR_H

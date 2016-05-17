@@ -26,8 +26,8 @@ using namespace std;
 ">"		{ return TK_GTH; }
 "<="		{ return TK_LEQ; }
 ">="		{ return TK_GEQ; }
-x[1-9][0-9]*  { yylval.name = yytext; return TK_LOVAR; }
 [a-z]+          { yylval.name = yytext; return TK_FUN; }
+x[1-9][0-9]*    { yylval.name = yytext; return TK_LOVAR; }
 "0"("\n"*)            { return TK_ZERO;}//End Of Formule, the HEX 0a is a pain in the 
 .               ;
 %%

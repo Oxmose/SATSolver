@@ -20,17 +20,16 @@ using namespace std;
 
 string tab_char[8] = { "=>", "<=>", "\\/", "/\\", "X", "~", "=", "!=" };
 
-int main()
+void randomSMTEGen()
 {
     srand(time(NULL));
     string filename;
     cout << "Entre file name: ";
     cin >> filename;
-    randomGenerator(filename);
-    return 0;
+    randomSMTEGenerator(filename);
 }
 
-void randomGenerator(const string &p_fileName)
+void randomSMTEGenerator(const string &p_fileName)
 {
     
 
@@ -139,7 +138,7 @@ void generateTree(unsigned int maxIndex, unsigned int clausesCount, unsigned int
                 next_fill->right = equal;
             }
         }
-        dfs(root, out);
+        smtedfs(root, out);
         if(i == clausesCount - 1)
         {
             out << " 0" << endl;
@@ -151,7 +150,7 @@ void generateTree(unsigned int maxIndex, unsigned int clausesCount, unsigned int
     }
 }
 
-void dfs(node *root, ofstream &out)
+void smtedfs(node *root, ofstream &out)
 {
     if(root->type != LIT)
     {
@@ -167,7 +166,7 @@ void dfs(node *root, ofstream &out)
     }
 
     if(root->left)
-        dfs(root->left, out);
+        smtedfs(root->left, out);
 
     if(root->type == LIT)
         out << root->lit;
@@ -175,7 +174,7 @@ void dfs(node *root, ofstream &out)
         out << " " << tab_char[root->op] << " ";
 
     if(root->right)
-        dfs(root->right, out);
+        smtedfs(root->right, out);
 
     if(root->type != LIT)
         out << ")";
