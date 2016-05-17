@@ -26,4 +26,10 @@ Jo{\~{a}}o P.~Marques Silva and Karem~A. Sakallah.
 \newblock {GRASP} - a new search algorithm for satisfiability.
 \newblock In {\em {ICCAD}}, pages 220--227, 1996.
 
+\bibitem{SMT}
+Albert~Oliveras Robert~Nieuwenhuis.
+\newblock Proof-producing congruence closure.
+\newblock echnical University of Catalonia, Jordi Girona 1, 08034 Barcelona,
+  Spain.
+
 \end{thebibliography}

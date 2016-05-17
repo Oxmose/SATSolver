@@ -551,12 +551,13 @@ bool SATSolver::solve()
 {
     /* MESSY DEBUG */
     /*for(auto c : formula)
-        printf("for %s\n", c.to_str().c_str());
-    for(auto l : dpll_to_smt)
-        printf("dp sm %d %s\n", l.first, l.second->to_str().c_str());
-    for(auto l : valuation)
-        printf("var %d\n", l.first);*/
+        printf("for %s\n", c.to_str().c_str());*/
 
+    /*for(auto l : dpll_to_smt)
+        printf("dp sm %d %s\n", l.first, l.second->to_str().c_str());*/
+    /*for(auto l : valuation)
+        printf("var %d\n", l.first);*/
+    //exit(0);
     reset_valuation();//No unitary clash found in input
     
     if(settings_s.smtc_s)
